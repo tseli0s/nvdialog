@@ -14,24 +14,33 @@ if (UNIX)
         set(CMAKE_INSTALL_PREFIX /usr)
 endif()
 
-set(CMAKE_C_FLAGS "-Wall -Wextra -Werror -std=c99")
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -std=c99")
+set(CMAKE_C_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 
-set(NVD_SOURCES src/backend/nvdialog_adw.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+set(NVD_SOURCES src/backend/nvdialog_adw.c src/backend/nvdialog_gtk.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
 
 # If compiling for Windows, only use Win32 API.
 # Otherwise, use the standard backends.
 if (WIN32)
         add_library(nvdialog SHARED src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
-        message(INFO "Compiling a Windows library.")
+        message("Compiling a Windows library.")
 else()
         add_library(nvdialog SHARED ${NVD_SOURCES})
-        message(INFO "Compiling a GNU/Linux library.")
+        find_package(PkgConfig)
+        if (PKG_CONFIG_FOUND)
+                pkg_check_modules(GTK "gtk+-3.0")
+                if (GTK_FOUND)    
+                        target_link_libraries(nvdialog ${GTK_LIBRARIES})
+                        add_definitions(${GTK_CFLAGS} ${GTK_CFLAGS_OTHER})
+                endif()
+        endif()
+
+        message("Compiling a GNU/Linux library.")
 endif()
 
 set_target_properties(nvdialog PROPERTIES SOVERSION 0)
 set_target_properties(nvdialog PROPERTIES VERSION ${PROJECT_VERSION})
-
+target_include_directories(nvdialog PRIVATE include/)
 # Required to find the system paths easier.
 include(GNUInstallDirs)
 
