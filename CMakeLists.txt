@@ -1,0 +1,39 @@
+# CMake Build Script for libnvdialog.
+# This file is part of libnvdialog and is released under the MIT license.
+
+cmake_minimum_required(VERSION 3.18)
+project(libnvdialog VERSION 0.1.0 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+
+# On GNU/Linux, by default CMake installs the libraries and headers under
+# /usr/local. There are two problems with this approach:
+# 1. Arch Linux and a few other distros consider the path deprecated in favor of /usr
+# 2. Most linkers shipped with distributions do not search on /usr/local for shared libraries.
+# This means the library won't be found at runtime unless LD_LIBRARY_PATH is set to do so.
+# For that reason, we set the prefix to /usr.
+if (UNIX)
+        set(CMAKE_INSTALL_PREFIX /usr)
+endif()
+
+set(CMAKE_C_FLAGS "-Wall -Wextra -Werror -std=c99")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -std=c99")
+
+set(NVD_SOURCES src/backend/nvdialog_adw.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+
+# If compiling for Windows, only use Win32 API.
+# Otherwise, use the standard backends.
+if (WIN32)
+        add_library(nvdialog SHARED src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+        message(INFO "Compiling a Windows library.")
+else()
+        add_library(nvdialog SHARED ${NVD_SOURCES})
+        message(INFO "Compiling a GNU/Linux library.")
+endif()
+
+set_target_properties(nvdialog PROPERTIES SOVERSION 0)
+set_target_properties(nvdialog PROPERTIES VERSION ${PROJECT_VERSION})
+
+# Required to find the system paths easier.
+include(GNUInstallDirs)
+
+install(TARGETS nvdialog LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES include/nvdialog.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

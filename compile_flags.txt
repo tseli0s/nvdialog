@@ -1,0 +1,4 @@
+-Iinclude/
+-Wall
+-Wextra
+-Werror

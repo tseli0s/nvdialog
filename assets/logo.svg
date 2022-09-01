@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="433.34259"
+   height="195.24774"
+   viewBox="0 0 433.34259 195.24774"
+   version="1.1"
+   id="SVGRoot"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1056">
+    <rect
+       x="93.53466"
+       y="102.50845"
+       width="338.80411"
+       height="69.013588"
+       id="rect1881" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-40,-30)">
+    <rect
+       style="fill:#000000"
+       id="rect1242"
+       width="433.34259"
+       height="195.24774"
+       x="40"
+       y="30"
+       rx="33"
+       ry="33" />
+    <path
+       style="fill:#ff0000;stroke-width:0.748058"
+       id="path1348"
+       d="m 456.46317,48.594299 a 7.798285,7.5079355 0 0 1 -7.7967,7.507936 7.798285,7.5079355 0 0 1 -7.79987,-7.504886 7.798285,7.5079355 0 0 1 7.79354,-7.510984 7.798285,7.5079355 0 0 1 7.80303,7.501836 l -7.79828,0.0061 z" />
+    <path
+       style="fill:#ffff00;stroke-width:0.748058"
+       id="path1767"
+       d="m 439.14341,48.722961 a 7.798285,7.5079355 0 0 1 -7.7967,7.507936 7.798285,7.5079355 0 0 1 -7.79987,-7.504886 7.798285,7.5079355 0 0 1 7.79353,-7.510984 7.798285,7.5079355 0 0 1 7.80304,7.501836 l -7.79829,0.0061 z" />
+    <path
+       style="fill:#00ff00;stroke-width:0.748058"
+       id="path1769"
+       d="m 421.24674,48.722961 a 7.798285,7.5079355 0 0 1 -7.7967,7.507936 7.798285,7.5079355 0 0 1 -7.79987,-7.504886 7.798285,7.5079355 0 0 1 7.79353,-7.510984 7.798285,7.5079355 0 0 1 7.80304,7.501836 l -7.79828,0.0061 z" />
+    <text
+       xml:space="preserve"
+       id="text1879"
+       style="font-weight:bold;font-size:48px;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold';white-space:pre;shape-inside:url(#rect1881);fill:#ffffff"
+       transform="matrix(1.437243,0,0,1.5139569,-37.901292,-68.894177)"><tspan
+         x="93.535156"
+         y="146.90781"
+         id="tspan1974">nvdialog</tspan></text>
+  </g>
+</svg>
