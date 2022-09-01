@@ -22,13 +22,12 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef __nvdialog_gtk_h__
-#define __nvdialog_gtk_h__
+#ifndef __nvdialog_adw_h__
+#define __nvdialog_adw_h__
 
 #include "nvdialog.h"
-#include <gtk/gtk.h>
 
-void *nvd_create_gtk_dialog(const char *title, const char *message,
+void *nvd_create_adw_dialog(const char *title, const char *message,
                             NvdDialogType type);
 
 #endif /* __nvdialog_gtk_h__ */
