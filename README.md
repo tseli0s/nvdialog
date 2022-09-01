@@ -13,13 +13,13 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 
 # Backends
 - **Adwaita Backend**\
-A backend using `libadwaita` and Gtk4. Recommended for GNU/Linux.
+A backend using `libadwaita` and Gtk4. Currently unsupported because it requires Gtk4 (see the Gtk3 backend below for more).\
 
 - **Gtk3 Backend**\
-Some older distributions do not have Adwaita / Gtk4 support yet. The Gtk3 backend can be used in such a situation. However Gtk3 is considered to be deprecated and you should consider if it's a good choice.
+Some older distributions do not have Adwaita / Gtk4 support yet. The Gtk3 backend can be used in such a situation. However Gtk3 is considered to be deprecated and will be replaced with `libadwaita` later in the library.
 
 - **Win32 Backend**\
-Windows-specific backend. Not recommended to use it on your own, the library should decide itself instead on whether to use it or not.
+Windows-specific backend, used only for Windows compatibility.
 
 - **Fallback Backend**\
 This backend is only used if everything else fails. It outputs an error message to the console.
@@ -41,12 +41,10 @@ int main(int argc, char **argv)
                 "Hello world ! This is a dialog box created using libnvdialog!"
                 NVD_SIMPLE_MESSAGEBOX
         );
-        /* And showing it. */
-        nvd_show_dialog(box);
-        /* Deinitializing the library. */
-        nvd_terminate();
 }
 ```
+Yes, it's that simple !
+
 # Installation
 Make sure you have installed CMake before doing anything else ! The library can only be installed using CMake. See [CMake's website](https://cmake.org/) for more information.
 - First, clone the repository:
