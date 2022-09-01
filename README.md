@@ -32,18 +32,18 @@ This is a simple cross-platform example of a simple message box greeting the use
 
 int main(int argc, char **argv)
 {
-        /* Initializing the library. This step is not necessary but may be useful for stability. */
-        nvd_init();
+        /* Initializing the library. */
+        nvd_init(argv[0]);
 
         /* Creating the dialog. */
-        NvdDialogBox* box = nvd_dialog_box_new(
+        nvd_dialog_box_new(
                 "Hello, world!",
                 "Hello world ! This is a dialog box created using libnvdialog!"
                 NVD_SIMPLE_MESSAGEBOX
         );
 }
 ```
-Yes, it's that simple !
+Yes, it's that simple ! The library is designed with simplicity in mind so it will not require anything else to work.
 
 # Installation
 Make sure you have installed CMake before doing anything else ! The library can only be installed using CMake. See [CMake's website](https://cmake.org/) for more information.
