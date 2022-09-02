@@ -53,11 +53,21 @@ uint32_t nvd_init(char *program) {
 #endif /* _WIN32 */
 }
 
+#ifdef __nvdialog_experimental__
+void nvd_open_file_dialog_new(const char *title, const char *file_extensions) {
+        #if !defined (_WIN32)
+        nvd_open_file_dialog_gtk(title, file_extensions);
+        #else
+        nvd_open_file_dialog_win32(title, file_extensions);
+        #endif /* _WIN32 */
+}
+#endif /* __nvdialog_experimental__ */
 NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                                  NvdDialogType type) {
 #if !defined(_WIN32)
-        void *dialog = nvd_create_gtk_dialog(title, message, type);
+        NvdDialogBox *dialog = nvd_create_gtk_dialog(title, message, type);
         assert(dialog != NULL);
+        return dialog;
 #else
         nvd_create_win32_dialog(title, message, type);
 #endif /* _WIN32 */
