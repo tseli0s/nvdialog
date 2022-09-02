@@ -27,24 +27,34 @@
 
 void *nvd_create_gtk_dialog(const char *title, const char *message,
                             NvdDialogType type) {
-        GtkWidget *dialog, *label, *content_area;
+        GtkWidget *dialog, *label, *content_area, *ok_button;
         GtkDialogFlags flags = GTK_DIALOG_USE_HEADER_BAR;
 
         dialog = gtk_dialog_new_with_buttons(title, NULL, flags, NULL,
                                              GTK_RESPONSE_NONE, NULL);
         content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
         label = gtk_label_new(message);
+        ok_button = gtk_button_new_with_label("Ok");
 
         gtk_widget_set_margin_bottom(label, 12);
         gtk_widget_set_margin_start(label, 12);
         gtk_widget_set_margin_end(label, 12);
         gtk_widget_set_margin_top(label, 12);
 
+        gtk_widget_set_margin_bottom(ok_button, 12);
+        gtk_widget_set_margin_start(ok_button, 12);
+        gtk_widget_set_margin_end(ok_button, 12);
+        gtk_widget_set_margin_top(ok_button, 12);
+
         g_signal_connect_swapped(dialog, "response",
                                  G_CALLBACK(gtk_widget_destroy), dialog);
+        g_signal_connect_swapped(ok_button, "clicked", G_CALLBACK(gtk_main_quit), NULL);
+
         gtk_container_add(GTK_CONTAINER(content_area), label);
+        gtk_container_add(GTK_CONTAINER (content_area), ok_button);
+        
         gtk_widget_show_all(dialog);
         gtk_main();
-
+        
         return dialog;
 }
