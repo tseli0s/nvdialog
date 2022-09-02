@@ -24,11 +24,9 @@
 
 #include "nvdialog_win32.h"
 
-void nvd_create_win32_dialog(
-        const char* title,
-        const char* message,
-        NvdDialogType type
-) {
-        /* TODO: Match 'type' using switch statement to decide the dialog type */
+void nvd_create_win32_dialog(const char *title, const char *message,
+                             NvdDialogType type) {
+        /* TODO: Match 'type' using switch statement to decide the dialog type
+         */
         MessageBox(NULL, message, title, MB_OK);
 }

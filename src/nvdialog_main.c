@@ -27,7 +27,7 @@
 #include "backend/nvdialog_gtk.h"
 #endif /* _WIN32 */
 
-#if defined (_WIN32)
+#if defined(_WIN32)
 #include "backend/nvdialog_win32.h"
 #endif /* _WIN32 */
 
@@ -48,9 +48,9 @@ uint32_t nvd_init(char *program) {
         char **__argv__ = {
             &program,
         };
-        #ifndef _WIN32
+#ifndef _WIN32
         gtk_init(&__argc__, &__argv__);
-        #endif /* _WIN32 */
+#endif /* _WIN32 */
 }
 
 NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
