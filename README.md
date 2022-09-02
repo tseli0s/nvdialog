@@ -38,8 +38,8 @@ int main(int argc, char **argv)
         /* Creating the dialog. */
         nvd_dialog_box_new(
                 "Hello, world!",
-                "Hello world ! This is a dialog box created using libnvdialog!"
-                NVD_SIMPLE_MESSAGEBOX
+                "Hello world ! This is a dialog box created using libnvdialog!",
+                NVD_DIALOG_SIMPLE
         );
 }
 ```
