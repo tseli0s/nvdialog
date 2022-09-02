@@ -22,8 +22,15 @@
  * IN THE SOFTWARE.
  */
 
+#ifndef _WIN32
 #include "backend/nvdialog_adw.h"
 #include "backend/nvdialog_gtk.h"
+#endif /* _WIN32 */
+
+#if defined (_WIN32)
+#include "backend/nvdialog_win32.h"
+#endif /* _WIN32 */
+
 #include "nvdialog.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -37,29 +44,21 @@ struct NvdDialogBox {
 };
 
 uint32_t nvd_init(char *program) {
-        int __argc = 1;
-        char **__argv = {
+        int __argc__ = 1;
+        char **__argv__ = {
             &program,
         };
-        gtk_init(&__argc, &__argv);
+        #ifndef _WIN32
+        gtk_init(&__argc__, &__argv__);
+        #endif /* _WIN32 */
 }
 
 NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                                  NvdDialogType type) {
 #if !defined(_WIN32)
-#ifdef __NVDIALOG_EXPERIMENTAL
-        if (getenv("NVDIALOG_USE_LEGACY_GTK") &&
-            !strcmp(getenv("NVDIALOG_USE_LEGACY_GTK"), "1")) {
-#endif /* __NVDIALOG_EXPERIMENTAL */
-                void *dialog = nvd_create_gtk_dialog(title, message, type);
-                assert(dialog != NULL);
-#ifdef __NVDIALOG_EXPERIMENTAL
-        } else {
-#endif /* __NVDIALOG_EXPERIMENTAL */
-                // void *__dialog = nvd_create_adw_dialog(title, message, type);
-                // assert(__dialog != NULL);
-#ifdef __NVDIALOG_EXPERIMENTAL
-        }
-#endif /* __NVDIALOG_EXPERIMENTAL */
+        void *dialog = nvd_create_gtk_dialog(title, message, type);
+        assert(dialog != NULL);
+#else
+        nvd_create_win32_dialog(title, message, type);
 #endif /* _WIN32 */
 }
