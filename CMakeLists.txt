@@ -2,7 +2,9 @@
 # This file is part of libnvdialog and is released under the MIT license.
 
 cmake_minimum_required(VERSION 3.18)
-project(libnvdialog VERSION 0.1.0 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+project(libnvdialog LANGUAGES C VERSION 0.1.0 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+
+option(WIN32_TARGET "Build the library for Windows usage. Requires x86_64-w64-mingw32." OFF)
 
 # On GNU/Linux, by default CMake installs the libraries and headers under
 # /usr/local. There are two problems with this approach:
@@ -14,15 +16,19 @@ if (UNIX)
         set(CMAKE_INSTALL_PREFIX /usr)
 endif()
 
+if(WIN32_TARGET)
+        set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
+endif()
+
 set(CMAKE_C_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 
-set(NVD_SOURCES src/backend/nvdialog_adw.c src/backend/nvdialog_gtk.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+set(NVD_SOURCES src/nvdialog_version.c src/backend/nvdialog_adw.c src/backend/nvdialog_gtk.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
 
 # If compiling for Windows, only use Win32 API.
 # Otherwise, use the standard backends.
-if (WIN32)
-        add_library(nvdialog SHARED src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+if (WIN32 OR WIN32_TARGET)
+        add_library(nvdialog SHARED src/nvdialog_version.c src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
         message("Compiling a Windows library.")
 else()
         add_library(nvdialog SHARED ${NVD_SOURCES})
