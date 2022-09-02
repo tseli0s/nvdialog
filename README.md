@@ -8,7 +8,7 @@
 <br>
 <code>libnvdialog</code> is a simple dialog box library written in C (Bindings for Rust also exist)
 for multiple purposes such as games, app development, simple UI boxes for terminal apps or anything else. If you need something that doesn't require a bunch of setup this library is for you. <br>
-<a href="https://androgr.github.io/libnvdialog.git">libnvdialog Website</a>
+<a href="https://androgr.github.io/libnvdialog">libnvdialog Website</a>
 <br> <br>
 
 # Backends
