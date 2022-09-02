@@ -3,3 +3,4 @@ build/
 .cache/
 rust/nvdialog-rs/target/
 rust/nvdialog-rs/Cargo.lock
+testing/
