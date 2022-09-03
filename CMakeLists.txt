@@ -20,8 +20,7 @@ if(WIN32_TARGET)
         set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
 endif()
 
-set(CMAKE_C_FLAGS "-Wall -Wextra")
-set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_C_FLAGS "-Wall -Wextra -O3 -s")
 
 set(NVD_SOURCES src/nvdialog_version.c src/backend/nvdialog_adw.c src/backend/nvdialog_gtk.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
 
