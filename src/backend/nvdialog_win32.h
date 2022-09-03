@@ -27,7 +27,7 @@
 #include <winuser.h>
 
 /* Shows an Open File dialog using the Win32 API. */
-void nvd_open_file_dialog_win32(const char *title, const char *message);
+const char *nvd_open_file_dialog_win32(const char *title, const char *message);
 
 /*
  * Creates a simple dialog window using the Win32 API.
