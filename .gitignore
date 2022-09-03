@@ -3,4 +3,5 @@ build/
 .cache/
 rust/nvdialog-rs/target/
 rust/nvdialog-rs/Cargo.lock
+rust/nvdialog-rs/examples/hello-world/target
 testing/
