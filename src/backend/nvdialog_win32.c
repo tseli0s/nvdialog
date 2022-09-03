@@ -24,9 +24,7 @@
 
 #include "nvdialog_win32.h"
 
-void nvd_open_file_dialog_win32(const char *title, const char *message) {
-        
-}
+void nvd_open_file_dialog_win32(const char *title, const char *message) {}
 
 void nvd_create_win32_dialog(const char *title, const char *message,
                              NvdDialogType type) {
