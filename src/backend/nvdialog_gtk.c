@@ -24,6 +24,37 @@
 
 #include "nvdialog_gtk.h"
 #include <stdbool.h>
+#include <stdio.h>
+
+/*
+ * FIXME: This function segfaults apparently. I can't find why.
+ * Perhaps it's a bug in Gtk3?
+*/
+const char *nvd_open_file_dialog_gtk(const char *title,
+                                     const char *file_extensions) {
+        GtkFileChooserNative *native;
+        GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
+        gint res;
+
+        native = gtk_file_chooser_native_new ("Open File",
+                                      NULL,
+                                      action,
+                                      "_Open",
+                                      "_Cancel");
+
+        res = gtk_native_dialog_run (GTK_NATIVE_DIALOG (native));
+        if (res == GTK_RESPONSE_ACCEPT)
+        {
+                char *filename;
+                GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
+                filename = gtk_file_chooser_get_filename (chooser);
+                printf("filename");
+                //g_free (filename);
+        }
+
+        g_object_unref (native);
+        native = NULL;
+}
 
 void *nvd_create_gtk_dialog(const char *title, const char *message,
                             NvdDialogType type) {
@@ -48,13 +79,14 @@ void *nvd_create_gtk_dialog(const char *title, const char *message,
 
         g_signal_connect_swapped(dialog, "response",
                                  G_CALLBACK(gtk_widget_destroy), dialog);
-        g_signal_connect_swapped(ok_button, "clicked", G_CALLBACK(gtk_main_quit), NULL);
+        g_signal_connect_swapped(ok_button, "clicked",
+                                 G_CALLBACK(gtk_main_quit), NULL);
 
         gtk_container_add(GTK_CONTAINER(content_area), label);
-        gtk_container_add(GTK_CONTAINER (content_area), ok_button);
-        
+        gtk_container_add(GTK_CONTAINER(content_area), ok_button);
+
         gtk_widget_show_all(dialog);
         gtk_main();
-        
+
         return dialog;
 }
