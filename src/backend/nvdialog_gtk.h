@@ -30,17 +30,15 @@
 
 /*
  * Creates a window that asks for a file using Gtk3.
- * This function is still a WIP.
-*/
-void *nvd_open_file_dialog_gtk(
-        const char* title,
-        const char* file_extensions
-);
+ * This function is incomplete and will not be used.
+ */
+const char *nvd_open_file_dialog_gtk(const char *title,
+                                     const char *file_extensions);
 
 /*
  * Creates a simple dialog window using Gtk3.
  * TODO: Add an Ok button to the dialog window.
-*/
+ */
 void *nvd_create_gtk_dialog(const char *title, const char *message,
                             NvdDialogType type);
 
