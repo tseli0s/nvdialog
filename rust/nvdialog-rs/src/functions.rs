@@ -22,6 +22,19 @@
  * IN THE SOFTWARE.
  */
 
-pub(crate) fn message_box() {
-        todo!()
+use libloading::*;
+
+fn symbol_fmt(s: &str) -> String {
+        format!("{}{}", s, '\0')
+}
+
+pub(super) fn msgbox(library: &Library, title: &str, msg: &str) {
+        unsafe {
+                let func: Symbol<unsafe extern "C" fn(*const i8, *const i8, u32)> = library.get(
+                        symbol_fmt(
+                                "nvd_dialog_box_new"
+                        ).as_bytes()
+                ).expect("Invalid library");
+                func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 255);
+        }
 }
