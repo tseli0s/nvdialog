@@ -47,6 +47,22 @@ int main(int argc, char **argv)
 ```
 Yes, it's that simple ! The library is designed with simplicity in mind so it will not require anything else to work.
 
+# Screenshots
+<div align="center">
+        <img src="assets/warning_scr.png" width="512"></img>
+        <h5><i>Warning dialog using libnvdialog</i></h5>
+<br>
+<br>
+<img src="assets/info_scr.png" width="512"></img>
+        <h5><i>Info dialog using libnvdialog</i></h5>
+<br>
+<br>
+<img src="assets/error_scr.png" width="512"></img>
+        <h5><i>Error dialog using libnvdialog</i></h5>
+</div>
+<br>
+<br>
+
 # Installation
 Make sure you have installed CMake before doing anything else ! The library can only be installed using CMake. See [CMake's website](https://cmake.org/) for more information.
 - First, clone the repository:
