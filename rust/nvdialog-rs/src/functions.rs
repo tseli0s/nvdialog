@@ -30,7 +30,12 @@ fn symbol_fmt(s: &str) -> String {
 
 pub(super) fn msgbox(library: &Library, title: &str, msg: &str) {
         unsafe {
-                let func: Symbol<unsafe extern "C" fn(*const i8, *const i8, u32)> = library.get(
+                let func: Symbol<
+                        unsafe extern "C" fn(
+                                *const i8,
+                                *const i8, u32,
+                        ) -> *mut libc::c_void
+                > = library.get(
                         symbol_fmt(
                                 "nvd_dialog_box_new"
                         ).as_bytes()
@@ -38,3 +43,36 @@ pub(super) fn msgbox(library: &Library, title: &str, msg: &str) {
                 func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 255);
         }
 }
+
+pub(super) fn warningbox(library: &Library, title: &str, msg: &str) {
+        unsafe {
+                let func: Symbol<
+                        unsafe extern "C" fn(
+                                *const i8,
+                                *const i8, u32,
+                        ) -> *mut libc::c_void
+                > = library.get(
+                        symbol_fmt(
+                                "nvd_dialog_box_new"
+                        ).as_bytes()
+                ).expect("Invalid library");
+                func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 256);
+        }
+}
+
+pub(super) fn errorbox(library: &Library, title: &str, msg: &str) {
+        unsafe {
+                let func: Symbol<
+                        unsafe extern "C" fn(
+                                *const i8,
+                                *const i8, u32,
+                        ) -> *mut libc::c_void
+                > = library.get(
+                        symbol_fmt(
+                                "nvd_dialog_box_new"
+                        ).as_bytes()
+                ).expect("Invalid library");
+                func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 257);
+        }
+}
+

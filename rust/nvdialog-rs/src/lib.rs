@@ -85,10 +85,10 @@ impl NvDialogContext {
                         functions::msgbox(&self.library, title, message);
                 },
                 DialogType::WarningDialog => {
-                        todo!()
+                        functions::warningbox(&self.library, title, message);
                 },
                 DialogType::ErrorDialog => {
-                        todo!()
+                        functions::errorbox(&self.library, title, message);
                 },
         }
     }
