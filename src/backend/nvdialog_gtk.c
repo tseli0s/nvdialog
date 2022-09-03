@@ -91,7 +91,7 @@ void *nvd_create_gtk_dialog(const char *title, const char *message,
         gtk_widget_set_margin_top(image, 12);
 
         g_signal_connect_swapped(dialog, "response",
-                                 G_CALLBACK(gtk_widget_destroy), dialog);
+                                 G_CALLBACK(gtk_main_quit), NULL);
         g_signal_connect_swapped(ok_button, "clicked",
                                  G_CALLBACK(gtk_main_quit), NULL);
         GtkWidget *grid = gtk_grid_new();
