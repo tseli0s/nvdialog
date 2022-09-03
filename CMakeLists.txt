@@ -29,6 +29,7 @@ set(NVD_SOURCES src/nvdialog_version.c src/backend/nvdialog_adw.c src/backend/nv
 if (WIN32 OR WIN32_TARGET)
         add_library(nvdialog SHARED src/nvdialog_version.c src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
         message("Compiling a Windows library.")
+        target_link_libraries(nvdialog comdlg32)
 else()
         add_library(nvdialog SHARED ${NVD_SOURCES})
         find_package(PkgConfig)
