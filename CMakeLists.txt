@@ -49,5 +49,10 @@ target_include_directories(nvdialog PRIVATE include/)
 # Required to find the system paths easier.
 include(GNUInstallDirs)
 
-install(TARGETS nvdialog LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(FILES include/nvdialog.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+# On Windows the installation procedure is a bit different
+# so until we resolve this the library and the header have to
+# be manually installed.
+if (!WIN32_TARGET OR !WIN32)
+        install(TARGETS nvdialog LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        install(FILES include/nvdialog.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+endif()
