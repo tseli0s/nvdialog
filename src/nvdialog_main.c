@@ -22,6 +22,7 @@
  * IN THE SOFTWARE.
  */
 
+#include <stdio.h>
 #ifndef _WIN32
 #include "backend/nvdialog_adw.h"
 #include "backend/nvdialog_gtk.h"
@@ -51,17 +52,21 @@ uint32_t nvd_init(char *program) {
 #ifndef _WIN32
         gtk_init(&__argc__, &__argv__);
 #endif /* _WIN32 */
+        return 0;
 }
 
-#ifdef __nvdialog_experimental__
-void nvd_open_file_dialog_new(const char *title, const char *file_extensions) {
-        #if !defined (_WIN32)
-        nvd_open_file_dialog_gtk(title, file_extensions);
-        #else
+
+const char *___nvd_open_file_dialog_new(const char *title,
+                                     const char *file_extensions) {
+#if !defined(_WIN32)
+        const char *data = nvd_open_file_dialog_gtk(title, file_extensions);
+        if (!data) abort();
+        return data;
+#else
         nvd_open_file_dialog_win32(title, file_extensions);
-        #endif /* _WIN32 */
+#endif /* _WIN32 */
 }
-#endif /* __nvdialog_experimental__ */
+
 NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                                  NvdDialogType type) {
 #if !defined(_WIN32)
