@@ -32,6 +32,6 @@ void nvd_open_file_dialog_win32(const char *title, const char *message);
 /*
  * Creates a simple dialog window using the Win32 API.
  * Returns the value of the MessageBox call.
-*/
+ */
 uint32_t nvd_create_win32_dialog(const char *title, const char *message,
-                             NvdDialogType type);
+                                 NvdDialogType type);

@@ -28,19 +28,20 @@
 void nvd_open_file_dialog_win32(const char *title, const char *message) {}
 
 uint32_t nvd_create_win32_dialog(const char *title, const char *message,
-                             NvdDialogType type) {
+                                 NvdDialogType type) {
         uint32_t flag;
         switch (type) {
-                case NVD_DIALOG_SIMPLE:
-                        flag = MB_ICONINFORMATION;
-                        break;
-                case NVD_DIALOG_WARNING:
-                        flag = MB_ICONWARNING;
-                        break;
-                case NVD_DIALOG_ERROR:
-                        flag = MB_ICONHAND;
-                        break;
-                default: abort();
+        case NVD_DIALOG_SIMPLE:
+                flag = MB_ICONINFORMATION;
+                break;
+        case NVD_DIALOG_WARNING:
+                flag = MB_ICONWARNING;
+                break;
+        case NVD_DIALOG_ERROR:
+                flag = MB_ICONHAND;
+                break;
+        default:
+                abort();
         }
         return MessageBox(NULL, message, title, MB_OK | flag);
 }
