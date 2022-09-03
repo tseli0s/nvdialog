@@ -55,12 +55,12 @@ uint32_t nvd_init(char *program) {
         return 0;
 }
 
-
 const char *___nvd_open_file_dialog_new(const char *title,
-                                     const char *file_extensions) {
+                                        const char *file_extensions) {
 #if !defined(_WIN32)
         const char *data = nvd_open_file_dialog_gtk(title, file_extensions);
-        if (!data) abort();
+        if (!data)
+                abort();
         return data;
 #else
         nvd_open_file_dialog_win32(title, file_extensions);
