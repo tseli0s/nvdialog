@@ -24,8 +24,14 @@
 
 #include "nvdialog.h"
 #include <windows.h>
+#include <winuser.h>
 
+/* Shows an Open File dialog using the Win32 API. */
 void nvd_open_file_dialog_win32(const char *title, const char *message);
 
-void nvd_create_win32_dialog(const char *title, const char *message,
+/*
+ * Creates a simple dialog window using the Win32 API.
+ * Returns the value of the MessageBox call.
+*/
+uint32_t nvd_create_win32_dialog(const char *title, const char *message,
                              NvdDialogType type);
