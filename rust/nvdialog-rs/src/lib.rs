@@ -25,10 +25,7 @@
 mod functions;
 
 extern crate libloading;
-use libloading::{
-        Library,
-        Symbol,
-};
+use libloading::{Library, Symbol};
 #[allow(unused)]
 use std::ffi::*;
 /*
@@ -37,44 +34,62 @@ use std::ffi::*;
 */
 #[derive(Debug)]
 pub struct NvDialogContext {
-        bound: bool,
-        errcode: u32,
-        library: Library,
+    bound: bool,
+    errcode: u32,
+    library: Library,
+}
+
+#[derive(Debug)]
+pub enum DialogType {
+    SimpleDialog  = 0xff,
+    WarningDialog,
+    ErrorDialog,
 }
 
 impl NvDialogContext {
-        /* Creates a new NvDialogContext object and returns it. */
-        pub fn new() -> Self {
-                let library;
+    /* Creates a new NvDialogContext object and returns it. */
+    pub fn new() -> Self {
+        let library;
 
-                unsafe {
-                        library = Library::new("/usr/lib/libnvdialog.so.0.1.0")
-                        .expect("Couldn't load the native library.");
-                }
-                Self {
-                        bound: false,
-                        errcode: 0,
-                        library
-                }
+        unsafe {
+            library = Library::new("/usr/lib/libnvdialog.so.0.1.0")
+                .expect("Couldn't load the native library.");
         }
-        /* Initializes nvdialog. This is nvd_init() but in Rust. */
-        pub fn init(mut self) -> Self {
-                let init_fn: Symbol<unsafe extern "C" fn(*const i8) -> u32>;
-                unsafe {
-                        init_fn = self.library.get(b"init").expect("Invalid library.");
-                        init_fn(
-                                CStr::from_bytes_with_nul(
-                                        b"hello-world"
-                                ).unwrap().as_ptr()
-                        );
-                }
-                self.bound = true;
-                self.errcode = 0;
+        Self {
+            bound: false,
+            errcode: 0,
+            library,
+        }
+    }
+    /* Initializes nvdialog. This is nvd_init() but in Rust. */
+    pub fn init(mut self, argv_0: &str) -> Self {
+        let argv0 = format!("{}{}", argv_0, '\0');
+        let init_fn: Symbol<unsafe extern "C" fn(*const i8) -> u32>;
+        unsafe {
+            init_fn = self.library.get(b"nvd_init").expect("Invalid library");
+            init_fn(
+                CStr::from_bytes_with_nul(argv0.as_str().as_bytes())
+                    .unwrap()
+                    .as_ptr(),
+            );
+        }
+        self.bound = true;
+        self.errcode = 0;
 
-                self
-        }
+        self
+    }
 
-        pub fn message_box(&self, title: &str, message: &str) {
-                todo!()
+    pub fn message_box(&self, title: &str, message: &str, dialog_type: DialogType) {
+        match dialog_type {
+                DialogType::SimpleDialog => {
+                        functions::msgbox(&self.library, title, message);
+                },
+                DialogType::WarningDialog => {
+                        todo!()
+                },
+                DialogType::ErrorDialog => {
+                        todo!()
+                },
         }
+    }
 }
