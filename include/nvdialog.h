@@ -101,8 +101,12 @@ void nvd_show_dialog(NvdDialogBox *dialog);
  * This function creates a dialog to open a file in the filesystem
  * through a GUI.
  * @param title The window title to display.
- * @param file_extensions If looking for specific file extension, put it here. Else pass NULL.
+ * @param file_extensions If looking for specific file extension, put it here.
+ * Else pass NULL.
+ * @note INCOMPLETE FUNCTION - Do not use please.
+ * @returns The filename path on success, otherwise NULL.
  */
-void nvd_open_file_dialog_new(const char *title, const char *file_extensions);
+const char *nvd_open_file_dialog_new(const char *title,
+                                     const char *file_extensions);
 
 #endif /* __nvdialog_h__ */
