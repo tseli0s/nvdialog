@@ -26,6 +26,11 @@
 #include "nvdialog.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
+
+#ifndef NVDIALOG_MAXBUF
+#define NVDIALOG_MAXBUF 4096
+#endif /* NVDIALOG_MAXBUF */
 
 /*
  * FIXME: This function segfaults apparently. I can't find why.
@@ -33,24 +38,42 @@
  */
 const char *nvd_open_file_dialog_gtk(const char *title,
                                      const char *file_extensions) {
-        GtkFileChooserNative *native;
-        GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
-        gint res;
+        /* Creating the dialog. */
+        GtkWidget *dialog = gtk_file_chooser_dialog_new(
+                title, NULL,
+                GTK_FILE_CHOOSER_ACTION_OPEN,
+                "Open",
+                GTK_RESPONSE_ACCEPT,
+                "Cancel",
+                GTK_RESPONSE_CANCEL,
+                NULL
+        );
+        /* Running the dialog and checking the user's action. */
+        int result = gtk_dialog_run(GTK_DIALOG (dialog));
+        if (result == GTK_RESPONSE_ACCEPT) {
+                GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
+                char *filename = gtk_file_chooser_get_filename (chooser);
+                /* For compatibility reasons, we need the filename in UTF-8 format. */
+                g_filename_to_utf8(
+                        filename,
+                        strlen(filename),
+                        NULL, NULL,
+                        NULL
+                );
+                /* The dialog should be destroyed at this stage. */
+                gtk_widget_destroy(dialog);
+                
+                /* Copying the value to the stack. */
+                char __buffer[NVDIALOG_MAXBUF];
 
-        native = gtk_file_chooser_native_new("Open File", NULL, action, "_Open",
-                                             "_Cancel");
-
-        res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native));
-        if (res == GTK_RESPONSE_ACCEPT) {
-                char *filename;
-                GtkFileChooser *chooser = GTK_FILE_CHOOSER(native);
-                filename = gtk_file_chooser_get_filename(chooser);
-                printf("filename");
-                // g_free (filename);
+                printf("Filename: %s", filename);
+                /* Avoiding a warning. */
+                char* buffer = __buffer;
+                return buffer;
+        } else if (result == GTK_RESPONSE_CANCEL || result == GTK_RESPONSE_CLOSE) {
+                gtk_main_quit();
+                return NULL;
         }
-
-        g_object_unref(native);
-        native = NULL;
 }
 
 void *nvd_create_gtk_dialog(const char *title, const char *message,
