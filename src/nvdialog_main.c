@@ -59,8 +59,6 @@ const char *nvd_open_file_dialog_new(const char *title,
                                      const char *file_extensions) {
 #if !defined(_WIN32)
         const char *data = nvd_open_file_dialog_gtk(title, file_extensions);
-        if (!data)
-                abort();
         return data;
 #else
         return nvd_open_file_dialog_win32(title, file_extensions);
