@@ -20,7 +20,7 @@ if(WIN32_TARGET)
         set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
 endif()
 
-set(CMAKE_C_FLAGS "-Wall -Wextra -O3 -s")
+set(CMAKE_C_FLAGS "-Wall -Wextra -O0 -ggdb3")
 
 set(NVD_SOURCES src/nvdialog_version.c src/backend/nvdialog_adw.c src/backend/nvdialog_gtk.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
 
@@ -53,7 +53,5 @@ include(GNUInstallDirs)
 # On Windows the installation procedure is a bit different
 # so until we resolve this the library and the header have to
 # be manually installed.
-if (!WIN32_TARGET OR !WIN32)
-        install(TARGETS nvdialog LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-        install(FILES include/nvdialog.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-endif()
+install(TARGETS nvdialog LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES include/nvdialog.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
