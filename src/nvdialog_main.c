@@ -22,6 +22,7 @@
  * IN THE SOFTWARE.
  */
 
+#include "nvdialog_error.h"
 #include <stdio.h>
 #ifndef _WIN32
 #include "backend/nvdialog_adw.h"
@@ -50,6 +51,11 @@ uint32_t nvd_init(char *program) {
             &program,
         };
 #ifndef _WIN32
+        if (!getenv("DISPLAY")) {
+                nvd_set_error(NVD_NO_DISPLAY);
+                NVD_PRINT_CURRENT_ERROR;
+                return -1;
+        }
         gtk_init(&__argc__, &__argv__);
 #endif /* _WIN32 */
         return 0;
