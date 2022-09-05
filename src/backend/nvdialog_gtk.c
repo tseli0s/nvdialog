@@ -23,10 +23,18 @@
  */
 
 #include "nvdialog_gtk.h"
+#include "../nvdialog_error.h"
 #include "nvdialog.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+
+#define NVD_CHECK_GTK_INIT                                                     \
+        if (gtk_init_check(NULL, NULL)) {                                      \
+                nvd_set_error(NVD_NOT_INITIALIZED);                            \
+                nvd_print(nvd_stringify_error(nvd_get_error()));               \
+                return NULL;                                                   \
+        }
 
 #ifndef NVDIALOG_MAXBUF
 #define NVDIALOG_MAXBUF 4096
@@ -38,6 +46,8 @@
  */
 const char *nvd_open_file_dialog_gtk(const char *title,
                                      const char *file_extensions) {
+        NVD_CHECK_GTK_INIT;
+
         /* Creating the dialog. */
         GtkWidget *dialog = gtk_file_chooser_dialog_new(
             title, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, "Open",
@@ -71,6 +81,7 @@ const char *nvd_open_file_dialog_gtk(const char *title,
 
 void *nvd_create_gtk_dialog(const char *title, const char *message,
                             NvdDialogType type) {
+        NVD_CHECK_GTK_INIT;
         GtkWidget *dialog, *label, *content_area, *ok_button, *image;
         GtkDialogFlags flags = GTK_DIALOG_USE_HEADER_BAR;
 
