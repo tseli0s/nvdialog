@@ -55,7 +55,8 @@ const char *nvd_stringify_error(NvdError err) {
         char *error = NULL;
         switch (err) {
         case NVD_NO_ERROR:
-                return NULL;
+                error = "No error";
+                break;
         case NVD_NO_DISPLAY:
                 error = "No display found (Is X.org or a Wayland compositor "
                         "running?)";
@@ -81,7 +82,4 @@ const char *nvd_stringify_error(NvdError err) {
         return error;
 }
 
-void nvd_print(const char*msg)
-{
-        fprintf(stderr, "%s", msg);
-}
+void nvd_print(const char *msg) { fprintf(stderr, "%s", msg); }
