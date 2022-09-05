@@ -20,14 +20,14 @@ if(WIN32_TARGET)
         set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
 endif()
 
-set(CMAKE_C_FLAGS "-Wall -Wextra -O0 -ggdb3")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-parameter -Wall -Wextra -O3")
 
-set(NVD_SOURCES src/nvdialog_version.c src/backend/nvdialog_adw.c src/backend/nvdialog_gtk.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_adw.c src/backend/nvdialog_gtk.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
 
 # If compiling for Windows, only use Win32 API.
 # Otherwise, use the standard backends.
 if (WIN32 OR WIN32_TARGET)
-        add_library(nvdialog SHARED src/nvdialog_version.c src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+        add_library(nvdialog SHARED src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
         message("Compiling a Windows library.")
         target_link_libraries(nvdialog comdlg32)
 else()
