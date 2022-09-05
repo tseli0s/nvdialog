@@ -25,10 +25,11 @@
 #include "nvdialog_win32.h"
 #include <stdio.h>
 
-/* The largest filename allowed by the library. Perhaps we should extend this? */
+/* The largest filename allowed by the library. Perhaps we should extend this?
+ */
 #ifndef NVD_MAX_FILENAME_LEN
-#define NVD_MAX_FILENAME_LEN  4096
-#endif  /* NVD_MAX_FILENAME_LEN */
+#define NVD_MAX_FILENAME_LEN 4096
+#endif /* NVD_MAX_FILENAME_LEN */
 
 const char *nvd_open_file_dialog_win32(const char *title, const char *message) {
         OPENFILENAME ofn;
@@ -40,19 +41,19 @@ const char *nvd_open_file_dialog_win32(const char *title, const char *message) {
         ofn.lpstrFile = file;
         ofn.lpstrFile[0] = '\0';
         ofn.nMaxFile = sizeof(file) - 1; /* NULL byte manually set */
-        
+
         ofn.lpstrFilter = "";
         ofn.nFilterIndex = 1;
         ofn.lpstrFileTitle = NULL;
-        
+
         ofn.nMaxFileTitle = 0;
         ofn.lpstrInitialDir = NULL;
         ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-        
+
         file[NVD_MAX_FILENAME_LEN] = '\0';
         GetOpenFileName(&ofn);
 
-        char* ptr = ofn.lpstrFile;
+        char *ptr = ofn.lpstrFile;
         return ptr;
 }
 
