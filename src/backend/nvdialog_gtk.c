@@ -30,7 +30,7 @@
 #include <string.h>
 
 #define NVD_CHECK_GTK_INIT                                                     \
-        if (gtk_init_check(NULL, NULL)) {                                      \
+        if (!gtk_init_check(NULL, NULL)) {                                      \
                 nvd_set_error(NVD_NOT_INITIALIZED);                            \
                 nvd_print(nvd_stringify_error(nvd_get_error()));               \
                 return NULL;                                                   \
