@@ -31,12 +31,14 @@
 #include <stdio.h>
 #include <string.h>
 
+#define NVD_PRINT_CURRENT_ERROR nvd_print(nvd_stringify_error(nvd_get_error()))
+
 /* Formats an error message to print to stderr / stdout */
 NVD_INTERNAL_FUNCTION const char *nvd_fmt_error_message(const char *fmt);
 
 /* Sets the error code of the library */
-NVD_INTERNAL_FUNCTION NVD_FORCE_INLINE void nvd_set_error(NvdError error);
+NVD_INTERNAL_FUNCTION void nvd_set_error(NvdError error);
 
 /* Prints the error message given to stdout */
 void nvd_print(const char *msg);
-#endif  /* __nvd_error_h__ */
+#endif /* __nvd_error_h__ */
