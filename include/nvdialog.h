@@ -54,6 +54,18 @@ typedef enum {
         NVD_DIALOG_QUESTION,
 } NvdDialogType;
 
+/** @brief The enumerator containing most
+   errors the library can handle. */
+typedef enum {
+        NVD_NO_ERROR = 0,
+        NVD_NO_DISPLAY = 0xff,
+        NVD_INVALID_PARAM,
+        NVD_NOT_INITIALIZED,
+        NVD_STRING_EMPTY,
+        NVD_OUT_OF_MEMORY,
+        NVD_INTERNAL_ERROR,
+} NvdError;
+
 /**
  * @brief A struct that identifies a version of nvdialog.
  * This struct is returned by nvd_get_version().
@@ -108,5 +120,22 @@ void nvd_show_dialog(NvdDialogBox *dialog);
  */
 const char *nvd_open_file_dialog_new(const char *title,
                                      const char *file_extensions);
+
+/**
+ * @brief Returns the current error code of the library.
+ * The error code has to be manually be transformed into a string
+ * using nvd_stringify_error. Else, use the NvdError enum to check for
+ * the error manually.
+ * @returns The error code as a uint32_t.
+ */
+uint32_t nvd_get_error(void);
+
+/**
+ * @brief Transforms an error code into a string representation, that can be
+ * used to print errors to the console. Recommended: Enable automatic logging of
+ * the library's errors instead of manually logging them yourself.
+ * @returns The string representation of the error, or NULL on failure.
+ */
+const char *nvd_stringify_error(NvdError err);
 
 #endif /* __nvdialog_h__ */
