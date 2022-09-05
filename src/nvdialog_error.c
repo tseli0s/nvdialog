@@ -22,7 +22,7 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvd_error.h"
+#include "nvdialog_error.h"
 #include <stdio.h>
 
 #define MAXBUF 4096
