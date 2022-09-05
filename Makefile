@@ -6,12 +6,12 @@
 CC=gcc
 SRC=src/*.c src/backend/nvdialog_gtk.c
 PUBHEADER=include/nvdialog.h
-CFLAGS='-Wall -Wextra -O3 -s -Wno-unused-parameter -fstack-protector-all -fPIC -shared'
+CFLAGS=-Wall -Wextra -O3 -s -Wno-unused-parameter -fstack-protector-all -fPIC -shared
 OUTFILE=libnvdialog.so
-EXFLAGS=`pkgconfig --libs --cflags gtk+-3.0`
+EXFLAGS=`pkg-config --libs --cflags gtk+-3.0`
 
 all: $(SRC) $(PUBHEADER)
-	@$(CC) $(SRC) -o $(OUTFILE) $(CFLAGS) $(EXFLAGS)
+	$(CC) $(SRC) -o $(OUTFILE) $(CFLAGS) $(EXFLAGS)
 	@echo "Finished, run 'make install' as root to install the library."
 
 install: $(OUTFILE) $(PUBHEADER)
