@@ -23,7 +23,13 @@
  */
 
 #ifndef __nvdialog_h__
-#define __nvdialog_h__
+#define __nvdialog_h__ 1
+
+#pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 #define NVDIALOG_VERSION_MAJOR 0
 #define NVDIALOG_VERSION_MINOR 1
@@ -137,5 +143,9 @@ uint32_t nvd_get_error(void);
  * @returns The string representation of the error, or NULL on failure.
  */
 const char *nvd_stringify_error(NvdError err);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __nvdialog_h__ */
