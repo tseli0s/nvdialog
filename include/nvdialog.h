@@ -22,9 +22,6 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef __nvdialog_h__
-#define __nvdialog_h__ 1
-
 #pragma once
 
 #ifdef __cplusplus
@@ -147,5 +144,3 @@ const char *nvd_stringify_error(NvdError err);
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-
-#endif /* __nvdialog_h__ */
