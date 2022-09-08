@@ -15,8 +15,6 @@ int main(int argc, char **argv)
 
         if (filename != NULL)
         {
-                printf("%s", NULL);
-                printf("%s", filename);
                 nvd_dialog_box_new(
                         "File Selected",
                         filename,
