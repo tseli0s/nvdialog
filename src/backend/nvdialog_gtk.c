@@ -57,22 +57,12 @@ const char *nvd_open_file_dialog_gtk(const char *title,
         if (result == GTK_RESPONSE_ACCEPT) {
                 GtkFileChooser *chooser = GTK_FILE_CHOOSER(dialog);
                 char *filename = gtk_file_chooser_get_filename(chooser);
-                /* For compatibility reasons, we need the filename in UTF-8
-                 * format. */
-                g_filename_to_utf8(filename, strlen(filename), NULL, NULL,
-                                   NULL);
                 /* The dialog should be destroyed at this stage. */
                 gtk_widget_destroy(dialog);
 
-                /* Copying the value to the stack. */
-                char __buffer[NVDIALOG_MAXBUF];
-
                 printf("Filename: %s", filename);
-                /* Avoiding a warning. */
-                char *buffer = __buffer;
-                return buffer;
-        } else if (result == GTK_RESPONSE_CANCEL ||
-                   result == GTK_RESPONSE_CLOSE) {
+                return strdup(filename);
+        } else if (result == GTK_RESPONSE_CANCEL) {
                 gtk_main_quit();
                 return NULL;
         }
