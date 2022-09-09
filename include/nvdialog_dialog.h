@@ -38,7 +38,7 @@
  * @return The NvdReply on success, else -1 -- Check @ref nvd_get_error() for more.
  * @since  v0.1.1
  */
-int nvd_dialog_question_new(const char* title,
+NvdReply nvd_dialog_question_new(const char* title,
                                  const char *question,
                                  NvdQuestionButton button);
 
