@@ -21,34 +21,26 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-
+ 
 #pragma once
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-#include "nvdialog_types.h"
-
-#define NVDIALOG_VERSION_MAJOR 0
-#define NVDIALOG_VERSION_MINOR 1
-#define NVDIALOG_VERSION_PATCH 0
+#ifndef __nvdialog_error_h__
+#define __nvdialog_error_h__ 1
 
 /**
- * @brief Returns the version of nvdialog currently linked with.
- * For a compile time alternative implementation see the
- * NVDIALOG_VERSION_MAJOR, NVDIALOG_VERSION_MINOR and NVDIALOG_VERSION_PATCH
- * constants.
+ * @brief Returns the current error code of the library.
+ * The error code has to be manually be transformed into a string
+ * using nvd_stringify_error. Else, use the NvdError enum to check for
+ * the error manually.
+ * @returns The error code as a uint32_t.
  */
-NvdVersion nvd_get_version();
+int nvd_get_error(void);
 
-#ifndef __nvdialog_core_included__
-#include "nvdialog_core.h"
-#include "nvdialog_dialog.h"
-#include "nvdialog_types.h"
-#include "nvdialog_error.h"
-#endif  /* __nvdialog_core_included__ */
+/**
+ * @brief Transforms an error code into a string representation, that can be
+ * used to print errors to the console. Recommended: Enable automatic logging of
+ * the library's errors instead of manually logging them yourself.
+ * @returns The string representation of the error, or NULL on failure.
+ */
+const char *nvd_stringify_error(NvdError err);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+#endif /* __nvdialog_error_h__ */

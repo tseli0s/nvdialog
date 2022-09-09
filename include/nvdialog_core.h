@@ -24,31 +24,16 @@
 
 #pragma once
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-#include "nvdialog_types.h"
-
-#define NVDIALOG_VERSION_MAJOR 0
-#define NVDIALOG_VERSION_MINOR 1
-#define NVDIALOG_VERSION_PATCH 0
+#ifndef __nvdialog_core_h__
+#define __nvdialog_core_h__ 1
 
 /**
- * @brief Returns the version of nvdialog currently linked with.
- * For a compile time alternative implementation see the
- * NVDIALOG_VERSION_MAJOR, NVDIALOG_VERSION_MINOR and NVDIALOG_VERSION_PATCH
- * constants.
+ * @brief Initializes the library.
+ * This function is only required for compatibility with every platform. You
+ * can safely ignore this function if you only target a specific platform.
+ * @param program The argv[0] of your program.
+ * @return 0 on success, else a negative error code indicating failure.
  */
-NvdVersion nvd_get_version();
+int nvd_init(char *program);
 
-#ifndef __nvdialog_core_included__
-#include "nvdialog_core.h"
-#include "nvdialog_dialog.h"
-#include "nvdialog_types.h"
-#include "nvdialog_error.h"
-#endif  /* __nvdialog_core_included__ */
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+#endif  /* __nvdialog_core_h__ */
