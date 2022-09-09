@@ -42,4 +42,11 @@ const char *nvd_open_file_dialog_gtk(const char *title,
 void *nvd_create_gtk_dialog(const char *title, const char *message,
                             NvdDialogType type);
 
+/*
+ * Creates a question dialog window using Gtk3.
+ * NOTE: This function is experimental.
+ */
+NvdReply nvd_question_gtk(const char *title,
+                          const char *question,
+                          NvdQuestionButton button);
 #endif /* __nvdialog_gtk_h__ */
