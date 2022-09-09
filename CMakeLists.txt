@@ -23,7 +23,7 @@ endif()
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-parameter -Wall -Wextra -O3")
 
 set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_adw.c src/backend/nvdialog_gtk.c src/nvdialog_main.c)
-
+set(NVD_HEADERS include/nvdialog_core.h include/nvdialog_types.h include/nvdialog_error.h include/nvdialog.h)
 # If compiling for Windows, only use Win32 API.
 # Otherwise, use the standard backends.
 if (WIN32 OR WIN32_TARGET)
@@ -54,4 +54,5 @@ include(GNUInstallDirs)
 # so until we resolve this the library and the header have to
 # be manually installed.
 install(TARGETS nvdialog LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(FILES include/nvdialog.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/ )
+install(FILES ${NVD_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/)
