@@ -22,7 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-#pragma once
+#ifndef __nvdialog_h__
+#define __nvdialog_h__
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,3 +53,5 @@ NvdVersion nvd_get_version();
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
+
+#endif /* __nvdialog_h__ */
