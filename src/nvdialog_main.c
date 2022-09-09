@@ -45,7 +45,7 @@ struct NvdDialogBox {
         NvdDialogType type;
 };
 
-uint32_t nvd_init(char *program) {
+int nvd_init(char *program) {
         int __argc__ = 1;
         char **__argv__ = {
             &program,
@@ -75,9 +75,21 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                                  NvdDialogType type) {
 #if !defined(_WIN32)
         NvdDialogBox *dialog = nvd_create_gtk_dialog(title, message, type);
-        assert(dialog != NULL);
+        if (!dialog) nvd_set_error(NVD_INTERNAL_ERROR);
         return dialog;
 #else
         nvd_create_win32_dialog(title, message, type);
 #endif /* _WIN32 */
+}
+
+int nvd_dialog_question_new(const char* title,
+                                 const char *question,
+                                 NvdQuestionButton button)
+{
+        #if !defined(_WIN32)
+        nvd_question_gtk(title, question, button);
+        #else
+        nvd_question_win32(title, question, button);
+        #endif /* _WIN32 */
+        return -1;
 }
