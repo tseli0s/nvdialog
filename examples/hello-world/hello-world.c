@@ -1,4 +1,4 @@
-#include <nvdialog.h>
+#include <nvdialog/nvdialog.h>
 #include <stdio.h>
 
 int main(int argc, char **argv)
@@ -14,6 +14,5 @@ int main(int argc, char **argv)
                 ,
                 NVD_DIALOG_SIMPLE
         );
-        
         return argc - 1;
 }
