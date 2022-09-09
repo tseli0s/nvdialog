@@ -82,12 +82,12 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
 #endif /* _WIN32 */
 }
 
-int nvd_dialog_question_new(const char* title,
+NvdReply nvd_dialog_question_new(const char* title,
                                  const char *question,
                                  NvdQuestionButton button)
 {
         #if !defined(_WIN32)
-        nvd_question_gtk(title, question, button);
+        return nvd_question_gtk(title, question, button);
         #else
         nvd_question_win32(title, question, button);
         #endif /* _WIN32 */
