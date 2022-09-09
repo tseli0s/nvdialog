@@ -5,3 +5,7 @@ rust/nvdialog-rs/target/
 rust/nvdialog-rs/Cargo.lock
 rust/nvdialog-rs/examples/hello-world/target
 testing/
+
+# The documentation will be uploaded on the website anyways,
+# so no point on storing it here.
+docs/
