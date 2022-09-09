@@ -52,27 +52,28 @@
 #define NVDIALOG_MAXBUF 4096
 #endif /* NVDIALOG_MAXBUF */
 
-static NvdReply __dialog_reply = -1; /* By default invalid. */
-
 /*
  * A few callbacks for the response buttons.
  * TODO: Perhaps make this entire code better,
  * by passing a pointer argument to a local variable instead?
  */
 
-static inline void ok_clicked(void)
+static inline void ok_clicked(NvdReply *store)
 {
-        __dialog_reply = NVD_REPLY_OK;
+        *store = NVD_REPLY_OK;
+        gtk_main_quit();
 }
 
-static inline void cancel_clicked(void)
+static inline void cancel_clicked(NvdReply *store)
 {
-        __dialog_reply = NVD_REPLY_CANCEL;
+        *store = NVD_REPLY_CANCEL;
+        gtk_main_quit();
 }
 
-static inline void no_clicked(void)
+static inline void no_clicked(NvdReply *store)
 {
-        __dialog_reply = NVD_REPLY_NO;
+        *store = NVD_REPLY_NO;
+        gtk_main_quit();
 }
 
 /*
@@ -180,8 +181,9 @@ NvdReply nvd_question_gtk(const char *title,
 
         const char* icon_name = "dialog-question";
         GtkWidget*  dialog, *grid, *button_yes, *button_no, *button_cancel, *text, *icon;
+        NvdReply rep = 0x0;
 
-        dialog = gtk_dialog_new();
+        dialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
         gtk_window_set_title(GTK_WINDOW (dialog), title);
         text   = gtk_label_new(question);
         grid   = gtk_grid_new();
@@ -189,7 +191,7 @@ NvdReply nvd_question_gtk(const char *title,
         icon = gtk_image_new_from_icon_name(icon_name, GTK_ICON_SIZE_DIALOG);
         button_yes = gtk_button_new_with_label("Yes");
         g_signal_connect_swapped(button_yes, "clicked",
-                                 G_CALLBACK(ok_clicked), NULL);
+                                 G_CALLBACK(ok_clicked), &rep);
 
         button_no     = NULL;
         button_cancel = NULL;
@@ -224,18 +226,18 @@ NvdReply nvd_question_gtk(const char *title,
         {
                 gtk_grid_attach(GTK_GRID (grid), button_no, 1, 1, 1, 1);
                 g_signal_connect_swapped(button_no, "clicked",
-                                 G_CALLBACK(no_clicked), NULL);
+                                 G_CALLBACK(no_clicked), &rep);
         }
         if (button_cancel)
         {
                 gtk_grid_attach(GTK_GRID (grid), button_cancel, 2, 1, 1, 1);
                 g_signal_connect_swapped(button_cancel, "clicked",
-                                 G_CALLBACK(cancel_clicked), NULL);
+                                 G_CALLBACK(cancel_clicked), &rep);
         }
 
         gtk_grid_set_row_spacing(GTK_GRID(grid), 12);
 
         gtk_widget_show_all(dialog);
         gtk_main();
-        return __dialog_reply;
+        return rep;
 }
