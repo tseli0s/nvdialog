@@ -41,7 +41,7 @@ NVD_INTERNAL_FUNCTION const char *nvd_fmt_error_message(const char *fmt) {
         char buffer[MAXBUF];
         sprintf(buffer, "%s %s", TERMINAL_PREFIX, fmt);
         char *ptr = buffer;
-        return ptr;
+        return strdup(ptr); // Remember to free it!
 }
 
 NVD_INTERNAL_FUNCTION NVD_FORCE_INLINE void nvd_set_error(NvdError error) {
@@ -49,7 +49,7 @@ NVD_INTERNAL_FUNCTION NVD_FORCE_INLINE void nvd_set_error(NvdError error) {
         *ptr = error;
 }
 
-NVD_FORCE_INLINE uint32_t nvd_get_error(void) { return ___error; }
+NVD_FORCE_INLINE int nvd_get_error(void) { return ___error; }
 
 const char *nvd_stringify_error(NvdError err) {
         char *error = NULL;
