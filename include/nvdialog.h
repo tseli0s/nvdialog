@@ -46,9 +46,9 @@ NvdVersion nvd_get_version();
 #ifndef __nvdialog_core_included__
 #include "nvdialog_core.h"
 #include "nvdialog_dialog.h"
-#include "nvdialog_types.h"
 #include "nvdialog_error.h"
-#endif  /* __nvdialog_core_included__ */
+#include "nvdialog_types.h"
+#endif /* __nvdialog_core_included__ */
 
 #ifdef __cplusplus
 }

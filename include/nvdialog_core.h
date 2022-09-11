@@ -36,4 +36,4 @@
  */
 int nvd_init(char *program);
 
-#endif  /* __nvdialog_core_h__ */
+#endif /* __nvdialog_core_h__ */

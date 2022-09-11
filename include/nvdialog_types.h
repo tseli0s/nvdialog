@@ -61,7 +61,7 @@ typedef enum {
 
 /**
  * @brief Enumerator containing the possible arguments for
- * nvd_dialog_question_new(). 
+ * nvd_dialog_question_new().
  */
 typedef enum {
         NVD_YES_NO = 0x04,
@@ -73,12 +73,7 @@ typedef enum {
  * @brief This enum is returned as the reply of a question widget.
  * Usually you should use this instead of raw integers.
  */
-typedef enum {
-        NVD_REPLY_OK = 0x04,
-        NVD_REPLY_CANCEL,
-        NVD_REPLY_NO
-} NvdReply;
-
+typedef enum { NVD_REPLY_OK = 0x04, NVD_REPLY_CANCEL, NVD_REPLY_NO } NvdReply;
 
 /**
  * @brief A struct that identifies a version of nvdialog.
@@ -91,4 +86,4 @@ typedef struct {
         char *string;
 } NvdVersion;
 
-#endif  /* __nvdialog_types_h__ */
+#endif /* __nvdialog_types_h__ */

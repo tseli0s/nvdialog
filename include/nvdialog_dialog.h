@@ -35,11 +35,11 @@
  * - Yes / No
  * - Yes / No / Cancel
  * - Yes / Cancel
- * @return The NvdReply on success, else -1 -- Check @ref nvd_get_error() for more.
+ * @return The NvdReply on success, else -1 -- Check @ref nvd_get_error() for
+ * more.
  * @since  v0.1.1
  */
-NvdReply nvd_dialog_question_new(const char* title,
-                                 const char *question,
+NvdReply nvd_dialog_question_new(const char *title, const char *question,
                                  NvdQuestionButton button);
 
 /**
@@ -70,7 +70,6 @@ const char *nvd_open_file_dialog_new(const char *title,
 NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                                  NvdDialogType type);
 
-
 /**
  * @brief Shows a dialog to the system shell.
  * @param dialog The dialog to show.
@@ -78,4 +77,4 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
  */
 void nvd_show_dialog(NvdDialogBox *dialog);
 
-#endif  /* __nvdialog_dialog_h__ */
+#endif /* __nvdialog_dialog_h__ */
