@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.18)
 project(libnvdialog LANGUAGES C VERSION 0.1.1 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
 option(WIN32_TARGET "Build the library for Windows usage. Requires x86_64-w64-mingw32." OFF)
+option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental.")
 
 # On GNU/Linux, by default CMake installs the libraries and headers under
 # /usr/local. There are two problems with this approach:
@@ -22,7 +23,13 @@ endif()
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-parameter -Wall -Wextra -O3")
 
-set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_adw.c src/backend/nvdialog_gtk.c src/nvdialog_main.c)
+if (NOT NVD_USE_GTK4)
+        set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_gtk.c src/nvdialog_main.c)
+else()
+        add_compile_definitions(NVD_USE_GTK4)
+        message("-- NOTE: Compiling NvDialog using the experimental Gtk4+Libadwaita backend.")
+        set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_adw.c src/nvdialog_main.c)
+endif()
 set(NVD_HEADERS include/nvdialog_core.h include/nvdialog_types.h include/nvdialog_error.h include/nvdialog.h)
 # If compiling for Windows, only use Win32 API.
 # Otherwise, use the standard backends.
@@ -34,7 +41,11 @@ else()
         add_library(nvdialog SHARED ${NVD_SOURCES})
         find_package(PkgConfig)
         if (PKG_CONFIG_FOUND)
-                pkg_check_modules(GTK "gtk+-3.0")
+                if (NVD_USE_GTK4)
+                        pkg_check_modules(GTK "libadwaita-1") # Well actually, libadwaita isn't Gtk4, but who cares anyways :P
+                else(NVD_USE_GTK4)
+                        pkg_check_modules(GTK "gtk+-3.0")
+                endif(NVD_USE_GTK4)
                 if (GTK_FOUND)    
                         target_link_libraries(nvdialog ${GTK_LIBRARIES})
                         add_definitions(${GTK_CFLAGS} ${GTK_CFLAGS_OTHER})
