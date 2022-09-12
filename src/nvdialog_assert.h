@@ -49,11 +49,11 @@ nvd_print_assert(const char *msg, ...) {
 
 #define NVD_ASSERT(eq)                                                         \
         do {                                                                   \
-                if (!(eq)) {                                                    \
+                if (!(eq)) {                                                   \
                         nvd_print_assert(                                      \
-                            "Assertion failure: %s\n  Line: %d\n  Filename: "     \
+                            "Assertion failure: %s\n  Line: %d\n  Filename: "  \
                             "%s\n  Function: %s\n",                            \
-                            #eq, __LINE__, __FILE__, __func__);                 \
+                            #eq, __LINE__, __FILE__, __func__);                \
                 }                                                              \
         } while (0)
 
