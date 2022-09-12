@@ -48,8 +48,12 @@ struct _NvdDialogBox {
         NvdDialogType type;
 };
 
-struct _NvdContext {
+struct NvdContext {
+        #ifdef NVD_USE_GTK4
         AdwApplication *application;
+        #else
+        GtkApplication *application;
+        #endif /* NVD_USE_GTK4 */
         bool initialized, ready;
         const char *domain;
         uint32_t flags;
@@ -61,7 +65,7 @@ struct _NvdContext {
  */
 static char *nvd_domain_name = "io.androgr.libnvdialog";
 
-inline int nvd_set_domain_name(char *domain) { nvd_domain_name = domain; }
+inline void nvd_set_domain_name(char *domain) { nvd_domain_name = domain; }
 
 NvdContext *nvd_bind_context(void) {
         return NULL; /* Currently unimplemented, awaiting for libadwaita
