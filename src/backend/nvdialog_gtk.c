@@ -36,17 +36,19 @@
               */
 #endif       /* NVD_PADDING_SIZE */
 
+#define nvd_init_check gtk_init_check /* For better error messages */
+
 #define NVD_CHECK_GTK_INIT                                                     \
         if (!gtk_init_check(NULL, NULL)) {                                     \
                 nvd_set_error(NVD_NOT_INITIALIZED);                            \
-                nvd_print(nvd_stringify_error(nvd_get_error()));               \
+                nvd_error_message("Backend couldn't be initialized.");         \
                 return NULL;                                                   \
         }
 
 #define NVD_CHECK_GTK_INIT_INT                                                 \
         if (!gtk_init_check(NULL, NULL)) {                                     \
                 nvd_set_error(NVD_NOT_INITIALIZED);                            \
-                nvd_print(nvd_stringify_error(nvd_get_error()));               \
+                nvd_error_message("Backend couldn't be initialized.");         \
                 return -1;                                                     \
         }
 
