@@ -21,7 +21,7 @@ if(WIN32_TARGET)
         set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
 endif()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-parameter -Wall -Wextra -O3")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-parameter -Wall -Wextra -O0 -g3")
 
 if (NOT NVD_USE_GTK4)
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_gtk.c src/nvdialog_main.c)
