@@ -31,6 +31,14 @@
 #include <stdio.h>
 #include <string.h>
 
+#if !defined(_WIN32) || defined(linux) || defined(__gnu_linux__)
+#define TERMINAL_PREFIX "\x1B[96m\x1b[1mlibnvdialog:\x1b[0m"
+
+#else
+
+#define TERMINAL_PREFIX "libnvdialog:"
+#endif /* UNIX_PREFIX */
+
 #define NVD_PRINT_CURRENT_ERROR nvd_print(nvd_stringify_error(nvd_get_error()))
 
 /* Formats an error message to print to stderr / stdout */
