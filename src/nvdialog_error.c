@@ -26,13 +26,6 @@
 #include <stdio.h>
 
 #define MAXBUF 4096
-#if !defined(_WIN32) || defined(linux) || defined(__gnu_linux__)
-#define TERMINAL_PREFIX "\x1B[97m\x1b[1mlibnvdialog:"
-
-#else
-
-#define TERMINAL_PREFIX "libnvdialog:"
-#endif /* UNIX_PREFIX */
 
 static NvdError ___error = NVD_NO_ERROR;
 
