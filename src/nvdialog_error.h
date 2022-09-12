@@ -49,4 +49,10 @@ NVD_INTERNAL_FUNCTION void nvd_set_error(NvdError error);
 
 /* Prints the error message given to stdout */
 void nvd_print(const char *msg);
+
+/* 
+ * A function that allows printing an error message to stderr, with support for variadic arguments,
+ * proper formatting and easier integration with the library.
+ */
+void nvd_error_message(const char* fmt, ...);
 #endif /* __nvd_error_h__ */

@@ -23,6 +23,8 @@
  */
 
 #include "nvdialog_error.h"
+#include "nvdialog_macros.h"
+#include <stdarg.h>
 #include <stdio.h>
 
 #define MAXBUF 4096
@@ -75,4 +77,19 @@ const char *nvd_stringify_error(NvdError err) {
         return error;
 }
 
-void nvd_print(const char *msg) { fprintf(stderr, "%s", msg); }
+void nvd_error_message(const char* fmt, ...)
+{
+        va_list args;
+        va_start(args, fmt);
+
+        char buffer[NVD_BUFFER_SIZE];
+
+        sprintf(buffer, "%s %s", TERMINAL_PREFIX, fmt);
+        vfprintf(stderr, buffer, args);
+
+        va_end(args);
+        fflush(stderr);
+}
+
+void NVD_DEPRECATED("This function has been deprecated in favor of nvd_error_message. Please use that instead of this function.")
+nvd_print(const char *msg) { fprintf(stderr, "%s", msg); }
