@@ -30,10 +30,11 @@
 #include <string.h>
 
 #ifndef NVD_PADDING_SIZE
-#define NVD_PADDING_SIZE (12)  /* TODO: Make this
-                                changeable at compile time
-                                */
-#endif  /* NVD_PADDING_SIZE */
+#define NVD_PADDING_SIZE                                                       \
+        (12) /* TODO: Make this                                                \
+              changeable at compile time                                       \
+              */
+#endif       /* NVD_PADDING_SIZE */
 
 #define NVD_CHECK_GTK_INIT                                                     \
         if (!gtk_init_check(NULL, NULL)) {                                     \
@@ -42,7 +43,8 @@
                 return NULL;                                                   \
         }
 
-#define NVD_CHECK_GTK_INIT_INT if (!gtk_init_check(NULL, NULL)) {              \
+#define NVD_CHECK_GTK_INIT_INT                                                 \
+        if (!gtk_init_check(NULL, NULL)) {                                     \
                 nvd_set_error(NVD_NOT_INITIALIZED);                            \
                 nvd_print(nvd_stringify_error(nvd_get_error()));               \
                 return -1;                                                     \
@@ -58,20 +60,17 @@
  * by passing a pointer argument to a local variable instead?
  */
 
-static inline void ok_clicked(NvdReply *store)
-{
+static inline void ok_clicked(NvdReply *store) {
         *store = NVD_REPLY_OK;
         gtk_main_quit();
 }
 
-static inline void cancel_clicked(NvdReply *store)
-{
+static inline void cancel_clicked(NvdReply *store) {
         *store = NVD_REPLY_CANCEL;
         gtk_main_quit();
 }
 
-static inline void no_clicked(NvdReply *store)
-{
+static inline void no_clicked(NvdReply *store) {
         *store = NVD_REPLY_NO;
         gtk_main_quit();
 }
@@ -79,9 +78,8 @@ static inline void no_clicked(NvdReply *store)
 /*
  * Sets equal padding for a Gtk widget.
  * Basically a shortcut for gtk_widget_set_margin_*
-*/
-static inline void nvd_set_margin(GtkWidget *widget)
-{
+ */
+static inline void nvd_set_margin(GtkWidget *widget) {
         gtk_widget_set_margin_top(widget, NVD_PADDING_SIZE);
         gtk_widget_set_margin_bottom(widget, NVD_PADDING_SIZE);
         gtk_widget_set_margin_start(widget, NVD_PADDING_SIZE);
@@ -173,66 +171,62 @@ void *nvd_create_gtk_dialog(const char *title, const char *message,
         return dialog;
 }
 
-NvdReply nvd_question_gtk(const char *title,
-                          const char *question,
-                          NvdQuestionButton button)
-{
+NvdReply nvd_question_gtk(const char *title, const char *question,
+                          NvdQuestionButton button) {
         NVD_CHECK_GTK_INIT_INT;
 
-        const char* icon_name = "dialog-question";
-        GtkWidget*  dialog, *grid, *button_yes, *button_no, *button_cancel, *text, *icon;
+        const char *icon_name = "dialog-question";
+        GtkWidget *dialog, *grid, *button_yes, *button_no, *button_cancel,
+            *text, *icon;
         NvdReply rep = 0x0;
 
         dialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-        gtk_window_set_title(GTK_WINDOW (dialog), title);
-        text   = gtk_label_new(question);
-        grid   = gtk_grid_new();
-        gtk_container_add (GTK_CONTAINER (dialog), grid);
+        gtk_window_set_title(GTK_WINDOW(dialog), title);
+        text = gtk_label_new(question);
+        grid = gtk_grid_new();
+        gtk_container_add(GTK_CONTAINER(dialog), grid);
         icon = gtk_image_new_from_icon_name(icon_name, GTK_ICON_SIZE_DIALOG);
         button_yes = gtk_button_new_with_label("Yes");
-        g_signal_connect_swapped(button_yes, "clicked",
-                                 G_CALLBACK(ok_clicked), &rep);
+        g_signal_connect_swapped(button_yes, "clicked", G_CALLBACK(ok_clicked),
+                                 &rep);
 
-        button_no     = NULL;
+        button_no = NULL;
         button_cancel = NULL;
 
-        switch (button)
-        {
-                case NVD_YES_NO:
+        switch (button) {
+        case NVD_YES_NO:
                 button_no = gtk_button_new_with_label("No");
                 /* Yes already created, skipping. */
                 break;
 
-                case NVD_YES_NO_CANCEL:
+        case NVD_YES_NO_CANCEL:
                 button_cancel = gtk_button_new_with_label("Cancel");
                 button_no = gtk_button_new_with_label("No");
                 break;
 
-                case NVD_YES_CANCEL:
+        case NVD_YES_CANCEL:
                 button_cancel = gtk_button_new_with_label("Cancel");
         }
 
-        gtk_grid_attach(GTK_GRID (grid), icon, 0, 0, 1, 1);
-        gtk_grid_attach(GTK_GRID (grid), text, 1, 0, 1, 1);
-        gtk_grid_attach(GTK_GRID (grid), button_yes, 0, 1, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), icon, 0, 0, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), text, 1, 0, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), button_yes, 0, 1, 1, 1);
 
         nvd_set_margin(button_yes);
-        nvd_set_margin(button_no );
+        nvd_set_margin(button_no);
         nvd_set_margin(button_cancel);
         nvd_set_margin(icon);
         nvd_set_margin(text);
 
-        if (button_no)
-        {
-                gtk_grid_attach(GTK_GRID (grid), button_no, 1, 1, 1, 1);
+        if (button_no) {
+                gtk_grid_attach(GTK_GRID(grid), button_no, 1, 1, 1, 1);
                 g_signal_connect_swapped(button_no, "clicked",
-                                 G_CALLBACK(no_clicked), &rep);
+                                         G_CALLBACK(no_clicked), &rep);
         }
-        if (button_cancel)
-        {
-                gtk_grid_attach(GTK_GRID (grid), button_cancel, 2, 1, 1, 1);
+        if (button_cancel) {
+                gtk_grid_attach(GTK_GRID(grid), button_cancel, 2, 1, 1, 1);
                 g_signal_connect_swapped(button_cancel, "clicked",
-                                 G_CALLBACK(cancel_clicked), &rep);
+                                         G_CALLBACK(cancel_clicked), &rep);
         }
 
         gtk_grid_set_row_spacing(GTK_GRID(grid), 12);
