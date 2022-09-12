@@ -36,7 +36,6 @@
 #endif /* _WIN32 */
 
 #include "nvdialog.h"
-#include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -76,7 +75,7 @@ int nvd_init(char *program) {
 #ifndef _WIN32
         if (!getenv("DISPLAY")) {
                 nvd_set_error(NVD_NO_DISPLAY);
-                NVD_PRINT_CURRENT_ERROR;
+                nvd_error_message("%s", nvd_stringify_error(NVD_NO_DISPLAY));
                 return -1;
         }
 /* Apparently in Gtk4 the gtk_init function doesn't require any arguments. */
