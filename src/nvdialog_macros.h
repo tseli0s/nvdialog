@@ -50,7 +50,6 @@
 #ifndef NVD_BUFFER_SIZE
 #define NVD_BUFFER_SIZE 4096
 #endif /* NVD_BUFFER_SIZE */
-
 #endif /* __clang__ */
 
 #endif /* __nvdialog_macros_h__ */
