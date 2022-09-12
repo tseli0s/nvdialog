@@ -1,7 +1,7 @@
 
 <div align="center">
         <h1>libnvdialog</h1>
-        <img src="assets/logo.svg" width="256">
+        <img src="assets/logo-new.svg" width="244">
         <br>
         <h5>A cross-platform dialog library.</h5>
 </div>
