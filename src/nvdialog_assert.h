@@ -30,6 +30,7 @@
 #include "nvdialog_macros.h"
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 static void __attribute__((format(printf, 1, 2)))
 nvd_print_assert(const char *msg, ...) {
@@ -38,7 +39,7 @@ nvd_print_assert(const char *msg, ...) {
 
         char buffer[NVD_BUFFER_SIZE * 16]; /* I know. Huge buffer. But we could
                                               be dealing with worse things. */
-        sprintf(buffer, "%s %s", TERMINAL_PREFIX, msg);
+        sprintf(buffer, "%s \x1B[95m%s", TERMINAL_PREFIX, msg);
         vfprintf(stderr, buffer, args);
 
         va_end(args);
@@ -55,6 +56,19 @@ nvd_print_assert(const char *msg, ...) {
                             "%s\n  Function: %s\n",                            \
                             #eq, __LINE__, __FILE__, __func__);                \
                 }                                                              \
+        } while (0)
+
+/* This is supposed to be called only when the library cannot be used anymore.
+ */
+#define NVD_ASSERT_FATAL(eq)                                                   \
+        do {                                                                   \
+                if (!(eq)) {                                                   \
+                        nvd_print_assert("**CRITICAL ASSERTION FAILURE**: "    \
+                                         "%s\n  Line: %d\n  Filename: "        \
+                                         "%s\n  Function: %s\n",               \
+                                         #eq, __LINE__, __FILE__, __func__);   \
+                }                                                              \
+                abort();                                                       \
         } while (0)
 
 #endif /* __nvdialog_assert_h__ */
