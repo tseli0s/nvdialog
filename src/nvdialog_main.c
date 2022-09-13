@@ -24,6 +24,7 @@
 
 #include "nvdialog_assert.h"
 #include "nvdialog_error.h"
+#include "nvdialog_macros.h"
 #include <stdint.h>
 #include <stdio.h>
 #ifndef _WIN32
@@ -63,6 +64,7 @@ struct NvdContext {
  * This variable is modified from nvd_set_domain_name().
  */
 static char *nvd_domain_name = "io.androgr.libnvdialog";
+static char *nvd_argv_0 = NULL;
 
 inline void nvd_set_domain_name(char *domain) {
         NVD_ASSERT(domain != NULL);
@@ -79,19 +81,21 @@ NvdContext *nvd_bind_context(void) {
 #endif /* NVD_USE_GTK4 */
 }
 
-void nvd_delete_context(NvdContext *ctx)
-{
-        #if defined (NVD_USE_GTK4)
+void nvd_delete_context(NvdContext *ctx) {
+#if defined(NVD_USE_GTK4)
         nvd_delete_context_adw(ctx);
         return;
-        #else
+#else
         /* TODO: Implement a custom function instead. */
         free(ctx);
         return;
-        #endif /* NVD_USE_GTK4 */
+#endif /* NVD_USE_GTK4 */
 }
 
+const char *nvd_get_argv() { return nvd_argv_0; }
+
 int nvd_init(char *program) {
+        nvd_argv_0 = program;
 #ifndef _WIN32
         if (!getenv("DISPLAY")) {
                 nvd_set_error(NVD_NO_DISPLAY);
