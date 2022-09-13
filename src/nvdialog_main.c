@@ -48,11 +48,11 @@ struct _NvdDialogBox {
 };
 
 struct NvdContext {
-        #ifdef NVD_USE_GTK4
+#ifdef NVD_USE_GTK4
         AdwApplication *application;
-        #else
+#else
         GtkApplication *application;
-        #endif /* NVD_USE_GTK4 */
+#endif /* NVD_USE_GTK4 */
         bool initialized, ready;
         const char *domain;
         uint32_t flags;
@@ -64,11 +64,31 @@ struct NvdContext {
  */
 static char *nvd_domain_name = "io.androgr.libnvdialog";
 
-inline void nvd_set_domain_name(char *domain) { nvd_domain_name = domain; }
+inline void nvd_set_domain_name(char *domain) {
+        NVD_ASSERT(domain != NULL);
+        nvd_domain_name = domain;
+}
+
+inline const char *nvd_get_domain_name(void) { return nvd_domain_name; }
 
 NvdContext *nvd_bind_context(void) {
-        return NULL; /* Currently unimplemented, awaiting for libadwaita
-                        backend. */
+#if defined(NVD_USE_GTK4)
+        return nvd_bind_context_adw();
+#else
+        return NULL; /* Other backends do not support this call. */
+#endif /* NVD_USE_GTK4 */
+}
+
+void nvd_delete_context(NvdContext *ctx)
+{
+        #if defined (NVD_USE_GTK4)
+        nvd_delete_context_adw(ctx);
+        return;
+        #else
+        /* TODO: Implement a custom function instead. */
+        free(ctx);
+        return;
+        #endif /* NVD_USE_GTK4 */
 }
 
 int nvd_init(char *program) {
