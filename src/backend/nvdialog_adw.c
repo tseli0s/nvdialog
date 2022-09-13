@@ -24,6 +24,8 @@
 
 #include "nvdialog_adw.h"
 #include "../nvdialog_macros.h"
+#include "nvdialog_core.h"
+#include "nvdialog_types.h"
 #include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -69,6 +71,27 @@ static void nvd_open_file_adw_response(NvdActivateData *data,
                 data->return_data = (char *)filename;
         }
         gtk_window_destroy(GTK_WINDOW(data->dialog));
+}
+
+NvdContext *nvd_bind_context_adw() {
+        /* Maybe we should just use the stack instead? */
+        NvdContext *ctx = malloc(sizeof(struct _NvdContext));
+        NVD_ASSERT_FATAL(ctx != NULL);
+
+        ctx->domain = nvd_get_domain_name();
+        ctx->application = nvd_create_application_adw(ctx->domain);
+
+        ctx->initialized = true;
+        ctx->flags = NVD_NO_FLAGS;
+        ctx->ready = true;
+
+        return ctx; /* TODO: Potential memory leak here, we need to fix it. */
+}
+
+inline void nvd_delete_context_adw(NvdContext *ctx) {
+        nvd_delete_app(ctx->application);
+        free(ctx);
+        return;
 }
 
 /* INCOMPLETE FUNCTION -- FIXING NEEDED */
