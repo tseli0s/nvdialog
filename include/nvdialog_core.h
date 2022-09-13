@@ -70,4 +70,12 @@ NvdContext *nvd_bind_context(void);
  */
 const char *nvd_get_domain_name(void);
 
+/**
+ * @brief Returns the argv[0] given to nvdialog.
+ * @details This function returns the parameter passed to nvdialog during
+ * nvd_init. It is mainly intended to be used internally.
+ * @return The argv[0] given to nvdialog on success, otherwise NULL.
+ */
+const char *nvd_get_argv(void);
+
 #endif /* __nvdialog_core_h__ */
