@@ -45,6 +45,9 @@ typedef struct _NvdActivateData {
         void *dialog, *return_data;
 } NvdActivateData;
 
+/* A handle to the current context bound. */
+static NvdContext *nvd_bound_ctx = NULL;
+
 /*
  * TODO: Instead of creating an entire application, we
  * should just call Adwaita functions similar to Gtk.
@@ -85,6 +88,8 @@ NvdContext *nvd_bind_context_adw() {
         ctx->flags = NVD_NO_FLAGS;
         ctx->ready = true;
 
+        /* We need to get the context to the global scope. */
+        nvd_bound_ctx = ctx;
         return ctx; /* TODO: Potential memory leak here, we need to fix it. */
 }
 
