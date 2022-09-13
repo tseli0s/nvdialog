@@ -23,11 +23,27 @@
  */
 
 #ifndef __nvdialog_adw_h__
-#define __nvdialog_adw_h__
+#define __nvdialog_adw_h__ 1
+
+#ifdef NVD_USE_GTK4
 
 #include "nvdialog.h"
+#include <adwaita.h>
 
-void *nvd_create_adw_dialog(const char *title, const char *message,
-                            NvdDialogType type);
+/*
+ * Opens a "Open File" dialog using Gtk4 and libadwaita.
+ * This function is mostly experimental like the entire backend.
+ */
+const char *nvd_open_file_dialog_adw(const char *title,
+                                     const char *file_extensions);
 
+/*
+ * Creates a message dialog using Gtk4 and libadwaita.
+ * This function uses a much more newer look, so it may not be very
+ * consistent across different library builds.
+ */
+NvdDialogBox *nvd_create_adw_dialog(const char *title, const char *message,
+                                    const NvdDialogType type);
+
+#endif /* NVD_USE_GTK4 */
 #endif /* __nvdialog_gtk_h__ */
