@@ -35,6 +35,18 @@
 
 #define NVD_NO_FLAGS (0)
 
+/* Copy of the original implementation to access the members. */
+struct _NvdContext {
+#ifdef NVD_USE_GTK4
+        AdwApplication *application;
+#else
+        GtkApplication *application;
+#endif /* NVD_USE_GTK4 */
+        bool initialized, ready;
+        const char *domain;
+        uint32_t flags;
+};
+
 /*
  * The struct used to pass data into the activate() function.
  * This struct should be allocated on the heap.
@@ -119,8 +131,6 @@ const char *nvd_open_file_dialog_adw(const char *title,
 
 NvdDialogBox *nvd_create_adw_dialog(const char *title, const char *message,
                                     const NvdDialogType type) {
-        AdwApplication *app =
-            nvd_create_application_adw("com.AndroGR.libnvdialog");
         GtkWidget *dialog = adw_message_dialog_new(NULL, title, message);
         adw_message_dialog_add_responses(ADW_MESSAGE_DIALOG(dialog), "proceed",
                                          "Ok", NULL);
@@ -141,5 +151,6 @@ NvdDialogBox *nvd_create_adw_dialog(const char *title, const char *message,
         adw_message_dialog_set_response_appearance(ADW_MESSAGE_DIALOG(dialog),
                                                    "proceed", response);
         gtk_window_present(GTK_WINDOW(dialog));
-        g_application_run(G_APPLICATION(app), 1, NULL);
+        const char *_argv = nvd_get_argv();
+        g_application_run(G_APPLICATION(nvd_bound_ctx->application), 1, (char**) &_argv);
 }
