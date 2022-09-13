@@ -27,8 +27,34 @@
 
 #ifdef NVD_USE_GTK4
 
+#include "../nvdialog_assert.h"
 #include "nvdialog.h"
 #include <adwaita.h>
+
+/* Copy of the original implementation to access the members. */
+struct NvdContext {
+#ifdef NVD_USE_GTK4
+        AdwApplication *application;
+#else
+        GtkApplication *application;
+#endif /* NVD_USE_GTK4 */
+        bool initialized, ready;
+        const char *domain;
+        uint32_t flags;
+};
+
+/*
+ * Creates a new GApplication, connects it to the usual signals,
+ * and sets up the activate function. This function is needed
+ * with the new Gtk4 backend.
+ */
+NvdContext *nvd_bind_context_adw();
+
+/*
+ * Deletes a context created by nvd_bind_context_adw().
+ * NOTE: Use after free may happen if on multiple threads.
+*/
+void nvd_delete_context_adw(NvdContext *ctx);
 
 /*
  * Opens a "Open File" dialog using Gtk4 and libadwaita.
