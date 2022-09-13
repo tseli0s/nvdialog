@@ -60,4 +60,14 @@ void nvd_set_domain_name(char *domain);
  */
 NvdContext *nvd_bind_context(void);
 
+/**
+ * @brief Returns the current domain name of the NvDialog context.
+ * @details This function returns the current domain name of the NvDialog
+ * context. By default, it is set to 'io.androgr.nvdialog', and it can be
+ * changed using @ref nvd_set_domain_name.
+ * @return The domain name of NvDialog currently set (Defaults to
+ * io.androgr.nvdialog)
+ */
+const char *nvd_get_domain_name(void);
+
 #endif /* __nvdialog_core_h__ */
