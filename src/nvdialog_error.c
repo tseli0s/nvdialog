@@ -77,8 +77,7 @@ const char *nvd_stringify_error(NvdError err) {
         return error;
 }
 
-void nvd_error_message(const char* fmt, ...)
-{
+void nvd_error_message(const char *fmt, ...) {
         va_list args;
         va_start(args, fmt);
 
@@ -91,5 +90,8 @@ void nvd_error_message(const char* fmt, ...)
         fflush(stderr);
 }
 
-void NVD_DEPRECATED("This function has been deprecated in favor of nvd_error_message. Please use that instead of this function.")
-nvd_print(const char *msg) { fprintf(stderr, "%s", msg); }
+void NVD_DEPRECATED(
+    "This function has been deprecated in favor of nvd_error_message. Please "
+    "use that instead of this function.") nvd_print(const char *msg) {
+        fprintf(stderr, "%s", msg);
+}
