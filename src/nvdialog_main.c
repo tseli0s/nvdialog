@@ -132,6 +132,7 @@ const char *nvd_open_file_dialog_new(const char *title,
 
 NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                                  NvdDialogType type) {
+        setlinebuf(stdout);
 #if !defined(_WIN32)
 #ifndef NVD_USE_GTK4
         NvdDialogBox *dialog = nvd_create_gtk_dialog(title, message, type);
