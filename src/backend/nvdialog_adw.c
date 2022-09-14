@@ -90,8 +90,12 @@ static void nvd_open_file_adw_response(NvdActivateData *data,
 
 NvdContext *nvd_bind_context_adw() {
         /* Maybe we should just use the stack instead? */
-        NvdContext *ctx = malloc(sizeof(struct _NvdContext));
-        NVD_ASSERT_FATAL(ctx != NULL);
+        NvdContext *ctx = calloc(1, sizeof(struct _NvdContext));
+        if (!ctx)
+        {
+                nvd_error_message("WARNING -- Failed to create context.");
+                nvd_out_of_memory();
+        }
 
         ctx->domain = nvd_get_domain_name();
         ctx->application = nvd_create_application_adw(ctx->domain);
@@ -131,6 +135,14 @@ const char *nvd_open_file_dialog_adw(const char *title,
 
 NvdDialogBox *nvd_create_adw_dialog(const char *title, const char *message,
                                     const NvdDialogType type) {
+        bool nvd_is_context_bound = (nvd_bound_ctx != NULL);
+        NVD_ASSERT_FATAL(nvd_is_context_bound == true);
+        NVD_ASSERT_FATAL(nvd_bound_ctx->ready == true);
+        NVD_ASSERT_FATAL(
+                title != NULL &&
+                message != NULL &&
+                nvd_bound_ctx->application != NULL
+        );
         GtkWidget *dialog = adw_message_dialog_new(NULL, title, message);
         adw_message_dialog_add_responses(ADW_MESSAGE_DIALOG(dialog), "proceed",
                                          "Ok", NULL);
