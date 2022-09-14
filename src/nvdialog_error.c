@@ -24,8 +24,11 @@
 
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
+#include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define MAXBUF 4096
 
@@ -94,4 +97,11 @@ void NVD_DEPRECATED(
     "This function has been deprecated in favor of nvd_error_message. Please "
     "use that instead of this function.") nvd_print(const char *msg) {
         fprintf(stderr, "%s", msg);
+}
+
+void nvd_out_of_memory()
+{
+        nvd_error_message("%s%d%s%s", "Host machine out of memory: (errno ", errno, strerror(errno), "). Aborting execution");
+        nvd_set_error(NVD_OUT_OF_MEMORY); /* Like described in the header, this is pretty useless. */
+        abort();
 }

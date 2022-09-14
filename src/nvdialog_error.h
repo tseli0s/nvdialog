@@ -48,7 +48,8 @@ NVD_INTERNAL_FUNCTION const char *nvd_fmt_error_message(const char *fmt);
 NVD_INTERNAL_FUNCTION void nvd_set_error(NvdError error);
 
 /* Prints the error message given to stdout */
-void nvd_print(const char *msg);
+NVD_DEPRECATED("This function has been deprecated in favor of nvd_error_message. "
+"Please use that instead of this function.") void nvd_print(const char *msg);
 
 /*
  * A function that allows printing an error message to stderr, with support for
@@ -56,4 +57,11 @@ void nvd_print(const char *msg);
  * library.
  */
 void nvd_error_message(const char *fmt, ...);
+
+/*
+ * Aborts execution if memory cannot be allocated on the heap.
+ * This function cancels out the NVD_OUT_OF_MEMORY error code,
+ * so the former may be deprecated soon in favor of this.
+ */
+void nvd_out_of_memory();
 #endif /* __nvd_error_h__ */
