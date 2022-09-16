@@ -95,6 +95,7 @@ void nvd_delete_context(NvdContext *ctx) {
 const char *nvd_get_argv() { return nvd_argv_0; }
 
 int nvd_init(char *program) {
+        setlinebuf(stdout);
         nvd_argv_0 = program;
 #ifndef _WIN32
         if (!getenv("DISPLAY")) {
