@@ -104,8 +104,9 @@ NvdContext *nvd_bind_context_adw() {
         ctx->flags = NVD_NO_FLAGS;
         ctx->ready = true;
 
-        /* We need to get the context to the global scope. */
-        nvd_bound_ctx = ctx;
+        /* For some reason, this one works instead of plain assignment. */
+        NvdContext **ctx_static = &nvd_bound_ctx;
+        *ctx_static = ctx;
         return ctx; /* TODO: Potential memory leak here, we need to fix it. */
 }
 
@@ -135,8 +136,7 @@ const char *nvd_open_file_dialog_adw(const char *title,
 
 NvdDialogBox *nvd_create_adw_dialog(const char *title, const char *message,
                                     const NvdDialogType type) {
-        bool nvd_is_context_bound = (nvd_bound_ctx != NULL);
-        NVD_ASSERT_FATAL(nvd_is_context_bound == true);
+        NVD_ASSERT_FATAL(nvd_bound_ctx != NULL);
         NVD_ASSERT_FATAL(nvd_bound_ctx->ready == true);
         NVD_ASSERT_FATAL(
                 title != NULL &&
@@ -163,6 +163,7 @@ NvdDialogBox *nvd_create_adw_dialog(const char *title, const char *message,
         adw_message_dialog_set_response_appearance(ADW_MESSAGE_DIALOG(dialog),
                                                    "proceed", response);
         gtk_window_present(GTK_WINDOW(dialog));
-        const char *_argv = nvd_get_argv();
-        g_application_run(G_APPLICATION(nvd_bound_ctx->application), 1, (char**) &_argv);
+        char *_argv = nvd_get_argv();
+        assert(_argv != NULL && _argv != 0x1);
+        g_application_run(G_APPLICATION(nvd_bound_ctx->application), 1, &_argv);
 }
