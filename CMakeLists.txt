@@ -50,8 +50,7 @@ else()
                         target_link_libraries(nvdialog ${GTK_LIBRARIES})
                         add_definitions(${GTK_CFLAGS} ${GTK_CFLAGS_OTHER})
                 else(GTK_FOUND)
-                        message(SEND_ERROR "CRITICAL: Gtk libraries not found, aborting.");
-                        return()
+                        message(FATAL_ERROR "CRITICAL: Gtk libraries not found, aborting.")
                 endif()
         endif()
 
