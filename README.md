@@ -1,12 +1,3 @@
-# NOTICE (Please read)
-My computer broke yesterday, with a chance of the damage
-being irrecoverable. Since a huge ton of files, including the library's
-new features were there I will probably not maintain the library
-temporarily, until I will be able to fix or replace anything that failed.
-
-In the meantime, feel free to use the library and open issues. I will be able to partially
-test it through Termux and find the issues. However do not make contributions or feature requests, they
-will be dismissed.
 <div align="center">
         <h1>libnvdialog</h1>
         <img src="assets/logo-new.svg" width="244">
