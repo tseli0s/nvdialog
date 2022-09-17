@@ -27,6 +27,11 @@
 #ifndef __nvdialog_core_h__
 #define __nvdialog_core_h__ 1
 
+#ifndef __nvdialog_h__
+#error  [ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
+#endif  /* __nvdialog_h__ */
+
+
 #include "nvdialog_types.h"
 
 /**

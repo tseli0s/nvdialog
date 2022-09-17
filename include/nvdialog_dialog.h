@@ -26,6 +26,11 @@
 #ifndef __nvdialog_dialog_h__
 #define __nvdialog_dialog_h__ 1
 
+#ifndef __nvdialog_h__
+#error  [ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
+#endif  /* __nvdialog_h__ */
+
+
 #include "nvdialog_types.h"
 
 /**
@@ -71,9 +76,6 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
  */
 void nvd_show_dialog(NvdDialogBox *dialog);
 
-<<<<<<< HEAD
-#endif /* __nvdialog_dialog_h__ */
-=======
 /**
  * @brief Shows an 'About application' dialog box.
  * @details This function displays a dialog box similar to 'About' menus in
@@ -94,4 +96,3 @@ NvdDialogBox *nvd_about_dialog_new(const char *name, const char *description,
                                    const char *license_text, const char *logo);
 
 #endif /* __nvdialog_dialog_h__ */
->>>>>>> a4a366c (nvd_about_dialog_new: Declare function prototype.)
