@@ -23,56 +23,68 @@
  */
 
 use libloading::*;
+use std::ptr::{null, null_mut};
 
 fn symbol_fmt(s: &str) -> String {
-        format!("{}{}", s, '\0')
+    format!("{}{}", s, '\0')
 }
 
 pub(super) fn msgbox(library: &Library, title: &str, msg: &str) {
-        unsafe {
-                let func: Symbol<
-                        unsafe extern "C" fn(
-                                *const i8,
-                                *const i8, u32,
-                        ) -> *mut libc::c_void
-                > = library.get(
-                        symbol_fmt(
-                                "nvd_dialog_box_new"
-                        ).as_bytes()
-                ).expect("Invalid library");
-                func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 255);
-        }
+    unsafe {
+        let func: Symbol<unsafe extern "C" fn(*const i8, *const i8, u32) -> *mut libc::c_void> =
+            library
+                .get(symbol_fmt("nvd_dialog_box_new").as_bytes())
+                .expect("Invalid library");
+        func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 255);
+    }
 }
 
 pub(super) fn warningbox(library: &Library, title: &str, msg: &str) {
-        unsafe {
-                let func: Symbol<
-                        unsafe extern "C" fn(
-                                *const i8,
-                                *const i8, u32,
-                        ) -> *mut libc::c_void
-                > = library.get(
-                        symbol_fmt(
-                                "nvd_dialog_box_new"
-                        ).as_bytes()
-                ).expect("Invalid library");
-                func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 256);
-        }
+    unsafe {
+        let func: Symbol<unsafe extern "C" fn(*const i8, *const i8, u32) -> *mut libc::c_void> =
+            library
+                .get(symbol_fmt("nvd_dialog_box_new").as_bytes())
+                .expect("Invalid library");
+        func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 256);
+    }
 }
 
 pub(super) fn errorbox(library: &Library, title: &str, msg: &str) {
-        unsafe {
-                let func: Symbol<
-                        unsafe extern "C" fn(
-                                *const i8,
-                                *const i8, u32,
-                        ) -> *mut libc::c_void
-                > = library.get(
-                        symbol_fmt(
-                                "nvd_dialog_box_new"
-                        ).as_bytes()
-                ).expect("Invalid library");
-                func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 257);
-        }
+    unsafe {
+        let func: Symbol<unsafe extern "C" fn(*const i8, *const i8, u32) -> *mut libc::c_void> =
+            library
+                .get(symbol_fmt("nvd_dialog_box_new").as_bytes())
+                .expect("Invalid library");
+        func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 257);
+    }
 }
 
+pub(super) fn about_dialog(
+    library: &Library,
+    title: &str,
+    content: &str,
+    license: &str,
+    icon: Option<&str>,
+) {
+    unsafe {
+        let func: Symbol<
+            unsafe extern "C" fn(*const i8, *const i8, *const i8, *const i8) -> *mut libc::c_void,
+        > = library
+            .get(symbol_fmt("nvd_about_dialog_new").as_bytes())
+            .expect("Invalid library");
+
+        let used_icon: *const i8;
+        let has_icon = icon.is_some();
+        if has_icon {
+            used_icon = icon.unwrap().as_ptr() as *const i8;
+        } else {
+            used_icon = null();
+        }
+        func(
+            title.as_ptr() as *const i8,
+            content.as_ptr() as *const i8,
+            license.as_ptr() as *const i8,
+            used_icon,
+        );
+    }
+}
