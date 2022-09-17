@@ -99,9 +99,10 @@ void NVD_DEPRECATED(
         fprintf(stderr, "%s", msg);
 }
 
-void nvd_out_of_memory()
-{
-        nvd_error_message("%s%d%s%s", "Host machine out of memory: (errno ", errno, strerror(errno), "). Aborting execution");
-        nvd_set_error(NVD_OUT_OF_MEMORY); /* Like described in the header, this is pretty useless. */
+void nvd_out_of_memory() {
+        nvd_error_message("%s%d%s%s", "Host machine out of memory: (errno ",
+                          errno, strerror(errno), "). Aborting execution");
+        nvd_set_error(NVD_OUT_OF_MEMORY); /* Like described in the header, this
+                                             is pretty useless. */
         abort();
 }
