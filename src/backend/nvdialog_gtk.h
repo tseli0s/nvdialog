@@ -48,4 +48,10 @@ void *nvd_create_gtk_dialog(const char *title, const char *message,
  */
 NvdReply nvd_question_gtk(const char *title, const char *question,
                           NvdQuestionButton button);
+
+/*
+ * Creates an 'About Application' dialog window.
+ */
+void *nvd_about_dialog_gtk(const char *name, const char *description,
+                           const char *license_text, const char *logo_path);
 #endif /* __nvdialog_gtk_h__ */

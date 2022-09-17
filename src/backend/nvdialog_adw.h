@@ -59,5 +59,11 @@ const char *nvd_open_file_dialog_adw(const char *title,
 NvdDialogBox *nvd_create_adw_dialog(const char *title, const char *message,
                                     const NvdDialogType type);
 
+/*
+ * Creates an 'About Application' dialog window.
+ */
+void *nvd_about_dialog_adw(const char *name, const char *description,
+                           const char *license_text, const char *logo_path);
+
 #endif /* NVD_USE_GTK4 */
 #endif /* __nvdialog_gtk_h__ */
