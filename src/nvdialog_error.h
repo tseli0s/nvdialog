@@ -48,8 +48,10 @@ NVD_INTERNAL_FUNCTION const char *nvd_fmt_error_message(const char *fmt);
 NVD_INTERNAL_FUNCTION void nvd_set_error(NvdError error);
 
 /* Prints the error message given to stdout */
-NVD_DEPRECATED("This function has been deprecated in favor of nvd_error_message. "
-"Please use that instead of this function.") void nvd_print(const char *msg);
+NVD_DEPRECATED(
+    "This function has been deprecated in favor of nvd_error_message. "
+    "Please use that instead of this function.")
+void nvd_print(const char *msg);
 
 /*
  * A function that allows printing an error message to stderr, with support for
