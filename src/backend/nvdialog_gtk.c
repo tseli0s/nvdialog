@@ -274,6 +274,8 @@ void *nvd_about_dialog_gtk(const char *name, const char *description,
         gtk_grid_attach(GTK_GRID (grid), ok_button, 0, 2, 1, 1);
 
         g_signal_connect_swapped(ok_button, "clicked", gtk_main_quit, NULL);
+        g_signal_connect(window, "destroy", gtk_main_quit, NULL);
+        g_signal_connect(window, "delete-event", gtk_main_quit, NULL);
 
         gtk_widget_show_all(window);
         gtk_main();
