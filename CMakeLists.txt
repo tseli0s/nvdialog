@@ -6,6 +6,7 @@ project(libnvdialog LANGUAGES C VERSION 0.1.3 DESCRIPTION "A simple and minimal 
 
 option(WIN32_TARGET "Build the library for Windows usage. Requires x86_64-w64-mingw32." OFF)
 option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental.")
+option(NVD_BUILD_STATIC "Build NvDialog as a static library. Experimental." OFF) # TODO: Turn this ON by default (0.2)
 
 # On GNU/Linux, by default CMake installs the libraries and headers under
 # /usr/local. There are two problems with this approach:
@@ -34,11 +35,19 @@ set(NVD_HEADERS include/nvdialog_dialog.h include/nvdialog_core.h include/nvdial
 # If compiling for Windows, only use Win32 API.
 # Otherwise, use the standard backends.
 if (WIN32 OR WIN32_TARGET)
-        add_library(nvdialog SHARED src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+        if (NVD_BUILD_STATIC)
+                add_library(nvdialog STATIC src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+        else(NVD_BUILD_STATIC)
+                add_library(nvdialog SHARED src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+        endif(NVD_BUILD_STATIC)
         message("Compiling a Windows library.")
         target_link_libraries(nvdialog comdlg32)
 else()
-        add_library(nvdialog SHARED ${NVD_SOURCES})
+        if (NVD_BUILD_STATIC)
+                add_library(nvdialog STATIC ${NVD_SOURCES})
+        else(NVD_BUILD_STATIC)
+                add_library(nvdialog SHARED ${NVD_SOURCES})
+        endif(NVD_BUILD_STATIC)
         find_package(PkgConfig)
         if (PKG_CONFIG_FOUND)
                 if (NVD_USE_GTK4)
