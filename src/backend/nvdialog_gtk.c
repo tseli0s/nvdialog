@@ -24,6 +24,7 @@
 
 #include "nvdialog_gtk.h"
 #include "../nvdialog_error.h"
+#include "../nvdialog_assert.h"
 #include "nvdialog.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -236,4 +237,42 @@ NvdReply nvd_question_gtk(const char *title, const char *question,
         gtk_widget_show_all(dialog);
         gtk_main();
         return rep;
+}
+
+void *nvd_about_dialog_gtk(const char *name, const char *description,
+                           const char *license_text, const char *logo_path) {
+        NVD_ASSERT(name != NULL);
+        NVD_ASSERT(description != NULL);
+        NVD_ASSERT(license_text != NULL);
+
+        GtkWidget *window, *grid, *label, *license_label, *logo_img, *ok_button;
+        window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        char buffer[NVDIALOG_MAXBUF];
+        sprintf(buffer, "About %s", name);
+        gtk_window_set_title(GTK_WINDOW(window), buffer);
+        grid = gtk_grid_new();
+
+        label = gtk_label_new(description);
+        license_label = gtk_label_new(license_text);
+
+        if (logo_path) {
+                logo_img = gtk_image_new_from_icon_name(logo_path, 22);
+                nvd_set_margin(logo_img);
+                gtk_grid_attach(GTK_GRID (grid), logo_img, 0, 0, 1, 1);
+        }
+        ok_button = gtk_button_new_with_label("Close");
+
+        nvd_set_margin(license_label);
+        nvd_set_margin(label);
+        nvd_set_margin(ok_button);
+
+        gtk_container_add(GTK_CONTAINER(window), grid);
+        gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1);
+        gtk_grid_attach(GTK_GRID (grid), ok_button, 0, 2, 1, 1);
+
+        g_signal_connect_swapped(ok_button, "clicked", gtk_main_quit, NULL);
+
+        gtk_widget_show_all(window);
+        gtk_main();
+        return (void *)1; /* FIXME: New return value */
 }
