@@ -43,12 +43,6 @@ NvdReply nvd_dialog_question_new(const char *title, const char *question,
                                  NvdQuestionButton button);
 
 /**
- * @brief Shows a dialog to the system shell.
- * @param dialog The dialog to show.
- */
-void nvd_show_dialog(NvdDialogBox *dialog);
-
-/**
  * @brief Creates an open file dialog.
  * This function creates a dialog to open a file in the filesystem
  * through a GUI.
