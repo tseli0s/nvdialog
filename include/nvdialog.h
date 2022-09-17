@@ -33,7 +33,7 @@ extern "C" {
 
 #define NVDIALOG_VERSION_MAJOR 0
 #define NVDIALOG_VERSION_MINOR 1
-#define NVDIALOG_VERSION_PATCH 1
+#define NVDIALOG_VERSION_PATCH 3
 
 /**
  * @brief Returns the version of nvdialog currently linked with.

@@ -1,3 +1,18 @@
+# Changelog -- 0.1.3
+
+- Fixed multiple compiler / linker errors
+- Fixed a buffer overflow by using `NVDIALOG_MAXBUF` instead of a fixed 128 byte buffer.
+- New function (Incomplete): `nvd_about_dialog_new`. This function shows a simple dialog similar to those found in some 'About' app menu items. It will be stabilized in 0.2.
+- Added new example.
+- Removed deprecated code, replaced with more modern and accurate alternatives.
+- Partial `libadwaita` support complete.
+- New assertion system.
+- Remove fallback backend, replaced with raw runtime assertions.
+- Headers are now installed inside the `nvdialog/` directory in the standard include directory.
+- New logo (May change again)
+
+**WARNING: API breakage may occur. If you are worried, do not upgrade to this release.**
+
 # Changelog -- 0.1.2
 
 - Fixed multiple miscalleneous bugs from 0.1.1 and a few memory leaks.

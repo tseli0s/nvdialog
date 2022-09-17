@@ -2,7 +2,7 @@
 # This file is part of libnvdialog and is released under the MIT license.
 
 cmake_minimum_required(VERSION 3.18)
-project(libnvdialog LANGUAGES C VERSION 0.1.2 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+project(libnvdialog LANGUAGES C VERSION 0.1.3 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
 option(WIN32_TARGET "Build the library for Windows usage. Requires x86_64-w64-mingw32." OFF)
 option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental.")
