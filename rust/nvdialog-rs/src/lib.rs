@@ -41,7 +41,7 @@ pub struct NvDialogContext {
 
 #[derive(Debug)]
 pub enum DialogType {
-    SimpleDialog  = 0xff,
+    SimpleDialog = 0xff,
     WarningDialog,
     ErrorDialog,
 }
@@ -52,7 +52,7 @@ impl NvDialogContext {
         let library;
 
         unsafe {
-            library = Library::new("/usr/lib/libnvdialog.so.0.1.0")
+            library = Library::new("/usr/lib/libnvdialog.so.0.1.3")
                 .expect("Couldn't load the native library.");
         }
         Self {
@@ -81,15 +81,36 @@ impl NvDialogContext {
 
     pub fn message_box(&self, title: &str, message: &str, dialog_type: DialogType) {
         match dialog_type {
-                DialogType::SimpleDialog => {
-                        functions::msgbox(&self.library, title, message);
-                },
-                DialogType::WarningDialog => {
-                        functions::warningbox(&self.library, title, message);
-                },
-                DialogType::ErrorDialog => {
-                        functions::errorbox(&self.library, title, message);
-                },
+            DialogType::SimpleDialog => {
+                functions::msgbox(&self.library, title, message);
+            }
+            DialogType::WarningDialog => {
+                functions::warningbox(&self.library, title, message);
+            }
+            DialogType::ErrorDialog => {
+                functions::errorbox(&self.library, title, message);
+            }
+        }
+    }
+
+    pub fn about_dialog(&self, name: &str, contents: &str, license: &str, icon_name: Option<&str>) {
+        let has_icon = icon_name.is_some();
+        if has_icon {
+            functions::about_dialog(
+                &self.library,
+                &format!("About {}", name),
+                contents,
+                license,
+                Some(icon_name.unwrap()),
+            );
+        } else {
+            functions::about_dialog(
+                &self.library,
+                &format!("About {}", name),
+                contents,
+                license,
+                None,
+            );
         }
     }
 }
