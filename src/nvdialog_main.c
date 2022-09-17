@@ -25,6 +25,7 @@
 #include "nvdialog_assert.h"
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
+#include "nvdialog_types.h"
 #include <stdint.h>
 #include <stdio.h>
 #ifndef _WIN32
@@ -163,4 +164,18 @@ NvdReply nvd_dialog_question_new(const char *title, const char *question,
         nvd_question_win32(title, question, button);
 #endif /* _WIN32 */
         return -1;
+}
+
+NvdDialogBox *nvd_about_dialog_new(const char *name, const char *description,
+                                   const char *license_text,
+                                   const char *logo_path) {
+#if defined(_WIN32)
+#error Unimplemented function. /* FIXME: Implement function. */
+#else
+#if !defined(NVD_USE_GTK4)
+        return nvd_about_dialog_gtk(name, description, license_text, logo_path);
+#else
+        return nvd_about_dialog_adw(name, description, license, logo_path);
+#endif /* !NVD_USE_GTK4 */
+#endif /* _WIN32 */
 }
