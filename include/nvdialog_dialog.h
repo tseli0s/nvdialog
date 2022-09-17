@@ -71,4 +71,24 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
  */
 void nvd_show_dialog(NvdDialogBox *dialog);
 
+<<<<<<< HEAD
 #endif /* __nvdialog_dialog_h__ */
+=======
+/**
+ * @brief Shows an 'About application' dialog box.
+ * @details This function displays a dialog box similar to 'About' menus in other applications.
+ * It will display the application name, a brief description of the application, the logo (If specified)
+ * @param name Your application name.
+ * @param description A short description of the application, describing what it does.
+ * @param license_text A short license text. Eg. for MIT licensed software, you could use something like:
+ * [App name] is licensed under the MIT license. See [license link] for details.
+ * @param logo Nullable value that can specify a filename to load as the application logo.
+ * @return NULL on failure.
+ */
+NvdDialogBox *nvd_about_dialog_new(const char* name,
+                                   const char* description,
+                                   const char* license_text,
+                                   const char* logo);
+
+#endif /* __nvdialog_dialog_h__ */
+>>>>>>> a4a366c (nvd_about_dialog_new: Declare function prototype.)
