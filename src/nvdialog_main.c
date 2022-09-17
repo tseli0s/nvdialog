@@ -175,7 +175,7 @@ NvdDialogBox *nvd_about_dialog_new(const char *name, const char *description,
 #if !defined(NVD_USE_GTK4)
         return nvd_about_dialog_gtk(name, description, license_text, logo_path);
 #else
-        return nvd_about_dialog_adw(name, description, license, logo_path);
+        return nvd_about_dialog_adw(name, description, license_text, logo_path);
 #endif /* !NVD_USE_GTK4 */
 #endif /* _WIN32 */
 }
