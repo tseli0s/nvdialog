@@ -256,10 +256,13 @@ void *nvd_about_dialog_gtk(const char *name, const char *description,
         license_label = gtk_label_new(license_text);
 
         if (logo_path) {
-                logo_img = gtk_image_new_from_icon_name(logo_path, 22);
-                nvd_set_margin(logo_img);
-                gtk_grid_attach(GTK_GRID (grid), logo_img, 0, 0, 1, 1);
+                logo_img = gtk_image_new_from_icon_name(logo_path, GTK_ICON_SIZE_DIALOG);
+
+        } else {
+                logo_img = gtk_image_new_from_icon_name("computer", GTK_ICON_SIZE_DIALOG);
         }
+        nvd_set_margin(logo_img);
+        gtk_grid_attach(GTK_GRID (grid), logo_img, 0, 0, 1, 1);
         ok_button = gtk_button_new_with_label("Close");
 
         nvd_set_margin(license_label);
