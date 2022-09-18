@@ -15,7 +15,7 @@
  * along with nvd-shell.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include <nvdialog.h>
+#include <nvdialog/nvdialog.h>
 
 class DialogManager {
 private:
