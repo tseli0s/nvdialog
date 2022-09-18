@@ -1,6 +1,6 @@
 CXX=clang++
-CFLAGS=-Wall -Wextra -pedantic -fstrict-aliasing -lnvdialog -s -O3
-SRCS=src/Main.cpp src/Dialogs.cpp
+CFLAGS=-Wall -Wextra -pedantic -fstrict-aliasing -lnvdialog -s -O3 -I../include/
+SRCS=src/Main.cpp src/Dialogs.cpp src/CommandLine.cpp
 OUTFILE=nvd-shell
 
 all: $(SRCS)
