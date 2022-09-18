@@ -46,6 +46,9 @@ static void usage(const char* program)
 int main(int argc, char **argv)
 {
         if (argv[1]) {
+                DialogManager *mgr = new DialogManager(argc, argv);
+                nvd_init(argv[0]);
+
                 ArgumentCollection args;
                 CommandLineParser cmp;
                 if (strcmp(argv[1], "--help") == 0) {
@@ -55,22 +58,16 @@ int main(int argc, char **argv)
                         cmp.ParseArguments(argc, argv);
                         args = cmp.GetArgumentOptions();
                         char* title, *contents;
-                        title = (char*) args.title.c_str();
-                        contents = (char*) args.contents.c_str();
 
-                        if (args.begin != 73) {
+                        if (args.begin == true) {
                                 /* TODO: Based on --dialog-type, find the appropriate dialog to show */
-                                nvd_dialog_box_new(title,
-                                                   contents,
-                                                   NVD_DIALOG_SIMPLE);
+                                mgr->SimpleDialogBox();
+                                delete mgr;
                         }
                 }
         } else {
                 usage(argv[0]);
                 return -1;
         }
-
-        DialogManager *mgr = new DialogManager(argc, argv);
-        nvd_init(argv[0]);
         return 0;
 }
