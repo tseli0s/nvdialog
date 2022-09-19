@@ -74,3 +74,4 @@ $ sudo make install -j`nproc`
 
 # License
 `nvdialog` is licensed under the MIT license. See [COPYING](./COPYING) for more.
+All contributions made to the library are assumed to be licensed under the MIT license as well. However, you may specify a different license if you wish.
