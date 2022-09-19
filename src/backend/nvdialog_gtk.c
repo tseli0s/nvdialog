@@ -23,8 +23,8 @@
  */
 
 #include "nvdialog_gtk.h"
-#include "../nvdialog_error.h"
 #include "../nvdialog_assert.h"
+#include "../nvdialog_error.h"
 #include "nvdialog.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -99,8 +99,8 @@ const char *nvd_open_file_dialog_gtk(const char *title,
 
         /* Creating the dialog. */
         GtkWidget *dialog = gtk_file_chooser_dialog_new(
-            title, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, "Open",
-            GTK_RESPONSE_ACCEPT, "Cancel", GTK_RESPONSE_CANCEL, NULL);
+            title, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, "_Open",
+            GTK_RESPONSE_ACCEPT, "_Cancel", GTK_RESPONSE_CANCEL, NULL);
         /* Running the dialog and checking the user's action. */
         int result = gtk_dialog_run(GTK_DIALOG(dialog));
         if (result == GTK_RESPONSE_ACCEPT) {
@@ -110,9 +110,8 @@ const char *nvd_open_file_dialog_gtk(const char *title,
                 gtk_widget_destroy(dialog);
 
                 printf("Filename: %s", filename);
-                return strdup(filename);
+                // return strdup(filename);
         } else if (result == GTK_RESPONSE_CANCEL) {
-                gtk_main_quit();
                 return NULL;
         }
         return NULL;
@@ -250,6 +249,7 @@ void *nvd_about_dialog_gtk(const char *name, const char *description,
         char buffer[NVDIALOG_MAXBUF];
         sprintf(buffer, "About %s", name);
         gtk_window_set_title(GTK_WINDOW(window), buffer);
+        gtk_window_set_default_size(GTK_WINDOW (window), 545, 650);
         grid = gtk_grid_new();
 
         label = gtk_label_new(description);
@@ -258,13 +258,15 @@ void *nvd_about_dialog_gtk(const char *name, const char *description,
         gtk_label_set_line_wrap(GTK_LABEL(license_label), true);
 
         if (logo_path) {
-                logo_img = gtk_image_new_from_icon_name(logo_path, GTK_ICON_SIZE_DIALOG);
+                logo_img = gtk_image_new_from_icon_name(logo_path,
+                                                        GTK_ICON_SIZE_DIALOG);
 
         } else {
-                logo_img = gtk_image_new_from_icon_name("computer", GTK_ICON_SIZE_DIALOG);
+                logo_img = gtk_image_new_from_icon_name("computer",
+                                                        GTK_ICON_SIZE_DIALOG);
         }
         nvd_set_margin(logo_img);
-        gtk_grid_attach(GTK_GRID (grid), logo_img, 0, 0, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), logo_img, 0, 0, 1, 1);
         ok_button = gtk_button_new_with_label("Close");
 
         nvd_set_margin(license_label);
@@ -273,8 +275,8 @@ void *nvd_about_dialog_gtk(const char *name, const char *description,
 
         gtk_container_add(GTK_CONTAINER(window), grid);
         gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1);
-        gtk_grid_attach(GTK_GRID (grid), license_label, 0, 2, 1, 1);
-        gtk_grid_attach(GTK_GRID (grid), ok_button, 0, 3, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), license_label, 0, 2, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), ok_button, 0, 3, 1, 1);
 
         g_signal_connect_swapped(ok_button, "clicked", gtk_main_quit, NULL);
         g_signal_connect(window, "destroy", gtk_main_quit, NULL);
