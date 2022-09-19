@@ -82,7 +82,7 @@ static inline void no_clicked(NvdReply *store) {
  * Sets equal padding for a Gtk widget.
  * Basically a shortcut for gtk_widget_set_margin_*
  */
-static inline void nvd_set_margin(GtkWidget *widget) {
+static NVD_FORCE_INLINE void nvd_set_margin(GtkWidget *widget) {
         gtk_widget_set_margin_top(widget, NVD_PADDING_SIZE);
         gtk_widget_set_margin_bottom(widget, NVD_PADDING_SIZE);
         gtk_widget_set_margin_start(widget, NVD_PADDING_SIZE);
