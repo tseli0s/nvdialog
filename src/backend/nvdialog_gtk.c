@@ -40,14 +40,14 @@
 #define nvd_init_check gtk_init_check /* For better error messages */
 
 #define NVD_CHECK_GTK_INIT                                                     \
-        if (!gtk_init_check(NULL, NULL)) {                                     \
+        if (!nvd_init_check(NULL, NULL)) {                                     \
                 nvd_set_error(NVD_NOT_INITIALIZED);                            \
                 nvd_error_message("Backend couldn't be initialized.");         \
                 return NULL;                                                   \
         }
 
 #define NVD_CHECK_GTK_INIT_INT                                                 \
-        if (!gtk_init_check(NULL, NULL)) {                                     \
+        if (!nvd_init_check(NULL, NULL)) {                                     \
                 nvd_set_error(NVD_NOT_INITIALIZED);                            \
                 nvd_error_message("Backend couldn't be initialized.");         \
                 return -1;                                                     \
@@ -254,6 +254,8 @@ void *nvd_about_dialog_gtk(const char *name, const char *description,
 
         label = gtk_label_new(description);
         license_label = gtk_label_new(license_text);
+        gtk_label_set_line_wrap(GTK_LABEL(label), true);
+        gtk_label_set_line_wrap(GTK_LABEL(license_label), true);
 
         if (logo_path) {
                 logo_img = gtk_image_new_from_icon_name(logo_path, GTK_ICON_SIZE_DIALOG);
@@ -271,7 +273,8 @@ void *nvd_about_dialog_gtk(const char *name, const char *description,
 
         gtk_container_add(GTK_CONTAINER(window), grid);
         gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1);
-        gtk_grid_attach(GTK_GRID (grid), ok_button, 0, 2, 1, 1);
+        gtk_grid_attach(GTK_GRID (grid), license_label, 0, 2, 1, 1);
+        gtk_grid_attach(GTK_GRID (grid), ok_button, 0, 3, 1, 1);
 
         g_signal_connect_swapped(ok_button, "clicked", gtk_main_quit, NULL);
         g_signal_connect(window, "destroy", gtk_main_quit, NULL);
