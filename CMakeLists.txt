@@ -8,6 +8,8 @@ option(WIN32_TARGET "Build the library for Windows usage. Requires x86_64-w64-mi
 option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental.")
 option(NVD_BUILD_STATIC "Build NvDialog as a static library. Experimental." OFF) # TODO: Turn this ON by default (0.2)
 
+set(NVDIALOG_MAXBUF 4096)
+
 # On GNU/Linux, by default CMake installs the libraries and headers under
 # /usr/local. There are two problems with this approach:
 # 1. Arch Linux and a few other distros consider the path deprecated in favor of /usr
@@ -23,7 +25,7 @@ if(WIN32_TARGET)
 endif()
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-parameter -Wall -Wextra -O0 -g3")
-
+add_compile_definitions(NVDIALOG_MAXBUF=${NVDIALOG_MAXBUF})
 if (NOT NVD_USE_GTK4)
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_gtk.c src/nvdialog_main.c)
 else()
@@ -31,6 +33,7 @@ else()
         message("-- NOTE: Compiling NvDialog using the experimental Gtk4+Libadwaita backend.")
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_adw.c src/nvdialog_main.c)
 endif()
+message("-- NVDIALOG_MAXBUF equals ${NVDIALOG_MAXBUF}. If buffer overflows are detected, increase this number.")
 set(NVD_HEADERS include/nvdialog_dialog.h include/nvdialog_core.h include/nvdialog_types.h include/nvdialog_error.h include/nvdialog.h)
 # If compiling for Windows, only use Win32 API.
 # Otherwise, use the standard backends.
@@ -40,7 +43,7 @@ if (WIN32 OR WIN32_TARGET)
         else(NVD_BUILD_STATIC)
                 add_library(nvdialog SHARED src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
         endif(NVD_BUILD_STATIC)
-        message("Compiling a Windows library.")
+        message("-- Compiling a Windows library.")
         target_link_libraries(nvdialog comdlg32)
 else()
         if (NVD_BUILD_STATIC)
@@ -63,7 +66,7 @@ else()
                 endif()
         endif()
 
-        message("Compiling a GNU/Linux library.")
+        message("-- Compiling a GNU/Linux library.")
 endif()
 
 set_target_properties(nvdialog PROPERTIES SOVERSION 0)
