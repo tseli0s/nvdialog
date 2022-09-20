@@ -25,6 +25,14 @@
 use libloading::*;
 use std::ptr::{null, null_mut};
 
+/*
+ * WARNING:
+ * This file contains alot of FFI function interfaces intended purely for internal use.
+ * They are not intended to be used directly, or even exist as anything more than a bridge
+ * for actual functions. If you wish to contribute, this is probably not where you want to.
+ * If you do insist on reading this source code, be prepared for alot of "wrong ideas".
+*/
+
 fn symbol_fmt(s: &str) -> String {
     format!("{}{}", s, '\0')
 }

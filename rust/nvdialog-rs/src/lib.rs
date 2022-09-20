@@ -33,12 +33,20 @@ use std::ffi::*;
  * and provide symbols. You should use this to initialize the library.
 */
 #[derive(Debug)]
+/*
+ * The NvDialogContext is used to connect to the actual library and provide
+ * symbols. You should use this to call functions from the native library.
+*/
 pub struct NvDialogContext {
     bound: bool,
     errcode: u32,
     library: Library,
 }
 
+/*
+ * The type of the dialog to use.
+ * You can imagine this as the copy of NvdDialogType.
+*/
 #[derive(Debug)]
 pub enum DialogType {
     SimpleDialog = 0xff,
@@ -61,7 +69,13 @@ impl NvDialogContext {
             library,
         }
     }
-    /* Initializes nvdialog. This is nvd_init() but in Rust. */
+    /*
+     * Initializes NvDialog.
+     * This is an important step. See the API reference for more information.
+     * Skipping this may result in undefined behavior. Please ensure you call this
+     * function.
+     * TODO: Return Result on everything.
+    */
     pub fn init(mut self, argv_0: &str) -> Self {
         let argv0 = format!("{}{}", argv_0, '\0');
         let init_fn: Symbol<unsafe extern "C" fn(*const i8) -> u32>;
@@ -79,6 +93,7 @@ impl NvDialogContext {
         self
     }
 
+    /* Shows a simple message box with the title and message given. */
     pub fn message_box(&self, title: &str, message: &str, dialog_type: DialogType) {
         match dialog_type {
             DialogType::SimpleDialog => {
@@ -93,6 +108,7 @@ impl NvDialogContext {
         }
     }
 
+    /* A function that can be used to show some information about your application. */
     pub fn about_dialog(&self, name: &str, contents: &str, license: &str, icon_name: Option<&str>) {
         let has_icon = icon_name.is_some();
         if has_icon {
