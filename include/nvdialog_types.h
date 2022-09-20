@@ -27,9 +27,8 @@
 #define __nvdialog_types_h__ 1
 
 #ifndef __nvdialog_h__
-#error  [ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif  /* __nvdialog_h__ */
-
+#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
+#endif /* __nvdialog_h__ */
 
 /**
  * @brief The core type for managing and identifying dialog boxes.
