@@ -52,7 +52,7 @@ impl NvDialogContext {
         let library;
 
         unsafe {
-            library = Library::new("/usr/lib/libnvdialog.so.0.1.3")
+            library = Library::new("/usr/lib/libnvdialog.so")
                 .expect("Couldn't load the native library.");
         }
         Self {
