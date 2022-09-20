@@ -5,9 +5,11 @@
 
 int main(int argc, char **argv)
 {
-        const char *description = "This is an example brief description about your application. NvDialog Example\n"
-                                  "is a simple example of capabilities NvDialog has. See https://github.com/AndroGR/nvdialog\n"
-                                  "for more information.\n";
+        const char *description = "This is an example brief description about"
+                                  "your application. NvDialog Example"
+                                  "is a simple example of capabilities NvDialog has."
+                                  "See https://github.com/AndroGR/nvdialog"
+                                  "for more information.";
         nvd_init(argv[0]);
         nvd_about_dialog_new(APP_NAME,
                              description, "This program is licensed under the MIT license,"
