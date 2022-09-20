@@ -170,7 +170,8 @@ NvdDialogBox *nvd_about_dialog_new(const char *name, const char *description,
                                    const char *license_text,
                                    const char *logo_path) {
 #if defined(_WIN32)
-#error Unimplemented function. /* FIXME: Implement function. */
+        return nvd_about_dialog_win32(name, description, license_text,
+                                      logo_path);
 #else
 #if !defined(NVD_USE_GTK4)
         return nvd_about_dialog_gtk(name, description, license_text, logo_path);
