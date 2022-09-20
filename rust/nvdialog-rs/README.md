@@ -1,6 +1,6 @@
 <div align="center">
         <h1>nvdialog-rs</h1>
-        <img src="../../assets/logo.svg" width="256">
+        <img src="../../assets/logo-new.svg" width="256">
         <br>
         <h5>Rust bindings for <code>libnvdialog.</code></h5>
 </div>
@@ -8,12 +8,14 @@
 <br>
 This is a Rust library that provides a safe and simple interface to nvdialog in Rust. This is not a Rust-only library; It will still try to link into the host library and panic otherwise. There may be better libraries out there if that's what you're looking for.<br>
 <br>
+Do note that NvDialog will need to be preinstalled before using this library. If required, ship a build of NvDialog by yourself and install it at runtime.
+<br>
 
 # Installation
 Add the following to your `Cargo.toml` file:
 ```toml
 [dependencies]
-nvdialog = "0.1.0"
+nvdialog = "0.1.3"
 ```
 # Simple example in Rust:
 ```rust
