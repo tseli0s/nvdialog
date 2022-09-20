@@ -9,3 +9,6 @@ testing/
 # The documentation will be uploaded on the website anyways,
 # so no point on storing it here.
 docs/
+
+# Makefile output, no need to include it.
+./libnvdialog.so
