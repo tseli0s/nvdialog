@@ -22,33 +22,29 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef __nvdialog_h__
-#define __nvdialog_h__
+#include "../include/nvdialog_capab.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+static bool __nvd_has_adw_gtk =
+#ifdef NVD_USE_GTK4
+true;
+#else
+false;
+#endif
 
-#define NVDIALOG_VERSION_MAJOR 0
-#define NVDIALOG_VERSION_MINOR 1
-#define NVDIALOG_VERSION_PATCH 3
+static bool __nvd_built_static =
+#ifdef NVD_STATIC_LINKAGE
+true;
+#else
+false;
+#endif
 
-#include "nvdialog_core.h"
-#include "nvdialog_dialog.h"
-#include "nvdialog_error.h"
-#include "nvdialog_capab.h"
-#include "nvdialog_types.h"
+static bool __nvd_compat_mode = false; /* No compatibility features currently available */
 
-/**
- * @brief Returns the version of nvdialog currently linked with.
- * For a compile time alternative implementation see the
- * NVDIALOG_VERSION_MAJOR, NVDIALOG_VERSION_MINOR and NVDIALOG_VERSION_PATCH
- * constants.
- */
-NvdVersion nvd_get_version();
-
-#ifdef __cplusplus
+bool nvd_get_capabilities(int query) {
+        switch (query) {
+                case NVD_ADW_BACKEND: return __nvd_has_adw_gtk;
+                case NVD_STATIC_LIB:  return __nvd_built_static;
+                case NVD_COMPAT_MODE: return __nvd_compat_mode;
+        }
+        return false; /* Just to silence compiler warnings */
 }
-#endif /* __cplusplus */
-
-#endif /* __nvdialog_h__ */

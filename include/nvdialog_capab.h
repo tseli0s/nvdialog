@@ -22,33 +22,33 @@
  * IN THE SOFTWARE.
  */
 
+#pragma once
+#ifndef __nvdialog_capab_h__
+#define __nvdialog_capab_h__ 1
+
+#include <stdbool.h>
+
 #ifndef __nvdialog_h__
-#define __nvdialog_h__
+#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
+#endif /* __nvdialog_h__ */
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-#define NVDIALOG_VERSION_MAJOR 0
-#define NVDIALOG_VERSION_MINOR 1
-#define NVDIALOG_VERSION_PATCH 3
-
-#include "nvdialog_core.h"
-#include "nvdialog_dialog.h"
-#include "nvdialog_error.h"
-#include "nvdialog_capab.h"
-#include "nvdialog_types.h"
+enum {
+        /* Adwaita backend support */
+        NVD_ADW_BACKEND = 0x20,
+        /* Built as a static library */
+        NVD_STATIC_LIB,
+        /* Older version compatibility */
+        NVD_COMPAT_MODE
+};
 
 /**
- * @brief Returns the version of nvdialog currently linked with.
- * For a compile time alternative implementation see the
- * NVDIALOG_VERSION_MAJOR, NVDIALOG_VERSION_MINOR and NVDIALOG_VERSION_PATCH
- * constants.
+ * @brief Returns the NvDialog's build time detected capabilities.
+ * @details This function returns the NvDialog's build time capabilities, such
+ * as backends enabled, linkage method and others. It is a work in progress since most
+ * of the library isn't modular.
+ * @param query Which capabilities to query.
+ * @return true if the requested @ref query is supported, else false.
  */
-NvdVersion nvd_get_version();
+bool nvd_get_capabilities(int query);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
-
-#endif /* __nvdialog_h__ */
+#endif /* __nvdialog_capab_h__ */
