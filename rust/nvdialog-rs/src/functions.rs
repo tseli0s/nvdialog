@@ -45,7 +45,10 @@ pub(super) fn msgbox(library: &Library, title: &str, msg: &str) -> Result<(), cr
             library
                 .get(symbol_fmt("nvd_dialog_box_new").as_bytes())
                 .expect("Invalid library");
-        let result = func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 255);
+        let result = func(
+            symbol_fmt(title).as_ptr() as *const i8,
+            symbol_fmt(msg).as_ptr() as *const i8, 255
+        );
         if result == null_mut() {
             Err(crate::error::Error::NVD_INTERNAL_ERROR)
         } else {
@@ -64,7 +67,10 @@ pub(super) fn warningbox(
             library
                 .get(symbol_fmt("nvd_dialog_box_new").as_bytes())
                 .expect("Invalid library");
-        if func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 256) == null_mut() {
+        if func(
+            symbol_fmt(title).as_ptr() as *const i8,
+            symbol_fmt(msg).as_ptr() as *const i8, 256
+        ) == null_mut() {
             Err(crate::error::Error::NVD_INTERNAL_ERROR)
         } else {
             Ok(())
@@ -82,7 +88,10 @@ pub(super) fn errorbox(
             library
                 .get(symbol_fmt("nvd_dialog_box_new").as_bytes())
                 .expect("Invalid library");
-        if func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 257) == null_mut() {
+        if func(
+            symbol_fmt(title).as_ptr() as *const i8,
+            symbol_fmt(msg).as_ptr() as *const i8, 257
+        ) == null_mut() {
             Err(crate::error::Error::NVD_INTERNAL_ERROR)
         } else {
             Ok(())
@@ -112,9 +121,9 @@ pub(super) fn about_dialog(
             used_icon = null();
         }
         func(
-            title.as_ptr() as *const i8,
-            content.as_ptr() as *const i8,
-            license.as_ptr() as *const i8,
+            symbol_fmt(title).as_ptr() as *const i8,
+            symbol_fmt(content).as_ptr() as *const i8,
+            null(),
             used_icon,
         );
     }
