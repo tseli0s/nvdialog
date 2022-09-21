@@ -22,6 +22,7 @@
  * IN THE SOFTWARE.
  */
 
+pub mod error;
 mod functions;
 
 extern crate libloading;
@@ -60,8 +61,8 @@ impl NvDialogContext {
         let library;
 
         unsafe {
-            library = Library::new("/usr/lib/libnvdialog.so")
-                .expect("Couldn't load the native library.");
+            library =
+                Library::new("/usr/lib/libnvdialog.so").expect("Couldn't load the native library.");
         }
         Self {
             bound: false,
@@ -75,7 +76,7 @@ impl NvDialogContext {
      * Skipping this may result in undefined behavior. Please ensure you call this
      * function.
      * TODO: Return Result on everything.
-    */
+     */
     pub fn init(mut self, argv_0: &str) -> Self {
         let argv0 = format!("{}{}", argv_0, '\0');
         let init_fn: Symbol<unsafe extern "C" fn(*const i8) -> u32>;
@@ -94,17 +95,16 @@ impl NvDialogContext {
     }
 
     /* Shows a simple message box with the title and message given. */
-    pub fn message_box(&self, title: &str, message: &str, dialog_type: DialogType) {
+    pub fn message_box(
+        &self,
+        title: &str,
+        message: &str,
+        dialog_type: DialogType,
+    ) -> Result<(), crate::error::Error> {
         match dialog_type {
-            DialogType::SimpleDialog => {
-                functions::msgbox(&self.library, title, message);
-            }
-            DialogType::WarningDialog => {
-                functions::warningbox(&self.library, title, message);
-            }
-            DialogType::ErrorDialog => {
-                functions::errorbox(&self.library, title, message);
-            }
+            DialogType::SimpleDialog => functions::msgbox(&self.library, title, message),
+            DialogType::WarningDialog => functions::warningbox(&self.library, title, message),
+            DialogType::ErrorDialog => functions::errorbox(&self.library, title, message),
         }
     }
 
@@ -128,5 +128,13 @@ impl NvDialogContext {
                 None,
             );
         }
+    }
+
+    pub fn get_error(&self) -> i32 {
+        crate::functions::get_error(&self.library)
+    }
+
+    pub fn stringify_error(&self, err: crate::error::Error) -> String {
+        crate::functions::stringify_error(&self.library, err)
     }
 }

@@ -22,8 +22,10 @@
  * IN THE SOFTWARE.
  */
 
+use core::ptr::null_mut;
 use libloading::*;
-use std::ptr::{null, null_mut};
+use std::ffi::CStr;
+use std::ptr::null;
 
 /*
  * WARNING:
@@ -37,33 +39,54 @@ fn symbol_fmt(s: &str) -> String {
     format!("{}{}", s, '\0')
 }
 
-pub(super) fn msgbox(library: &Library, title: &str, msg: &str) {
+pub(super) fn msgbox(library: &Library, title: &str, msg: &str) -> Result<(), crate::error::Error> {
     unsafe {
         let func: Symbol<unsafe extern "C" fn(*const i8, *const i8, u32) -> *mut libc::c_void> =
             library
                 .get(symbol_fmt("nvd_dialog_box_new").as_bytes())
                 .expect("Invalid library");
-        func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 255);
+        let result = func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 255);
+        if result == null_mut() {
+            Err(crate::error::Error::NVD_INTERNAL_ERROR)
+        } else {
+            Ok(())
+        }
     }
 }
 
-pub(super) fn warningbox(library: &Library, title: &str, msg: &str) {
+pub(super) fn warningbox(
+    library: &Library,
+    title: &str,
+    msg: &str,
+) -> Result<(), crate::error::Error> {
     unsafe {
         let func: Symbol<unsafe extern "C" fn(*const i8, *const i8, u32) -> *mut libc::c_void> =
             library
                 .get(symbol_fmt("nvd_dialog_box_new").as_bytes())
                 .expect("Invalid library");
-        func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 256);
+        if func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 256) == null_mut() {
+            Err(crate::error::Error::NVD_INTERNAL_ERROR)
+        } else {
+            Ok(())
+        }
     }
 }
 
-pub(super) fn errorbox(library: &Library, title: &str, msg: &str) {
+pub(super) fn errorbox(
+    library: &Library,
+    title: &str,
+    msg: &str,
+) -> Result<(), crate::error::Error> {
     unsafe {
         let func: Symbol<unsafe extern "C" fn(*const i8, *const i8, u32) -> *mut libc::c_void> =
             library
                 .get(symbol_fmt("nvd_dialog_box_new").as_bytes())
                 .expect("Invalid library");
-        func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 257);
+        if func(title.as_ptr() as *const i8, msg.as_ptr() as *const i8, 257) == null_mut() {
+            Err(crate::error::Error::NVD_INTERNAL_ERROR)
+        } else {
+            Ok(())
+        }
     }
 }
 
@@ -94,5 +117,23 @@ pub(super) fn about_dialog(
             license.as_ptr() as *const i8,
             used_icon,
         );
+    }
+}
+
+pub(super) fn get_error(library: &Library) -> i32 {
+    unsafe {
+        let fnc: Symbol<unsafe extern "C" fn() -> std::os::raw::c_int> =
+            library.get(b"nvd_get_error").expect("Invalid library.");
+
+        fnc()
+    }
+}
+
+pub(super) fn stringify_error(library: &Library, error: crate::error::Error) -> String {
+    unsafe {
+        let fnc: Symbol<unsafe extern "C" fn(crate::error::Error) -> *const i8> =
+            library.get(b"nvd_get_error").expect("Invalid library.");
+
+        String::from(CStr::from_ptr(fnc(error)).to_str().unwrap())
     }
 }
