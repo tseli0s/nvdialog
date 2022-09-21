@@ -22,7 +22,7 @@
  * IN THE SOFTWARE.
  */
 
-#include "../include/nvdialog_capab.h"
+#include "nvdialog.h"
 
 static bool __nvd_has_adw_gtk =
 #ifdef NVD_USE_GTK4
