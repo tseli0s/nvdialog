@@ -36,5 +36,5 @@ const char *nvd_open_file_dialog_win32(const char *title, const char *message);
 uint32_t nvd_create_win32_dialog(const char *title, const char *message,
                                  NvdDialogType type);
 
-nvd_about_dialog_win32(const char *name, const char *description,
+void* nvd_about_dialog_win32(const char *name, const char *description,
                        const char *license_text, const char *logo_path);

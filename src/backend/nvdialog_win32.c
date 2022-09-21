@@ -75,3 +75,7 @@ uint32_t nvd_create_win32_dialog(const char *title, const char *message,
         }
         return MessageBox(NULL, message, title, MB_OK | flag);
 }
+
+void* nvd_about_dialog_win32(const char *name, const char *description,
+                       const char *license_text, const char *logo_path)
+                       { }
