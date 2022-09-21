@@ -6,7 +6,7 @@ author = "Aggelos Tselios <aggelostselios777@gmail.com>"
 license = "MIT"
 
 description = "Safe and lightweight bindings for libnvdialog."
-version = "0.1.3"
+version = "0.1.5"
 edition = "2021"
 
 repository = "https://github.com/AndroGR/nvdialog"

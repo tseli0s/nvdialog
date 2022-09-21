@@ -22,9 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-use libloading::*;
-
 #[allow(non_camel_case_types)]
+#[derive(Debug)]
 pub enum Error {
     NVD_NO_ERROR = 0x0,
     NVD_NO_DISPLAY = 0xff,

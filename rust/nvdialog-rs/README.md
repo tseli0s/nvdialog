@@ -15,24 +15,24 @@ Do note that NvDialog will need to be preinstalled before using this library. If
 Add the following to your `Cargo.toml` file:
 ```toml
 [dependencies]
-nvdialog = "0.1.3"
+nvdialog = "0.1.5"
 ```
-# Simple example in Rust:
-```rust
-/* Importing the library */
-extern crate nvdialog;
-use nvdialog::NvDialogContext;
 
-fn main() {
-        /* Initializing the library */
-        let nvd_dialog_ctx = NvdialogContext::new().init();
+# Documentation
+You can find the documentation for this crate through the [crates.io link.](https://crates.io/).
+Do note that documentation is only available since 0.1.5, since before that the main focus was shifted
+towards the native (C) library.
 
-        /* And creating the dialog */
-        nvd_dialog_ctx.messagebox(
-                "Hello world from Rust !",
-                "This is a simple example in Rust using the nvdialog crate."
-        )
-}
-```
+# MSRV and NvDialog Compatibility
+##### *(Minimum Rust version supported)*
+| `nvdialog-rs` | `MSRV` | NvDialog version compatibility |
+| --- | --- | --- |
+| 0.1.0 | 1.35 | 0.1.0 |
+| 0.1.3 | 1.35 | 0.1.3 |
+| 0.1.5 | 1.35 | 0.1.3 |
+
+# License
+This library is licensed under the MIT License, see [COPYING](./COPYING) for more details.
+There is a chance to relicense future versions of this library to Apache-2.0. If your code is incompatible, a dual license will be offered.
 
 
