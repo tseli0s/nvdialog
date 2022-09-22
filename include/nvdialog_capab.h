@@ -44,8 +44,8 @@ enum {
 /**
  * @brief Returns the NvDialog's build time detected capabilities.
  * @details This function returns the NvDialog's build time capabilities, such
- * as backends enabled, linkage method and others. It is a work in progress since most
- * of the library isn't modular.
+ * as backends enabled, linkage method and others. It is a work in progress
+ * since most of the library isn't modular.
  * @param query Which capabilities to query.
  * @return true if the requested @ref query is supported, else false.
  */
