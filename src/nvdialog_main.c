@@ -151,6 +151,7 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
 #endif /* NVD_USE_GTK4 */
 #else
         nvd_create_win32_dialog(title, message, type);
+        return 0;
 #endif /* _WIN32 */
 }
 
