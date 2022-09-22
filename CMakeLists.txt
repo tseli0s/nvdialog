@@ -39,9 +39,9 @@ set(NVD_HEADERS include/nvdialog_dialog.h include/nvdialog_core.h include/nvdial
 # Otherwise, use the standard backends.
 if (WIN32 OR WIN32_TARGET)
         if (NVD_BUILD_STATIC)
-                add_library(nvdialog STATIC src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+                add_library(nvdialog STATIC src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/nvdialog_capab.c src/nvdialog_main.c)
         else(NVD_BUILD_STATIC)
-                add_library(nvdialog SHARED src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/backend/nvdialog_fallback.c src/nvdialog_main.c)
+                add_library(nvdialog SHARED src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/nvdialog_capab.c src/nvdialog_main.c)
         endif(NVD_BUILD_STATIC)
         message("-- Compiling a Windows library.")
         target_link_libraries(nvdialog comdlg32)
