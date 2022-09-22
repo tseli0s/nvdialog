@@ -141,6 +141,7 @@ void *nvd_create_gtk_dialog(const char *title, const char *message,
         image = gtk_image_new_from_icon_name(icon, GTK_ICON_SIZE_DIALOG);
         dialog = gtk_dialog_new_with_buttons(title, NULL, flags, NULL,
                                              GTK_RESPONSE_NONE, NULL);
+        gtk_window_set_resizable(GTK_WINDOW (dialog), false);
         content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
         label = gtk_label_new(message);
         ok_button = gtk_button_new_with_label("Ok");
@@ -183,6 +184,7 @@ NvdReply nvd_question_gtk(const char *title, const char *question,
         NvdReply rep = 0x0;
 
         dialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gtk_window_set_resizable(GTK_WINDOW (dialog), false);
         gtk_window_set_title(GTK_WINDOW(dialog), title);
         text = gtk_label_new(question);
         grid = gtk_grid_new();
