@@ -249,7 +249,7 @@ void *nvd_about_dialog_gtk(const char *name, const char *description,
         char buffer[NVDIALOG_MAXBUF];
         sprintf(buffer, "About %s", name);
         gtk_window_set_title(GTK_WINDOW(window), buffer);
-        gtk_window_set_default_size(GTK_WINDOW (window), 545, 650);
+        gtk_window_set_default_size(GTK_WINDOW(window), 545, 650);
         grid = gtk_grid_new();
 
         label = gtk_label_new(description);
