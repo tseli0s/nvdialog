@@ -64,12 +64,12 @@ $ git clone --depth=1 https://github.com/AndroGR/libnvdialog.git && cd libnvdial
 ```sh
 $ mkdir build/ && cd build/
 $ cmake ..
-$ make -j`nproc`
+$ cmake --build .
 ```
 
 - And install it on your system:
 ```sh
-$ sudo make install -j`nproc`
+$ sudo cmake --install .
 ```
 
 # License
