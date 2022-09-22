@@ -22,8 +22,11 @@
  * IN THE SOFTWARE.
  */
 
+#include "nvdialog.h"
 #include "nvdialog_win32.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <wchar.h>
 
 /* The largest filename allowed by the library. Perhaps we should extend this?
  */
@@ -76,6 +79,11 @@ uint32_t nvd_create_win32_dialog(const char *title, const char *message,
         return MessageBox(NULL, message, title, MB_OK | flag);
 }
 
-void* nvd_about_dialog_win32(const char *name, const char *description,
-                       const char *license_text, const char *logo_path)
-                       { }
+void *nvd_about_dialog_win32(const char *name, const char *description,
+                             const char *license_text, const char *logo_path) {
+        /*
+         * The window class.
+         * TODO: Make this modifiable by the user.
+         */
+        const wchar_t *class = "NvDialog Window";
+}
