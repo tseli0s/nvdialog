@@ -23,9 +23,9 @@
  */
 
 #include "nvdialog.h"
+#include <stdint.h>
 #include <windows.h>
 #include <winuser.h>
-#include <stdint.h>
 
 /* Shows an Open File dialog using the Win32 API. */
 const char *nvd_open_file_dialog_win32(const char *title, const char *message);
@@ -39,3 +39,7 @@ uint32_t nvd_create_win32_dialog(const char *title, const char *message,
 
 void *nvd_about_dialog_win32(const char *name, const char *description,
                              const char *license_text, const char *logo_path);
+
+/* A dialog to show a question. */
+NvdReply nvd_dialog_question_win32(const char *title, const char *question,
+                                   NvdQuestionButton button);

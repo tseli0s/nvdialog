@@ -22,8 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog.h"
 #include "nvdialog_win32.h"
+#include "nvdialog.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <wchar.h>
@@ -86,4 +86,30 @@ void *nvd_about_dialog_win32(const char *name, const char *description,
          * TODO: Make this modifiable by the user.
          */
         const wchar_t *class = "NvDialog Window";
+}
+
+NvdReply nvd_dialog_question_win32(const char *title, const char *question,
+                                   NvdQuestionButton button) {
+        int flag, reply;
+        switch (button) {
+        case NVD_YES_NO:
+        case NVD_YES_CANCEL:
+                flag = MB_YESNO;
+                break;
+        case NVD_YES_NO_CANCEL:
+                flag = MB_YESNOCANCEL;
+                break;
+        default:
+                nvd_set_error(NVD_INVALID_PARAM);
+                break;
+        }
+
+        reply = MessageBox(NULL, question, title, flag | MB_ICONQUESTION);
+        switch (reply)
+        {
+                case IDYES: return NVD_REPLY_OK;
+                case IDNO: return NVD_REPLY_NO;
+                case IDCANCEL: return NVD_REPLY_CANCEL;
+        }
+        return -1; /* Just so GCC doesn't complain */
 }
