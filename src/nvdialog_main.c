@@ -31,6 +31,7 @@
 #ifndef _WIN32
 #include "backend/nvdialog_adw.h"
 #include "backend/nvdialog_gtk.h"
+#include <commctrl.h>
 #endif /* _WIN32 */
 
 #if defined(_WIN32)
@@ -49,6 +50,7 @@ struct _NvdDialogBox {
         NvdDialogType type;
 };
 
+#if !defined (_WIN32)
 struct NvdContext {
 #ifdef NVD_USE_GTK4
         AdwApplication *application;
@@ -59,7 +61,7 @@ struct NvdContext {
         const char *domain;
         uint32_t flags;
 };
-
+#endif /* !defined (_WIN32) */
 /*
  * The default domain name used for libadwaita applications.
  * This variable is modified from nvd_set_domain_name().
@@ -96,7 +98,9 @@ void nvd_delete_context(NvdContext *ctx) {
 const char *nvd_get_argv() { return nvd_argv_0; }
 
 int nvd_init(char *program) {
-        setlinebuf(stdout);
+        #if !defined(_WIN32)
+        setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
+        #endif /* _WIN32 */
         nvd_argv_0 = program;
 #ifndef _WIN32
         if (!getenv("DISPLAY")) {
@@ -134,7 +138,6 @@ const char *nvd_open_file_dialog_new(const char *title,
 
 NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                                  NvdDialogType type) {
-        setlinebuf(stdout);
 #if !defined(_WIN32)
 #ifndef NVD_USE_GTK4
         NvdDialogBox *dialog = nvd_create_gtk_dialog(title, message, type);
@@ -161,7 +164,7 @@ NvdReply nvd_dialog_question_new(const char *title, const char *question,
         return 0; /* Unimplemented */
 #endif /* NVD_USE_GTK4 */
 #else
-        nvd_question_win32(title, question, button);
+        return -1; /* Unimplemented */
 #endif /* _WIN32 */
         return -1;
 }
