@@ -101,7 +101,7 @@ NvdReply nvd_dialog_question_win32(const char *title, const char *question,
                 break;
         default:
                 nvd_set_error(NVD_INVALID_PARAM);
-                break;
+                return -1;
         }
 
         reply = MessageBox(NULL, question, title, flag | MB_ICONQUESTION);
