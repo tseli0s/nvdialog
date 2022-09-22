@@ -50,7 +50,7 @@ struct _NvdDialogBox {
         NvdDialogType type;
 };
 
-#if !defined (_WIN32)
+#if !defined(_WIN32)
 struct NvdContext {
 #ifdef NVD_USE_GTK4
         AdwApplication *application;
@@ -98,14 +98,13 @@ void nvd_delete_context(NvdContext *ctx) {
 const char *nvd_get_argv() { return nvd_argv_0; }
 
 int nvd_init(char *program) {
-        #if !defined(_WIN32)
+#if !defined(_WIN32)
         setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
-        #endif /* _WIN32 */
+#endif                      /* _WIN32 */
         nvd_argv_0 = program;
 #ifndef _WIN32
         if (!getenv("DISPLAY")) {
                 nvd_set_error(NVD_NO_DISPLAY);
-                nvd_error_message("%s", nvd_stringify_error(NVD_NO_DISPLAY));
                 return -1;
         }
 /* Apparently in Gtk4 the gtk_init function doesn't require any arguments. */
@@ -161,10 +160,10 @@ NvdReply nvd_dialog_question_new(const char *title, const char *question,
 #if !defined(NVD_USE_GTK4)
         return nvd_question_gtk(title, question, button);
 #else
-        return 0; /* Unimplemented */
+        return -1; /* Unimplemented */
 #endif /* NVD_USE_GTK4 */
 #else
-        return -1; /* Unimplemented */
+        return nvd_dialog_question_win32(title, question, button);
 #endif /* _WIN32 */
         return -1;
 }
