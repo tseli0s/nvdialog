@@ -26,25 +26,29 @@
 
 static bool __nvd_has_adw_gtk =
 #ifdef NVD_USE_GTK4
-true;
+    true;
 #else
-false;
+    false;
 #endif
 
 static bool __nvd_built_static =
 #ifdef NVD_STATIC_LINKAGE
-true;
+    true;
 #else
-false;
+    false;
 #endif
 
-static bool __nvd_compat_mode = false; /* No compatibility features currently available */
+static bool __nvd_compat_mode =
+    false; /* No compatibility features currently available */
 
 bool nvd_get_capabilities(int query) {
         switch (query) {
-                case NVD_ADW_BACKEND: return __nvd_has_adw_gtk;
-                case NVD_STATIC_LIB:  return __nvd_built_static;
-                case NVD_COMPAT_MODE: return __nvd_compat_mode;
+        case NVD_ADW_BACKEND:
+                return __nvd_has_adw_gtk;
+        case NVD_STATIC_LIB:
+                return __nvd_built_static;
+        case NVD_COMPAT_MODE:
+                return __nvd_compat_mode;
         }
         return false; /* Just to silence compiler warnings */
 }
