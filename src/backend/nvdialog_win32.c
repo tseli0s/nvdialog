@@ -23,6 +23,7 @@
  */
 
 #include "nvdialog_win32.h"
+#include "../nvdialog_error.h"
 #include "nvdialog.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -79,13 +80,25 @@ uint32_t nvd_create_win32_dialog(const char *title, const char *message,
         return MessageBox(NULL, message, title, MB_OK | flag);
 }
 
+/*
+ * TODO: This function is not as good as its Gtk (Linux) implementation.
+ * In order to provide a consistent interface, we should rewrite it to look
+ * better and be more customizable.
+*/
 void *nvd_about_dialog_win32(const char *name, const char *description,
                              const char *license_text, const char *logo_path) {
-        /*
-         * The window class.
-         * TODO: Make this modifiable by the user.
-         */
-        const wchar_t *class = "NvDialog Window";
+        char fmt[NVDIALOG_MAXBUF];
+        char description_fmt[NVDIALOG_MAXBUF * 2];
+        sprintf(description_fmt, "%s\n\n%s", description, license_text);
+        sprintf(fmt, "About %s", name);
+        MessageBoxEx(
+                NULL,
+                description_fmt,
+                fmt,
+                MB_ICONINFORMATION | MB_OK | MB_RIGHT | MB_SYSTEMMODAL,
+                0
+        );
+        return (void*) 1; /* TODO: Create an NvdDialogBox and return it */
 }
 
 NvdReply nvd_dialog_question_win32(const char *title, const char *question,
