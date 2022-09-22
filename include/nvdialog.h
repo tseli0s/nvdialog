@@ -33,10 +33,10 @@ extern "C" {
 #define NVDIALOG_VERSION_MINOR 1
 #define NVDIALOG_VERSION_PATCH 3
 
+#include "nvdialog_capab.h"
 #include "nvdialog_core.h"
 #include "nvdialog_dialog.h"
 #include "nvdialog_error.h"
-#include "nvdialog_capab.h"
 #include "nvdialog_types.h"
 
 /**
