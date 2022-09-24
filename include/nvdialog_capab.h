@@ -22,6 +22,10 @@
  * IN THE SOFTWARE.
  */
 
+#ifdef __nvdialog_capab_h__
+#error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
+#endif /* __nvdialog_capab_h__ */
+
 #pragma once
 #ifndef __nvdialog_capab_h__
 #define __nvdialog_capab_h__ 1

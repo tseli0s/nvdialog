@@ -23,6 +23,11 @@
  */
 
 #pragma once
+
+#ifdef __nvdialog_types_h__
+#error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
+#endif /* __nvdialog_types_h__ */
+
 #ifndef __nvdialog_types_h__
 #define __nvdialog_types_h__ 1
 
