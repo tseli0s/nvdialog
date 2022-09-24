@@ -101,6 +101,7 @@ const char *nvd_get_argv() { return nvd_argv_0; }
 int nvd_init(char *program) {
 #if !defined(_WIN32)
         setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
+        setlinebuf(stderr);
 #endif                      /* _WIN32 */
         nvd_argv_0 = program;
 #ifndef _WIN32
