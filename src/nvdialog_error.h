@@ -66,4 +66,12 @@ void nvd_error_message(const char *fmt, ...);
  * so the former may be deprecated soon in favor of this.
  */
 void nvd_out_of_memory();
+
+/*
+ * Prints a message to stdout.
+ * This function will only be useful if NvDialog is built with this
+ * option. It is also not used for error messages, just some debugging.
+*/
+void nvd_message(const char* fmt, ...);
+
 #endif /* __nvd_error_h__ */

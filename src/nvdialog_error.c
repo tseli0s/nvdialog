@@ -106,3 +106,16 @@ void nvd_out_of_memory() {
                                              is pretty useless. */
         abort();
 }
+
+void nvd_message(const char* fmt, ...) {
+        va_list args;
+        va_start(args, fmt);
+
+        char buffer[NVD_BUFFER_SIZE];
+
+        sprintf(buffer, "%s %s", TERMINAL_PREFIX, fmt);
+        vfprintf(stdout, buffer, args);
+
+        va_end(args);
+        fflush(stderr);
+}
