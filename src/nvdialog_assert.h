@@ -39,7 +39,7 @@ nvd_print_assert(const char *msg, ...) {
 
         char buffer[NVD_BUFFER_SIZE * 16]; /* I know. Huge buffer. But we could
                                               be dealing with worse things. */
-        sprintf(buffer, "%s \x1B[1m\x1B[91m%s\x1B[0m\x1B[97m", TERMINAL_PREFIX,
+        sprintf(buffer, "%s \x1B[1m%s\x1B[0m", TERMINAL_PREFIX,
                 msg);
         vfprintf(stderr, buffer, args);
 
