@@ -86,7 +86,7 @@ void nvd_error_message(const char *fmt, ...) {
 
         char buffer[NVD_BUFFER_SIZE];
 
-        sprintf(buffer, "%s %s", TERMINAL_PREFIX, fmt);
+        sprintf(buffer, "%s %s\n", TERMINAL_PREFIX, fmt);
         vfprintf(stderr, buffer, args);
 
         va_end(args);
@@ -113,9 +113,9 @@ void nvd_message(const char* fmt, ...) {
 
         char buffer[NVD_BUFFER_SIZE];
 
-        sprintf(buffer, "%s %s", TERMINAL_PREFIX, fmt);
+        sprintf(buffer, "%s %s\n", TERMINAL_PREFIX, fmt);
         vfprintf(stdout, buffer, args);
 
         va_end(args);
-        fflush(stderr);
+        fflush(stdout);
 }
