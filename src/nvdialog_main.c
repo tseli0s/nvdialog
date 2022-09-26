@@ -32,10 +32,6 @@
 #include "backend/nvdialog_adw.h"
 #include "backend/nvdialog_gtk.h"
 #else
-#include <commctrl.h>
-#endif /* _WIN32 */
-
-#if defined(_WIN32)
 #include "backend/nvdialog_win32.h"
 #endif /* _WIN32 */
 
