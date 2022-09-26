@@ -55,7 +55,7 @@ nvd_print_assert(const char *msg, ...) {
                         nvd_print_assert(                                      \
                             "Assertion failure: %s\n  Line: %d\n  Filename: "  \
                             "%s\n  Function: %s\n",                            \
-                            #eq, __LINE__, __FILE__, __func__);                \
+                            #eq, __LINE__, __FILE__, NVD_FN_IDENT);            \
                 }                                                              \
         } while (0)
 
