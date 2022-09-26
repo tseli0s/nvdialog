@@ -37,6 +37,7 @@
 #define NVD_INTERNAL_FUNCTION __attribute__((visibility("hidden")))
 #define NVD_DONT_INITIALIZE __attribute__((noinit))
 #define NVD_DEPRECATED(x) __attribute__((deprecated(x)))
+#define NVD_FN_IDENT __PRETTY_FUNCTION__
 
 #else
 
@@ -46,6 +47,8 @@
 
 #define NVD_LIBRARY_FUNCTION
 #define NVD_INTERNAL_FUNCTION
+
+#define NVD_FN_IDENT __FUNC__
 
 #ifndef NVD_BUFFER_SIZE
 #define NVD_BUFFER_SIZE 4096
