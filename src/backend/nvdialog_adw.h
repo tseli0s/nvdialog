@@ -23,47 +23,14 @@
  */
 
 #ifndef __nvdialog_adw_h__
-#define __nvdialog_adw_h__ 1
+#define __nvdialog_adw_h__
 
-#ifdef NVD_USE_GTK4
-
-#include "../nvdialog_assert.h"
 #include "nvdialog.h"
 #include <adwaita.h>
 
-/*
- * Creates a new GApplication, connects it to the usual signals,
- * and sets up the activate function. This function is needed
- * with the new Gtk4 backend.
- */
-NvdContext *nvd_bind_context_adw();
+/* Shows a simple dialog box using libadwaita. */
+NvdDialogBox *nvd_dialog_box_adw(const char* title,
+                                 const char* message,
+                                 NvdDialogType type);
 
-/*
- * Deletes a context created by nvd_bind_context_adw().
- * NOTE: Use after free may happen if on multiple threads.
- */
-void nvd_delete_context_adw(NvdContext *ctx);
-
-/*
- * Opens a "Open File" dialog using Gtk4 and libadwaita.
- * This function is mostly experimental like the entire backend.
- */
-const char *nvd_open_file_dialog_adw(const char *title,
-                                     const char *file_extensions);
-
-/*
- * Creates a message dialog using Gtk4 and libadwaita.
- * This function uses a much more newer look, so it may not be very
- * consistent across different library builds.
- */
-NvdDialogBox *nvd_create_adw_dialog(const char *title, const char *message,
-                                    const NvdDialogType type);
-
-/*
- * Creates an 'About Application' dialog window.
- */
-void *nvd_about_dialog_adw(const char *name, const char *description,
-                           const char *license_text, const char *logo_path);
-
-#endif /* NVD_USE_GTK4 */
-#endif /* __nvdialog_gtk_h__ */
+#endif /* __nvdialog_adw_h__ */
