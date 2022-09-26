@@ -22,11 +22,9 @@
  * IN THE SOFTWARE.
  */
 
+#include <windows.h>
+#include <winuser.h>
 #include "nvdialog_win32.h"
-#include "../nvdialog_error.h"
-#include "nvdialog.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include <wchar.h>
 
 /* The largest filename allowed by the library. Perhaps we should extend this?

@@ -23,9 +23,8 @@
  */
 
 #include "nvdialog.h"
-#include <stdint.h>
-#include <windows.h>
-#include <winuser.h>
+
+#define uint32_t int
 
 /* Shows an Open File dialog using the Win32 API. */
 const char *nvd_open_file_dialog_win32(const char *title, const char *message);
