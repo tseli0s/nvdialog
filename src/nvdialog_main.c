@@ -74,22 +74,11 @@ inline void nvd_set_domain_name(char *domain) {
 inline const char *nvd_get_domain_name(void) { return nvd_domain_name; }
 
 NvdContext *nvd_bind_context(void) {
-#if defined(NVD_USE_GTK4)
-        return nvd_bind_context_adw();
-#else
-        return NULL; /* Other backends do not support this call. */
-#endif /* NVD_USE_GTK4 */
+        return NULL;
 }
 
 void nvd_delete_context(NvdContext *ctx) {
-#if defined(NVD_USE_GTK4)
-        nvd_delete_context_adw(ctx);
-        return;
-#else
-        /* TODO: Implement a custom function instead. */
         free(ctx);
-        return;
-#endif /* NVD_USE_GTK4 */
 }
 
 const char *nvd_get_argv() { return nvd_argv_0; }
@@ -113,7 +102,7 @@ int nvd_init(char *program) {
         };
         gtk_init(&__argc__, &__argv__);
 #else
-        gtk_init();
+        adw_init();
 #endif /* NVD_USE_GTK4 */
 #endif /* _WIN32 */
         return 0;
@@ -126,7 +115,7 @@ const char *nvd_open_file_dialog_new(const char *title,
         const char *data = nvd_open_file_dialog_gtk(title, file_extensions);
         return data;
 #else
-        return nvd_open_file_dialog_adw(title, file_extensions);
+        return NULL;
 #endif /* NVD_USE_GTK4 */
 #else
         return nvd_open_file_dialog_win32(title, file_extensions);
@@ -142,7 +131,7 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                 nvd_set_error(NVD_INTERNAL_ERROR);
         return dialog;
 #else
-        NvdDialogBox *dialog = nvd_create_adw_dialog(title, message, type);
+        NvdDialogBox *dialog = nvd_dialog_box_adw(title, message, type);
         if (!dialog)
                 nvd_set_error(NVD_INTERNAL_ERROR);
         return dialog;
@@ -177,7 +166,7 @@ NvdDialogBox *nvd_about_dialog_new(const char *name, const char *description,
 #if !defined(NVD_USE_GTK4)
         return nvd_about_dialog_gtk(name, description, license_text, logo_path);
 #else
-        return nvd_about_dialog_adw(name, description, license_text, logo_path);
+        return NULL;
 #endif /* !NVD_USE_GTK4 */
 #endif /* _WIN32 */
 }
