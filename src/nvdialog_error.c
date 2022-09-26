@@ -77,7 +77,7 @@ const char *nvd_stringify_error(NvdError err) {
         default:
                 return NULL;
         }
-        return error;
+        return error; // FIXME: Don't return a local stack pointer here.
 }
 
 void nvd_error_message(const char *fmt, ...) {
