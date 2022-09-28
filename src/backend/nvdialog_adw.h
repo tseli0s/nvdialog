@@ -33,4 +33,7 @@ NvdDialogBox *nvd_dialog_box_adw(const char* title,
                                  const char* message,
                                  NvdDialogType type);
 
+/* Opens a file dialog using libadwaita. */
+const char* nvd_open_file_dialog_adw(const char* title,
+                                     const char* file_extensions);
 #endif /* __nvdialog_adw_h__ */
