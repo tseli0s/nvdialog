@@ -115,7 +115,8 @@ const char *nvd_open_file_dialog_new(const char *title,
         const char *data = nvd_open_file_dialog_gtk(title, file_extensions);
         return data;
 #else
-        return NULL;
+        const char* data = nvd_open_file_dialog_adw(title, file_extensions);
+        return data;
 #endif /* NVD_USE_GTK4 */
 #else
         return nvd_open_file_dialog_win32(title, file_extensions);
