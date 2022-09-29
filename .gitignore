@@ -12,3 +12,5 @@ docs/
 
 # Makefile output, no need to include it.
 ./libnvdialog.so
+examples/file-dialog/file_dialog_example
+examples/hello-world/hello-world
