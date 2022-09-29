@@ -24,7 +24,7 @@ if(WIN32_TARGET)
         set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
 endif()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-parameter ---param ssp-buffer-size=4 mmitigate-rop -Werror=conversion -Werror=format -Werror=format-security -W -Winline -Wall -Wextra")
+set(CMAKE_C_FLAGS "-O3 -s -flto -Wno-unused-parameter --param ssp-buffer-size=4 -Werror=conversion -Werror=format -Werror=format-security -W -Winline -Wall -Wextra")
 add_compile_definitions(_FORTIFY_SOURCE=2)
 add_compile_definitions(NVDIALOG_MAXBUF=${NVDIALOG_MAXBUF})
 if (NOT NVD_USE_GTK4)
