@@ -20,6 +20,7 @@
 - Assertion failures no longer output red text.
 - Function names are now using a GCC extension to allow `main` to become `int main(int, char**)`.
 - Ported API changes to Windows.
+- Added `PKGBUILD` for Arch Linux.
 
 # Changelog -- 0.1.3
 
