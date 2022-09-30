@@ -1,9 +1,16 @@
+# The usual directories.
 build/
 .vscode/
 .cache/
+
+# Rust files that would normally take gigabytes of storage
+# if not entirely excluded.
 rust/nvdialog-rs/target/
 rust/nvdialog-rs/Cargo.lock
 rust/nvdialog-rs/examples/hello-world/target
+
+# The directory where some features are being tested,
+# not uploaded because there's a mess inside it.
 testing/
 
 # The documentation will be uploaded on the website anyways,
@@ -12,5 +19,7 @@ docs/
 
 # Makefile output, no need to include it.
 ./libnvdialog.so
+
+# Examples, we should not upload the binaries.
 examples/file-dialog/file_dialog_example
 examples/hello-world/hello-world
