@@ -65,6 +65,7 @@ struct NvdContext {
  */
 static char *nvd_domain_name = "io.androgr.libnvdialog";
 static char *nvd_argv_0 = NULL;
+static NvdParentWindow nvd_parent_window = NULL;
 
 inline void nvd_set_domain_name(char *domain) {
         NVD_ASSERT(domain != NULL);
@@ -149,7 +150,7 @@ NvdReply nvd_dialog_question_new(const char *title, const char *question,
 #if !defined(NVD_USE_GTK4)
         return nvd_question_gtk(title, question, button);
 #else
-        return -1; /* Unimplemented */
+        return nvd_question_adw(title, question, button);
 #endif /* NVD_USE_GTK4 */
 #else
         return nvd_dialog_question_win32(title, question, button);
@@ -171,3 +172,11 @@ NvdDialogBox *nvd_about_dialog_new(const char *name, const char *description,
 #endif /* !NVD_USE_GTK4 */
 #endif /* _WIN32 */
 }
+
+inline int nvd_set_parent(NvdParentWindow parent) {
+        nvd_parent_window = parent;
+}
+
+inline NvdParentWindow nvd_get_parent(void) { return nvd_parent_window; }
+
+inline void nvd_delete_parent() { nvd_parent_window = NULL; }
