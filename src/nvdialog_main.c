@@ -74,13 +74,9 @@ inline void nvd_set_domain_name(char *domain) {
 
 inline const char *nvd_get_domain_name(void) { return nvd_domain_name; }
 
-NvdContext *nvd_bind_context(void) {
-        return NULL;
-}
+NvdContext *nvd_bind_context(void) { return NULL; }
 
-void nvd_delete_context(NvdContext *ctx) {
-        free(ctx);
-}
+void nvd_delete_context(NvdContext *ctx) { free(ctx); }
 
 const char *nvd_get_argv() { return nvd_argv_0; }
 
@@ -88,7 +84,7 @@ int nvd_init(char *program) {
 #if !defined(_WIN32)
         setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
         setlinebuf(stderr);
-#endif                      /* _WIN32 */
+#endif /* _WIN32 */
         nvd_argv_0 = program;
 #ifndef _WIN32
         if (!getenv("DISPLAY")) {
@@ -116,7 +112,7 @@ const char *nvd_open_file_dialog_new(const char *title,
         const char *data = nvd_open_file_dialog_gtk(title, file_extensions);
         return data;
 #else
-        const char* data = nvd_open_file_dialog_adw(title, file_extensions);
+        const char *data = nvd_open_file_dialog_adw(title, file_extensions);
         return data;
 #endif /* NVD_USE_GTK4 */
 #else

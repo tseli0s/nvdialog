@@ -107,7 +107,7 @@ void nvd_out_of_memory() {
         abort();
 }
 
-void nvd_message(const char* fmt, ...) {
+void nvd_message(const char *fmt, ...) {
         va_list args;
         va_start(args, fmt);
 

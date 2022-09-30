@@ -38,7 +38,7 @@
 #include "nvdialog_types.h"
 
 /** @brief An opaque representation of a window object. */
-typedef void* NvdParentWindow;
+typedef void *NvdParentWindow;
 
 /**
  * @brief Initializes the library.
@@ -91,8 +91,8 @@ const char *nvd_get_argv(void);
 
 /**
  * @brief Sets a window as the parent of all dialogs created from NvDialog.
- * @details Using the parameter given, a window will be set as the parent of all dialogs
- * that are created from within the library.
+ * @details Using the parameter given, a window will be set as the parent of all
+ * dialogs that are created from within the library.
  * @note This is a very dangerous function, and may not work as expected.
  * @param parent The window to set as the parent.
  * @return 0 on success, otherwise -1, call nvd_get_error() for more.
@@ -101,14 +101,15 @@ int nvd_set_parent(NvdParentWindow parent);
 
 /**
  * @brief Returns the window attached as the parent of all dialogs of NvDialog.
- * @return The currently set parent window, or NULL if no parent window is currently set.
+ * @return The currently set parent window, or NULL if no parent window is
+ * currently set.
  */
 NvdParentWindow nvd_get_parent(void);
 
 /**
  * @brief Unmarks the window set from @ref nvd_set_parent as the parent window.
- * @details This will reset the changes made by @ref nvd_set_parent, by unmarking the window
- * that is given as the parent from NvDialog.
+ * @details This will reset the changes made by @ref nvd_set_parent, by
+ * unmarking the window that is given as the parent from NvDialog.
  */
 void nvd_delete_parent(void);
 

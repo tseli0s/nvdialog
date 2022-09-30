@@ -29,16 +29,14 @@
 #include <adwaita.h>
 
 /* Shows a simple dialog box using libadwaita. */
-NvdDialogBox *nvd_dialog_box_adw(const char* title,
-                                 const char* message,
+NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
                                  NvdDialogType type);
 
 /* Opens a file dialog using libadwaita. */
-const char* nvd_open_file_dialog_adw(const char* title,
-                                     const char* file_extensions);
+const char *nvd_open_file_dialog_adw(const char *title,
+                                     const char *file_extensions);
 
 /* Creates a dialog box with the usual yes, no and cancel buttons. */
-NvdReply nvd_question_adw(const char* title,
-                          const char* question,
+NvdReply nvd_question_adw(const char *title, const char *question,
                           NvdQuestionButton buttons);
 #endif /* __nvdialog_adw_h__ */

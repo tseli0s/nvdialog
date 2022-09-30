@@ -1,3 +1,26 @@
+# Changelog -- 0.2.0 (Not released yet)
+
+- Fixed compilation errors on all backends (Especially Windows).
+- API Upgraded to 0.2.0
+- New function: `nvd_about_dialog_new` - Shows a window with information about your application.
+- New functions:\
+        - `nvd_set_parent` - Allows to set a foreign window as the parent of every dialog.\
+        - `nvd_get_parent` - Returns the current parent window or NULL otherwise.\
+        - `nvd_delete_parent` - Marks that no window is currently considered the parent.
+- Implemented Gtk4 backend (Currently still experimental).
+- Adwaita Backend now partially available.
+- `nvd_about_dialog_new` -> Window size is now more compact (Gtk3 only)
+- Simple dialogs are no longer resizable (Gtk3 only).
+- Fixed a bug where the process would remain open even though all the windows were closed.
+- Added a function to query NvDialog's capabilities at runtime. ([7511aaf](https://github.com/AndroGR/nvdialog/commit/7511aaf9cc1976c81c134feecea3248895f2f133))
+- `setlinebuf(stdout)` will no longer be called on Windows.
+- NvDialog's website is ready ([Click Here](https://androgr.github.io/libnvdialog/))
+- `nvd-shell` is no longer part of this project, considered deprecated until later notice.
+- Fixed a bug in `nvd_stringify_error` where a local string would be returned instead of a heap one.
+- Assertion failures no longer output red text.
+- Function names are now using a GCC extension to allow `main` to become `int main(int, char**)`.
+- Ported API changes to Windows.
+
 # Changelog -- 0.1.3
 
 - Fixed multiple compiler / linker errors

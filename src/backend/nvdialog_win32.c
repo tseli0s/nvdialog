@@ -22,10 +22,10 @@
  * IN THE SOFTWARE.
  */
 
-#include <windows.h>
-#include <winuser.h>
 #include "nvdialog_win32.h"
 #include <wchar.h>
+#include <windows.h>
+#include <winuser.h>
 
 /* The largest filename allowed by the library. Perhaps we should extend this?
  */
@@ -82,21 +82,16 @@ uint32_t nvd_create_win32_dialog(const char *title, const char *message,
  * TODO: This function is not as good as its Gtk (Linux) implementation.
  * In order to provide a consistent interface, we should rewrite it to look
  * better and be more customizable.
-*/
+ */
 void *nvd_about_dialog_win32(const char *name, const char *description,
                              const char *license_text, const char *logo_path) {
         char fmt[NVDIALOG_MAXBUF];
         char description_fmt[NVDIALOG_MAXBUF * 2];
         sprintf(description_fmt, "%s\n\n%s", description, license_text);
         sprintf(fmt, "About %s", name);
-        MessageBoxEx(
-                NULL,
-                description_fmt,
-                fmt,
-                MB_ICONINFORMATION | MB_OK | MB_RIGHT | MB_SYSTEMMODAL,
-                0
-        );
-        return (void*) 1; /* TODO: Create an NvdDialogBox and return it */
+        MessageBoxEx(NULL, description_fmt, fmt,
+                     MB_ICONINFORMATION | MB_OK | MB_RIGHT | MB_SYSTEMMODAL, 0);
+        return (void *)1; /* TODO: Create an NvdDialogBox and return it */
 }
 
 NvdReply nvd_dialog_question_win32(const char *title, const char *question,
@@ -115,12 +110,14 @@ NvdReply nvd_dialog_question_win32(const char *title, const char *question,
                 return -1;
         }
 
-        reply = MessageBox(NULL, question, title, flag | MB_ICONQUESTION);
-        switch (reply)
-        {
-                case IDYES: return NVD_REPLY_OK;
-                case IDNO: return NVD_REPLY_NO;
-                case IDCANCEL: return NVD_REPLY_CANCEL;
+        reply = MessageBox(NULL, question, title, (unsigned int) flag | MB_ICONQUESTION);
+        switch (reply) {
+        case IDYES:
+                return NVD_REPLY_OK;
+        case IDNO:
+                return NVD_REPLY_NO;
+        case IDCANCEL:
+                return NVD_REPLY_CANCEL;
         }
         return -1; /* Just so GCC doesn't complain */
 }

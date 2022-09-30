@@ -24,18 +24,16 @@
 
 #include "nvdialog_adw.h"
 
-char* filename;
+char *filename;
 
-static void write_filename(GtkNativeDialog *native,
-                          int response) {
-        if (response == GTK_RESPONSE_ACCEPT)
-        {
-                GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
-                GFile *file = gtk_file_chooser_get_file (chooser);
-                filename = (char*) file;
-        } 
+static void write_filename(GtkNativeDialog *native, int response) {
+        if (response == GTK_RESPONSE_ACCEPT) {
+                GtkFileChooser *chooser = GTK_FILE_CHOOSER(native);
+                GFile *file = gtk_file_chooser_get_file(chooser);
+                filename = (char *)file;
+        }
 
-  g_object_unref (native);
+        g_object_unref(native);
 }
 
 inline static void nvd_reply_write_ok(NvdReply *reply) {
@@ -49,51 +47,47 @@ inline static void nvd_reply_write_no(NvdReply *reply) {
         *reply = NVD_REPLY_NO;
 }
 
-NvdDialogBox *nvd_dialog_box_adw(const char* title,
-                                 const char* message,
+NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
                                  NvdDialogType type) {
-        GtkWidget* dialog = adw_message_dialog_new(NULL,
-                               title,
-                               message);
+        GtkWidget *dialog = adw_message_dialog_new(NULL, title, message);
 
-        adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "accept", "Okay");
-        adw_message_dialog_set_default_response(ADW_MESSAGE_DIALOG (dialog), "accept");
+        adw_message_dialog_add_response(ADW_MESSAGE_DIALOG(dialog), "accept",
+                                        "Okay");
+        adw_message_dialog_set_default_response(ADW_MESSAGE_DIALOG(dialog),
+                                                "accept");
 
         switch (type) {
-                case NVD_DIALOG_WARNING:
-                case NVD_DIALOG_ERROR:
-                        adw_message_dialog_set_response_appearance(ADW_MESSAGE_DIALOG (dialog),
-                                                                   "accept",
-                                                                   ADW_RESPONSE_DESTRUCTIVE
-                        );
-                        break;
+        case NVD_DIALOG_WARNING:
+        case NVD_DIALOG_ERROR:
+                adw_message_dialog_set_response_appearance(
+                    ADW_MESSAGE_DIALOG(dialog), "accept",
+                    ADW_RESPONSE_DESTRUCTIVE);
+                break;
 
-                default:
-                case NVD_DIALOG_SIMPLE:
-                        break;
+        default:
+        case NVD_DIALOG_SIMPLE:
+                break;
         }
 
         gtk_window_present(GTK_WINDOW(dialog));
-        while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
-        {
+        while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0) {
                 g_main_context_iteration(NULL, true);
         }
 
         return NULL;
 }
 
-/* TODO: Seperate this function into two steps, where the first step is "building" the dialog
- * and the second step is actually running it and getting the filename. */
-const char* nvd_open_file_dialog_adw(const char* title,
-                                     const char* file_extensions) {
-        GtkFileChooserNative *dialog = gtk_file_chooser_native_new (title,
-                                      NULL,
-                                      GTK_FILE_CHOOSER_ACTION_OPEN,
-                                      "_Open",
-                                      "_Cancel");
+/* TODO: Seperate this function into two steps, where the first step is
+ * "building" the dialog and the second step is actually running it and getting
+ * the filename. */
+const char *nvd_open_file_dialog_adw(const char *title,
+                                     const char *file_extensions) {
+        GtkFileChooserNative *dialog = gtk_file_chooser_native_new(
+            title, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, "_Open", "_Cancel");
 
-        g_signal_connect(dialog, "response", G_CALLBACK(write_filename), &filename);
-        gtk_native_dialog_show (GTK_NATIVE_DIALOG (dialog));
+        g_signal_connect(dialog, "response", G_CALLBACK(write_filename),
+                         &filename);
+        gtk_native_dialog_show(GTK_NATIVE_DIALOG(dialog));
 
         if (filename) {
                 printf("%s\n", filename);
@@ -104,33 +98,39 @@ const char* nvd_open_file_dialog_adw(const char* title,
         return "a";
 }
 
-NvdReply nvd_question_adw(const char* title,
-                          const char* question,
+NvdReply nvd_question_adw(const char *title, const char *question,
                           NvdQuestionButton buttons) {
-        GtkWidget* dialog = adw_message_dialog_new(NULL, title, question);
+        GtkWidget *dialog = adw_message_dialog_new(NULL, title, question);
 
-        adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "accept", "Yes");
-        adw_message_dialog_set_default_response(ADW_MESSAGE_DIALOG (dialog), "accept");
+        adw_message_dialog_add_response(ADW_MESSAGE_DIALOG(dialog), "accept",
+                                        "Yes");
+        adw_message_dialog_set_default_response(ADW_MESSAGE_DIALOG(dialog),
+                                                "accept");
 
         if (buttons == NVD_YES_CANCEL) {
-                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "cancel", "Cancel");
+                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG(dialog),
+                                                "cancel", "Cancel");
         } else if (buttons == NVD_YES_NO_CANCEL) {
-                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "cancel", "Cancel");
-                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "reject", "No");
+                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG(dialog),
+                                                "cancel", "Cancel");
+                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG(dialog),
+                                                "reject", "No");
         } else {
-                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "reject", "No");
+                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG(dialog),
+                                                "reject", "No");
         }
 
         NvdReply reply = NVD_REPLY_CANCEL;
-        g_signal_connect_swapped(dialog, "response::accept", G_CALLBACK(nvd_reply_write_ok), &reply);
-        g_signal_connect_swapped(dialog, "response::reject", G_CALLBACK(nvd_reply_write_no), &reply);
-        g_signal_connect_swapped(dialog, "response::cancel", G_CALLBACK(nvd_reply_write_cancel), &reply);
+        g_signal_connect_swapped(dialog, "response::accept",
+                                 G_CALLBACK(nvd_reply_write_ok), &reply);
+        g_signal_connect_swapped(dialog, "response::reject",
+                                 G_CALLBACK(nvd_reply_write_no), &reply);
+        g_signal_connect_swapped(dialog, "response::cancel",
+                                 G_CALLBACK(nvd_reply_write_cancel), &reply);
 
         gtk_window_present(GTK_WINDOW(dialog));
-        while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
-        {
+        while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0) {
                 g_main_context_iteration(NULL, true);
         }
         return reply;
-
 }
