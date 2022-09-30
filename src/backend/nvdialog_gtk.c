@@ -99,7 +99,7 @@ const char *nvd_open_file_dialog_gtk(const char *title,
 
         /* Creating the dialog. */
         GtkWidget *dialog = gtk_file_chooser_dialog_new(
-            title, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, "_Open",
+            title, nvd_get_parent(), GTK_FILE_CHOOSER_ACTION_OPEN, "_Open",
             GTK_RESPONSE_ACCEPT, "_Cancel", GTK_RESPONSE_CANCEL, NULL);
         /* Running the dialog and checking the user's action. */
         int result = gtk_dialog_run(GTK_DIALOG(dialog));

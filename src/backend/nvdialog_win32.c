@@ -38,7 +38,7 @@ const char *nvd_open_file_dialog_win32(const char *title, const char *message) {
         char file[NVD_MAX_FILENAME_LEN + 1];
         ZeroMemory(&ofn, sizeof(ofn));
         ofn.lStructSize = sizeof(ofn);
-        ofn.hwndOwner = NULL;
+        ofn.hwndOwner = nvd_get_parent();
 
         ofn.lpstrFile = file;
         ofn.lpstrFile[0] = '\0';
@@ -75,7 +75,7 @@ uint32_t nvd_create_win32_dialog(const char *title, const char *message,
         default:
                 abort();
         }
-        return MessageBox(NULL, message, title, MB_OK | flag);
+        return MessageBox(nvd_get_parent(), message, title, MB_OK | flag);
 }
 
 /*
@@ -89,7 +89,7 @@ void *nvd_about_dialog_win32(const char *name, const char *description,
         char description_fmt[NVDIALOG_MAXBUF * 2];
         sprintf(description_fmt, "%s\n\n%s", description, license_text);
         sprintf(fmt, "About %s", name);
-        MessageBoxEx(NULL, description_fmt, fmt,
+        MessageBoxEx(nvd_get_parent(), description_fmt, fmt,
                      MB_ICONINFORMATION | MB_OK | MB_RIGHT | MB_SYSTEMMODAL, 0);
         return (void *)1; /* TODO: Create an NvdDialogBox and return it */
 }
@@ -110,7 +110,7 @@ NvdReply nvd_dialog_question_win32(const char *title, const char *question,
                 return -1;
         }
 
-        reply = MessageBox(NULL, question, title, (unsigned int) flag | MB_ICONQUESTION);
+        reply = MessageBox(nvd_get_parent(), question, title, (unsigned int) flag | MB_ICONQUESTION);
         switch (reply) {
         case IDYES:
                 return NVD_REPLY_OK;
