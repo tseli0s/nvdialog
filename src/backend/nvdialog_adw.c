@@ -38,6 +38,17 @@ static void write_filename(GtkNativeDialog *native,
   g_object_unref (native);
 }
 
+inline static void nvd_reply_write_ok(NvdReply *reply) {
+        *reply = NVD_REPLY_OK;
+}
+
+inline static void nvd_reply_write_cancel(NvdReply *reply) {
+        *reply = NVD_REPLY_CANCEL;
+}
+inline static void nvd_reply_write_no(NvdReply *reply) {
+        *reply = NVD_REPLY_NO;
+}
+
 NvdDialogBox *nvd_dialog_box_adw(const char* title,
                                  const char* message,
                                  NvdDialogType type) {
@@ -91,4 +102,35 @@ const char* nvd_open_file_dialog_adw(const char* title,
                 return NULL;
         }
         return "a";
+}
+
+NvdReply nvd_question_adw(const char* title,
+                          const char* question,
+                          NvdQuestionButton buttons) {
+        GtkWidget* dialog = adw_message_dialog_new(NULL, title, question);
+
+        adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "accept", "Yes");
+        adw_message_dialog_set_default_response(ADW_MESSAGE_DIALOG (dialog), "accept");
+
+        if (buttons == NVD_YES_CANCEL) {
+                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "cancel", "Cancel");
+        } else if (buttons == NVD_YES_NO_CANCEL) {
+                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "cancel", "Cancel");
+                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "reject", "No");
+        } else {
+                adw_message_dialog_add_response(ADW_MESSAGE_DIALOG (dialog), "reject", "No");
+        }
+
+        NvdReply reply = NVD_REPLY_CANCEL;
+        g_signal_connect_swapped(dialog, "response::accept", G_CALLBACK(nvd_reply_write_ok), &reply);
+        g_signal_connect_swapped(dialog, "response::reject", G_CALLBACK(nvd_reply_write_no), &reply);
+        g_signal_connect_swapped(dialog, "response::cancel", G_CALLBACK(nvd_reply_write_cancel), &reply);
+
+        gtk_window_present(GTK_WINDOW(dialog));
+        while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
+        {
+                g_main_context_iteration(NULL, true);
+        }
+        return reply;
+
 }
