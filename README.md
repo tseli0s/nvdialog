@@ -17,7 +17,7 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 A backend using Gtk4 and `libadwaita`. Currently experimental, however it is expected to be ported to stable by 0.2.0. Also note, this backend makes use of hardware acceleration, which sometimes breaks games in Wayland.
 
 - **Gtk3 Backend**\
-Some older distributions do not have Adwaita / Gtk4 support yet. The Gtk3 backend can be used in such a situation. However Gtk3 is considered to be deprecated and will be replaced with `libadwaita` later in the library.
+Some older distributions do not have Adwaita / Gtk4 support yet. The Gtk3 backend can be used in such a situation. However Gtk3 is considered to be deprecated and will be replaced with `libadwaita` later in the library. This backend will be replaced with Qt6 later.
 
 - **Win32 Backend**\
 Windows-specific backend, used only for Windows compatibility. This backend is mainly tested on GNU/Linux with `wine`, and so some bugs may not be detected. Open an issue if that's the case.
