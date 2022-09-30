@@ -29,8 +29,11 @@
 #include <stdint.h>
 #include <stdio.h>
 #ifndef _WIN32
+#ifdef NVD_USE_GTK4
 #include "backend/nvdialog_adw.h"
+#else
 #include "backend/nvdialog_gtk.h"
+#endif /* NVD_USE_GTK4 */
 #else
 #include "backend/nvdialog_win32.h"
 #endif /* _WIN32 */
