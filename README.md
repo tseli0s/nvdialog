@@ -72,6 +72,25 @@ $ cmake --build .
 $ sudo cmake --install .
 ```
 
+# Installing on Arch Linux
+###### *TODO: Upload the library to the AUR.*
+For Arch Linux and derivatives, a `PKGBUILD` is provided to build the library as a package. It is recommended to use it this way to allow uninstalling the library easily.\
+To install the library as an Arch Linux package, enter the following commands:
+
+**Download `git`** (Required to download the source code)
+```bash
+$ sudo pacman -S git
+```
+**Clone the repository (To download the source code)**
+```bash
+$ git clone --depth=1 https://github.com/AndroGR/nvdialog.git
+$ cd nvdialog/
+```
+**Build the package:**
+```bash
+$ makepkg --clean --install
+```
+
 # License
 `nvdialog` is licensed under the MIT license. See [COPYING](./COPYING) for more.
 All contributions made to the library are assumed to be licensed under the MIT license as well. However, you may specify a different license if you wish.
