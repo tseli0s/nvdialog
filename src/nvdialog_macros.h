@@ -30,7 +30,7 @@
 #define NVD_FORCE_INLINE inline __attribute__((always_inline))
 
 #ifndef NVD_BUFFER_SIZE
-#define NVD_BUFFER_SIZE 4096
+#define NVD_BUFFER_SIZE NVDIALOG_MAXBUF
 #endif /* NVD_BUFFER_SIZE */
 
 #define NVD_LIBRARY_FUNCTION __attribute__((visibility("default")))
