@@ -146,3 +146,21 @@ pub(super) fn stringify_error(library: &Library, error: crate::error::Error) -> 
         String::from(CStr::from_ptr(fnc(error)).to_str().unwrap())
     }
 }
+
+pub(super) fn set_parent(library: &Library, parent: *mut libc::c_void) {
+    unsafe {
+        let fnc: Symbol<unsafe extern "C" fn(*mut libc::c_void)> =
+            library.get(b"nvd_set_parent").expect("Invalid library.");
+
+        fnc(parent);
+    }
+}
+
+pub(super) fn get_parent(library: &Library) -> *mut libc::c_void {
+    unsafe {
+        let fnc: Symbol<unsafe extern "C" fn() -> *mut libc::c_void> =
+        library.get(b"nvd_get_parent").expect("Invalid library.");
+
+        fnc()
+    }
+}
