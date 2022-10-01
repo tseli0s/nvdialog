@@ -2,7 +2,7 @@
 
 pkgname=libnvdialog-git
 _pkgname=nvdialog
-pkgver=4.9.r263.6bdb7c4
+pkgver=0.2.0
 pkgrel=1
 epoch=
 pkgdesc="A cross-platform library to show dialog boxes, written in C. (Git Version)"
@@ -33,7 +33,7 @@ validpgpkeys=()
 
 pkgver() {
 	cd "${_pkgname}"
-	printf "4.9.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	printf "0.2.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {

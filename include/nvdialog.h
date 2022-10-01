@@ -30,8 +30,8 @@ extern "C" {
 #endif /* __cplusplus */
 
 #define NVDIALOG_VERSION_MAJOR 0
-#define NVDIALOG_VERSION_MINOR 1
-#define NVDIALOG_VERSION_PATCH 3
+#define NVDIALOG_VERSION_MINOR 2
+#define NVDIALOG_VERSION_PATCH 0
 
 #include "nvdialog_capab.h"
 #include "nvdialog_core.h"

@@ -1,4 +1,4 @@
-# Changelog -- 0.2.0 (Not released yet)
+# Changelog -- 0.2.0
 
 - Fixed compilation errors on all backends (Especially Windows).
 - API Upgraded to 0.2.0
