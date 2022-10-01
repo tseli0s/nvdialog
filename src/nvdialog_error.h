@@ -31,7 +31,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#if !defined(_WIN32) || defined(linux) || defined(__gnu_linux__)
+#if !defined(_WIN32) || defined(linux) || defined(__gnu_linux__) || defined(unix)
 #define TERMINAL_PREFIX "\x1B[92m\x1b[1mlibnvdialog:\x1b[0m"
 
 #else
