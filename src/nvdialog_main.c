@@ -52,7 +52,7 @@ struct _NvdDialogBox {
 
 #if !defined(_WIN32)
 struct NvdContext {
-#ifdef NVD_USE_GTK4
+#if defined(NVD_USE_GTK4)
         AdwApplication *application;
 #else
         GtkApplication *application;
@@ -89,13 +89,13 @@ int nvd_init(char *program) {
         setlinebuf(stderr);
 #endif /* _WIN32 */
         nvd_argv_0 = program;
-#ifndef _WIN32
+#if !defined(_WIN32) /* On Windows the DISPLAY variable isn't set at all */
         if (!getenv("DISPLAY")) {
                 nvd_set_error(NVD_NO_DISPLAY);
                 return -1;
         }
 /* Apparently in Gtk4 the gtk_init function doesn't require any arguments. */
-#ifndef NVD_USE_GTK4
+#if !defined(NVD_USE_GTK4)
         int __argc__ = 1;
         char **__argv__ = {
             &program,
@@ -111,7 +111,7 @@ int nvd_init(char *program) {
 const char *nvd_open_file_dialog_new(const char *title,
                                      const char *file_extensions) {
 #if !defined(_WIN32)
-#ifndef NVD_USE_GTK4
+#if !defined(NVD_USE_GTK4)
         const char *data = nvd_open_file_dialog_gtk(title, file_extensions);
         return data;
 #else
@@ -126,7 +126,7 @@ const char *nvd_open_file_dialog_new(const char *title,
 NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                                  NvdDialogType type) {
 #if !defined(_WIN32)
-#ifndef NVD_USE_GTK4
+#if !defined(NVD_USE_GTK4)
         NvdDialogBox *dialog = nvd_create_gtk_dialog(title, message, type);
         if (!dialog)
                 nvd_set_error(NVD_INTERNAL_ERROR);
@@ -173,7 +173,8 @@ NvdDialogBox *nvd_about_dialog_new(const char *name, const char *description,
 }
 
 inline int nvd_set_parent(NvdParentWindow parent) {
-        nvd_parent_window = parent;
+        if (!parent) return -1; else nvd_parent_window = parent;
+        return 0;
 }
 
 inline NvdParentWindow nvd_get_parent(void) { return nvd_parent_window; }

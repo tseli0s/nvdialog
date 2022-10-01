@@ -25,14 +25,14 @@
 #include "nvdialog.h"
 
 static bool __nvd_has_adw_gtk =
-#ifdef NVD_USE_GTK4
+#if !defined(NVD_USE_GTK4)
     true;
 #else
     false;
 #endif
 
 static bool __nvd_built_static =
-#ifdef NVD_STATIC_LINKAGE
+#if !defined(NVD_STATIC_LINKAGE)
     true;
 #else
     false;
