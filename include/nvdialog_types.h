@@ -36,13 +36,6 @@
 #endif /* __nvdialog_h__ */
 
 /**
- * @brief The core type for managing and identifying dialog boxes.
- * This struct should be returned from the library and not be shared across
- * multiple threads / uses.
- */
-typedef struct _NvdDialogBox NvdDialogBox;
-
-/**
  * @brief Defines what use it the dialog about.
  * Each member of this enum defines what the dialog should
  * represent:
