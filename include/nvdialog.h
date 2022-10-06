@@ -33,11 +33,12 @@ extern "C" {
 #define NVDIALOG_VERSION_MINOR 2
 #define NVDIALOG_VERSION_PATCH 0
 
+#include "nvdialog_types.h"
 #include "nvdialog_capab.h"
 #include "nvdialog_core.h"
 #include "nvdialog_dialog.h"
 #include "nvdialog_error.h"
-#include "nvdialog_types.h"
+
 
 /**
  * @brief Returns the version of nvdialog currently linked with.
