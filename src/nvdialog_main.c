@@ -22,6 +22,7 @@
  * IN THE SOFTWARE.
  */
 
+#include "dialogs/nvdialog_dialog_box.h"
 #include "nvdialog_assert.h"
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
@@ -30,12 +31,12 @@
 #include <stdio.h>
 #ifndef _WIN32
 #ifdef NVD_USE_GTK4
-#include "backend/nvdialog_adw.h"
+#include "backend/adw/nvdialog_adw.h"
 #else
-#include "backend/nvdialog_gtk.h"
+#include "backend/adw/nvdialog_gtk.h"
 #endif /* NVD_USE_GTK4 */
 #else
-#include "backend/nvdialog_win32.h"
+#include "backend/win32/nvdialog_win32.h"
 #endif /* _WIN32 */
 
 #include "nvdialog.h"
@@ -43,25 +44,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct _NvdDialogBox {
-        void *window_handle;
-        const char *msg;
-        const char *content;
-        NvdDialogType type;
-};
-
-#if !defined(_WIN32)
-struct NvdContext {
-#if defined(NVD_USE_GTK4)
-        AdwApplication *application;
-#else
-        GtkApplication *application;
-#endif /* NVD_USE_GTK4 */
-        bool initialized, ready;
-        const char *domain;
-        uint32_t flags;
-};
-#endif /* !defined (_WIN32) */
 /*
  * The default domain name used for libadwaita applications.
  * This variable is modified from nvd_set_domain_name().
@@ -143,13 +125,13 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
 #endif /* _WIN32 */
 }
 
-NvdReply nvd_dialog_question_new(const char *title, const char *question,
+NvdQuestionBox* nvd_dialog_question_new(const char *title, const char *question,
                                  NvdQuestionButton button) {
 #if !defined(_WIN32)
 #if !defined(NVD_USE_GTK4)
         return nvd_question_gtk(title, question, button);
 #else
-        return nvd_question_adw(title, question, button);
+        return NULL;
 #endif /* NVD_USE_GTK4 */
 #else
         return nvd_dialog_question_win32(title, question, button);
