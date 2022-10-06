@@ -31,10 +31,6 @@
 #ifndef __nvdialog_types_h__
 #define __nvdialog_types_h__ 1
 
-#ifndef __nvdialog_h__
-#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif /* __nvdialog_h__ */
-
 /**
  * @brief Defines what use it the dialog about.
  * Each member of this enum defines what the dialog should
