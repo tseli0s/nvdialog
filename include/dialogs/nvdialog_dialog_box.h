@@ -25,6 +25,8 @@
 #ifndef __nvdialog_box_h__
 #define __nvdialog_box_h__
 
+#include "../nvdialog_types.h"
+
 /**
  * @brief The core type for managing and identifying dialog boxes.
  * This struct should be returned from the library and not be shared across
