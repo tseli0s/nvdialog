@@ -41,8 +41,8 @@ else()
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/backend/adw/nvdialog_adw.c src/nvdialog_main.c)
 endif()
 message("-- NVDIALOG_MAXBUF equals ${NVDIALOG_MAXBUF}. If buffer overflows are detected, increase this number.")
-set(NVD_HEADERS include/nvdialog_dialog.h include/nvdialog_core.h include/nvdialog_capab.h include/nvdialog_types.h include/nvdialog_error.h include/nvdialog.h
-                include/dialogs/nvdialog_file_dialog.h include/dialogs/nvdialog_about_dialog.h include/dialogs/nvdialog_dialog_box.h)
+set(NVD_HEADERS include/nvdialog_dialog.h include/nvdialog_core.h include/nvdialog_capab.h include/nvdialog_types.h include/nvdialog_error.h include/nvdialog.h)
+set(NVD_EXTRA_HEADERS include/dialogs/nvdialog_file_dialog.h include/dialogs/nvdialog_about_dialog.h include/dialogs/nvdialog_dialog_box.h)
 
 # If compiling for Windows, only use Win32 API.
 # Otherwise, use the standard backends.
@@ -88,5 +88,7 @@ include(GNUInstallDirs)
 # so until we resolve this the library and the header have to
 # be manually installed.
 install(TARGETS nvdialog LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/ )
+install(DIRECTORY DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/)
+install(DIRECTORY DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/dialogs)
+install(FILES ${NVD_EXTRA_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/dialogs)
 install(FILES ${NVD_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/)
