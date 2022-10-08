@@ -22,9 +22,6 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef __nvdialog_box_h__
-#define __nvdialog_box_h__
-
 #include "../nvdialog_types.h"
 
 /**
@@ -71,4 +68,3 @@ void nvd_show_dialog(NvdDialogBox *dialog);
  */
 NvdQuestionBox* nvd_dialog_question_new(const char *title, const char *question,
                                         NvdQuestionButton button);
-#endif  /* __nvdialog_box_h__ */

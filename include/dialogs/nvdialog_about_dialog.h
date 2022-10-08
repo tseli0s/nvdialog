@@ -22,9 +22,6 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef __nvdialog_box_h__
-#define __nvdialog_box_h__
-
 /**
  * @brief An opaque handle to a dialog box created from
  * @ref nvd_about_dialog_new.
@@ -61,6 +58,3 @@ NvdAboutDialog *nvd_about_dialog_new(const char *name, const char *description,
 void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
                                        const char *license_link,
                                        const char* txt);
-
-void nvd_show_about_dialog(NvdAboutDialog *dialog);
-#endif /* __nvdialog_box_h__ */

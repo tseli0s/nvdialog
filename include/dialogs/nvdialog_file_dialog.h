@@ -22,10 +22,7 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef __nvdialog_box_h__
-#define __nvdialog_box_h__
-
-/** * @brief A type to represent a file dialog (Saving / Opening). */
+/** @brief A type to represent a file dialog (Saving / Opening). */
 typedef struct _NvdFileDialog NvdFileDialog;
 
 /**
@@ -49,4 +46,3 @@ NvdFileDialog* nvd_open_file_dialog_new(const char *title,
  * @param savebuf A pointer to a buffer where the location will be saved.
  */
 void nvd_get_file_location(NvdFileDialog* dialog, const char** savebuf);
-#endif /* __nvdialog_box_h__ */
