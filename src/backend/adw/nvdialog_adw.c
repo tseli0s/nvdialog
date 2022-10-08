@@ -22,19 +22,10 @@
  * IN THE SOFTWARE.
  */
 
+
 #include "nvdialog_adw.h"
-
-char *filename;
-
-static void write_filename(GtkNativeDialog *native, int response) {
-        if (response == GTK_RESPONSE_ACCEPT) {
-                GtkFileChooser *chooser = GTK_FILE_CHOOSER(native);
-                GFile *file = gtk_file_chooser_get_file(chooser);
-                filename = (char *)file;
-        }
-
-        g_object_unref(native);
-}
+#include "nvdialog_types.h"
+#include "dialogs/nvdialog_dialog_box.h"
 
 inline static void nvd_reply_write_ok(NvdReply *reply) {
         *reply = NVD_REPLY_OK;
@@ -75,27 +66,6 @@ NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
         }
 
         return NULL;
-}
-
-/* TODO: Seperate this function into two steps, where the first step is
- * "building" the dialog and the second step is actually running it and getting
- * the filename. */
-const char *nvd_open_file_dialog_adw(const char *title,
-                                     const char *file_extensions) {
-        GtkFileChooserNative *dialog = gtk_file_chooser_native_new(
-            title, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, "_Open", "_Cancel");
-
-        g_signal_connect(dialog, "response", G_CALLBACK(write_filename),
-                         &filename);
-        gtk_native_dialog_show(GTK_NATIVE_DIALOG(dialog));
-
-        if (filename) {
-                printf("%s\n", filename);
-                return strdup(filename);
-        } else {
-                return NULL;
-        }
-        return "a";
 }
 
 NvdReply nvd_question_adw(const char *title, const char *question,

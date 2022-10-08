@@ -22,22 +22,27 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef __nvdialog_adw_h__
-#define __nvdialog_adw_h__
-
-#include "dialogs/nvdialog_dialog_box.h"
+#include "nvdialog_adw.h"
 #include "dialogs/nvdialog_file_dialog.h"
-#include <adwaita.h>
+#include "../../nvdialog_macros.h"
+#include <stdlib.h>
 
-/* Shows a simple dialog box using libadwaita. */
-NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
-                                 NvdDialogType type);
+struct _NvdFileDialog {
+        char* filename, file_extensions;
+        bool location_was_chosen;
+};
 
-/* Opens a file dialog using libadwaita. */
 NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
-                                     const char *file_extensions);
+                                        const char *file_extensions) {
+        NvdFileDialog* dialog = malloc(sizeof(struct _NvdFileDialog));
+        NVD_RETURN_IF_NULL(dialog);
+        dialog->file_extensions = file_extensions;
+        return dialog;
+}
 
-/* Creates a dialog box with the usual yes, no and cancel buttons. */
-NvdReply nvd_question_adw(const char *title, const char *question,
-                          NvdQuestionButton buttons);
-#endif /* __nvdialog_adw_h__ */
+void nvd_get_file_location_adw(NvdFileDialog *dialog,
+                               const char **savebuf) {
+        dialog->filename = "";
+        dialog->location_was_chosen = false;
+        return;
+}
