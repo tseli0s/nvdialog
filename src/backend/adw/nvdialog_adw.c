@@ -22,10 +22,9 @@
  * IN THE SOFTWARE.
  */
 
-
 #include "nvdialog_adw.h"
-#include "nvdialog_types.h"
 #include "dialogs/nvdialog_dialog_box.h"
+#include "nvdialog_types.h"
 
 inline static void nvd_reply_write_ok(NvdReply *reply) {
         *reply = NVD_REPLY_OK;
@@ -40,7 +39,8 @@ inline static void nvd_reply_write_no(NvdReply *reply) {
 
 NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
                                  NvdDialogType type) {
-        GtkWidget *dialog = adw_message_dialog_new(nvd_get_parent(), title, message);
+        GtkWidget *dialog =
+            adw_message_dialog_new(nvd_get_parent(), title, message);
 
         adw_message_dialog_add_response(ADW_MESSAGE_DIALOG(dialog), "accept",
                                         "Okay");
@@ -70,7 +70,8 @@ NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
 
 NvdReply nvd_question_adw(const char *title, const char *question,
                           NvdQuestionButton buttons) {
-        GtkWidget *dialog = adw_message_dialog_new(nvd_get_parent(), title, question);
+        GtkWidget *dialog =
+            adw_message_dialog_new(nvd_get_parent(), title, question);
 
         adw_message_dialog_add_response(ADW_MESSAGE_DIALOG(dialog), "accept",
                                         "Yes");

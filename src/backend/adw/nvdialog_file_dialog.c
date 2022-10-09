@@ -22,27 +22,28 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog_adw.h"
 #include "dialogs/nvdialog_file_dialog.h"
 #include "../../nvdialog_macros.h"
+#include "nvdialog_adw.h"
 #include <stdlib.h>
 
 struct _NvdFileDialog {
-        char* filename, file_extensions;
+        char *filename, file_extensions;
         bool location_was_chosen;
 };
 
 NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
                                         const char *file_extensions) {
-        NvdFileDialog* dialog = malloc(sizeof(struct _NvdFileDialog));
+        NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
         dialog->file_extensions = file_extensions;
         return dialog;
 }
 
-void nvd_get_file_location_adw(NvdFileDialog *dialog,
-                               const char **savebuf) {
+void nvd_get_file_location_adw(NvdFileDialog *dialog, const char **savebuf) {
         dialog->filename = "";
         dialog->location_was_chosen = false;
+        *savebuf = dialog->filename;
+
         return;
 }
