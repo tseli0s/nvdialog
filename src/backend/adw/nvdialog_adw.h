@@ -40,4 +40,7 @@ NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
 /* Creates a dialog box with the usual yes, no and cancel buttons. */
 NvdReply nvd_question_adw(const char *title, const char *question,
                           NvdQuestionButton buttons);
+
+/* Shows the dialog box given to the system. */
+void nvd_show_dialog_adw(NvdDialogBox* dialog);
 #endif /* __nvdialog_adw_h__ */
