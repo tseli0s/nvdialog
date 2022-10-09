@@ -22,13 +22,12 @@
  * IN THE SOFTWARE.
  */
 
-
 #include "nvdialog.h"
+#include "dialogs/nvdialog_dialog_box.h"
+#include "dialogs/nvdialog_file_dialog.h"
 #include "nvdialog_assert.h"
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
-#include "dialogs/nvdialog_dialog_box.h"
-#include "dialogs/nvdialog_file_dialog.h"
 #ifndef _WIN32
 #ifdef NVD_USE_GTK4
 #include "backend/adw/nvdialog_adw.h"
@@ -87,14 +86,13 @@ int nvd_init(char *program) {
 }
 
 NvdFileDialog *nvd_open_file_dialog_new(const char *title,
-                                     const char *file_extensions) {
+                                        const char *file_extensions) {
 #if !defined(_WIN32)
 #if !defined(NVD_USE_GTK4)
         const char *data = nvd_open_file_dialog_gtk(title, file_extensions);
         return data;
 #else
-        const char *data = nvd_open_file_dialog_adw(title, file_extensions);
-        return data;
+        return nvd_open_file_dialog_adw(title, file_extensions);
 #endif /* NVD_USE_GTK4 */
 #else
         return nvd_open_file_dialog_win32(title, file_extensions);
@@ -132,12 +130,12 @@ NvdQuestionBox *nvd_dialog_question_new(const char *title, const char *question,
 #else
         return nvd_dialog_question_win32(title, question, button);
 #endif /* _WIN32 */
-        return -1;
+        return NULL;
 }
 
 NvdAboutDialog *nvd_about_dialog_new(const char *name, const char *description,
-                                   const char *license_text,
-                                   const char *logo_path) {
+                                     const char *license_text,
+                                     const char *logo_path) {
 #if defined(_WIN32)
         return nvd_about_dialog_win32(name, description, license_text,
                                       logo_path);
@@ -158,11 +156,11 @@ inline int nvd_set_parent(NvdParentWindow parent) {
         return 0;
 }
 
-inline NvdParentWindow nvd_get_parent(void) { return nvd_parent_window; }
+NvdParentWindow nvd_get_parent(void) { return nvd_parent_window; }
 
-inline void nvd_delete_parent() { nvd_parent_window = NULL; }
+void nvd_delete_parent() { nvd_parent_window = NULL; }
 
-inline void nvd_free_object(void* obj) {
+void nvd_free_object(void *obj) {
         NVD_ASSERT(obj != NULL);
         free(obj);
 }
