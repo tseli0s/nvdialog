@@ -22,9 +22,9 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
+#include "nvdialog.h"
 #include "nvdialog_assert.h"
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
@@ -125,12 +125,22 @@ NvdQuestionBox *nvd_dialog_question_new(const char *title, const char *question,
 #if !defined(NVD_USE_GTK4)
         return nvd_question_gtk(title, question, button);
 #else
-        return NULL;
+        return nvd_question_adw(title, question, button);
 #endif /* NVD_USE_GTK4 */
 #else
         return nvd_dialog_question_win32(title, question, button);
 #endif /* _WIN32 */
         return NULL;
+}
+
+NvdReply nvd_get_reply(NvdQuestionBox *question) {
+#if defined(NVD_USE_GTK4)
+        return nvd_get_reply_adw(question);
+#elif defined(_WIN32)
+        return nvd_get_reply_win32(question);
+#else
+        return nvd_get_reply_gtk(question);
+#endif /* NVD_USE_GTK4 */
 }
 
 NvdAboutDialog *nvd_about_dialog_new(const char *name, const char *description,
@@ -166,13 +176,13 @@ void nvd_free_object(void *obj) {
 }
 
 void nvd_show_dialog(NvdDialogBox *dialog) {
-        #if !defined(_WIN32) && defined(NVD_USE_GTK4)
+#if !defined(_WIN32) && defined(NVD_USE_GTK4)
         nvd_show_dialog_adw(dialog);
-        #elif defined(_WIN32)
+#elif defined(_WIN32)
         nvd_show_dialog_win32(dialog);
-        #elif !defined(NVD_USE_GTK4)
+#elif !defined(NVD_USE_GTK4)
         nvd_show_dialog_gtk(dialog);
-        #else
+#else
         return;
-        #endif
+#endif
 }
