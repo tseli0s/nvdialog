@@ -55,13 +55,4 @@
 #endif /* NVD_BUFFER_SIZE */
 #endif /* __clang__ */
 
-#define NVD_RETURN_IF_NULL(x)                                                  \
-        do {                                                                   \
-                if (!x) {                                                      \
-                        NVD_ASSERT(x !=                                        \
-                                   NULL); /* Just for the error message. */    \
-                        return NULL;                                           \
-                }                                                              \
-        } while (0);
-
 #endif /* __nvdialog_macros_h__ */
