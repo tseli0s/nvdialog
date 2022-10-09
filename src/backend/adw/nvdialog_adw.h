@@ -25,6 +25,7 @@
 #ifndef __nvdialog_adw_h__
 #define __nvdialog_adw_h__
 
+#include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
 #include <adwaita.h>
@@ -38,9 +39,20 @@ NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
                                         const char *file_extensions);
 
 /* Creates a dialog box with the usual yes, no and cancel buttons. */
-NvdReply nvd_question_adw(const char *title, const char *question,
-                          NvdQuestionButton buttons);
+NvdQuestionBox *nvd_question_adw(const char *title, const char *question,
+                                 NvdQuestionButton buttons);
 
 /* Shows the dialog box given to the system. */
-void nvd_show_dialog_adw(NvdDialogBox* dialog);
+void nvd_show_dialog_adw(NvdDialogBox *dialog);
+
+/* Shows the dialog box and returns the reply given. */
+NvdReply nvd_get_reply_adw(NvdQuestionBox *box);
+
+/*
+ * About dialog box using libadwaita.
+ * TODO: Add functions within NvDialog to allow adding additional
+ * elements to the dialog box.
+ */
+NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
+                                     const char *logo);
 #endif /* __nvdialog_adw_h__ */
