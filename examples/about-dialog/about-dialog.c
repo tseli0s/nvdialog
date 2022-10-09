@@ -1,3 +1,5 @@
+#include "dialogs/nvdialog_about_dialog.h"
+#include "dialogs/nvdialog_dialog_box.h"
 #include <nvdialog/nvdialog.h>
 #include <nvdialog/nvdialog_dialog.h>
 #define APP_NAME "NvDialog Example"
@@ -11,8 +13,13 @@ int main(int argc, char **argv)
                                   "See https://github.com/AndroGR/nvdialog"
                                   "for more information.";
         nvd_init(argv[0]);
-        nvd_about_dialog_new(APP_NAME,
+        NvdAboutDialog* dialog = nvd_about_dialog_new(APP_NAME,
                              description, "This program is licensed under the MIT license,"
                              "see https://mitlicense.example for more.", NULL);
+        if (!dialog) return -1;
+        else {
+                nvd_show_about_dialog(dialog);
+                return 0;
+        }
         return argc;
 }

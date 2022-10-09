@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -lnvdialog -O3 -s -fno-exceptions
+CFLAGS=-Wall -Wextra -lnvdialog -O3 -s -fno-exceptions
 SRCS=question-dialog.c
 OUTFILE=question-example
 
