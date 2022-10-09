@@ -38,7 +38,7 @@ if (NOT NVD_USE_GTK4)
 else()
         add_compile_definitions(NVD_USE_GTK4)
         message("-- NOTE: Compiling NvDialog using the experimental Gtk4+Libadwaita backend.")
-        set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/backend/adw/nvdialog_adw.c src/nvdialog_main.c)
+        set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c)
 endif()
 message("-- NVDIALOG_MAXBUF equals ${NVDIALOG_MAXBUF}. If buffer overflows are detected, increase this number.")
 set(NVD_HEADERS include/nvdialog_dialog.h include/nvdialog_core.h include/nvdialog_capab.h include/nvdialog_types.h include/nvdialog_error.h include/nvdialog.h)
@@ -58,9 +58,10 @@ else(WIN32 OR WIN32_TARGET)
                 find_package(PkgConfig)
                 if (PKG_CONFIG_FOUND)
                         if (NVD_USE_GTK4)
-                                set(NVD_ADW_SOURCES src/backend/adw/nvdialog_adw.c
+                                set(NVD_ADW_SOURCES src/backend/adw/nvdialog_about_dialog.c
                                                     src/backend/adw/nvdialog_file_dialog.c
-                                                    src/backend/adw/nvdialog_dialog_box.c)
+                                                    src/backend/adw/nvdialog_dialog_box.c
+                                                    src/backend/adw/nvdialog_question_dialog.c)
                                 set(NVD_SOURCES ${NVD_SOURCES} ${NVD_ADW_SOURCES})
                                 message("Sources are: ${NVD_SOURCES}")
                                 pkg_check_modules(GTK "libadwaita-1") # Well actually, libadwaita isn't Gtk4, but who cares anyways :P
