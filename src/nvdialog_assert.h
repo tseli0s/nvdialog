@@ -32,7 +32,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void __attribute__((format(printf, 1, 2)))
+static void __attribute__((format(printf, 1, 2)))
 nvd_print_assert(const char *msg, ...) {
         va_list args;
         va_start(args, msg);
@@ -57,6 +57,15 @@ nvd_print_assert(const char *msg, ...) {
                             NVD_STRING(eq), __LINE__, __FILE__, NVD_FN_IDENT);            \
                 }                                                              \
         } while (0)
+
+#define NVD_RETURN_IF_NULL(x)                                                  \
+        do {                                                                   \
+                if (!x) {                                                      \
+                        NVD_ASSERT(x !=                                        \
+                                   NULL); /* Just for the error message. */    \
+                        return NULL;                                           \
+                }                                                              \
+        } while (0);
 
 /* This is supposed to be called only when the library cannot be used anymore.
  */
