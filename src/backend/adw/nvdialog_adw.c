@@ -37,37 +37,6 @@ inline static void nvd_reply_write_no(NvdReply *reply) {
         *reply = NVD_REPLY_NO;
 }
 
-NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
-                                 NvdDialogType type) {
-        GtkWidget *dialog =
-            adw_message_dialog_new(nvd_get_parent(), title, message);
-
-        adw_message_dialog_add_response(ADW_MESSAGE_DIALOG(dialog), "accept",
-                                        "Okay");
-        adw_message_dialog_set_default_response(ADW_MESSAGE_DIALOG(dialog),
-                                                "accept");
-
-        switch (type) {
-        case NVD_DIALOG_WARNING:
-        case NVD_DIALOG_ERROR:
-                adw_message_dialog_set_response_appearance(
-                    ADW_MESSAGE_DIALOG(dialog), "accept",
-                    ADW_RESPONSE_DESTRUCTIVE);
-                break;
-
-        default:
-        case NVD_DIALOG_SIMPLE:
-                break;
-        }
-
-        gtk_window_present(GTK_WINDOW(dialog));
-        while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0) {
-                g_main_context_iteration(NULL, true);
-        }
-
-        return NULL;
-}
-
 NvdReply nvd_question_adw(const char *title, const char *question,
                           NvdQuestionButton buttons) {
         GtkWidget *dialog =
