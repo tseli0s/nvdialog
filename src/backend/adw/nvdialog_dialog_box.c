@@ -64,7 +64,7 @@ NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
         return dialog;
 }
 
-void nvd_show_dialog_adw(NvdDialogBox* dialog) {
+void nvd_show_dialog_adw(NvdDialogBox *dialog) {
         gtk_window_present(GTK_WINDOW(dialog->window_handle));
         while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
                 g_main_context_iteration(NULL, true);
