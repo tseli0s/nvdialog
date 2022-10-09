@@ -26,8 +26,8 @@
 #define __nvdialog_assert_h__
 
 #include "nvdialog.h"
-#include "nvdialog_macros.h"
 #include "nvdialog_error.h"
+#include "nvdialog_macros.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,7 +54,7 @@ nvd_print_assert(const char *msg, ...) {
                         nvd_print_assert(                                      \
                             "Assertion failure: %s\n  Line: %d\n  Filename: "  \
                             "%s\n  Function: %s\n",                            \
-                            NVD_STRING(eq), __LINE__, __FILE__, NVD_FN_IDENT);            \
+                            NVD_STRING(eq), __LINE__, __FILE__, NVD_FN_IDENT); \
                 }                                                              \
         } while (0)
 
