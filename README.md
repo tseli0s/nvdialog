@@ -9,7 +9,7 @@ huge changes and will definitely break your program. Use the latest release inst
 </div>
 
 <br>
-<code>libnvdialog</code> is a simple dialog box library written in C (Bindings for Rust also exist)
+<code>libnvdialog</code> is a simple dialog box library written in C
 for multiple purposes such as games, app development, simple UI boxes for terminal apps or anything else. If you need something that doesn't require a bunch of setup this library is for you. <br>
 <b>If you like this project, support it by recommending it and starring it. Thanks :)</b> <br>
 <a href="https://androgr.github.io/libnvdialog">libnvdialog Website</a>
@@ -29,22 +29,41 @@ Windows-specific backend, used only for Windows compatibility. This backend is m
 This is a simple cross-platform example of a simple message box greeting the user:
 ```c
 #include <nvdialog/nvdialog.h>
-#include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char **argv)
 {
-        /* Initializing the library. */
-        nvd_init(argv[0]);
+        /*
+         * First we need to initialize NvDialog, otherwise
+         * we might end up with alot of runtime errors and bugs.
+        */
+        if (nvd_init(argv[0]) != 0) {
+                puts("Failed to initialize NvDialog.\n");
+                exit(EXIT_FAILURE);
+        }
 
-        /* Creating the dialog. */
-        nvd_dialog_box_new(
-                "Hello, world!",
-                "Hello world ! This is a dialog box created using libnvdialog!",
-                NVD_DIALOG_SIMPLE
+        /*
+         * "Building" the dialog.
+         * In this step we add all the data required to create
+         * a dialog into a single variable. The dialog will not be
+         * shown until we call nvd_show_dialog().
+        */
+        NvdDialogBox* dialog = nvd_dialog_box_new(
+                "Hello, world!", // Title of the dialog
+                "Hello world ! This is a dialog box created using libnvdialog!", // Message of the dialog
+                NVD_DIALOG_SIMPLE // What is the dialog representing? (Eg a warning). In this
+                                  // case, it represents a simple dialog with no context.
         );
+
+        /*
+         * And finally, showing the dialog to the user.
+         * Note that this will halt the thread running the dialog,
+         * so you may get things like "App not responding".
+        */
+        nvd_show_dialog(dialog);
+        return 0;
 }
 ```
-Yes, it's that simple ! The library is designed with simplicity in mind so it will not require anything else to work.
 
 # Screenshots
 <div align="center">
