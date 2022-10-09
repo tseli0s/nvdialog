@@ -164,3 +164,15 @@ void nvd_free_object(void *obj) {
         NVD_ASSERT(obj != NULL);
         free(obj);
 }
+
+void nvd_show_dialog(NvdDialogBox *dialog) {
+        #if !defined(_WIN32) && defined(NVD_USE_GTK4)
+        nvd_show_dialog_adw(dialog);
+        #elif defined(_WIN32)
+        nvd_show_dialog_win32(dialog);
+        #elif !defined(NVD_USE_GTK4)
+        nvd_show_dialog_gtk(dialog);
+        #else
+        return;
+        #endif
+}
