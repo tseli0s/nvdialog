@@ -110,7 +110,8 @@ NvdReply nvd_dialog_question_win32(const char *title, const char *question,
                 return -1;
         }
 
-        reply = MessageBox(nvd_get_parent(), question, title, (unsigned int) flag | MB_ICONQUESTION);
+        reply = MessageBox(nvd_get_parent(), question, title,
+                           (unsigned int)flag | MB_ICONQUESTION);
         switch (reply) {
         case IDYES:
                 return NVD_REPLY_OK;
