@@ -1,3 +1,6 @@
+⚠️ **WARNING:** Currently NvDialog is undergoing some \
+huge changes and will definitely break your program. Use the latest release instead or another older release.
+
 <div align="center">
         <h1>libnvdialog</h1>
         <img src="assets/logo-new.svg" width="244">
