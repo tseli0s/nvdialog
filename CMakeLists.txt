@@ -25,9 +25,9 @@ if(WIN32_TARGET)
 endif()
 
 if(WIN32_TARGET)
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto -fno-stack-protector -Wno-unused-parameter -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-stack-protector -Wno-unused-parameter -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
 else()
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto -fstack-protector-all -fstack-clash-protection -Wno-unused-parameter --param ssp-buffer-size=4 -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-all -fstack-clash-protection -Wno-unused-parameter --param ssp-buffer-size=4 -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
         add_compile_definitions(_FORTIFY_SOURCE=2)
 endif()
 
@@ -59,7 +59,8 @@ else(WIN32 OR WIN32_TARGET)
                 if (PKG_CONFIG_FOUND)
                         if (NVD_USE_GTK4)
                                 set(NVD_ADW_SOURCES src/backend/adw/nvdialog_adw.c
-                                                src/backend/adw/nvdialog_file_dialog.c)
+                                                    src/backend/adw/nvdialog_file_dialog.c
+                                                    src/backend/adw/nvdialog_dialog_box.c)
                                 set(NVD_SOURCES ${NVD_SOURCES} ${NVD_ADW_SOURCES})
                                 message("Sources are: ${NVD_SOURCES}")
                                 pkg_check_modules(GTK "libadwaita-1") # Well actually, libadwaita isn't Gtk4, but who cares anyways :P
