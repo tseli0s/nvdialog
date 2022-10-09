@@ -42,3 +42,9 @@ struct _NvdFileDialog {
         char* filename, file_extensions;
         bool location_was_chosen;
 };
+
+struct _NvdQuestionBox {
+        void* window_handle;
+        char* title, *contents;
+        NvdReply reply;
+};
