@@ -23,7 +23,7 @@
  */
 
 #include "dialogs/nvdialog_file_dialog.h"
-#include "../../nvdialog_macros.h"
+#include "../../nvdialog_assert.h"
 #include "nvdialog_adw.h"
 #include <stdlib.h>
 
