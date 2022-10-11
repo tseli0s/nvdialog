@@ -113,4 +113,14 @@ NvdParentWindow nvd_get_parent(void);
  */
 void nvd_delete_parent(void);
 
+/**
+ * @brief Deletes an object creates by NvDialog.
+ * @details Call this function when you are no longer interested in using the
+ * parameter passed anymore, to free up any resources occupied by the object.
+ * Note that calling this in the middle of an operation will cause undefined
+ * behavior.
+ * @param object The object to be deleted.
+ */
+void nvd_free_object(void *object);
+
 #endif /* __nvdialog_core_h__ */
