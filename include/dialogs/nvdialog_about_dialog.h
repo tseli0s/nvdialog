@@ -58,3 +58,9 @@ NvdAboutDialog *nvd_about_dialog_new(const char *name, const char *description,
 void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
                                        const char *license_link,
                                        const char* txt);
+
+/**
+ * @brief Shows the About dialog given to the user.
+ * @param dialog The dialog to show.
+ */
+void nvd_show_about_dialog(NvdAboutDialog *dialog);
