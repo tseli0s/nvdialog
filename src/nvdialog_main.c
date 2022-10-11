@@ -188,11 +188,11 @@ void nvd_show_dialog(NvdDialogBox *dialog) {
 }
 
 void nvd_show_about_dialog(NvdAboutDialog *dialog) {
-        #if defined (_WIN32)
+#if defined(_WIN32)
         nvd_show_about_dialog_adw(dialog);
-        #elif defined (NVD_USE_GTK4)
+#elif defined(NVD_USE_GTK4)
         nvd_show_about_dialog_adw(dialog);
-        #else
+#else
         nvd_show_about_dialog_gtk(dialog);
-        #endif /* _WIN32 */
+#endif /* _WIN32 */
 }
