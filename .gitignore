@@ -23,3 +23,5 @@ docs/
 # Examples, we should not upload the binaries.
 examples/file-dialog/file_dialog_example
 examples/hello-world/hello-world
+examples/question-dialog/question-example
+examples/about-dialog/about-dialog-example

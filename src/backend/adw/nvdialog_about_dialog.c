@@ -47,7 +47,7 @@ NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
                 adw_about_window_set_application_icon(dialog->raw, logo);
 
         adw_about_window_set_application_name(dialog->raw, appname);
-        adw_about_window_set_comments(dialog->raw, (char*) dialog->contents); // FIXME: Invalid pointer cast
+        adw_about_window_set_debug_info(dialog->raw, brief);
 
         return dialog;
 }
