@@ -93,9 +93,9 @@ NvdQuestionBox *nvd_question_adw(const char *title, const char *question,
             ADW_MESSAGE_DIALOG((GtkWidget *)dialog->window_handle), "accept",
             "Okay");
         /* Just for better looks. */
-        adw_message_dialog_set_response_appearance(ADW_MESSAGE_DIALOG((GtkWidget *)dialog->window_handle),
-                                                   "accept", 
-                                                   ADW_RESPONSE_SUGGESTED);
+        adw_message_dialog_set_response_appearance(
+            ADW_MESSAGE_DIALOG((GtkWidget *)dialog->window_handle), "accept",
+            ADW_RESPONSE_SUGGESTED);
         return dialog;
 }
 
