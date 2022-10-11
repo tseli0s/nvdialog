@@ -23,6 +23,7 @@
  */
 
 #include "nvdialog_adw.h"
+#include "../../nvdialog_assert.h"
 #include <stdio.h>
 
 struct _NvdAboutDialog {
@@ -46,7 +47,13 @@ NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
                 adw_about_window_set_application_icon(dialog->raw, logo);
 
         adw_about_window_set_application_name(dialog->raw, appname);
-        adw_about_window_set_comments(dialog->raw, dialog->contents);
+        adw_about_window_set_comments(dialog->raw, (char*) dialog->contents); // FIXME: Invalid pointer cast
 
         return dialog;
+}
+
+void nvd_show_about_dialog_adw(NvdAboutDialog *dialog) {
+        gtk_window_present(GTK_WINDOW(dialog->raw));
+        while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
+                g_main_context_iteration(NULL, true);
 }
