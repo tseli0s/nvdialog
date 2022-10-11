@@ -55,4 +55,9 @@ NvdReply nvd_get_reply_adw(NvdQuestionBox *box);
  */
 NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
                                      const char *logo);
+
+/*
+ * Shows the dialog given to the system.
+ */
+void nvd_show_about_dialog_adw(NvdAboutDialog *dialog);
 #endif /* __nvdialog_adw_h__ */
