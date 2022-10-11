@@ -153,7 +153,7 @@ NvdAboutDialog *nvd_about_dialog_new(const char *name, const char *description,
 #if !defined(NVD_USE_GTK4)
         return nvd_about_dialog_gtk(name, description, license_text, logo_path);
 #else
-        return NULL;
+        return nvd_about_dialog_adw(name, description, logo_path);
 #endif /* !NVD_USE_GTK4 */
 #endif /* _WIN32 */
 }
@@ -185,4 +185,14 @@ void nvd_show_dialog(NvdDialogBox *dialog) {
 #else
         return;
 #endif
+}
+
+void nvd_show_about_dialog(NvdAboutDialog *dialog) {
+        #if defined (_WIN32)
+        nvd_show_about_dialog_adw(dialog);
+        #elif defined (NVD_USE_GTK4)
+        nvd_show_about_dialog_adw(dialog);
+        #else
+        nvd_show_about_dialog_gtk(dialog);
+        #endif /* _WIN32 */
 }
