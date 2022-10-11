@@ -22,8 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog_adw.h"
 #include "../../nvdialog_assert.h"
+#include "nvdialog_adw.h"
 #include <stdio.h>
 
 struct _NvdAboutDialog {
