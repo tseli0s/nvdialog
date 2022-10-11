@@ -12,8 +12,10 @@ int main(int argc, char **argv) {
                 case NVD_REPLY_NO:
                 case NVD_REPLY_CANCEL:
                         /* Cancel or No pressed in the dialog */
+                        nvd_free_object(question);
                         return argc; /* Just to avoid an unused parameter warning */
                 case NVD_REPLY_OK:
+                        nvd_free_object(question);
                         return 0;
         }
 }
