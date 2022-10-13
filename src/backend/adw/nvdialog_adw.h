@@ -60,4 +60,10 @@ NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
  * Shows the dialog given to the system.
  */
 void nvd_show_about_dialog_adw(NvdAboutDialog *dialog);
+
+/*
+ * Sets the version of the application in the About dialog box
+ * passed as the parameter.
+ */
+void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version);
 #endif /* __nvdialog_adw_h__ */
