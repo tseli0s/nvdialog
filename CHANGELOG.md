@@ -1,3 +1,9 @@
+# Changelog -- 0.3.0 (Not yet released)
+
+- Changed the API to now use a new model, where creating and showing the dialog window are now seperate tasks.
+- Rewritten the `NvdAboutDialog` with a better UI for Linux.
+- The source code tree is now reorganized in a much better working model.
+
 # Changelog -- 0.2.0
 
 - Fixed compilation errors on all backends (Especially Windows).
