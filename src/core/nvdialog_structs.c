@@ -24,6 +24,7 @@
 
 #include "nvdialog.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 struct _NvdDialogBox {
         void *window_handle;
@@ -34,8 +35,15 @@ struct _NvdDialogBox {
 
 struct _NvdAboutDialog {
         void* raw;
-        char* title, contents;
-        uint8_t image_buffer;
+        char* title, *contents;
+        char* version;
+        char* hyperlinks[6];
+        short amount_of_hyperlinks;
+        char* image_name;
+        bool image_from_icon;
+        void* buttons[4];
+        short amount_of_buttons;
+        void* layout;
 };
 
 struct _NvdFileDialog {
