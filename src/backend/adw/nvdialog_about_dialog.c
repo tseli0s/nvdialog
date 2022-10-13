@@ -28,28 +28,77 @@
 
 struct _NvdAboutDialog {
         void *raw;
-        char *title, contents;
-        uint8_t image_buffer;
+        char *title, *contents;
+        char *version;
+        char *hyperlinks[6];
+        short amount_of_hyperlinks;
+        char *image_name;
+        bool image_from_icon;
+        void *buttons[4];
+        short amount_of_buttons;
+        void *layout;
 };
+
+static void nvd_set_margins_gtk4(GtkWidget *widget) {
+        gtk_widget_set_margin_start(widget, 16);
+        gtk_widget_set_margin_end(widget, 16);
+        gtk_widget_set_margin_top(widget, 16);
+        gtk_widget_set_margin_bottom(widget, 16);
+}
 
 NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
                                      const char *logo) {
         NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
         /* In order to have a better title. */
-        size_t title_len = strlen("About ") + strlen(appname);
-        dialog->title = calloc(1, title_len);
-        dialog->contents = brief;
+        dialog->title = (char *)appname;
+        dialog->contents = (char *)brief;
+        dialog->layout = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
+        dialog->raw = adw_window_new();
+        gtk_window_set_default_size(GTK_WINDOW(dialog->raw), 600, 400);
 
-        snprintf(dialog->title, title_len, "About %s", appname);
-        dialog->raw = adw_about_window_new();
-        if (logo)
-                adw_about_window_set_application_icon(dialog->raw, logo);
+        GtkWidget *titlebar = adw_header_bar_new();
+        GtkWidget *logo_img;
+        GtkWidget *title =
+            adw_window_title_new(dialog->title, "About Application");
+        GtkWidget *label = gtk_label_new("");
+        GtkWidget *brief_label = gtk_label_new(dialog->contents);
+        gtk_label_set_lines(GTK_LABEL(brief_label), 1);
+        nvd_set_margins_gtk4(brief_label);
+        nvd_set_margins_gtk4(label);
+        gtk_label_set_wrap(GTK_LABEL(brief_label), true);
 
-        adw_about_window_set_application_name(dialog->raw, appname);
-        adw_about_window_set_debug_info(dialog->raw, brief);
+        char buffer[NVDIALOG_MAXBUF];
+        sprintf(buffer, "<span font_desc=\"18.0\"><b>About %s:</b></span>",
+                dialog->title);
+        gtk_label_set_markup(GTK_LABEL(label), buffer);
 
+        adw_header_bar_set_title_widget(ADW_HEADER_BAR(titlebar), title);
+        if (!logo)
+                logo_img = gtk_image_new_from_icon_name("computer");
+        else
+                logo_img = gtk_image_new_from_icon_name(logo);
+
+        gtk_box_append(GTK_BOX(dialog->layout), titlebar);
+        // gtk_box_append(GTK_BOX(dialog->layout), logo_img); (Left out because
+        // it's a WIP)
+        gtk_box_append(GTK_BOX(dialog->layout), label);
+        gtk_box_append(GTK_BOX(dialog->layout), brief_label);
+        adw_window_set_content(dialog->raw, dialog->layout);
         return dialog;
+}
+
+void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog,
+                                      const char *version) {
+        char buffer[NVDIALOG_MAXBUF];
+        sprintf(buffer,
+                "<span font_desc=\"8.0\"><i>Running version %s</i></span>",
+                version);
+        GtkWidget *label = gtk_label_new("");
+        gtk_label_set_markup(GTK_LABEL(label), buffer);
+        nvd_set_margins_gtk4(label);
+        gtk_box_append(GTK_BOX(dialog->layout), label);
+        return;
 }
 
 void nvd_show_about_dialog_adw(NvdAboutDialog *dialog) {
