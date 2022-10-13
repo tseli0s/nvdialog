@@ -36,17 +36,15 @@ typedef struct _NvdAboutDialog NvdAboutDialog;
  * @param name Your application name.
  * @param description A short description of the application, describing what it
  * does.
- * @param license_text A short license text. Eg. for MIT licensed software, you
- * could use something like: [App name] is licensed under the MIT license. See
- * [license link] for details.
  * @param logo Nullable value that can specify a filename to load as the
  * application logo.
  * @note This function does not use GtkAboutDialog on Unix.
  * @return NULL on failure, otherwise a handle to a heap allocated object containing
  * the actual dialog.
  */
-NvdAboutDialog *nvd_about_dialog_new(const char *name, const char *description,
-                                     const char *license_text, const char *logo);
+NvdAboutDialog *nvd_about_dialog_new(const char *name,
+                                     const char *description,
+                                     const char *logo);
 
 /**
  * @brief Sets a hyperlink to the application's license (Preferably a link.)
@@ -58,6 +56,13 @@ NvdAboutDialog *nvd_about_dialog_new(const char *name, const char *description,
 void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
                                        const char *license_link,
                                        const char* txt);
+
+/**
+ * @brief Adds a version text to the dialog given.
+ * @param dialog The dialog to set the version to.
+ * @param version A string to represent the version of your application.
+ */
+void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version);
 
 /**
  * @brief Shows the About dialog given to the user.
