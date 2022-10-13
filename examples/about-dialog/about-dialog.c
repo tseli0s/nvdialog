@@ -14,12 +14,12 @@ int main(int argc, char **argv)
                                   "for more information.";
         nvd_init(argv[0]);
         NvdAboutDialog* dialog = nvd_about_dialog_new(APP_NAME,
-                             description, "This program is licensed under the MIT license,"
-                             "see https://mitlicense.example for more.", NULL);
+                             description, NULL);
         if (!dialog) {
                 puts("Couldn't create the dialog object. Aborting.");
                 abort();
         } else {
+                nvd_about_dialog_set_version(dialog, "v0.1.0-testing");
                 nvd_show_about_dialog(dialog);
                 return 0;
         }
