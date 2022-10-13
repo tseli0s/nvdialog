@@ -144,14 +144,12 @@ NvdReply nvd_get_reply(NvdQuestionBox *question) {
 }
 
 NvdAboutDialog *nvd_about_dialog_new(const char *name, const char *description,
-                                     const char *license_text,
                                      const char *logo_path) {
 #if defined(_WIN32)
-        return nvd_about_dialog_win32(name, description, license_text,
-                                      logo_path);
+        return nvd_about_dialog_win32(name, description, logo_path);
 #else
 #if !defined(NVD_USE_GTK4)
-        return nvd_about_dialog_gtk(name, description, license_text, logo_path);
+        return nvd_about_dialog_gtk(name, description, logo_path);
 #else
         return nvd_about_dialog_adw(name, description, logo_path);
 #endif /* !NVD_USE_GTK4 */
@@ -195,4 +193,12 @@ void nvd_show_about_dialog(NvdAboutDialog *dialog) {
 #else
         nvd_show_about_dialog_gtk(dialog);
 #endif /* _WIN32 */
+}
+
+void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version) {
+#if defined(NVD_USE_GTK4)
+        nvd_about_dialog_set_version_adw(dialog, version);
+#elif defined(_WIN32)
+#else
+#endif /* NVD_USE_GTK4 */
 }
