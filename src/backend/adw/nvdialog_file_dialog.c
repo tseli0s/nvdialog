@@ -28,22 +28,35 @@
 #include <stdlib.h>
 
 struct _NvdFileDialog {
-        char *filename, file_extensions;
+        char *filename, *file_extensions;
         bool location_was_chosen;
+        void *raw;
 };
 
 NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
                                         const char *file_extensions) {
         NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
-        dialog->file_extensions = file_extensions;
+        dialog->file_extensions = (char *)file_extensions;
+
+        GtkWidget *dialog_raw = gtk_file_chooser_dialog_new(
+            title, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, "Cancel",
+            GTK_RESPONSE_CANCEL, "Open", GTK_RESPONSE_OK, NULL);
+
+        dialog->raw = dialog_raw;
+
         return dialog;
 }
 
-void nvd_get_file_location_adw(NvdFileDialog *dialog, const char **savebuf) {
-        dialog->filename = "";
-        dialog->location_was_chosen = false;
-        *savebuf = dialog->filename;
-
-        return;
+void nvd_get_file_location_adw(NvdFileDialog *dialog, char **savebuf) {
+        if (gtk_dialog_run(GTK_DIALOG(dialog->raw)) == GTK_RESPONSE_OK) {
+                *savebuf = gtk_file_chooser_get_filename(
+                    GTK_FILE_CHOOSER(dialog->raw));
+                dialog->filename = (char *)*savebuf;
+                dialog->location_was_chosen = true;
+                return;
+        } else {
+                dialog->location_was_chosen = false;
+                return;
+        }
 }
