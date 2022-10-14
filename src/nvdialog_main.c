@@ -32,7 +32,7 @@
 #ifdef NVD_USE_GTK4
 #include "backend/adw/nvdialog_adw.h"
 #else
-#include "backend/adw/nvdialog_gtk.h"
+#include "backend/gtk/nvdialog_gtk.h"
 #endif /* NVD_USE_GTK4 */
 #else
 #include "backend/win32/nvdialog_win32.h"
@@ -89,8 +89,7 @@ NvdFileDialog *nvd_open_file_dialog_new(const char *title,
                                         const char *file_extensions) {
 #if !defined(_WIN32)
 #if !defined(NVD_USE_GTK4)
-        const char *data = nvd_open_file_dialog_gtk(title, file_extensions);
-        return data;
+        return nvd_open_file_dialog_gtk(title, file_extensions);
 #else
         return nvd_open_file_dialog_adw(title, file_extensions);
 #endif /* NVD_USE_GTK4 */
@@ -103,7 +102,7 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                                  NvdDialogType type) {
 #if !defined(_WIN32)
 #if !defined(NVD_USE_GTK4)
-        NvdDialogBox *dialog = nvd_create_gtk_dialog(title, message, type);
+        NvdDialogBox *dialog = nvd_dialog_box_gtk(title, message, type);
         if (!dialog)
                 nvd_set_error(NVD_INTERNAL_ERROR);
         return dialog;
@@ -200,5 +199,14 @@ void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version) {
         nvd_about_dialog_set_version_adw(dialog, version);
 #elif defined(_WIN32)
 #else
+        nvd_about_dialog_set_version_gtk(dialog, version);
 #endif /* NVD_USE_GTK4 */
+}
+
+void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
+        #if defined(_WIN32)
+        #elif defined(NVD_USE_GTK4)
+        #else
+        nvd_get_file_location_gtk(dialog, **savebuf);
+        #endif /* _WIN32 */
 }
