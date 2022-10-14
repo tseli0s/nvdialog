@@ -4,6 +4,7 @@
 - Rewritten the `NvdAboutDialog` with a better UI for Linux.
 - The source code tree is now reorganized in a much better working model.
 - On Arch Linux, packages are going to be built from the local source code instead of the remote repository one, to allow for better integration with the package manager and stability.
+- The Adwaita backend is no longer experimental, and has become the default backend on Unix systems.
 
 # Changelog -- 0.2.0
 
