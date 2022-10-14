@@ -8,23 +8,14 @@
 int main(int argc, char **argv)
 {
         nvd_init(argv[0]);
-        const char* filename = nvd_open_file_dialog_new(
+        void* dialog = nvd_open_file_dialog_new(
                 "Open File Example",
                 NULL
         );
 
-        if (filename != NULL)
-        {
-                nvd_dialog_box_new(
-                        "File Selected",
-                        filename,
-                        NVD_DIALOG_SIMPLE
-                );
-        } else {
-                nvd_dialog_box_new(
-                        "Cancelled",
-                        "No file selected.",
-                        NVD_DIALOG_WARNING
-                );
-        }
+        const char* filename;
+        nvd_get_file_location(dialog, &filename);
+        NvdDialogBox* chosen_file = nvd_dialog_box_new("File chosen",
+        filename,
+                NVD_DIALOG_SIMPLE);
 }
