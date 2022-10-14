@@ -77,11 +77,8 @@ int main(int argc, char **argv)
 
 # Installation
 Make sure you have installed CMake before doing anything else ! The library can only be installed using CMake. See [CMake's website](https://cmake.org/) for more information.
-- First, clone the repository:
-```sh
-$ git clone --depth=1 https://github.com/AndroGR/libnvdialog.git && cd libnvdialog/
-```
-
+- First, download the source code in your preferred way. The [Releases](https://github.com/AndroGR/nvdialog/releases/) are recommended if you are looking for stability, but you can also optionally compile from
+the GitHub repository directly, by cloning the source code.
 - Compile the library:
 ```sh
 $ mkdir build/ && cd build/
