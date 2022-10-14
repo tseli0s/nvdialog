@@ -34,7 +34,11 @@ endif()
 message("-- Compiling with flags:\n  ${CMAKE_C_FLAGS}")
 add_compile_definitions(NVDIALOG_MAXBUF=${NVDIALOG_MAXBUF})
 if (NOT NVD_USE_GTK4)
-        set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_capab.c src/nvdialog_version.c src/backend/gtk/nvdialog_gtk.c src/nvdialog_main.c)
+        set(NVD_GTK_SOURCES src/backend/gtk/nvdialog_about_dialog.c
+                            src/backend/gtk/nvdialog_file_dialog.c
+                            src/backend/gtk/nvdialog_dialog_box.c
+                            src/backend/gtk/nvdialog_question_dialog.c)
+        set(NVD_SOURCES ${NVD_GTK_SOURCES} src/nvdialog_error.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
 else()
         add_compile_definitions(NVD_USE_GTK4)
         message("-- NOTE: Compiling NvDialog using the experimental Gtk4+Libadwaita backend.")
