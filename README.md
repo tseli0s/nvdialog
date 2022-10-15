@@ -1,7 +1,6 @@
 <div align="center">
-        <h1>NvDialog</h1>
         <img src="assets/logo-new.svg" width="244">
-        <br>
+        <h1>NvDialog</h1>
         <h5>A cross-platform dialog library.</h5>
 </div>
 
@@ -17,8 +16,7 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 A backend using Gtk4 and `libadwaita`. This backend has replaced the (following) Gtk3 backend since 0.2.0 was released. Also note, this backend makes use of hardware acceleration, which sometimes breaks games in Wayland.
 
 - **Gtk3 Backend**\
-Some older distributions do not have Adwaita / Gtk4 support yet. The Gtk3 backend can be used in such a situation. However Gtk3 is considered to be deprecated and has been replaced with the Adwaita backend. This backend will be replaced with Qt6 later.
-
+Some older distributions do not have Adwaita / Gtk4 support yet. The Gtk3 backend can be used in such a situation. However Gtk3 is considered to be deprecated and has been replaced with the Adwaita backend.
 - **Win32 Backend**\
 Windows-specific backend, used only for Windows compatibility. This backend is mainly tested on GNU/Linux with `wine`, and so some bugs may not be detected. Open an issue if that's the case.
 
@@ -73,7 +71,7 @@ int main(int argc, char **argv)
 </div>
 
 # Installation
-Make sure you have installed CMake before doing anything else ! The library can only be installed using CMake. See [CMake's website](https://cmake.org/) for more information.
+Make sure you have installed [CMake](https://cmake.org) before doing anything else ! The library can only be installed using CMake. See [CMake's website](https://cmake.org/) for more information.
 - First, download the source code in your preferred way. The [Releases](https://github.com/AndroGR/nvdialog/releases/) are recommended if you are looking for stability, but you can also optionally compile from
 the GitHub repository directly, by cloning the source code.
 - Compile the library:
