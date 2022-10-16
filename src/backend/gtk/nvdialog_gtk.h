@@ -65,5 +65,6 @@ void nvd_show_about_dialog_gtk(NvdAboutDialog *dialog);
  * Sets the version of the application in the About dialog box
  * passed as the parameter.
  */
-void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog, const char *version);
+void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog,
+                                      const char *version);
 #endif /* __nvdialog_adw_h__ */

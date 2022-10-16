@@ -50,27 +50,30 @@ NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
         dialog->msg = title;
         dialog->type = type;
         dialog->window_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-        GtkWidget* img;
+        GtkWidget *img;
         switch (type) {
         case NVD_DIALOG_WARNING:
-                img = gtk_image_new_from_icon_name("dialog-warning", GTK_ICON_SIZE_DIALOG);
+                img = gtk_image_new_from_icon_name("dialog-warning",
+                                                   GTK_ICON_SIZE_DIALOG);
                 break;
         case NVD_DIALOG_ERROR:
-                img = gtk_image_new_from_icon_name("dialog-error", GTK_ICON_SIZE_DIALOG);
+                img = gtk_image_new_from_icon_name("dialog-error",
+                                                   GTK_ICON_SIZE_DIALOG);
                 break;
 
         default:
         case NVD_DIALOG_SIMPLE:
-                img = gtk_image_new_from_icon_name("dialog-information", GTK_ICON_SIZE_DIALOG);
+                img = gtk_image_new_from_icon_name("dialog-information",
+                                                   GTK_ICON_SIZE_DIALOG);
                 break;
         }
 
-        GtkGrid* grid = GTK_GRID(gtk_grid_new());
+        GtkGrid *grid = GTK_GRID(gtk_grid_new());
         gtk_grid_set_column_spacing(grid, 16);
 
-        GtkWidget* text = gtk_label_new(dialog->content);
-        GtkWidget* button = gtk_button_new_with_label("Okay");
-        
+        GtkWidget *text = gtk_label_new(dialog->content);
+        GtkWidget *button = gtk_button_new_with_label("Okay");
+
         nvd_set_margins_gtk3(text);
         nvd_set_margins_gtk3(button);
         nvd_set_margins_gtk3(img);
@@ -82,12 +85,13 @@ NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
         gtk_widget_set_hexpand(GTK_WIDGET(grid), true);
         gtk_widget_set_vexpand(GTK_WIDGET(grid), true);
 
-        gtk_container_add(GTK_CONTAINER(dialog->window_handle), GTK_WIDGET(grid));
+        gtk_container_add(GTK_CONTAINER(dialog->window_handle),
+                          GTK_WIDGET(grid));
 
-        g_signal_connect_swapped(dialog->window_handle, "destroy", G_CALLBACK(gtk_main_quit),
-                                 NULL);
-        g_signal_connect_swapped(button, "clicked",
+        g_signal_connect_swapped(dialog->window_handle, "destroy",
                                  G_CALLBACK(gtk_main_quit), NULL);
+        g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_main_quit),
+                                 NULL);
 
         return dialog;
 }

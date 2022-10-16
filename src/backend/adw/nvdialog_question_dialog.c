@@ -33,8 +33,8 @@ struct NvdQuestionData {
 struct _NvdQuestionBox {
         void *window_handle;
         char *title, *contents;
-        struct NvdQuestionData data;
         NvdReply reply;
+        NvdQuestionButton buttons;
 };
 
 inline static void nvd_reply_write_ok(NvdReply *reply) {
