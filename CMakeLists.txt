@@ -50,13 +50,24 @@ set(NVD_EXTRA_HEADERS include/dialogs/nvdialog_file_dialog.h include/dialogs/nvd
 # If compiling for Windows, only use Win32 API.
 # Otherwise, use the standard backends.
 if (WIN32 OR WIN32_TARGET)
+        set(NVD_WIN32_SOURCES src/backend/win32/nvdialog_about_dialog.c
+                              src/backend/win32/nvdialog_dialog_box.c
+                              src/backend/win32/nvdialog_question_dialog.c
+                              src/backend/win32/nvdialog_file_dialog.c)
+        set(NVD_SOURCES ${NVD_WIN32_SOURCES}
+                        src/core/nvdialog_structs.c
+                        src/nvdialog_error.c
+                        src/nvdialog_version.c
+                        src/nvdialog_capab.c
+                        src/nvdialog_main.c)
+        message("The source code files are:\n  ${NVD_SOURCES}")
         if (NVD_BUILD_STATIC)
-                add_library(nvdialog STATIC src/core/nvdialog_structs.c src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/nvdialog_capab.c src/nvdialog_main.c)
+                add_library(nvdialog STATIC ${NVD_SOURCES})
         else(NVD_BUILD_STATIC)
-                add_library(nvdialog SHARED src/core/nvdialog_structs.c src/nvdialog_error.c src/nvdialog_version.c src/backend/nvdialog_win32.c src/nvdialog_capab.c src/nvdialog_main.c)
+                add_library(nvdialog SHARED ${NVD_SOURCES})
         endif(NVD_BUILD_STATIC)
         message("-- Compiling a Windows library.")
-        target_link_libraries(nvdialog comdlg32)
+        target_link_libraries(nvdialog comdlg32 shell32 user32)
 else(WIN32 OR WIN32_TARGET)
                 find_package(PkgConfig)
                 if (PKG_CONFIG_FOUND)
