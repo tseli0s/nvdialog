@@ -64,6 +64,13 @@ int main(int argc, char **argv)
          * so you may get things like "App not responding".
         */
         nvd_show_dialog(dialog);
+
+        /*
+         * Once we are done with the dialog,
+         * we should free it so that it doesn't
+         * leak memory or waste resources.
+        */
+        nvd_free_object(dialog);
         return 0;
 }
 ```
