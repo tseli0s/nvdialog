@@ -68,3 +68,10 @@ void nvd_show_dialog(NvdDialogBox *dialog);
  */
 NvdQuestionBox* nvd_dialog_question_new(const char *title, const char *question,
                                         NvdQuestionButton button);
+
+/**
+ * @brief Shows the dialog box given to the system and returns the choice given
+ * @param box The box to use to show the reply.
+ * @return The reply from the dialog box.
+ */
+NvdReply nvd_get_reply(NvdQuestionBox *box);
