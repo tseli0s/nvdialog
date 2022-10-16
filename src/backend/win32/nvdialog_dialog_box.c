@@ -22,29 +22,50 @@
  * IN THE SOFTWARE.
  */
 
-#include "dialogs/nvdialog_about_dialog.h"
-#include "dialogs/nvdialog_dialog_box.h"
-#include "dialogs/nvdialog_file_dialog.h"
+#include "../../nvdialog_assert.h"
+#include "nvdialog_win32.h"
+#include <stdint.h>
+#include <wchar.h>
+#include <windows.h>
+#include <winuser.h>
+
+struct _NvdDialogBox {
+        void *window_handle;
+        const char *msg;
+        const char *content;
+        NvdDialogType type;
+};
 
 NvdDialogBox *nvd_dialog_box_win32(const char *title, const char *message,
-                                   NvdDialogType type);
+                                   NvdDialogType type) {
+        NVD_ASSERT(title != NULL);
+        NVD_ASSERT(message != NULL);
 
-NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
-                                          const char *file_extensions);
+        NvdDialogBox *dialog =
+            (NvdDialogBox *)malloc(sizeof(struct _NvdDialogBox));
+        NVD_RETURN_IF_NULL(dialog);
 
-NvdQuestionBox *nvd_question_win32(const char *title, const char *question,
-                                   NvdQuestionButton buttons);
+        dialog->msg = title;
+        dialog->content = message;
+        dialog->type = type;
 
-void nvd_show_dialog_win32(NvdDialogBox *dialog);
+        return dialog;
+}
 
-NvdReply nvd_get_reply_win32(NvdQuestionBox *box);
+void nvd_show_dialog_win32(NvdDialogBox *dialog) {
+        uint32_t flag;
+        switch (dialog->type) {
+        case NVD_DIALOG_SIMPLE:
+                flag = MB_ICONINFORMATION;
+                break;
+        case NVD_DIALOG_WARNING:
+                flag = MB_ICONWARNING;
+                break;
+        case NVD_DIALOG_ERROR:
+                flag = MB_ICONHAND;
+                break;
+        }
 
-NvdAboutDialog *nvd_about_dialog_win32(const char *appname, const char *brief,
-                                       const char *logo);
-
-void nvd_show_about_dialog_win32(NvdAboutDialog *dialog);
-
-void nvd_about_dialog_set_version_win32(NvdAboutDialog *dialog,
-                                        const char *version);
-
-const char* nvd_get_file_location_win32(NvdFileDialog* dialog);
+        MessageBox(nvd_get_parent(), dialog->content, dialog->msg,
+                   MB_OK | flag);
+}
