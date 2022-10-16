@@ -113,8 +113,7 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
         return dialog;
 #endif /* NVD_USE_GTK4 */
 #else
-        nvd_create_win32_dialog(title, message, type);
-        return 0;
+        return nvd_dialog_box_win32(title, message, type);
 #endif /* _WIN32 */
 }
 
@@ -127,7 +126,7 @@ NvdQuestionBox *nvd_dialog_question_new(const char *title, const char *question,
         return nvd_question_adw(title, question, button);
 #endif /* NVD_USE_GTK4 */
 #else
-        return nvd_dialog_question_win32(title, question, button);
+        return nvd_question_win32(title, question, button);
 #endif /* _WIN32 */
         return NULL;
 }
@@ -186,7 +185,7 @@ void nvd_show_dialog(NvdDialogBox *dialog) {
 
 void nvd_show_about_dialog(NvdAboutDialog *dialog) {
 #if defined(_WIN32)
-        nvd_show_about_dialog_adw(dialog);
+        nvd_show_about_dialog_win32(dialog);
 #elif defined(NVD_USE_GTK4)
         nvd_show_about_dialog_adw(dialog);
 #else
@@ -204,9 +203,10 @@ void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version) {
 }
 
 void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
-        #if defined(_WIN32)
-        #elif defined(NVD_USE_GTK4)
-        #else
-        nvd_get_file_location_gtk(dialog, **savebuf);
-        #endif /* _WIN32 */
+#if defined(_WIN32)
+        nvd_get_file_location_win32(dialog, savebuf);
+#elif defined(NVD_USE_GTK4)
+#else
+        nvd_get_file_location_gtk(dialog, savebuf);
+#endif /* _WIN32 */
 }
