@@ -30,11 +30,11 @@
 #include "dialogs/nvdialog_file_dialog.h"
 #include <gtk/gtk.h>
 
-/* Shows a simple dialog box using libadwaita. */
+/* Shows a simple dialog box using Gtk3. */
 NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
                                  NvdDialogType type);
 
-/* Opens a file dialog using libadwaita. */
+/* Opens a file dialog using Gtk3. Not working yet. */
 NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
                                         const char *file_extensions);
 
@@ -42,16 +42,11 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
 NvdQuestionBox *nvd_question_gtk(const char *title, const char *question,
                                  NvdQuestionButton buttons);
 
-/* Shows the dialog box given to the system. */
-void nvd_show_dialog_gtk(NvdDialogBox *dialog);
-
 /* Shows the dialog box and returns the reply given. */
 NvdReply nvd_get_reply_gtk(NvdQuestionBox *box);
 
 /*
- * About dialog box using libadwaita.
- * TODO: Add functions within NvDialog to allow adding additional
- * elements to the dialog box.
+ * About dialog box using Gtk3.
  */
 NvdAboutDialog *nvd_about_dialog_gtk(const char *appname, const char *brief,
                                      const char *logo);
@@ -67,4 +62,10 @@ void nvd_show_about_dialog_gtk(NvdAboutDialog *dialog);
  */
 void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog,
                                       const char *version);
+
+/*
+ * Gets the full path of a file, and returns the path
+ * inside the 'save' nested pointer passed.
+*/
+void nvd_get_file_location_gtk(NvdFileDialog *dialog, const char** save);
 #endif /* __nvdialog_adw_h__ */
