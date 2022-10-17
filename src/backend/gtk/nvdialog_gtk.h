@@ -67,5 +67,5 @@ void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog,
  * Gets the full path of a file, and returns the path
  * inside the 'save' nested pointer passed.
 */
-void nvd_get_file_location_gtk(NvdFileDialog *dialog, const char** save);
+void nvd_get_file_location_gtk(NvdFileDialog *dialog, const char** savebuf);
 #endif /* __nvdialog_adw_h__ */
