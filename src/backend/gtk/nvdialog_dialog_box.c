@@ -22,9 +22,10 @@
  * IN THE SOFTWARE.
  */
 
+#include "nvdialog_gtk.h"
 #include "../../nvdialog_assert.h"
 #include "../../nvdialog_macros.h"
-#include "nvdialog_gtk.h"
+#include "dialogs/nvdialog_dialog_box.h"
 
 struct _NvdDialogBox {
         void *window_handle;
@@ -32,7 +33,6 @@ struct _NvdDialogBox {
         const char *content;
         NvdDialogType type;
 };
-#define NvdDialogBox struct _NvdDialogBox
 
 static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
         gtk_widget_set_margin_start(widget, 16);
@@ -46,10 +46,11 @@ NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
         NvdDialogBox *dialog = malloc(sizeof(struct _NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
-        dialog->content = message;
-        dialog->msg = title;
-        dialog->type = type;
+        dialog->content       = message;
+        dialog->msg           = title;
+        dialog->type          = type;
         dialog->window_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        
         GtkWidget *img;
         switch (type) {
         case NVD_DIALOG_WARNING:
