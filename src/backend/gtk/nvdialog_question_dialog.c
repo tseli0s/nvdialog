@@ -59,10 +59,10 @@ NvdQuestionBox *nvd_question_gtk(const char *title, const char *question,
                                  NvdQuestionButton buttons) {
         NvdQuestionBox *dialog = malloc(sizeof(struct _NvdQuestionBox));
         NVD_RETURN_IF_NULL(dialog);
-        dialog->title = (char *)title;
+
+        dialog->title    = (char *)title;
         dialog->contents = (char *)question;
-        dialog->reply =
-            NVD_REPLY_CANCEL; /* Default reply if no other was given */
+        dialog->reply    = NVD_REPLY_CANCEL; /* Default reply if no other was given */
 
         const char *icon_name = "dialog-question";
         GtkWidget *grid, *button_yes, *button_no, *button_cancel, *text, *icon;
@@ -125,14 +125,6 @@ NvdQuestionBox *nvd_question_gtk(const char *title, const char *question,
 }
 
 NvdReply nvd_get_reply_gtk(NvdQuestionBox *box) {
-        g_signal_connect_swapped((GtkWidget *)box->window_handle, "accept",
-                                 G_CALLBACK(nvd_reply_write_ok), &box->reply);
-        g_signal_connect_swapped((GtkWidget *)box->window_handle, "reject",
-                                 G_CALLBACK(nvd_reply_write_no), &box->reply);
-        g_signal_connect_swapped((GtkWidget *)box->window_handle, "cancel",
-                                 G_CALLBACK(nvd_reply_write_cancel),
-                                 &box->reply);
-
         g_signal_connect_swapped(box->window_handle, "destroy",
                                  G_CALLBACK(gtk_main_quit), NULL);
 
