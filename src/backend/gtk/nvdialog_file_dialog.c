@@ -57,14 +57,15 @@ void nvd_get_file_location_gtk(NvdFileDialog *dialog, const char** savebuf) {
                 dialog->location_was_chosen = true;
                 gtk_widget_destroy(dialog->raw);
                 if (filename) {
-		        dialog->filename = strndup(filename, strlen(filename));
+		        dialog->filename = strdup(filename);
 		        g_free(filename);
                 }
         } else {
                 dialog->location_was_chosen = false;
+                dialog->filename            = NULL;
                 gtk_widget_destroy(dialog->raw);
         }
-        
+
         while (gtk_events_pending())
 		gtk_main_iteration();
 
