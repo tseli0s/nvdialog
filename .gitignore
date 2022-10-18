@@ -25,3 +25,8 @@ examples/file-dialog/file_dialog_example
 examples/hello-world/hello-world
 examples/question-dialog/question-example
 examples/about-dialog/about-dialog-example
+
+# This is where prebuilt library copies are
+# created and distributed, so we don't want to
+# push this into the main repository.
+prebuilt/
