@@ -26,25 +26,28 @@
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
 
-NvdDialogBox *nvd_dialog_box_win32(const char *title, const char *message,
+NvdDialogBox *nvd_dialog_box_win32(const char   *title,
+                                   const char   *message,
                                    NvdDialogType type);
 
 NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
                                           const char *file_extensions);
 
-NvdQuestionBox *nvd_question_win32(const char *title, const char *question,
+NvdQuestionBox *nvd_question_win32(const char       *title,
+                                   const char       *question,
                                    NvdQuestionButton buttons);
 
 void nvd_show_dialog_win32(NvdDialogBox *dialog);
 
 NvdReply nvd_get_reply_win32(NvdQuestionBox *box);
 
-NvdAboutDialog *nvd_about_dialog_win32(const char *appname, const char *brief,
+NvdAboutDialog *nvd_about_dialog_win32(const char *appname,
+                                       const char *brief,
                                        const char *logo);
 
 void nvd_show_about_dialog_win32(NvdAboutDialog *dialog);
 
 void nvd_about_dialog_set_version_win32(NvdAboutDialog *dialog,
-                                        const char *version);
+                                        const char     *version);
 
-const char* nvd_get_file_location_win32(NvdFileDialog* dialog);
+const char *nvd_get_file_location_win32(NvdFileDialog *dialog);

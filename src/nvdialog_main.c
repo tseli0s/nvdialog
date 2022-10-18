@@ -45,6 +45,7 @@
  */
 static char *nvd_domain_name = "io.androgr.libnvdialog";
 static char *nvd_argv_0 = NULL;
+
 static NvdParentWindow nvd_parent_window = NULL;
 
 inline void nvd_set_domain_name(char *domain) {
@@ -73,7 +74,7 @@ int nvd_init(char *program) {
         }
 /* Apparently in Gtk4 the gtk_init function doesn't require any arguments. */
 #if !defined(NVD_USE_GTK4)
-        int __argc__ = 1;
+        int    __argc__ = 1;
         char **__argv__ = {
             &program,
         };
@@ -98,8 +99,8 @@ NvdFileDialog *nvd_open_file_dialog_new(const char *title,
 #endif /* _WIN32 */
 }
 
-NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
-                                 NvdDialogType type) {
+NvdDialogBox *
+nvd_dialog_box_new(const char *title, const char *message, NvdDialogType type) {
 #if !defined(_WIN32)
 #if !defined(NVD_USE_GTK4)
         NvdDialogBox *dialog = nvd_dialog_box_gtk(title, message, type);
@@ -117,7 +118,8 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
 #endif /* _WIN32 */
 }
 
-NvdQuestionBox *nvd_dialog_question_new(const char *title, const char *question,
+NvdQuestionBox *nvd_dialog_question_new(const char       *title,
+                                        const char       *question,
                                         NvdQuestionButton button) {
 #if !defined(_WIN32)
 #if !defined(NVD_USE_GTK4)
@@ -141,7 +143,8 @@ NvdReply nvd_get_reply(NvdQuestionBox *question) {
 #endif /* NVD_USE_GTK4 */
 }
 
-NvdAboutDialog *nvd_about_dialog_new(const char *name, const char *description,
+NvdAboutDialog *nvd_about_dialog_new(const char *name,
+                                     const char *description,
                                      const char *logo_path) {
 #if defined(_WIN32)
         return nvd_about_dialog_win32(name, description, logo_path);

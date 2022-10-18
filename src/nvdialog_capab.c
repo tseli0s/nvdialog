@@ -38,8 +38,8 @@ static bool __nvd_built_static =
     false;
 #endif
 
-static bool __nvd_compat_mode =
-    false; /* No compatibility features currently available */
+static bool __nvd_compat_mode
+    = false; /* No compatibility features currently available */
 
 bool nvd_get_capabilities(int query) {
         switch (query) {

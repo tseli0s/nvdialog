@@ -30,7 +30,7 @@
 
 struct _NvdFileDialog {
         char *filename, *file_extensions;
-        bool location_was_chosen;
+        bool  location_was_chosen;
         void *raw;
 };
 
@@ -40,34 +40,41 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
         NVD_RETURN_IF_NULL(dialog);
         dialog->file_extensions = (char *)file_extensions;
 
-        GtkWidget *dialog_raw = gtk_file_chooser_dialog_new(
-            title, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, "Cancel",
-            GTK_RESPONSE_CANCEL, "Open", GTK_RESPONSE_OK, NULL);
+        GtkWidget *dialog_raw
+            = gtk_file_chooser_dialog_new(title,
+                                          NULL,
+                                          GTK_FILE_CHOOSER_ACTION_OPEN,
+                                          "Cancel",
+                                          GTK_RESPONSE_CANCEL,
+                                          "Open",
+                                          GTK_RESPONSE_OK,
+                                          NULL);
 
         dialog->raw = dialog_raw;
 
         return dialog;
 }
 
-void nvd_get_file_location_gtk(NvdFileDialog *dialog, const char** savebuf) {
+void nvd_get_file_location_gtk(NvdFileDialog *dialog, const char **savebuf) {
         GtkResponseType response = gtk_dialog_run(GTK_DIALOG(dialog->raw));
-        char* filename;
+        char           *filename;
         if (response == GTK_RESPONSE_OK || response == GTK_RESPONSE_ACCEPT) {
-                filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog->raw));
+                filename = gtk_file_chooser_get_filename(
+                    GTK_FILE_CHOOSER(dialog->raw));
                 dialog->location_was_chosen = true;
                 gtk_widget_destroy(dialog->raw);
                 if (filename) {
-		        dialog->filename = strdup(filename);
-		        g_free(filename);
+                        dialog->filename = strdup(filename);
+                        g_free(filename);
                 }
         } else {
                 dialog->location_was_chosen = false;
-                dialog->filename            = NULL;
+                dialog->filename = NULL;
                 gtk_widget_destroy(dialog->raw);
         }
 
         while (gtk_events_pending())
-		gtk_main_iteration();
+                gtk_main_iteration();
 
         *savebuf = dialog->filename;
 }

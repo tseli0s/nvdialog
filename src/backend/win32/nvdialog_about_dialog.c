@@ -22,8 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog_win32.h"
 #include "../../nvdialog_assert.h"
+#include "nvdialog_win32.h"
 
 struct _NvdAboutDialog {
         void *raw;
@@ -32,16 +32,17 @@ struct _NvdAboutDialog {
         char *hyperlinks[6];
         short amount_of_hyperlinks;
         char *image_name;
-        bool image_from_icon;
+        bool  image_from_icon;
         void *buttons[4];
         short amount_of_buttons;
         void *layout;
 };
 
-NvdAboutDialog *nvd_about_dialog_win32(const char *appname, const char *brief,
+NvdAboutDialog *nvd_about_dialog_win32(const char *appname,
+                                       const char *brief,
                                        const char *logo) {
-        NvdAboutDialog *dialog =
-            (NvdAboutDialog *)malloc(sizeof(struct _NvdAboutDialog));
+        NvdAboutDialog *dialog
+            = (NvdAboutDialog *)malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->title = (char *)appname;
@@ -52,14 +53,15 @@ NvdAboutDialog *nvd_about_dialog_win32(const char *appname, const char *brief,
 }
 
 void nvd_about_dialog_set_version_win32(NvdAboutDialog *dialog,
-                                        const char *version) {
+                                        const char     *version) {
         dialog->version = (char *)version;
 }
 
 void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
         bool result = ShellAboutA(
             NULL, /* TODO: Port the nvd_get_parent() function to Windows. */
-            dialog->title, dialog->contents,
+            dialog->title,
+            dialog->contents,
             NULL /* Another TODO: Make it so icons can be added to Windows
                     dialogs. */
         );

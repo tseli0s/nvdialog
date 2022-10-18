@@ -30,16 +30,17 @@
 #include <winuser.h>
 
 struct _NvdQuestionBox {
-        void *window_handle;
-        char *title, *contents;
-        NvdReply reply;
+        void             *window_handle;
+        char             *title, *contents;
+        NvdReply          reply;
         NvdQuestionButton buttons;
 };
 
-NvdQuestionBox *nvd_question_win32(const char *title, const char *question,
+NvdQuestionBox *nvd_question_win32(const char       *title,
+                                   const char       *question,
                                    NvdQuestionButton buttons) {
-        NvdQuestionBox *box =
-            (NvdQuestionBox *)malloc(sizeof(struct _NvdQuestionBox));
+        NvdQuestionBox *box
+            = (NvdQuestionBox *)malloc(sizeof(struct _NvdQuestionBox));
         NVD_RETURN_IF_NULL(box);
 
         box->title = (char *)title;
@@ -63,7 +64,9 @@ NvdReply nvd_get_reply_win32(NvdQuestionBox *box) {
                 nvd_set_error(NVD_INVALID_PARAM);
                 return -1;
         }
-        uint32_t reply = MessageBox(nvd_get_parent(), box->contents, box->title,
+        uint32_t reply = MessageBox(nvd_get_parent(),
+                                    box->contents,
+                                    box->title,
                                     (unsigned int)flag | MB_ICONQUESTION);
         switch (reply) {
         case IDYES:

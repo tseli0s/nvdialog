@@ -33,7 +33,7 @@ struct _NvdAboutDialog {
         char *hyperlinks[6];
         short amount_of_hyperlinks;
         char *image_name;
-        bool image_from_icon;
+        bool  image_from_icon;
         void *buttons[4];
         short amount_of_buttons;
         void *layout;
@@ -46,8 +46,8 @@ static void nvd_set_margins_gtk4(GtkWidget *widget) {
         gtk_widget_set_margin_bottom(widget, 16);
 }
 
-NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
-                                     const char *logo) {
+NvdAboutDialog *
+nvd_about_dialog_adw(const char *appname, const char *brief, const char *logo) {
         NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
         /* In order to have a better title. */
@@ -59,8 +59,8 @@ NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
 
         GtkWidget *titlebar = adw_header_bar_new();
         GtkWidget *logo_img;
-        GtkWidget *title =
-            adw_window_title_new(dialog->title, "About Application");
+        GtkWidget *title
+            = adw_window_title_new(dialog->title, "About Application");
         GtkWidget *label = gtk_label_new("");
         GtkWidget *brief_label = gtk_label_new(dialog->contents);
         gtk_label_set_lines(GTK_LABEL(brief_label), 1);
@@ -69,7 +69,8 @@ NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
         gtk_label_set_wrap(GTK_LABEL(brief_label), true);
 
         char buffer[NVDIALOG_MAXBUF];
-        sprintf(buffer, "<span font_desc=\"18.0\"><b>About %s:</b></span>",
+        sprintf(buffer,
+                "<span font_desc=\"18.0\"><b>About %s:</b></span>",
                 dialog->title);
         gtk_label_set_markup(GTK_LABEL(label), buffer);
 
@@ -89,7 +90,7 @@ NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
 }
 
 void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog,
-                                      const char *version) {
+                                      const char     *version) {
         char buffer[NVDIALOG_MAXBUF];
         sprintf(buffer,
                 "<span font_desc=\"8.0\"><i>Running version %s</i></span>",

@@ -54,15 +54,18 @@ nvd_print_assert(const char *msg, ...) {
                         nvd_print_assert(                                      \
                             "Assertion failure: %s\n  Line: %d\n  Filename: "  \
                             "%s\n  Function: %s\n",                            \
-                            NVD_STRING(eq), __LINE__, __FILE__, NVD_FN_IDENT); \
+                            NVD_STRING(eq),                                    \
+                            __LINE__,                                          \
+                            __FILE__,                                          \
+                            NVD_FN_IDENT);                                     \
                 }                                                              \
         } while (0)
 
 #define NVD_RETURN_IF_NULL(x)                                                  \
         do {                                                                   \
                 if (!x) {                                                      \
-                        NVD_ASSERT(x !=                                        \
-                                   NULL); /* Just for the error message. */    \
+                        NVD_ASSERT(x                                           \
+                                   != NULL); /* Just for the error message. */ \
                         return NULL;                                           \
                 }                                                              \
         } while (0);
@@ -75,7 +78,10 @@ nvd_print_assert(const char *msg, ...) {
                         nvd_print_assert("**CRITICAL ASSERTION FAILURE**: "    \
                                          "%s\n  Line: %d\n  Filename: "        \
                                          "%s\n  Function: %s\n",               \
-                                         #eq, __LINE__, __FILE__, __func__);   \
+                                         #eq,                                  \
+                                         __LINE__,                             \
+                                         __FILE__,                             \
+                                         __func__);                            \
                 }                                                              \
                 abort();                                                       \
         } while (0)

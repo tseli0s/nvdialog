@@ -22,15 +22,15 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog_gtk.h"
+#include "dialogs/nvdialog_dialog_box.h"
 #include "../../nvdialog_assert.h"
 #include "../../nvdialog_macros.h"
-#include "dialogs/nvdialog_dialog_box.h"
+#include "nvdialog_gtk.h"
 
 struct _NvdDialogBox {
-        void *window_handle;
-        const char *msg;
-        const char *content;
+        void         *window_handle;
+        const char   *msg;
+        const char   *content;
         NvdDialogType type;
 };
 
@@ -41,16 +41,16 @@ static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
         gtk_widget_set_margin_bottom(widget, 16);
 }
 
-NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
-                                 NvdDialogType type) {
+NvdDialogBox *
+nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         NvdDialogBox *dialog = malloc(sizeof(struct _NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
-        dialog->content       = message;
-        dialog->msg           = title;
-        dialog->type          = type;
+        dialog->content = message;
+        dialog->msg = title;
+        dialog->type = type;
         dialog->window_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-        
+
         GtkWidget *img;
         switch (type) {
         case NVD_DIALOG_WARNING:
@@ -89,10 +89,10 @@ NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
         gtk_container_add(GTK_CONTAINER(dialog->window_handle),
                           GTK_WIDGET(grid));
 
-        g_signal_connect_swapped(dialog->window_handle, "destroy",
-                                 G_CALLBACK(gtk_main_quit), NULL);
-        g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_main_quit),
-                                 NULL);
+        g_signal_connect_swapped(
+            dialog->window_handle, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+        g_signal_connect_swapped(
+            button, "clicked", G_CALLBACK(gtk_main_quit), NULL);
 
         return dialog;
 }

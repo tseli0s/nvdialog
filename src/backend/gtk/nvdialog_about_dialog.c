@@ -33,7 +33,7 @@ struct _NvdAboutDialog {
         char *hyperlinks[6];
         short amount_of_hyperlinks;
         char *image_name;
-        bool image_from_icon;
+        bool  image_from_icon;
         void *buttons[4];
         short amount_of_buttons;
         void *layout;
@@ -46,7 +46,8 @@ static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
         gtk_widget_set_margin_bottom(widget, 16);
 }
 
-NvdAboutDialog *nvd_about_dialog_gtk(const char *appname, const char *brief,
+NvdAboutDialog *nvd_about_dialog_gtk(const char *appname,
+                                     const char *brief,
                                      const char *icon_name) {
         NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
@@ -54,7 +55,9 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname, const char *brief,
         dialog->contents = (char *)brief;
 
         char buffer[NVDIALOG_MAXBUF];
-        sprintf(buffer, "%s%s", "/usr/share/icons/hicolor/",
+        sprintf(buffer,
+                "%s%s",
+                "/usr/share/icons/hicolor/",
                 icon_name); // TODO: Fix this to use the icon theme.
         GdkPixbuf *img = gdk_pixbuf_new_from_file(buffer, NULL);
         if (!img) {
@@ -72,7 +75,7 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname, const char *brief,
 }
 
 void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog,
-                                      const char *version) {
+                                      const char     *version) {
         gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog->raw), version);
         return;
 }

@@ -22,29 +22,31 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog_win32.h"
 #include "../../nvdialog_assert.h"
+#include "nvdialog_win32.h"
 #include <stdbool.h>
 #include <wchar.h>
 #include <windows.h>
 #include <winuser.h>
 
 struct _NvdFileDialog {
-        char* filename, file_extensions;
-        bool location_was_chosen;
+        char *filename, file_extensions;
+        bool  location_was_chosen;
 };
 
-NvdFileDialog* nvd_open_file_dialog_win32(const char *title,
+NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
                                           const char *file_extensions) {
-        NvdFileDialog* dialog = (NvdFileDialog*) malloc(sizeof(struct _NvdFileDialog));
+        NvdFileDialog *dialog
+            = (NvdFileDialog *)malloc(sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
         return dialog;
 }
 
-const char* nvd_get_file_location_win32(NvdFileDialog* dialog) {
-        /* TODO: Move all this code in the function above for obvious reasons. */
+const char *nvd_get_file_location_win32(NvdFileDialog *dialog) {
+        /* TODO: Move all this code in the function above for obvious reasons.
+         */
         OPENFILENAME ofn;
-        char file[NVDIALOG_MAXBUF];
+        char         file[NVDIALOG_MAXBUF];
         ZeroMemory(&ofn, sizeof(ofn));
         ofn.lStructSize = sizeof(ofn);
         ofn.hwndOwner = nvd_get_parent();

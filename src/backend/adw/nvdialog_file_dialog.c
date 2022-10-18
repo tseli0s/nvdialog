@@ -29,7 +29,7 @@
 
 struct _NvdFileDialog {
         char *filename, *file_extensions;
-        bool location_was_chosen;
+        bool  location_was_chosen;
         void *raw;
 };
 
@@ -39,9 +39,15 @@ NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
         NVD_RETURN_IF_NULL(dialog);
         dialog->file_extensions = (char *)file_extensions;
 
-        GtkWidget *dialog_raw = gtk_file_chooser_dialog_new(
-            title, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, "Cancel",
-            GTK_RESPONSE_CANCEL, "Open", GTK_RESPONSE_OK, NULL);
+        GtkWidget *dialog_raw
+            = gtk_file_chooser_dialog_new(title,
+                                          NULL,
+                                          GTK_FILE_CHOOSER_ACTION_OPEN,
+                                          "Cancel",
+                                          GTK_RESPONSE_CANCEL,
+                                          "Open",
+                                          GTK_RESPONSE_OK,
+                                          NULL);
 
         dialog->raw = dialog_raw;
 
