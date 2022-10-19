@@ -209,6 +209,7 @@ void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
 #if defined(_WIN32)
         nvd_get_file_location_win32(dialog, savebuf);
 #elif defined(NVD_USE_GTK4)
+        nvd_get_file_location_adw(dialog, savebuf);
 #else
         nvd_get_file_location_gtk(dialog, savebuf);
 #endif /* _WIN32 */
