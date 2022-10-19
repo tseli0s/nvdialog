@@ -46,11 +46,12 @@ nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         NvdDialogBox *dialog = malloc(sizeof(struct _NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
-        dialog->content = message;
-        dialog->msg = title;
-        dialog->type = type;
+        dialog->content       = message;
+        dialog->msg           = title;
+        dialog->type          = type;
         dialog->window_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
+        gtk_widget_set_hexpand(dialog->window_handle, GTK_ALIGN_CENTER);
         GtkWidget *img;
         switch (type) {
         case NVD_DIALOG_WARNING:
