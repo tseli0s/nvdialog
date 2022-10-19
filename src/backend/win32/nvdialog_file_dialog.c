@@ -42,7 +42,7 @@ NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
         return dialog;
 }
 
-const char *nvd_get_file_location_win32(NvdFileDialog *dialog) {
+void nvd_get_file_location_win32(NvdFileDialog *dialog, const char** savebuf) {
         /* TODO: Move all this code in the function above for obvious reasons.
          */
         OPENFILENAME ofn;
@@ -68,5 +68,5 @@ const char *nvd_get_file_location_win32(NvdFileDialog *dialog) {
 
         dialog->filename = ofn.lpstrFile;
         dialog->location_was_chosen = true;
-        return dialog->filename;
+        *savebuf = dialog->filename;
 }

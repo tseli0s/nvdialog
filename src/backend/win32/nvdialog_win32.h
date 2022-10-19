@@ -50,4 +50,4 @@ void nvd_show_about_dialog_win32(NvdAboutDialog *dialog);
 void nvd_about_dialog_set_version_win32(NvdAboutDialog *dialog,
                                         const char     *version);
 
-const char *nvd_get_file_location_win32(NvdFileDialog *dialog);
+void nvd_get_file_location_win32(NvdFileDialog *dialog, const char** savebuf);
