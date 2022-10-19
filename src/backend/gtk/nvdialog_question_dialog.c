@@ -88,16 +88,20 @@ NvdQuestionBox *nvd_question_gtk(const char       *title,
         switch (buttons) {
         case NVD_YES_NO:
                 button_no = gtk_button_new_with_label("No");
+                nvd_set_margins_gtk3(button_no);
                 /* Yes already created, skipping. */
                 break;
 
         case NVD_YES_NO_CANCEL:
                 button_cancel = gtk_button_new_with_label("Cancel");
                 button_no = gtk_button_new_with_label("No");
+                nvd_set_margins_gtk3(button_no);
+                nvd_set_margins_gtk3(button_cancel);
                 break;
 
         case NVD_YES_CANCEL:
                 button_cancel = gtk_button_new_with_label("Cancel");
+                nvd_set_margins_gtk3(button_cancel);
         }
 
         gtk_grid_attach(GTK_GRID(grid), icon, 0, 0, 1, 1);
@@ -105,8 +109,6 @@ NvdQuestionBox *nvd_question_gtk(const char       *title,
         gtk_grid_attach(GTK_GRID(grid), button_yes, 0, 1, 1, 1);
 
         nvd_set_margins_gtk3(button_yes);
-        nvd_set_margins_gtk3(button_no);
-        nvd_set_margins_gtk3(button_cancel);
         nvd_set_margins_gtk3(icon);
         nvd_set_margins_gtk3(text);
 
@@ -133,7 +135,7 @@ NvdReply nvd_get_reply_gtk(NvdQuestionBox *box) {
         g_signal_connect_swapped(
             box->window_handle, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
-        gtk_window_present(GTK_WINDOW(box->window_handle));
+        gtk_widget_show_all(GTK_WIDGET(box->window_handle));
         gtk_main();
         return box->reply;
 }
