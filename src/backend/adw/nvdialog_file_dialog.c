@@ -33,6 +33,20 @@ struct _NvdFileDialog {
         void *raw;
 };
 
+static void nvd_file_dialog_response_adw(GtkDialog     *dialog,
+                                         int32_t        response,
+                                         NvdFileDialog* data) {
+        if (response == GTK_RESPONSE_ACCEPT ||
+            response == GTK_RESPONSE_APPLY  ||
+            response == GTK_RESPONSE_YES    ) {
+
+                GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
+                g_autoptr(GFile) file   = gtk_file_chooser_get_file (chooser);
+                data->filename          = (char*) file;
+        }
+        gtk_window_destroy (GTK_WINDOW (dialog));
+}
+
 NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
                                         const char *file_extensions) {
         NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
@@ -41,7 +55,7 @@ NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
 
         GtkWidget *dialog_raw
             = gtk_file_chooser_dialog_new(title,
-                                          NULL,
+                                          nvd_get_parent(),
                                           GTK_FILE_CHOOSER_ACTION_OPEN,
                                           "Cancel",
                                           GTK_RESPONSE_CANCEL,
@@ -50,19 +64,14 @@ NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
                                           NULL);
 
         dialog->raw = dialog_raw;
-
+        gtk_widget_show(dialog->raw);
         return dialog;
 }
 
 void nvd_get_file_location_adw(NvdFileDialog *dialog, char **savebuf) {
-        if (gtk_dialog_run(GTK_DIALOG(dialog->raw)) == GTK_RESPONSE_OK) {
-                *savebuf = gtk_file_chooser_get_filename(
-                    GTK_FILE_CHOOSER(dialog->raw));
-                dialog->filename = (char *)*savebuf;
-                dialog->location_was_chosen = true;
-                return;
-        } else {
-                dialog->location_was_chosen = false;
-                return;
-        }
+        g_signal_connect (dialog->raw,
+                          "response",
+                          G_CALLBACK (nvd_file_dialog_response_adw),
+                          dialog);
+        *savebuf = dialog->filename;
 }
