@@ -64,7 +64,7 @@ NvdReply nvd_get_reply_win32(NvdQuestionBox *box) {
                 nvd_set_error(NVD_INVALID_PARAM);
                 return -1;
         }
-        uint32_t reply = MessageBox(nvd_get_parent(),
+        int32_t reply = MessageBox(nvd_get_parent(),
                                     box->contents,
                                     box->title,
                                     (unsigned int)flag | MB_ICONQUESTION);
