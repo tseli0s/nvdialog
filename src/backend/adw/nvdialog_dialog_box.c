@@ -53,7 +53,7 @@ nvd_dialog_box_adw(const char *title, const char *message, NvdDialogType type) {
         case NVD_DIALOG_WARNING:
         case NVD_DIALOG_ERROR:
                 adw_message_dialog_set_response_appearance(
-                    ADW_MESSAGE_DIALOG(dialog),
+                    ADW_MESSAGE_DIALOG(dialog->window_handle),
                     "accept",
                     ADW_RESPONSE_DESTRUCTIVE);
                 break;
