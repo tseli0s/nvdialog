@@ -72,7 +72,9 @@ NvdQuestionBox *nvd_question_gtk(const char       *title,
         dialog->window_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
         gtk_window_set_resizable(GTK_WINDOW(dialog->window_handle), false);
         gtk_window_set_title(GTK_WINDOW(dialog->window_handle), title);
+        gtk_window_set_default_size(GTK_WINDOW(dialog->window_handle), 200, 150);
         text = gtk_label_new(question);
+        gtk_label_set_line_wrap(GTK_LABEL(text), true);
         grid = gtk_grid_new();
         gtk_container_add(GTK_CONTAINER(dialog->window_handle), grid);
         icon = gtk_image_new_from_icon_name(icon_name, GTK_ICON_SIZE_DIALOG);
