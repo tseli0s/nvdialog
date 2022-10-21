@@ -214,3 +214,15 @@ void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
         nvd_get_file_location_gtk(dialog, savebuf);
 #endif /* _WIN32 */
 }
+
+void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
+                                       const char *license_link,
+                                       const char *txt) {
+#if defined  (_WIN32)
+        nvd_about_dialog_set_license_link_win32(dialog, license_link, txt);
+#elif defined(NVD_USE_GTK4)
+        nvd_about_dialog_set_license_link_adw(dialog, license_link, txt);
+#else
+        nvd_about_dialog_set_license_link_gtk(dialog, license_link, txt);
+#endif
+}
