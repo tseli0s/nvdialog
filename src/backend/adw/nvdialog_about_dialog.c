@@ -22,8 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-#include "../../nvdialog_assert.h"
 #include "nvdialog_adw.h"
+#include "../../nvdialog_assert.h"
 #include <stdio.h>
 
 struct _NvdAboutDialog {
@@ -40,10 +40,10 @@ struct _NvdAboutDialog {
 };
 
 static void nvd_set_margins_gtk4(GtkWidget *widget) {
-        gtk_widget_set_margin_start(widget, 16);
-        gtk_widget_set_margin_end(widget, 16);
-        gtk_widget_set_margin_top(widget, 16);
-        gtk_widget_set_margin_bottom(widget, 16);
+        gtk_widget_set_margin_start(widget, 10);
+        gtk_widget_set_margin_end(widget, 10);
+        gtk_widget_set_margin_top(widget, 10);
+        gtk_widget_set_margin_bottom(widget, 10);
 }
 
 NvdAboutDialog *
@@ -51,11 +51,11 @@ nvd_about_dialog_adw(const char *appname, const char *brief, const char *logo) {
         NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
         /* In order to have a better title. */
-        dialog->title = (char *)appname;
-        dialog->contents = (char *)brief;
-        dialog->layout = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
-        dialog->raw = adw_window_new();
-        gtk_window_set_default_size(GTK_WINDOW(dialog->raw), 600, 400);
+        dialog->title    = (char *) appname;
+        dialog->contents = (char *) brief;
+        dialog->layout   = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
+        dialog->raw      = adw_window_new();
+        gtk_window_set_default_size(GTK_WINDOW(dialog->raw), 480, 400);
 
         GtkWidget *titlebar = adw_header_bar_new();
         GtkWidget *logo_img;
@@ -92,17 +92,42 @@ nvd_about_dialog_adw(const char *appname, const char *brief, const char *logo) {
 void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog,
                                       const char     *version) {
         char buffer[NVDIALOG_MAXBUF];
+        
         sprintf(buffer,
-                "<span font_desc=\"8.0\"><i>Running version %s</i></span>",
+                "<span font_desc=\"10.0\"><b>Running version %s</b></span>",
                 version);
         GtkWidget *label = gtk_label_new("");
+
         gtk_label_set_markup(GTK_LABEL(label), buffer);
         nvd_set_margins_gtk4(label);
         gtk_box_append(GTK_BOX(dialog->layout), label);
+        
         return;
 }
 
+void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
+                                       const char *license_link,
+                                       const char *txt) {
+        dialog->buttons[0]        = gtk_link_button_new_with_label(txt, license_link);
+        dialog->amount_of_buttons = 1;
+        gtk_widget_set_margin_start(dialog->buttons[0], 16);
+        gtk_widget_set_margin_end(dialog->buttons[0], 16);
+        gtk_box_append(GTK_BOX(dialog->layout),
+                               dialog->buttons[0]);
+}
+
 void nvd_show_about_dialog_adw(NvdAboutDialog *dialog) {
+        GtkWidget* button = gtk_button_new_with_label("Close");
+
+        gtk_widget_set_margin_start(button, 16);
+        gtk_widget_set_margin_end(button, 16);
+        gtk_widget_set_margin_top(button, 32);
+
+        GtkGrid* grid = GTK_GRID(gtk_grid_new());
+        gtk_grid_attach(grid, button, 2, 0, 1, 1);
+        gtk_box_append (GTK_BOX(dialog->layout),
+                                GTK_WIDGET(grid));
+        
         gtk_window_present(GTK_WINDOW(dialog->raw));
         while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
                 g_main_context_iteration(NULL, true);
