@@ -1,12 +1,19 @@
 <div align="center">
         <img src="assets/logo-new.svg" width="244">
         <h1>NvDialog</h1>
-        <h5>A cross-platform dialog library.</h5>
+        <a href="#example">Examples</a> | 
+        <a href="#screenshots">Screenshots</a> |
+        <a href="#installation">Installing</a> |
+        <a href="">Releases</a> |
+        <h5>A cross-platform dialog box library.</h5>
+
 </div>
 
 <br>
 <code>libnvdialog</code> is a simple dialog box library written in C
-for multiple purposes such as games, app development, simple UI boxes for terminal apps or anything else. If you need something that doesn't require a bunch of setup this library is for you. <br>
+for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else. If you need something that doesn't require a bunch of setup this library is for you. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3 / Gtk4</a> on Linux and other Unix like OSes or the WinAPI for Windows) to achieve a native look and feel.
+<!-- TODO: When custom CSS support is added, make sure to add it to the README. -->
+<br>
 NvDialog aims to be:
 <ul>
 <li>Very user friendly and easy to use.</li>
