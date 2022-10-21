@@ -65,6 +65,14 @@ void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog,
                                       const char     *version);
 
 /*
+ * Sets a license hyperlink for the dialog given to the system,
+ * using Gtk3's API.
+*/
+void nvd_about_dialog_set_license_link_gtk(NvdAboutDialog *dialog,
+                                           const char     *license_link, 
+                                           const char     *txt);
+
+/*
  * Gets the full path of a file, and returns the path
  * inside the 'save' nested pointer passed.
  */
