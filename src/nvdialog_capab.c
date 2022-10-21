@@ -25,7 +25,7 @@
 #include "nvdialog.h"
 
 static bool __nvd_has_adw_gtk =
-#if !defined(NVD_USE_GTK4)
+#if defined(NVD_USE_GTK4)
     true;
 #else
     false;
