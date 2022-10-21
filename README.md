@@ -4,7 +4,7 @@
         <a href="#example">Examples</a> | 
         <a href="#screenshots">Screenshots</a> |
         <a href="#installation">Installing</a> |
-        <a href="">Releases</a> |
+        <a href="https://github.com/AndroGR/nvdialog/releases">Releases</a> |
         <h5>A cross-platform dialog box library.</h5>
 
 </div>
