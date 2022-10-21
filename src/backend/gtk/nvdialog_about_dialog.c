@@ -80,6 +80,14 @@ void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog,
         return;
 }
 
+void nvd_about_dialog_set_license_link_gtk(NvdAboutDialog *dialog,
+                                           const char     *license_link, 
+                                           const char     *txt) {
+        gtk_about_dialog_set_license(GTK_ABOUT_DIALOG(dialog->raw),
+                                     license_link);
+        return;
+}
+
 void nvd_show_about_dialog_gtk(NvdAboutDialog *dialog) {
         gtk_dialog_run(GTK_DIALOG(dialog->raw));
         return;
