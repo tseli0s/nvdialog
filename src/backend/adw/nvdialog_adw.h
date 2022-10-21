@@ -62,9 +62,13 @@ nvd_about_dialog_adw(const char *appname, const char *brief, const char *logo);
  */
 void nvd_show_about_dialog_adw(NvdAboutDialog *dialog);
 
+/* Sets the license link for the dialog. */
+void nvd_about_dialog_set_license_link_adw(NvdAboutDialog *dialog,
+                                           const char *license_link,
+                                           const char *txt);
 /*
  * Sets the version of the application in the About dialog box
  * passed as the parameter.
  */
-void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version);
+void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog, const char *version);
 #endif /* __nvdialog_adw_h__ */

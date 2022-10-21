@@ -105,9 +105,9 @@ void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog,
         return;
 }
 
-void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
-                                       const char *license_link,
-                                       const char *txt) {
+void nvd_about_dialog_set_license_link_adw(NvdAboutDialog *dialog,
+                                           const char *license_link,
+                                           const char *txt) {
         dialog->buttons[0]        = gtk_link_button_new_with_label(txt, license_link);
         dialog->amount_of_buttons = 1;
         gtk_widget_set_margin_start(dialog->buttons[0], 16);
