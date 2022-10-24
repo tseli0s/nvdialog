@@ -58,7 +58,6 @@ nvd_about_dialog_adw(const char *appname, const char *brief, const char *logo) {
         gtk_window_set_default_size(GTK_WINDOW(dialog->raw), 480, 400);
 
         GtkWidget *titlebar = adw_header_bar_new();
-        GtkWidget *logo_img;
         GtkWidget *title
             = adw_window_title_new(dialog->title, "About Application");
         GtkWidget *label = gtk_label_new("");
@@ -75,14 +74,8 @@ nvd_about_dialog_adw(const char *appname, const char *brief, const char *logo) {
         gtk_label_set_markup(GTK_LABEL(label), buffer);
 
         adw_header_bar_set_title_widget(ADW_HEADER_BAR(titlebar), title);
-        if (!logo)
-                logo_img = gtk_image_new_from_icon_name("computer");
-        else
-                logo_img = gtk_image_new_from_icon_name(logo);
 
         gtk_box_append(GTK_BOX(dialog->layout), titlebar);
-        // gtk_box_append(GTK_BOX(dialog->layout), logo_img); (Left out because
-        // it's a WIP)
         gtk_box_append(GTK_BOX(dialog->layout), label);
         gtk_box_append(GTK_BOX(dialog->layout), brief_label);
         adw_window_set_content(dialog->raw, dialog->layout);
