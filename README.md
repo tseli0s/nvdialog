@@ -12,7 +12,6 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 <br>
 <br>
 <img src="https://img.shields.io/github/license/AndroGR/nvdialog">
-<img src="https://img.shields.io/github/repo-size/AndroGR/nvdialog">
 <img src="https://img.shields.io/github/issues/AndroGR/nvdialog">
 <img src="https://img.shields.io/github/commits-since/AndroGR/nvdialog/v0.2.0">
 <img src="https://github.com/AndroGR/nvdialog/actions/workflows/ci.yml/badge.svg">
