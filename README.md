@@ -5,26 +5,18 @@
         <a href="#screenshots">Screenshots</a> |
         <a href="#installation">Installing</a> |
         <a href="https://github.com/AndroGR/nvdialog/releases">Releases</a> |
-        <h5>A cross-platform dialog box library.</h5>
-
-</div>
-
-<br>
+        <h5><b>A simple, cross-platform dialog box library.</b></h5>
 <code>libnvdialog</code> is a simple dialog box library written in C
 for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else. If you need something that doesn't require a bunch of setup this library is for you. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3 / Gtk4</a> on Linux and other Unix like OSes or the WinAPI for Windows) to achieve a native look and feel.
 <!-- TODO: When custom CSS support is added, make sure to add it to the README. -->
 <br>
-NvDialog aims to be:
-<ul>
-<li>Very user friendly and easy to use.</li>
-<li>Unbloated, clean from reluctant code and extra features.</li>
-<li>Efficient and quick: The library's dialogs are designed to look and feel nice.</li>
-<li>Easy to bind it to other languages (See <a href="https://crates.io/crates/nvdialog">crates.io</a> for an example)</li>
-</ul>
-
-<b>If you like this project, support it by recommending it and starring it. Thanks :)</b> <br>
-<a href="https://androgr.github.io/libnvdialog">libnvdialog Website</a>
+<br>
+<img src="https://img.shields.io/github/license/AndroGR/nvdialog">
+<img src="https://img.shields.io/github/repo-size/AndroGR/nvdialog">
+<img src="https://img.shields.io/github/issues/AndroGR/nvdialog">
+<img src="https://img.shields.io/github/commits-since/AndroGR/nvdialog/v0.2.0">
 <br> <br>
+</div>
 
 # Backends
 - **Adwaita Backend**\
