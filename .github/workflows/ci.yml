@@ -1,7 +1,7 @@
 # TODO: Improve this workflow to make it better
 # for testing.
 
-name: Build and install on GNU/Linux
+name: Build CI
 on:
   push:
     branches: [ "master" ]
