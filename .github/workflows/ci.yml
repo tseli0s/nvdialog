@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install libgtk-3-0 ninja-build
+      run: sudo apt-get update && sudo apt-get install libgtk-3-0 ninja-build libgtk-3-dev
     
     - name: Configure CMake
       run: mkdir build && cd build/; cmake .. -DNVD_USE_GTK4=OFF -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -G "Ninja" -DWIN32_TARGET=OFF -DCMAKE_BUILD_TYPE=Release
