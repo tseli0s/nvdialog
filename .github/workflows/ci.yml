@@ -1,0 +1,32 @@
+# TODO: Improve this workflow to make it better
+# for testing.
+
+name: Build and install on GNU/Linux
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/cache@v3
+    
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install libadwaita-1-0
+    
+    - name: Configure CMake
+      run: mkdir build && cd build/; cmake .. -DNVD_USE_GTK4=ON -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -G "Ninja" -DWIN32_TARGET=OFF -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      # Build your program with the given configuration
+      run: cmake --build ${{github.workspace}}/build
+      
