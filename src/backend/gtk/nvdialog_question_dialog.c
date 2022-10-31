@@ -39,13 +39,16 @@ struct _NvdQuestionBox {
 
 inline static void nvd_reply_write_ok(NvdReply *reply) {
         *reply = NVD_REPLY_OK;
+        gtk_main_quit();
 }
 
 inline static void nvd_reply_write_cancel(NvdReply *reply) {
         *reply = NVD_REPLY_CANCEL;
+        gtk_main_quit();
 }
 inline static void nvd_reply_write_no(NvdReply *reply) {
         *reply = NVD_REPLY_NO;
+        gtk_main_quit();
 }
 
 static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
