@@ -57,6 +57,12 @@ void nvd_about_dialog_set_version_win32(NvdAboutDialog *dialog,
         dialog->version = (char *)version;
 }
 
+void nvd_about_dialog_set_license_link_win32(NvdAboutDialog *dialog,
+                                            const char      *license_link, 
+                                            const char      *txt) {
+        return; /* Unfortunately can't be implemented with the WinAPI. */
+}
+
 void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
         bool result = ShellAboutA(
             NULL, /* TODO: Port the nvd_get_parent() function to Windows. */
