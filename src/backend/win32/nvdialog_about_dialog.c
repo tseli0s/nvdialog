@@ -65,7 +65,7 @@ void nvd_about_dialog_set_license_link_win32(NvdAboutDialog *dialog,
 
 void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
         bool result = ShellAboutA(
-            NULL, /* TODO: Port the nvd_get_parent() function to Windows. */
+            nvd_get_parent(),
             dialog->title,
             dialog->contents,
             NULL /* Another TODO: Make it so icons can be added to Windows
