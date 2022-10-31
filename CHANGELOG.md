@@ -6,6 +6,9 @@
 - On Arch Linux, packages are going to be built from the local source code instead of the remote repository one, to allow for better integration with the package manager and stability.
 - The Adwaita backend is no longer experimental, and has become the default backend on Unix systems.
 - Fix `NvdFileDialog` not working under the Gtk3 backend.
+- Refreshed the website a little.
+- Added CI, to better test if NvDialog is working properly across platforms. (WIP)
+- Resulting shared library version has now been increased to 1. ([f3128b6]())
 
 # Changelog -- 0.2.0
 
