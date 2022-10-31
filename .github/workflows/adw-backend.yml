@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install libadwaita-1-0 libadwaita-1-dev 
+      run: sudo apt-get update && sudo apt-get install libadwaita-1-0 libadwaita-1-dev ninja
     
     - name: Configure CMake
       run: mkdir build && cd build/; cmake .. -DNVD_USE_GTK4=ON -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -G "Ninja" -DWIN32_TARGET=OFF -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
