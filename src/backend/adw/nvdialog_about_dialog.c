@@ -110,17 +110,10 @@ void nvd_about_dialog_set_license_link_adw(NvdAboutDialog *dialog,
 }
 
 void nvd_show_about_dialog_adw(NvdAboutDialog *dialog) {
-        GtkWidget* button = gtk_button_new_with_label("Close");
-
-        gtk_widget_set_margin_start(button, 16);
-        gtk_widget_set_margin_end(button, 16);
-        gtk_widget_set_margin_top(button, 32);
-
         GtkGrid* grid = GTK_GRID(gtk_grid_new());
-        gtk_grid_attach(grid, button, 2, 0, 1, 1);
         gtk_box_append (GTK_BOX(dialog->layout),
                                 GTK_WIDGET(grid));
-        
+
         gtk_window_present(GTK_WINDOW(dialog->raw));
         while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
                 g_main_context_iteration(NULL, true);
