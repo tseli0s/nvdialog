@@ -9,6 +9,7 @@
 - Refreshed the website a little.
 - Added CI, to better test if NvDialog is working properly across platforms. (WIP)
 - Resulting shared library version has now been increased to 1. ([f3128b6]())
+- Once again, updated the logo. This time it's much more modern and beautiful.
 
 # Changelog -- 0.2.0
 
