@@ -22,18 +22,15 @@ endif()
 
 if(WIN32_TARGET)
         set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
-endif()
-
-if(WIN32_TARGET)
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-stack-protector -Wno-unused-parameter -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
 else()
         if (${CMAKE_C_COMPILER_ID} STREQUAL "MSVC")
                 # MSVC doesn't really like GNU style arguments
                 message("NOTE: Compiling using MSVC is still experimental, prefer GCC or CLang if available.")
                 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
+        else()
+                set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-all -fstack-clash-protection -Wno-unused-parameter --param ssp-buffer-size=4 -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
         endif()
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-all -fstack-clash-protection -Wno-unused-parameter --param ssp-buffer-size=4 -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
-        add_compile_definitions(_FORTIFY_SOURCE=2)
 endif()
 
 message("-- Compiling with flags:\n  ${CMAKE_C_FLAGS}")
