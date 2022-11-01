@@ -1,5 +1,5 @@
 <div align="center">
-        <img src="assets/logo-new.svg" width="244">
+        <img src="assets/logo.svg" width="244">
         <h1>NvDialog</h1>
         <a href="#example">Examples</a> | 
         <a href="#screenshots">Screenshots</a> |
