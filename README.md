@@ -7,7 +7,11 @@
         <a href="https://github.com/AndroGR/nvdialog/releases">Releases</a> |
         <h5><b>A simple, cross-platform dialog box library.</b></h5>
 <code>libnvdialog</code> is a simple dialog box library written in C
+<<<<<<< HEAD
 for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else. If you need something that doesn't require a bunch of setup this library is for you. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3 / Gtk4</a> on Linux and other Unix like OSes or the WinAPI for Windows) to achieve a native look and feel.
+=======
+for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else.NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3 / Gtk4</a> on Linux and other Unix like OSes or the<a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list"> WinAPI</a> for Windows) to achieve a native look and feel, follow the system's theme settings and integrate with the rest of the UI.
+>>>>>>> ac55a37 (Fix git repository being broken.)
 <!-- TODO: When custom CSS support is added, make sure to add it to the README. -->
 <br>
 <br>
