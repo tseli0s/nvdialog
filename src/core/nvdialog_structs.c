@@ -56,3 +56,11 @@ struct _NvdQuestionBox {
         char* title, *contents;
         NvdReply reply;
 };
+
+struct _NvdNotification {
+        char *title;
+        char *contents;
+        NvdNotifyType type;
+        bool shown;
+        void* raw;
+};
