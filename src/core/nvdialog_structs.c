@@ -62,5 +62,6 @@ struct _NvdNotification {
         char *contents;
         NvdNotifyType type;
         bool shown;
-        void* raw;
+        void *raw;
+        void *lib;
 };
