@@ -71,4 +71,11 @@ void nvd_about_dialog_set_license_link_adw(NvdAboutDialog *dialog,
  * passed as the parameter.
  */
 void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog, const char *version);
+
+/*
+ * A notification object using the Adwaita backend.
+*/
+NvdNotification *nvd_notification_adw(const char   *title,
+                                        const char   *msg,
+                                        NvdNotifyType type);
 #endif /* __nvdialog_adw_h__ */
