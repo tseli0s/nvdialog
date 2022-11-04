@@ -25,9 +25,11 @@
 #ifndef __nvdialog_adw_h__
 #define __nvdialog_adw_h__
 
+#include "nvdialog.h"
 #include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
+#include "nvdialog_notification.h"
 #include <adwaita.h>
 
 /* Shows a simple dialog box using libadwaita. */
