@@ -1,3 +1,8 @@
+# Changelog -- 0.5.0
+
+- Added custom CSS stylesheet support (`NvdCSSManager`).
+- Added notification support (`NvdNotification`).
+
 # Changelog -- 0.3.0
 
 - Changed the API to now use a new model, where creating and showing the dialog window are now seperate tasks.
