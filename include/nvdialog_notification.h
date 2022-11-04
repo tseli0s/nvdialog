@@ -68,4 +68,11 @@ NvdNotification* nvd_notification_new(const char   *title,
  * @param notification The notification object to use.
  */
 void nvd_send_notification(NvdNotification* notification);
+
+/**
+ * @brief Deletes a notification object from NvDialog.
+ * @note  You should only use this to free notifications. Do not use @ref nvd_free_object please.
+ * @param notification The notification object to delete.
+ */
+void nvd_delete_notification(NvdNotification* notification);
 #endif /**/
