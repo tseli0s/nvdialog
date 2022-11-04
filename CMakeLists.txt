@@ -46,7 +46,7 @@ else()
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c)
 endif()
 message("-- NVDIALOG_MAXBUF equals ${NVDIALOG_MAXBUF}. If buffer overflows are detected, increase this number.")
-set(NVD_HEADERS include/nvdialog_dialog.h include/nvdialog_core.h include/nvdialog_capab.h include/nvdialog_types.h include/nvdialog_error.h include/nvdialog.h)
+set(NVD_HEADERS include/nvdialog_dialog.h include/nvdialog_notification.h include/nvdialog_core.h include/nvdialog_capab.h include/nvdialog_types.h include/nvdialog_error.h include/nvdialog.h)
 set(NVD_EXTRA_HEADERS include/dialogs/nvdialog_file_dialog.h include/dialogs/nvdialog_about_dialog.h include/dialogs/nvdialog_dialog_box.h)
 
 # If compiling for Windows, only use Win32 API.
@@ -55,7 +55,8 @@ if (WIN32 OR WIN32_TARGET)
         set(NVD_WIN32_SOURCES src/backend/win32/nvdialog_about_dialog.c
                               src/backend/win32/nvdialog_dialog_box.c
                               src/backend/win32/nvdialog_question_dialog.c
-                              src/backend/win32/nvdialog_file_dialog.c)
+                              src/backend/win32/nvdialog_file_dialog.c
+                              src/backend/win32/nvdialog_notification.c)
         set(NVD_SOURCES ${NVD_WIN32_SOURCES}
                         src/core/nvdialog_structs.c
                         src/nvdialog_error.c
@@ -78,7 +79,8 @@ else(WIN32 OR WIN32_TARGET)
                                 set(NVD_ADW_SOURCES src/backend/adw/nvdialog_about_dialog.c
                                                     src/backend/adw/nvdialog_file_dialog.c
                                                     src/backend/adw/nvdialog_dialog_box.c
-                                                    src/backend/adw/nvdialog_question_dialog.c)
+                                                    src/backend/adw/nvdialog_question_dialog.c
+                                                    src/backend/adw/nvdialog_notification.c)
                                 set(NVD_SOURCES ${NVD_SOURCES} ${NVD_ADW_SOURCES})
                                 message("Sources are: ${NVD_SOURCES}")
                                 pkg_check_modules(GTK "libadwaita-1") # Well actually, libadwaita isn't Gtk4, but who cares anyways :P
