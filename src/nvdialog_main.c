@@ -226,3 +226,15 @@ void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
         nvd_about_dialog_set_license_link_gtk(dialog, license_link, txt);
 #endif
 }
+
+NvdNotification *nvd_notification_new(const char *title,
+                                      const char *msg,
+                                      NvdNotifyType type) {
+#if   defined(_WIN32)
+        nvd_notification_win32(title, msg, type);
+#elif defined(NVD_USE_GTK4)
+        nvd_notification_adw(title, msg, type);
+#else
+        return NULL; /* Gtk3 backend support pending... */
+#endif /* _WIN32 */
+}
