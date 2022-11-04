@@ -35,9 +35,9 @@
  * @brief Defines what use it the dialog about.
  * Each member of this enum defines what the dialog should
  * represent:
- * - NVD_DIALOG_SIMPLE -> A simple message box, to say something.
+ * - NVD_DIALOG_SIMPLE  -> A simple message box, to say something.
  * - NVD_DIALOG_WARNING -> A warning message to be used for warnings.
- * - NVD_DIALOG_ERROR -> An error message box.
+ * - NVD_DIALOG_ERROR   -> An error message box.
  */
 typedef enum {
         NVD_DIALOG_SIMPLE = 0xff,
@@ -48,7 +48,7 @@ typedef enum {
 /** @brief The enumerator containing most
    errors the library can handle. */
 typedef enum {
-        NVD_NO_ERROR = 0,
+        NVD_NO_ERROR   = 0,
         NVD_NO_DISPLAY = 0xff,
         NVD_INVALID_PARAM,
         NVD_NOT_INITIALIZED,
