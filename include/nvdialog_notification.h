@@ -31,7 +31,9 @@
 #error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
 #endif /* __nvdialog_h__ */
 
+#if defined(__linux) || defined(__linux__) || defined(__gnu_linux__)
 #include <libnotify/notify.h>
+#endif /* __linux */
 
 /**
  * @brief An enumerator to define the type of notification
