@@ -38,7 +38,9 @@ struct _NvdNotification {
         void *lib;
 };
 
-typedef NotifyNotification *(*nvd_notify_new_t)(const char*, const char*, const char*);
+typedef NotifyNotification* (*nvd_notify_new_t)(const char*,
+                                                const char*,
+                                                const char*);
 
 NvdNotification *nvd_notification_adw(const char   *title,
                                       const char   *msg,
@@ -49,9 +51,8 @@ NvdNotification *nvd_notification_adw(const char   *title,
         notification->lib            = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
         nvd_notify_new_t notify_new  = dlsym(notification->lib, "notify_notification_new");
         
-        if (!fn) {
+        if (!notify_new) {
                 nvd_error_message("libnotify is missing required symbols.");
-                
                 dlclose(notification->lib);
                 free   (notification);
 
