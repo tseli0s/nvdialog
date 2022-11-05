@@ -28,3 +28,5 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build
       
+    - name: Test
+      run: ctest ${{github.workspace}}/build/
