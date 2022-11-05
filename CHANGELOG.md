@@ -2,6 +2,7 @@
 
 - Added custom CSS stylesheet support (`NvdCSSManager`).
 - Added notification support (`NvdNotification`).
+- Added testing units in CI.
 
 # Changelog -- 0.3.0
 
