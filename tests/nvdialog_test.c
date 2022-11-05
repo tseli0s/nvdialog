@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <nvdialog/nvdialog.h>
+#include <nvdialog.h>
 
 int main(int argc, char** argv) {
         if (nvd_init(argv[0]) != 0) {
