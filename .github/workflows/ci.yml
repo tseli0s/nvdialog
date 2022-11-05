@@ -25,8 +25,8 @@ jobs:
       run: mkdir build && cd build/; cmake .. -DNVD_USE_GTK4=OFF -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -G "Ninja" -DWIN32_TARGET=OFF -DCMAKE_BUILD_TYPE=Release
 
     - name: Build
-      # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build
-      
+    - name: Install library
+      run: sudo cmake --install ${{github.workspace}}/build/
     - name: Test
       run: ctest ${{github.workspace}}/build/
