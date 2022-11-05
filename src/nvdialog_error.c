@@ -48,7 +48,7 @@ NVD_INTERNAL_FUNCTION NVD_FORCE_INLINE void nvd_set_error(NvdError error) {
 NVD_FORCE_INLINE int nvd_get_error(void) { return ___error; }
 
 const char *nvd_stringify_error(NvdError err) {
-        char *error = NULL;
+        static char *error = NULL; /* Marked as static because we need it to stay persistent. */
         switch (err) {
         case NVD_NO_ERROR:
                 error = "No error";
@@ -75,7 +75,7 @@ const char *nvd_stringify_error(NvdError err) {
         default:
                 return NULL;
         }
-        return error; // FIXME: Don't return a local stack pointer here.
+        return error;
 }
 
 void nvd_error_message(const char *fmt, ...) {
