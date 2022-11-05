@@ -29,4 +29,4 @@ jobs:
     - name: Install library
       run: sudo cmake --install ${{github.workspace}}/build/
     - name: Test
-      run: ctest ${{github.workspace}}/build/
+      run: cd ${{github.workspace}}/build/ && ctest
