@@ -4,6 +4,9 @@
 - Added notification support (`NvdNotification`).
 - Added testing units in CI.
 - Fix `nvd_stringify_error` returning invalid pointer, causing undefined behavior.
+- Added two new library errors:\
+        - `NVD_FILE_INACCESSIBLE` (A file NvDialog tried to access is not accessible),\
+        - `NVD_BACKEND_INVALID`   (A backend is invalid, eg. A symbol can't be accessed)
 
 # Changelog -- 0.3.0
 
