@@ -3,6 +3,7 @@
 - Added custom CSS stylesheet support (`NvdCSSManager`).
 - Added notification support (`NvdNotification`).
 - Added testing units in CI.
+- Fix `nvd_stringify_error` returning invalid pointer, causing undefined behavior.
 
 # Changelog -- 0.3.0
 
