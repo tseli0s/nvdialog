@@ -58,6 +58,25 @@ static bool __nvd_check_libnotify(NvdNotification *notification) {
         return true;
 }
 
+static inline char *__nvd_match_notif_type_adw(NvdNotifyType type) {
+        static char *icon_name;
+        
+        switch (type) {
+        case NVD_NOTIFICATION_SIMPLE:
+                icon_name = "dialog-information";
+                break;
+        case NVD_NOTIFICATION_WARNING:
+                icon_name = "dialog-warning";
+                break;
+        case NVD_NOTIFICATION_ERROR:
+                icon_name = "dialog-error";
+                break;
+        default: return NULL;
+        }
+
+        return icon_name;
+}
+
 NvdNotification *nvd_notification_adw(const char   *title,
                                       const char   *msg,
                                       NvdNotifyType type) {
@@ -77,11 +96,13 @@ NvdNotification *nvd_notification_adw(const char   *title,
                 return NULL;
         }
 
+        const char *icon_name = __nvd_match_notif_type_adw(type);
+
         notification->title    = (char*) title;
         notification->contents = (char*) msg;
         notification->raw      = (void*) notify_new(notification->title,
                                                     notification->contents,
-                                                    NULL);
+                                                    icon_name);
         notification->type     = type;
         notification->shown    = false;
         
