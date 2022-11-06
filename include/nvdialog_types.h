@@ -52,6 +52,8 @@ typedef enum {
         NVD_NO_DISPLAY = 0xff,
         NVD_INVALID_PARAM,
         NVD_NOT_INITIALIZED,
+        NVD_BACKEND_INVALID,
+        NVD_FILE_INACCESSIBLE,
         NVD_STRING_EMPTY,
         NVD_OUT_OF_MEMORY,
         NVD_INTERNAL_ERROR,
