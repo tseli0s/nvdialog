@@ -80,4 +80,9 @@ void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog, const char *versio
 NvdNotification *nvd_notification_adw(const char   *title,
                                         const char   *msg,
                                         NvdNotifyType type);
+                                
+/*
+ * Sends the notification to the system.
+*/
+void nvd_send_notification_adw(NvdNotification *notification);
 #endif /* __nvdialog_adw_h__ */
