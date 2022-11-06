@@ -25,9 +25,7 @@
 #ifndef __nvdialog_adw_h__
 #define __nvdialog_adw_h__
 
-#include "dialogs/nvdialog_about_dialog.h"
-#include "dialogs/nvdialog_dialog_box.h"
-#include "dialogs/nvdialog_file_dialog.h"
+#include "nvdialog.h"
 #include <gtk/gtk.h>
 
 /* Shows a simple dialog box using Gtk3. */
@@ -77,4 +75,15 @@ void nvd_about_dialog_set_license_link_gtk(NvdAboutDialog *dialog,
  * inside the 'save' nested pointer passed.
  */
 void nvd_get_file_location_gtk(NvdFileDialog *dialog, const char **savebuf);
+
+/*
+ * Notification using Gtk3 backend.
+ * Just a copy of the Adwaita implementation.
+*/
+NvdNotification *nvd_notification_gtk(const char   *title,
+                                      const char   *msg,
+                                      NvdNotifyType type);
+
+/* Sends the notification to the system. */
+void nvd_send_notification_gtk(NvdNotification *notification);
 #endif /* __nvdialog_adw_h__ */
