@@ -96,7 +96,7 @@ NvdNotification *nvd_notification_adw(const char   *title,
                 return NULL;
         }
 
-        const char *icon_name = __nvd_match_notif_type_adw(type);
+        const char *icon_name  = __nvd_match_notif_type_adw(type);
 
         notification->title    = (char*) title;
         notification->contents = (char*) msg;
@@ -106,7 +106,7 @@ NvdNotification *nvd_notification_adw(const char   *title,
         notification->type     = type;
         notification->shown    = false;
         
-        NVD_ASSERT(notification->lib != NULL);
+        
         return notification;
 }
 
