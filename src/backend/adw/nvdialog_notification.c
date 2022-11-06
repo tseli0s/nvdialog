@@ -106,7 +106,13 @@ NvdNotification *nvd_notification_adw(const char   *title,
         notification->type     = type;
         notification->shown    = false;
         
-        
+        if (notification->type == NVD_NOTIFICATION_ERROR) {
+                const char *fn_name = "notify_notification_set_urgency";
+                void (*nvd_notify_set_urgency)(NotifyNotification *, gint) = dlsym(notification->lib,
+                                                                                   fn_name);
+                nvd_notify_set_urgency(notification->raw,
+                                       NOTIFY_URGENCY_CRITICAL);
+        }
         return notification;
 }
 
