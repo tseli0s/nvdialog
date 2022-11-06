@@ -66,6 +66,11 @@ const char *nvd_stringify_error(NvdError err) {
         case NVD_STRING_EMPTY:
                 error = "Passed empty string as a parameter.";
                 break;
+        case NVD_FILE_INACCESSIBLE:
+                error = "Attempted to read an inaccessible file.";
+                break;
+        case NVD_BACKEND_INVALID:
+                error = "Backend library is not matching NvDialog.";
         case NVD_OUT_OF_MEMORY:
                 error = "No memory left on the host machine.";
                 break;
