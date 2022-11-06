@@ -42,6 +42,22 @@ typedef NotifyNotification* (*nvd_notify_new_t)(const char*,
                                                 const char*,
                                                 const char*);
 
+static bool __nvd_check_libnotify(NvdNotification *notification) {
+        gboolean (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
+                if (!nvd_notify_init) {
+                        dlclose(notification->lib);
+                        nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
+                        return false;
+                }
+
+                if (!nvd_notify_init("NvDialog")) {
+                        dlclose(notification->lib);
+                        nvd_error_message("Couldn't initialize libnotify, stopping here.");
+                        return false;
+        }
+        return true;
+}
+
 NvdNotification *nvd_notification_adw(const char   *title,
                                       const char   *msg,
                                       NvdNotifyType type) {
@@ -49,18 +65,7 @@ NvdNotification *nvd_notification_adw(const char   *title,
         NVD_RETURN_IF_NULL(notification);
 
         notification->lib                  = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
-        gboolean (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
-                if (!nvd_notify_init) {
-                        dlclose(notification->lib);
-                        nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
-                        return -1;
-                }
-
-                if (!nvd_notify_init("NvDialog")) {
-                        dlclose(notification->lib);
-                        nvd_error_message("Couldn't initialize libnotify, stopping here.");
-                        return -1;
-        }
+        if (!__nvd_check_libnotify(notification)) nvd_set_error(NVD_BACKEND_INVALID);
 
         nvd_notify_new_t notify_new  = dlsym(notification->lib, "notify_notification_new");
         
