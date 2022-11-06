@@ -27,3 +27,4 @@
 -I/usr/x86_64-w64-mingw32/include/
 -I/usr/include/libadwaita-1
 -pthread
+-DNVDIALOG_MAXBUF=1
