@@ -48,7 +48,20 @@ NvdNotification *nvd_notification_adw(const char   *title,
         NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
         NVD_RETURN_IF_NULL(notification);
 
-        notification->lib            = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
+        notification->lib                  = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
+        gboolean (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
+                if (!nvd_notify_init) {
+                        dlclose(notification->lib);
+                        nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
+                        return -1;
+                }
+
+                if (!nvd_notify_init("NvDialog")) {
+                        dlclose(notification->lib);
+                        nvd_error_message("Couldn't initialize libnotify, stopping here.");
+                        return -1;
+        }
+
         nvd_notify_new_t notify_new  = dlsym(notification->lib, "notify_notification_new");
         
         if (!notify_new) {
