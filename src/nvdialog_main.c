@@ -29,6 +29,7 @@
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
 #ifndef _WIN32
+#include <dlfcn.h>
 #ifdef NVD_USE_GTK4
 #include "backend/adw/nvdialog_adw.h"
 #else
@@ -79,7 +80,50 @@ int nvd_init(char *program) {
             &program,
         };
         gtk_init(&__argc__, &__argv__);
+
+        void *lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
+        if (!lib) {
+                nvd_error_message("Couldn't load libnotify.so, %s", dlerror());
+                return -1;
+        } else {
+                /* 
+                 * This is just to check if we can use libnotify, and stop here if not
+                 * instead of causing it later in the program.
+                 */
+                gboolean (*nvd_notify_init)(char*) = dlsym(lib, "notify_init");
+                if (!nvd_notify_init) {
+                        dlclose(lib);
+                        nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
+                        return -1;
+                }
+
+                if (!nvd_notify_init("NvDialog")) { /* TODO: Set application name here from the user */
+                        dlclose(lib);
+                        nvd_error_message("Couldn't initialize libnotify, stopping here.");
+                        return -1;
+                }
+        }
+        dlclose(lib); /* We are going to load it seperately once needed. */
 #else
+        void *lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
+        if (!lib) {
+                nvd_error_message("Couldn't load libnotify.so, %s", dlerror());
+                return -1;
+        } else {
+                gboolean (*nvd_notify_init)(char*) = dlsym(lib, "notify_init");
+                if (!nvd_notify_init) {
+                        dlclose(lib);
+                        nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
+                        return -1;
+                }
+
+                if (!nvd_notify_init("NvDialog")) {
+                        dlclose(lib);
+                        nvd_error_message("Couldn't initialize libnotify, stopping here.");
+                        return -1;
+                }
+        }
+        dlclose(lib); /* We are going to load it seperately once needed. */
         adw_init();
 #endif /* NVD_USE_GTK4 */
 #endif /* _WIN32 */
@@ -231,10 +275,20 @@ NvdNotification *nvd_notification_new(const char *title,
                                       const char *msg,
                                       NvdNotifyType type) {
 #if   defined(_WIN32)
-        nvd_notification_win32(title, msg, type);
+        return nvd_notification_win32(title, msg, type);
 #elif defined(NVD_USE_GTK4)
-        nvd_notification_adw(title, msg, type);
+        return nvd_notification_adw(title, msg, type);
 #else
         return NULL; /* Gtk3 backend support pending... */
+#endif /* _WIN32 */
+}
+
+void nvd_send_notification(NvdNotification *notification) {
+#if   defined(_WIN32)
+        nvd_send_notification_win32(notification);
+#elif defined(NVD_USE_GTK4)
+        nvd_send_notification_adw(notification);
+#else
+        return; /* Gtk3 backend support pending... */
 #endif /* _WIN32 */
 }
