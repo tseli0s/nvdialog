@@ -279,7 +279,7 @@ NvdNotification *nvd_notification_new(const char *title,
 #elif defined(NVD_USE_GTK4)
         return nvd_notification_adw(title, msg, type);
 #else
-        return NULL; /* Gtk3 backend support pending... */
+        return nvd_notification_gtk(title, msg, type);
 #endif /* _WIN32 */
 }
 
@@ -289,6 +289,6 @@ void nvd_send_notification(NvdNotification *notification) {
 #elif defined(NVD_USE_GTK4)
         nvd_send_notification_adw(notification);
 #else
-        return; /* Gtk3 backend support pending... */
+        nvd_send_notification_gtk(notification);
 #endif /* _WIN32 */
 }
