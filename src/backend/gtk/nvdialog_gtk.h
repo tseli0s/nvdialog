@@ -86,4 +86,16 @@ NvdNotification *nvd_notification_gtk(const char   *title,
 
 /* Sends the notification to the system. */
 void nvd_send_notification_gtk(NvdNotification *notification);
+
+/* Returns an empty CSS Manager */
+NvdCSSManager *nvd_css_manager_gtk(void);
+
+/* Self explanatory I guess, otherwise see include/nvdialog_css_manager.h */
+int nvd_css_manager_attach_string_stylesheet_gtk(NvdCSSManager *mgr,
+                                                 const char    *str);
+
+int nvd_css_manager_attach_stylesheet_gtk(NvdCSSManager *mgr, const char *filename);
+
+/* Uses the stylesheet loaded for the widget provided. */
+int nvd_css_manager_use_style_gtk(NvdCSSManager *mgr, void *raw_handle);
 #endif /* __nvdialog_adw_h__ */
