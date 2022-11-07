@@ -7,7 +7,7 @@
 - Added two new library errors:\
         - `NVD_FILE_INACCESSIBLE` (A file NvDialog tried to access is not accessible),\
         - `NVD_BACKEND_INVALID`   (A backend is invalid, eg. A symbol can't be accessed)
-
+- Added `NVD_VERSION` macro -- Stores the compile time version of NvDialog to the `NvdVersion` variable passed.
 # Changelog -- 0.3.0
 
 - Changed the API to now use a new model, where creating and showing the dialog window are now seperate tasks.
