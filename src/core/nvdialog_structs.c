@@ -65,3 +65,10 @@ struct _NvdNotification {
         void *raw;
         void *lib;
 };
+
+struct _NvdCSSManager {
+        void *raw;
+        bool used;
+        char *filename;
+        void *extra_data;
+};
