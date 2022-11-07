@@ -40,6 +40,7 @@ if (NOT NVD_USE_GTK4)
                             src/backend/gtk/nvdialog_file_dialog.c
                             src/backend/gtk/nvdialog_dialog_box.c
                             src/backend/gtk/nvdialog_question_dialog.c
+                            src/backend/gtk/nvdialog_css_manager.c
                             src/backend/gtk/nvdialog_notification.c)
         set(NVD_SOURCES ${NVD_GTK_SOURCES} src/nvdialog_error.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
 else()
@@ -47,7 +48,7 @@ else()
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c)
 endif()
 message("-- NVDIALOG_MAXBUF equals ${NVDIALOG_MAXBUF}. If buffer overflows are detected, increase this number.")
-set(NVD_HEADERS include/nvdialog_dialog.h include/nvdialog_notification.h include/nvdialog_core.h include/nvdialog_capab.h include/nvdialog_types.h include/nvdialog_error.h include/nvdialog.h)
+set(NVD_HEADERS include/nvdialog_dialog.h include/nvdialog_css_manager.h include/nvdialog_notification.h include/nvdialog_core.h include/nvdialog_capab.h include/nvdialog_types.h include/nvdialog_error.h include/nvdialog.h)
 set(NVD_EXTRA_HEADERS include/dialogs/nvdialog_file_dialog.h include/dialogs/nvdialog_about_dialog.h include/dialogs/nvdialog_dialog_box.h)
 
 # If compiling for Windows, only use Win32 API.
