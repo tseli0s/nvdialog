@@ -33,11 +33,19 @@ extern "C" {
 #define NVDIALOG_VERSION_MINOR 3
 #define NVDIALOG_VERSION_PATCH 0
 
+/** @brief A macro to set the version at compile time. */
+#define NVD_VERSION(x) {                               \
+        (NvdVersion) x.major = NVDIALOG_VERSION_MAJOR; \
+        (NvdVersion) x.minor = NVDIALOG_VERSION_MINOR; \
+        (NvdVersion) x.patch = NVDIALOG_VERSION_PATCH; \
+}
+
 #include "nvdialog_capab.h"
 #include "nvdialog_core.h"
 #include "nvdialog_dialog.h"
 #include "nvdialog_error.h"
 #include "nvdialog_types.h"
+#include "nvdialog_css_manager.h"
 #include "nvdialog_notification.h"
 
 /**
