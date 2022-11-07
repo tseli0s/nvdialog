@@ -292,3 +292,23 @@ void nvd_send_notification(NvdNotification *notification) {
         nvd_send_notification_gtk(notification);
 #endif /* _WIN32 */
 }
+
+NvdCSSBackend nvd_get_css_backend() {
+#if   defined(NVD_USE_GTK4)
+        return NVD_GTK4_CSS_BACKEND;
+#elif defined(_WIN32)
+        return NVD_NO_CSS_BACKEND;
+#else
+        return NVD_GTK3_CSS_BACKEND;
+#endif /* NVD_USE_GTK4 */
+}
+
+NvdCSSManager *nvd_css_manager_new() {
+#if   defined(NVD_USE_GTK4)
+        return nvd_css_manager_adw();
+#elif defined(_WIN32)
+        return nvd_css_manager_win32();
+#else
+        return nvd_css_manager_gtk();
+#endif /* NVD_USE_GTK4 */
+}
