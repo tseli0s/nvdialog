@@ -50,8 +50,7 @@ typedef enum {
 /**
  * @brief The CSS manager for NvDialog. 
  * @details The CSS manager is responsible for using a custom stylesheet
- * on dialogs, by attaching the stylesheet to the backend.
- * You will most often find yourself working with it to use a custom stylesheet.
+ * on dialogs, by attaching the stylesheet to the raw handle of the dialog.
  * @note The CSS manager is *NOT* thread-safe. Only use it from the main thread.
  */
 typedef struct _NvdCSSManager NvdCSSManager;
@@ -93,9 +92,10 @@ int nvd_css_manager_attach_string_stylesheet(NvdCSSManager *mgr, const char *str
 int nvd_css_manager_attach_stylesheet(NvdCSSManager *mgr, const char *filename);
 
 /**
- * @brief Uses the stylesheet attached to the manager for all the dialogs.
+ * @brief Uses the stylesheet attached to the manager for the dialog specified.
  * @param mgr The manager to use.
+ * @param raw_handle Returned from an object-specific function as the backend object.
  * @return 0 on success, otherwise -1 and sets the error code. See @ref nvd_get_error.
  */
-int nvd_css_manager_use_style(NvdCSSManager *mgr);
+int nvd_css_manager_use_style(NvdCSSManager *mgr, void *raw_handle);
 #endif /* __nvdialog_css_manager_h__ */
