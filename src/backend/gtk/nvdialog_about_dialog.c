@@ -51,8 +51,9 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname,
                                      const char *icon_name) {
         NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
-        dialog->title = (char *)appname;
-        dialog->contents = (char *)brief;
+        
+        dialog->title          = (char *)appname;
+        dialog->contents       = (char *)brief;
 
         char buffer[NVDIALOG_MAXBUF];
         sprintf(buffer,
@@ -72,6 +73,11 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname,
         gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog->raw), brief);
         gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog->raw), img);
         return dialog;
+}
+
+NVD_FORCE_INLINE void *nvd_about_dialog_get_raw_gtk(NvdAboutDialog *dialog) {
+        NVD_ASSERT(dialog != NULL);
+        return dialog->raw;
 }
 
 void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog,

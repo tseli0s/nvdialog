@@ -136,6 +136,11 @@ NvdQuestionBox *nvd_question_gtk(const char       *title,
         return dialog;
 }
 
+void *nvd_question_get_raw(NvdQuestionBox *dlg) {
+        NVD_ASSERT(dlg != NULL);
+        return dlg->window_handle;
+}
+
 NvdReply nvd_get_reply_gtk(NvdQuestionBox *box) {
         g_signal_connect_swapped(
             box->window_handle, "destroy", G_CALLBACK(gtk_main_quit), NULL);

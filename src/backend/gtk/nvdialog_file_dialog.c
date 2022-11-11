@@ -55,6 +55,11 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
         return dialog;
 }
 
+inline void *nvd_file_dialog_get_raw(NvdFileDialog *dlg) {
+        NVD_ASSERT(dlg != NULL);
+        return dlg->raw;
+}
+
 void nvd_get_file_location_gtk(NvdFileDialog *dialog, const char **savebuf) {
         GtkResponseType response = gtk_dialog_run(GTK_DIALOG(dialog->raw));
         char           *filename;

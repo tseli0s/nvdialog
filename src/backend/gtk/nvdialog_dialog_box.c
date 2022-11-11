@@ -98,6 +98,11 @@ nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         return dialog;
 }
 
+inline void *nvd_dialog_box_get_raw_gtk(NvdDialogBox *dlg) {
+        NVD_ASSERT(dlg != NULL);
+        return dlg->window_handle;
+}
+
 void nvd_show_dialog_gtk(NvdDialogBox *dialog) {
         gtk_widget_show_all(dialog->window_handle);
         gtk_main();
