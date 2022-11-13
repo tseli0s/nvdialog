@@ -312,3 +312,43 @@ NvdCSSManager *nvd_css_manager_new() {
         return nvd_css_manager_gtk();
 #endif /* NVD_USE_GTK4 */
 }
+
+void *nvd_dialog_box_get_raw(NvdDialogBox *dialog) {
+#if     defined(NVD_USE_GTK4)
+        return nvd_dialog_box_get_raw_adw(dialog);
+#elif   defined(_WIN32)
+        return nvd_dialog_box_get_raw_win32(dialog);
+#else
+        return nvd_dialog_box_get_raw_gtk(dialog);
+#endif  /* NVD_USE_GTK4 */
+}
+
+void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog) {
+#if     defined(NVD_USE_GTK4)
+        return nvd_about_dialog_get_raw_adw(dialog);
+#elif   defined(_WIN32)
+        return nvd_about_dialog_get_raw_win32(dialog);
+#else
+        return nvd_about_dialog_get_raw_gtk(dialog);
+#endif  /* NVD_USE_GTK4 */
+}
+
+void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog) {
+#if     defined(NVD_USE_GTK4)
+        return nvd_dialog_question_get_raw_adw(dialog);
+#elif   defined(_WIN32)
+        return nvd_dialog_question_get_raw_win32(dialog);
+#else
+        return nvd_dialog_question_get_raw_gtk(dialog);
+#endif  /* NVD_USE_GTK4 */
+}
+
+void *nvd_open_file_dialog_get_raw(NvdFileDialog *dialog) {
+#if     defined(NVD_USE_GTK4)
+        return nvd_open_file_dialog_get_raw_adw(dialog);
+#elif   defined(_WIN32)
+        return nvd_open_file_dialog_get_raw_win32(dialog);
+#else
+        return nvd_open_file_dialog_get_raw_gtk(dialog);
+#endif  /* NVD_USE_GTK4 */
+}
