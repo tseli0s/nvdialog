@@ -22,6 +22,12 @@
  * IN THE SOFTWARE.
  */
 
+/* 
+ * As honest as I can, I couldn't care less
+ * about safety from a 30 year old function.
+ */
+#define _CRT_SECURE_NO_WARNINGS 1
+
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
 #include "nvdialog.h"
