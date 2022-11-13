@@ -22,6 +22,7 @@
  * IN THE SOFTWARE.
  */
 
+#include <nvdialog.h>
 #include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
