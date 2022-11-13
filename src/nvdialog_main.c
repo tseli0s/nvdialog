@@ -58,8 +58,6 @@ inline const char *nvd_get_domain_name(void) { return nvd_domain_name; }
 
 NvdContext *nvd_bind_context(void) { return NULL; }
 
-void nvd_delete_context(NvdContext *ctx) { free(ctx); }
-
 const char *nvd_get_argv() { return nvd_argv_0; }
 
 int nvd_init(char *program) {
