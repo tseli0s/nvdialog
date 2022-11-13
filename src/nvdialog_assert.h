@@ -32,7 +32,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#if defined(__clang__) || defined(__GNUC__)
 static void __attribute__((format(printf, 1, 2)))
+#endif
 nvd_print_assert(const char *msg, ...) {
         va_list args;
         va_start(args, msg);

@@ -69,7 +69,9 @@ void nvd_set_domain_name(char *domain);
  * @sa nvd_set_domain_name
  * @return const NvdContext*
  */
+#if defined(__clang__) || defined(__GNUC__)
 __attribute__((deprecated("Contexts have been removed from NvDialog since v0.3.0. Remove them from your code.")))
+#endif
 NvdContext *nvd_bind_context(void);
 
 /**
