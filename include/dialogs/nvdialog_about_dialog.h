@@ -69,3 +69,10 @@ void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version);
  * @param dialog The dialog to show.
  */
 void nvd_show_about_dialog(NvdAboutDialog *dialog);
+
+/**
+ * @brief Returns the raw object behind the dialog.
+ * @param dialog The dialog to retrieve the object from.
+ * @return void* The raw toolkit-created object.
+ */
+void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog);

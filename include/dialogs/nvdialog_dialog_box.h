@@ -75,3 +75,17 @@ NvdQuestionBox* nvd_dialog_question_new(const char *title, const char *question,
  * @return The reply from the dialog box.
  */
 NvdReply nvd_get_reply(NvdQuestionBox *box);
+
+/**
+ * @brief Returns the raw object behind the dialog.
+ * @param dialog The dialog to retrieve the object from.
+ * @return void* The raw toolkit-created object.
+ */ 
+void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog);
+
+/**
+ * @brief Returns the raw object behind the dialog.
+ * @param dialog The dialog to retrieve the object from.
+ * @return void* The raw toolkit-created object.
+ */
+void *nvd_dialog_box_get_raw(NvdDialogBox *dialog);

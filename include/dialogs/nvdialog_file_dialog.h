@@ -46,3 +46,10 @@ NvdFileDialog* nvd_open_file_dialog_new(const char *title,
  * @param savebuf A pointer to a buffer where the location will be saved.
  */
 void nvd_get_file_location(NvdFileDialog* dialog, const char** savebuf);
+
+/**
+ * @brief Returns the raw object behind the dialog.
+ * @param dialog The dialog to retrieve the object from.
+ * @return void* The raw toolkit-created object.
+ */
+void *nvd_open_file_dialog_get_raw(NvdFileDialog *dialog);
