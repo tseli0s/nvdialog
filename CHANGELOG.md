@@ -9,6 +9,8 @@
         - `NVD_BACKEND_INVALID`   (A backend is invalid, eg. A symbol can't be accessed)
 - Added `NVD_VERSION` macro -- Stores the compile time version of NvDialog to the `NvdVersion` variable passed.
 - Added `nvd_*_get_raw()` functions -- Allows to get the window implementation behind the dialog to use for the styling API.
+- Added `pkg-config` script to make NvDialog compatible with other build systems.
+
 # Changelog -- 0.3.0
 
 - Changed the API to now use a new model, where creating and showing the dialog window are now seperate tasks.
