@@ -22,8 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-#include "../../nvdialog_assert.h"
 #include "nvdialog_win32.h"
+#include "../../nvdialog_assert.h"
 
 struct _NvdAboutDialog {
         void *raw;
@@ -64,7 +64,7 @@ void nvd_about_dialog_set_license_link_win32(NvdAboutDialog *dialog,
 }
 
 void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
-        bool result = ShellAbout(
+        bool result = ShellAboutA(
             nvd_get_parent(),
             dialog->title,
             dialog->contents,
