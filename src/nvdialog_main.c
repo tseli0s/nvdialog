@@ -303,7 +303,7 @@ NvdCSSManager *nvd_css_manager_new() {
 #if   defined(NVD_USE_GTK4)
         return nvd_css_manager_adw();
 #elif defined(_WIN32)
-        return nvd_css_manager_win32();
+        return NULL;
 #else
         return nvd_css_manager_gtk();
 #endif /* NVD_USE_GTK4 */
@@ -313,7 +313,8 @@ int nvd_css_manager_attach_stylesheet(NvdCSSManager *mgr, const char *filename) 
 #if   defined(NVD_USE_GTK4)
         return nvd_css_manager_attach_stylesheet_adw(mgr, filename);
 #elif defined(_WIN32)
-        return nvd_css_manager_attach_stylesheet_win32(mgr, filename);
+        nvd_set_error(NVD_BACKEND_INVALID);
+        return -1;
 #else
         return nvd_css_manager_attach_stylesheet_gtk(mgr, filename);
 #endif /* NVD_USE_GTK4 */
@@ -323,7 +324,8 @@ int nvd_css_manager_use_style(NvdCSSManager *mgr, void *raw_handle) {
 #if   defined(NVD_USE_GTK4)
         return nvd_css_manager_use_style_adw(mgr, raw_handle);
 #elif defined(_WIN32)
-        return nvd_css_manager_use_style_win32(mgr, raw_handle);
+        nvd_set_error(NVD_BACKEND_INVALID);
+        return -1;
 #else
         return nvd_css_manager_use_style_gtk(mgr, raw_handle);
 #endif /* NVD_USE_GTK4 */
@@ -333,7 +335,7 @@ void *nvd_dialog_box_get_raw(NvdDialogBox *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_dialog_box_get_raw_adw(dialog);
 #elif   defined(_WIN32)
-        return nvd_dialog_box_get_raw_win32(dialog);
+        return NULL;
 #else
         return nvd_dialog_box_get_raw_gtk(dialog);
 #endif  /* NVD_USE_GTK4 */
@@ -343,7 +345,7 @@ void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_about_dialog_get_raw_adw(dialog);
 #elif   defined(_WIN32)
-        return nvd_about_dialog_get_raw_win32(dialog);
+        return NULL;
 #else
         return nvd_about_dialog_get_raw_gtk(dialog);
 #endif  /* NVD_USE_GTK4 */
@@ -353,7 +355,7 @@ void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_dialog_question_get_raw_adw(dialog);
 #elif   defined(_WIN32)
-        return nvd_dialog_question_get_raw_win32(dialog);
+        return NULL;
 #else
         return nvd_dialog_question_get_raw_gtk(dialog);
 #endif  /* NVD_USE_GTK4 */
@@ -363,7 +365,7 @@ void *nvd_open_file_dialog_get_raw(NvdFileDialog *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_open_file_dialog_get_raw_adw(dialog);
 #elif   defined(_WIN32)
-        return nvd_open_file_dialog_get_raw_win32(dialog);
+        return NULL;
 #else
         return nvd_open_file_dialog_get_raw_gtk(dialog);
 #endif  /* NVD_USE_GTK4 */
