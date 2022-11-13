@@ -309,6 +309,26 @@ NvdCSSManager *nvd_css_manager_new() {
 #endif /* NVD_USE_GTK4 */
 }
 
+int nvd_css_manager_attach_stylesheet(NvdCSSManager *mgr, const char *filename) {
+#if   defined(NVD_USE_GTK4)
+        return nvd_css_manager_attach_stylesheet_adw(mgr, filename);
+#elif defined(_WIN32)
+        return nvd_css_manager_attach_stylesheet_win32(mgr, filename);
+#else
+        return nvd_css_manager_attach_stylesheet_gtk(mgr, filename);
+#endif /* NVD_USE_GTK4 */
+}
+
+int nvd_css_manager_use_style(NvdCSSManager *mgr, void *raw_handle) {
+#if   defined(NVD_USE_GTK4)
+        return nvd_css_manager_use_style_adw(mgr, raw_handle);
+#elif defined(_WIN32)
+        return nvd_css_manager_use_style_win32(mgr, raw_handle);
+#else
+        return nvd_css_manager_use_style_gtk(mgr, raw_handle);
+#endif /* NVD_USE_GTK4 */
+}
+
 void *nvd_dialog_box_get_raw(NvdDialogBox *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_dialog_box_get_raw_adw(dialog);
