@@ -26,16 +26,17 @@
 #include <stdlib.h>
 #include <nvdialog.h>
 
-int main(int argc, char** argv) {
+int main(int argc __attribute__((unused)), char** argv) {
         if (nvd_init(argv[0]) != 0) {
-                printf("nvd_init: Couldn't initialize: %s\n", nvd_stringify_error(nvd_get_error()));
+                printf(
+                        "nvd_init: Couldn't initialize: %s\n",
+                        nvd_stringify_error((NvdError)nvd_get_error())
+                );
                 exit(EXIT_FAILURE);
         }
 
         char *dialog_title = "Dialog Title";
         char *dialog_msg   = "Testing Dialog.";
-        char *question_dlg = "Are you sure you want to discard changes?";
-        char *filename     = NULL;
 
         NvdDialogBox *dialog         = nvd_dialog_box_new(dialog_title,
                                                   dialog_msg,
