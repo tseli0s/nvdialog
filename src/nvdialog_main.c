@@ -56,8 +56,6 @@ inline void nvd_set_domain_name(char *domain) {
 
 inline const char *nvd_get_domain_name(void) { return nvd_domain_name; }
 
-NvdContext *nvd_bind_context(void) { return NULL; }
-
 const char *nvd_get_argv() { return nvd_argv_0; }
 
 int nvd_init(char *program) {
