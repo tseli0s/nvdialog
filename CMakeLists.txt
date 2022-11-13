@@ -112,6 +112,19 @@ target_include_directories(nvdialog PRIVATE include/)
 # Required to find the system paths easier.
 include(GNUInstallDirs)
 
+find_package(PkgConfig)
+if (PKG_CONFIG_FOUND)
+        message(STATUS "pkg-config was detected, NvDialog will generate a pkg-config script too.")
+        set(target1 nvdialog)
+        set(pc_libs_private)
+        set(pc_req_private)
+        set(pc_req_public)
+        configure_file(pkg-config/nvdialog.pc.in nvdialog.pc @ONLY)
+
+        set(NVDIALOG_PKG_CONFIG_FILE ${CMAKE_SOURCE_DIR}/build/nvdialog.pc)
+        install(FILES ${NVDIALOG_PKG_CONFIG_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/pkg/config)
+endif()
+
 # On Windows the installation procedure is a bit different
 # so until we resolve this the library and the header have to
 # be manually installed.
