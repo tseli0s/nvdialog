@@ -71,6 +71,7 @@ const char *nvd_stringify_error(NvdError err) {
                 break;
         case NVD_BACKEND_INVALID:
                 error = "Backend library is not matching NvDialog.";
+                break;
         case NVD_OUT_OF_MEMORY:
                 error = "No memory left on the host machine.";
                 break;
