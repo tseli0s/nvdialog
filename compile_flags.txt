@@ -28,3 +28,4 @@
 -I/usr/include/libadwaita-1
 -pthread
 -DNVDIALOG_MAXBUF=1
+-DNVD_USE_GTK4
