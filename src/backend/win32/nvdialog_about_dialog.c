@@ -64,7 +64,7 @@ void nvd_about_dialog_set_license_link_win32(NvdAboutDialog *dialog,
 }
 
 void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
-        bool result = ShellAboutA(
+        bool result = ShellAbout(
             nvd_get_parent(),
             dialog->title,
             dialog->contents,
