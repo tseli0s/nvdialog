@@ -47,7 +47,9 @@ static void nvd_set_margins_gtk4(GtkWidget *widget) {
 }
 
 NvdAboutDialog *
-nvd_about_dialog_adw(const char *appname, const char *brief, const char *logo) {
+nvd_about_dialog_adw(const char *appname,
+                     const char *brief,
+                     const char *logo) {
         NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
         /* In order to have a better title. */
@@ -117,4 +119,9 @@ void nvd_show_about_dialog_adw(NvdAboutDialog *dialog) {
         gtk_window_present(GTK_WINDOW(dialog->raw));
         while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
                 g_main_context_iteration(NULL, true);
+}
+
+void *nvd_about_dialog_get_raw_adw(NvdAboutDialog *dialog) {
+        NVD_ASSERT(dialog != NULL);
+        return dialog->raw;
 }

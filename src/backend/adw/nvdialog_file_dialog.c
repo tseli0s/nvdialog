@@ -68,6 +68,11 @@ NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
         return dialog;
 }
 
+inline void *nvd_open_file_dialog_get_raw_adw(NvdFileDialog *dlg) {
+        NVD_ASSERT(dlg != NULL);
+        return dlg->raw;
+}
+
 void nvd_get_file_location_adw(NvdFileDialog *dialog, char **savebuf) {
         g_signal_connect (dialog->raw,
                           "response",

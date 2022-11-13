@@ -85,4 +85,11 @@ NvdNotification *nvd_notification_adw(const char   *title,
  * Sends the notification to the system.
 */
 void nvd_send_notification_adw(NvdNotification *notification);
+
+/* Pretty self-explanatory; See the headers otherwise. */
+void *nvd_about_dialog_get_raw_adw    (NvdAboutDialog *dialog);
+void *nvd_dialog_box_get_raw_adw      (NvdDialogBox   *dialog);
+void *nvd_dialog_question_get_raw_adw (NvdQuestionBox *dialog);
+void *nvd_open_file_dialog_get_raw_adw(NvdFileDialog  *dialog);
+
 #endif /* __nvdialog_adw_h__ */

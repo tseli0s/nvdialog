@@ -126,3 +126,8 @@ NvdReply nvd_get_reply_adw(NvdQuestionBox *box) {
         }
         return box->reply;
 }
+
+void *nvd_dialog_question_get_raw_adw(NvdQuestionBox *dlg) {
+        NVD_ASSERT(dlg != NULL);
+        return dlg->window_handle;
+}
