@@ -92,7 +92,9 @@ typedef struct {
  * @details This is an opaque structure intended to hold some information about
  * the current process that nvdialog is linked to
  */
+#if defined(__clang__) || defined(__GNUC__)
 __attribute__((deprecated("Contexts are no longer used within NvDialog. Please remove them from your code.")))
+#endif
 typedef struct _NvdContext NvdContext;
 
 #endif /* __nvdialog_types_h__ */
