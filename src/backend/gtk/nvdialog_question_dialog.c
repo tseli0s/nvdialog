@@ -136,7 +136,7 @@ NvdQuestionBox *nvd_question_gtk(const char       *title,
         return dialog;
 }
 
-void *nvd_question_get_raw(NvdQuestionBox *dlg) {
+void *nvd_dialog_question_get_raw_gtk(NvdQuestionBox *dlg) {
         NVD_ASSERT(dlg != NULL);
         return dlg->window_handle;
 }

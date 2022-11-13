@@ -75,11 +75,6 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname,
         return dialog;
 }
 
-NVD_FORCE_INLINE void *nvd_about_dialog_get_raw_gtk(NvdAboutDialog *dialog) {
-        NVD_ASSERT(dialog != NULL);
-        return dialog->raw;
-}
-
 void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog,
                                       const char     *version) {
         gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog->raw), version);
@@ -97,4 +92,9 @@ void nvd_about_dialog_set_license_link_gtk(NvdAboutDialog *dialog,
 void nvd_show_about_dialog_gtk(NvdAboutDialog *dialog) {
         gtk_dialog_run(GTK_DIALOG(dialog->raw));
         return;
+}
+
+void *nvd_about_dialog_get_raw_gtk(NvdAboutDialog *dialog) {
+        NVD_ASSERT(dialog != NULL);
+        return dialog->raw;
 }

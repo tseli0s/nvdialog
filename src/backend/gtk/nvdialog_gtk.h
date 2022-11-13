@@ -98,4 +98,11 @@ int nvd_css_manager_attach_stylesheet_gtk(NvdCSSManager *mgr, const char *filena
 
 /* Uses the stylesheet loaded for the widget provided. */
 int nvd_css_manager_use_style_gtk(NvdCSSManager *mgr, void *raw_handle);
+
+/* Pretty self-explanatory; See the headers otherwise. */
+void *nvd_about_dialog_get_raw_gtk    (NvdAboutDialog *dialog);
+void *nvd_dialog_box_get_raw_gtk      (NvdDialogBox   *dialog);
+void *nvd_dialog_question_get_raw_gtk (NvdQuestionBox *dialog);
+void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog  *dialog);
+
 #endif /* __nvdialog_adw_h__ */

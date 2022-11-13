@@ -55,7 +55,7 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
         return dialog;
 }
 
-inline void *nvd_file_dialog_get_raw(NvdFileDialog *dlg) {
+inline void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog *dlg) {
         NVD_ASSERT(dlg != NULL);
         return dlg->raw;
 }
