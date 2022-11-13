@@ -24,7 +24,7 @@ if(WIN32_TARGET)
         set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-stack-protector -Wno-unused-parameter -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
 else()
-        if (${CMAKE_C_COMPILER_ID} STREQUAL "MSVC")
+        if (MSVC)
                 # MSVC doesn't really like GNU style arguments
                 message("NOTE: Compiling using MSVC is still experimental, prefer GCC or CLang if available.")
                 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
@@ -81,6 +81,7 @@ else(WIN32 OR WIN32_TARGET)
                                 set(NVD_ADW_SOURCES src/backend/adw/nvdialog_about_dialog.c
                                                     src/backend/adw/nvdialog_file_dialog.c
                                                     src/backend/adw/nvdialog_dialog_box.c
+                                                    src/backend/adw/nvdialog_css_manager.c
                                                     src/backend/adw/nvdialog_question_dialog.c
                                                     src/backend/adw/nvdialog_notification.c)
                                 set(NVD_SOURCES ${NVD_SOURCES} ${NVD_ADW_SOURCES})
@@ -122,7 +123,7 @@ if (PKG_CONFIG_FOUND)
         configure_file(pkg-config/nvdialog.pc.in nvdialog.pc @ONLY)
 
         set(NVDIALOG_PKG_CONFIG_FILE ${CMAKE_SOURCE_DIR}/build/nvdialog.pc)
-        install(FILES ${NVDIALOG_PKG_CONFIG_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/pkg/config)
+        install(FILES ${NVDIALOG_PKG_CONFIG_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pkgconfig)
 endif()
 
 # On Windows the installation procedure is a bit different
