@@ -26,7 +26,14 @@
 #include <stdlib.h>
 #include <nvdialog.h>
 
-int main(int argc __attribute__((unused)), char** argv) {
+#ifdef __clang__ || defined(__GNUC__)
+#define UNUSED __attribute__((unused))
+#elifdef _MSVC_VER
+#define UNUSED __pragma(warning(suppress:4100))
+#else
+#endif /* __clang__ */
+
+int main(int argc UNUSED, char** argv) {
         if (nvd_init(argv[0]) != 0) {
                 printf(
                         "nvd_init: Couldn't initialize: %s\n",
