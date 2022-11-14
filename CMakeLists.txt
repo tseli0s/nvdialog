@@ -141,15 +141,18 @@ install(DIRECTORY DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/dialogs)
 install(FILES ${NVD_EXTRA_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/dialogs)
 install(FILES ${NVD_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/)
 
-enable_testing()
-add_executable(nvdialog_test ${CMAKE_SOURCE_DIR}/tests/nvdialog_test.c)
-if (LINUX)
-        target_link_libraries(nvdialog_test PRIVATE nvdialog notify)
-else(LINUX)
-        target_link_libraries(nvdialog_test PRIVATE nvdialog)
-endif(LINUX)
-target_include_directories(nvdialog_test PRIVATE ${CMAKE_SOURCE_DIR}/include/) # Required
-add_test(
-        NAME    nvdialog_test
-        COMMAND $<TARGET_FILE:nvdialog_test>
-)
+# Just keep it out for now.
+if (NOT MSVC)
+        enable_testing()
+        add_executable(nvdialog_test ${CMAKE_SOURCE_DIR}/tests/nvdialog_test.c)
+        if (LINUX)
+                target_link_libraries(nvdialog_test PRIVATE nvdialog notify)
+        else(LINUX)
+                target_link_libraries(nvdialog_test PRIVATE nvdialog)
+        endif(LINUX)
+        target_include_directories(nvdialog_test PRIVATE ${CMAKE_SOURCE_DIR}/include/) # Required
+        add_test(
+                NAME    nvdialog_test
+                COMMAND $<TARGET_FILE:nvdialog_test>
+        )
+endif()
