@@ -25,7 +25,7 @@
 #ifndef __nvdialog_macros_h__
 #define __nvdialog_macros_h__
 
-#if defined(__clang__) || defined(__GNUC__) || defined(__tinyc)
+#if defined(__clang__) || defined(__GNUC__)
 
 #define NVD_FORCE_INLINE inline __attribute__((always_inline))
 

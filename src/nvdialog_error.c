@@ -40,11 +40,16 @@ NVD_INTERNAL_FUNCTION const char *nvd_fmt_error_message(const char *fmt) {
         return strdup(ptr); // Remember to free it!
 }
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 NVD_INTERNAL_FUNCTION NVD_FORCE_INLINE void nvd_set_error(NvdError error) {
         NvdError *ptr = &___error;
         *ptr = error;
 }
-
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 NVD_FORCE_INLINE int nvd_get_error(void) { return ___error; }
 
 const char *nvd_stringify_error(NvdError err) {
