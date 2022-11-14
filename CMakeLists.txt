@@ -42,7 +42,7 @@ if (NOT NVD_USE_GTK4)
                             src/backend/gtk/nvdialog_question_dialog.c
                             src/backend/gtk/nvdialog_css_manager.c
                             src/backend/gtk/nvdialog_notification.c)
-        set(NVD_SOURCES ${NVD_GTK_SOURCES} src/nvdialog_structs.c src/nvdialog_error.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
+        set(NVD_SOURCES ${NVD_GTK_SOURCES} src/core/nvdialog_structs.c src/nvdialog_error.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
 else()
         add_compile_definitions(NVD_USE_GTK4)
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c)
