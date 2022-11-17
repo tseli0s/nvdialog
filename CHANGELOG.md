@@ -10,6 +10,8 @@
 - Added `NVD_VERSION` macro -- Stores the compile time version of NvDialog to the `NvdVersion` variable passed.
 - Added `nvd_*_get_raw()` functions -- Allows to get the window implementation behind the dialog to use for the styling API.
 - Added `pkg-config` script to make NvDialog compatible with other build systems.
+- Removed previously deprecated functions.
+- NvDialog can now build with other compilers than GCC and CLang.
 
 # Changelog -- 0.3.0
 
