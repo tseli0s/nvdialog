@@ -43,14 +43,13 @@ struct _NvdNotification {
 
 #if !defined (NVD_PREINCLUDE_HEADERS)
 typedef void*              nvd_notification_t;
-#else
-typedef NotifyNotification nvd_notification_t;
-typedef enum
-{
+enum {
         NOTIFY_URGENCY_LOW,
         NOTIFY_URGENCY_NORMAL,
         NOTIFY_URGENCY_CRITICAL,
-} NotifyUrgency;
+};
+#else
+typedef NotifyNotification nvd_notification_t;
 #endif /* NVD_PREINCLUDE_HEADERS */
 
 typedef nvd_notification_t (*nvd_notify_new_t)(const char*,
