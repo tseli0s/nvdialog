@@ -25,7 +25,10 @@
 #include "../../nvdialog_assert.h"
 #include "nvdialog_adw.h"
 #include "nvdialog_notification.h"
+/* So we reduce compile-time dependencies. */
+#if defined (NVD_PREINCLUDE_HEADERS)
 #include <libnotify/notification.h>
+#endif /* NVD_PREINCLUDE_HEADERS */
 #include <dlfcn.h>
 #include <stdlib.h>
 
@@ -38,12 +41,18 @@ struct _NvdNotification {
         void *lib;
 };
 
-typedef NotifyNotification* (*nvd_notify_new_t)(const char*,
+#if defined (NVD_PREINCLUDE_HEADERS)
+typedef NotifyNotification* nvd_notification_t;
+#else
+typedef void*               nvd_notification_t;
+#endif /* NVD_PREINCLUDE_HEADERS */
+
+typedef nvd_notification_t (*nvd_notify_new_t)(const char*,
                                                 const char*,
                                                 const char*);
 
 static bool __nvd_check_libnotify(NvdNotification *notification) {
-        gboolean (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
+        bool (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
                 if (!nvd_notify_init) {
                         dlclose(notification->lib);
                         nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
@@ -58,7 +67,7 @@ static bool __nvd_check_libnotify(NvdNotification *notification) {
         return true;
 }
 
-static inline char *__nvd_match_notif_type_adw(NvdNotifyType type) {
+static inline char *__nvd_match_notif_type(NvdNotifyType type) {
         static char *icon_name;
         
         switch (type) {
@@ -77,13 +86,13 @@ static inline char *__nvd_match_notif_type_adw(NvdNotifyType type) {
         return icon_name;
 }
 
-NvdNotification *nvd_notification_adw(const char   *title,
+NvdNotification *nvd_notification_gtk(const char   *title,
                                       const char   *msg,
                                       NvdNotifyType type) {
         NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
         NVD_RETURN_IF_NULL(notification);
 
-        notification->lib                  = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
+        notification->lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
         if (!__nvd_check_libnotify(notification)) nvd_set_error(NVD_BACKEND_INVALID);
 
         nvd_notify_new_t notify_new  = dlsym(notification->lib, "notify_notification_new");
@@ -96,7 +105,7 @@ NvdNotification *nvd_notification_adw(const char   *title,
                 return NULL;
         }
 
-        const char *icon_name  = __nvd_match_notif_type_adw(type);
+        const char *icon_name  = __nvd_match_notif_type(type);
 
         notification->title    = (char*) title;
         notification->contents = (char*) msg;
@@ -108,7 +117,7 @@ NvdNotification *nvd_notification_adw(const char   *title,
         
         if (notification->type == NVD_NOTIFICATION_ERROR) {
                 const char *fn_name = "notify_notification_set_urgency";
-                void (*nvd_notify_set_urgency)(NotifyNotification *, gint) = dlsym(notification->lib,
+                void (*nvd_notify_set_urgency)(nvd_notification_t, gint) = dlsym(notification->lib,
                                                                                    fn_name);
                 nvd_notify_set_urgency(notification->raw,
                                        NOTIFY_URGENCY_CRITICAL);
@@ -116,7 +125,7 @@ NvdNotification *nvd_notification_adw(const char   *title,
         return notification;
 }
 
-void nvd_send_notification_adw(NvdNotification *notification) {
+void nvd_send_notification_gtk(NvdNotification *notification) {
         NVD_ASSERT(notification        != NULL );
         NVD_ASSERT(notification->shown == false); /* Just to avoid halting the thread. */
 
@@ -130,7 +139,7 @@ void nvd_send_notification_adw(NvdNotification *notification) {
         show_fn(notification->raw, NULL);
 }
 
-void nvd_delete_notification_adw(NvdNotification *notification) {
+void nvd_delete_notification_gtk(NvdNotification *notification) {
         NVD_ASSERT_FATAL(notification != NULL); /* Fatal to avoid some pretty scary bugs. */
         dlclose(notification->lib);
         free(notification);
