@@ -25,7 +25,10 @@
 #include "../../nvdialog_assert.h"
 #include "nvdialog_gtk.h"
 #include "nvdialog_notification.h"
+/* So we reduce compile-time dependencies. */
+#if defined (NVD_PREINCLUDE_HEADERS)
 #include <libnotify/notification.h>
+#endif /* NVD_PREINCLUDE_HEADERS */
 #include <dlfcn.h>
 #include <stdlib.h>
 
@@ -38,12 +41,18 @@ struct _NvdNotification {
         void *lib;
 };
 
-typedef NotifyNotification* (*nvd_notify_new_t)(const char*,
+#if defined (NVD_PREINCLUDE_HEADERS)
+typedef NotifyNotification* nvd_notification_t;
+#else
+typedef void*               nvd_notification_t;
+#endif /* NVD_PREINCLUDE_HEADERS */
+
+typedef nvd_notification_t (*nvd_notify_new_t)(const char*,
                                                 const char*,
                                                 const char*);
 
 static bool __nvd_check_libnotify(NvdNotification *notification) {
-        gboolean (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
+        bool (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
                 if (!nvd_notify_init) {
                         dlclose(notification->lib);
                         nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
@@ -108,7 +117,7 @@ NvdNotification *nvd_notification_gtk(const char   *title,
         
         if (notification->type == NVD_NOTIFICATION_ERROR) {
                 const char *fn_name = "notify_notification_set_urgency";
-                void (*nvd_notify_set_urgency)(NotifyNotification *, gint) = dlsym(notification->lib,
+                void (*nvd_notify_set_urgency)(nvd_notification_t, gint) = dlsym(notification->lib,
                                                                                    fn_name);
                 nvd_notify_set_urgency(notification->raw,
                                        NOTIFY_URGENCY_CRITICAL);
