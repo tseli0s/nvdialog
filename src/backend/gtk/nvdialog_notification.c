@@ -41,10 +41,16 @@ struct _NvdNotification {
         void *lib;
 };
 
-#if defined (NVD_PREINCLUDE_HEADERS)
+#if !defined (NVD_PREINCLUDE_HEADERS)
 typedef NotifyNotification* nvd_notification_t;
 #else
 typedef void*               nvd_notification_t;
+typedef enum
+{
+        NOTIFY_URGENCY_LOW,
+        NOTIFY_URGENCY_NORMAL,
+        NOTIFY_URGENCY_CRITICAL,
+} NotifyUrgency;
 #endif /* NVD_PREINCLUDE_HEADERS */
 
 typedef nvd_notification_t (*nvd_notify_new_t)(const char*,
@@ -129,7 +135,7 @@ void nvd_send_notification_gtk(NvdNotification *notification) {
         NVD_ASSERT(notification        != NULL );
         NVD_ASSERT(notification->shown == false); /* Just to avoid halting the thread. */
 
-        bool (*show_fn)(NotifyNotification*, GError**) = dlsym(notification->lib,
+        bool (*show_fn)(nvd_notification_t, GError**) = dlsym(notification->lib,
                                                               "notify_notification_show");
         if (!show_fn) {
                 nvd_error_message("libnotify is missing required symbols, see assertion message below.");
