@@ -46,6 +46,8 @@
 #endif /* _WIN32 */
 #include "nvdialog_types.h"
 
+extern void nvd_show_dialog_gtk(NvdDialogBox*);
+
 /*
  * The default domain name used for libadwaita applications.
  * This variable is modified from nvd_set_domain_name().
