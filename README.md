@@ -7,14 +7,14 @@
         <a href="https://github.com/AndroGR/nvdialog/releases">Releases</a> |
         <h5><b>A simple, cross-platform dialog box library.</b></h5>
 <code>libnvdialog</code> is a simple dialog box library written in C
-for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3 / Gtk4</a> on Linux and other Unix like OSes or the <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">WinAPI</a> for Windows) to achieve a look and feel that follows the system theme and design guidelines.
-<!-- TODO: When custom CSS support is added, make sure to add it to the README. -->
+for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3 / Gtk4</a> on Linux and other Unix like OSes or the <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">WinAPI</a> for Windows) to achieve a look and feel that follows the system theme and design guidelines. In addition, NvDialog allows custom styling support for certain backends to make it easier
 <br>
 <br>
-<img src="https://img.shields.io/github/license/AndroGR/nvdialog">
+<img src="https://img.shields.io/github/license/AndroGR/nvdialog?color=blue&label=License">
 <img src="https://img.shields.io/github/issues/AndroGR/nvdialog">
-<img src="https://img.shields.io/github/commits-since/AndroGR/nvdialog/v0.2.0">
+<img src="https://img.shields.io/github/commits-since/AndroGR/nvdialog/v0.3.0?label=Commits%20since%200.3.0&logo=git">
 <img src="https://github.com/AndroGR/nvdialog/actions/workflows/ci.yml/badge.svg">
+<img src="https://img.shields.io/github/workflow/status/AndroGR/NvDialog/Windows%20Integration?label=Windows%20CI&logo=github">
 <br> <br>
 </div>
 
