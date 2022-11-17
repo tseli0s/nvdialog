@@ -45,12 +45,6 @@ struct _NvdNotification {
 typedef void*              nvd_notification_t;
 #else
 typedef NotifyNotification nvd_notification_t;
-typedef enum
-{
-        NOTIFY_URGENCY_LOW,
-        NOTIFY_URGENCY_NORMAL,
-        NOTIFY_URGENCY_CRITICAL,
-} NotifyUrgency;
 #endif /* NVD_PREINCLUDE_HEADERS */
 
 typedef nvd_notification_t (*nvd_notify_new_t)(const char*,
@@ -125,8 +119,7 @@ NvdNotification *nvd_notification_gtk(const char   *title,
                 const char *fn_name = "notify_notification_set_urgency";
                 void (*nvd_notify_set_urgency)(nvd_notification_t, gint) = dlsym(notification->lib,
                                                                                    fn_name);
-                nvd_notify_set_urgency(notification->raw,
-                                       NOTIFY_URGENCY_CRITICAL);
+                nvd_notify_set_urgency(notification->raw, 2);
         }
         return notification;
 }
