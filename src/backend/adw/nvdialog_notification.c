@@ -23,7 +23,7 @@
  */
 
 #include "../../nvdialog_assert.h"
-#include "nvdialog_gtk.h"
+#include "nvdialog_adw.h"
 #include "nvdialog_notification.h"
 /* So we reduce compile-time dependencies. */
 #if defined (NVD_PREINCLUDE_HEADERS)
@@ -86,7 +86,7 @@ static inline char *__nvd_match_notif_type(NvdNotifyType type) {
         return icon_name;
 }
 
-NvdNotification *nvd_notification_gtk(const char   *title,
+NvdNotification *nvd_notification_adw(const char   *title,
                                       const char   *msg,
                                       NvdNotifyType type) {
         NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
@@ -124,7 +124,7 @@ NvdNotification *nvd_notification_gtk(const char   *title,
         return notification;
 }
 
-void nvd_send_notification_gtk(NvdNotification *notification) {
+void nvd_send_notification_adw(NvdNotification *notification) {
         NVD_ASSERT(notification        != NULL );
         NVD_ASSERT(notification->shown == false); /* Just to avoid halting the thread. */
 
@@ -138,7 +138,7 @@ void nvd_send_notification_gtk(NvdNotification *notification) {
         show_fn(notification->raw, NULL);
 }
 
-void nvd_delete_notification_gtk(NvdNotification *notification) {
+void nvd_delete_notification_adw(NvdNotification *notification) {
         NVD_ASSERT_FATAL(notification != NULL); /* Fatal to avoid some pretty scary bugs. */
         dlclose(notification->lib);
         free(notification);

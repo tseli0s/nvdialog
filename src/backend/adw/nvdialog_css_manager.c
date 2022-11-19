@@ -89,7 +89,7 @@ int nvd_css_manager_attach_stylesheet_adw(NvdCSSManager *mgr, const char *filena
         return 0;
 }
 
-NVD_FORCE_INLINE int nvd_css_manager_use_style_adw(NvdCSSManager *mgr, void *raw_handle) {
+int nvd_css_manager_use_style_adw(NvdCSSManager *mgr, void *raw_handle) {
         gtk_style_context_add_provider(
                 gtk_widget_get_style_context(GTK_WIDGET(raw_handle)),
                 mgr->raw,
