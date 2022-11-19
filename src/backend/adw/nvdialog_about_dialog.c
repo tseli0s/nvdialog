@@ -40,10 +40,10 @@ struct _NvdAboutDialog {
 };
 
 static void nvd_set_margins_gtk4(GtkWidget *widget) {
-        gtk_widget_set_margin_start(widget, 10);
-        gtk_widget_set_margin_end(widget, 10);
-        gtk_widget_set_margin_top(widget, 10);
-        gtk_widget_set_margin_bottom(widget, 10);
+        gtk_widget_set_margin_start(widget, 12);
+        gtk_widget_set_margin_end(widget, 12);
+        gtk_widget_set_margin_top(widget, 12);
+        gtk_widget_set_margin_bottom(widget, 12);
 }
 
 NvdAboutDialog *
@@ -55,67 +55,30 @@ nvd_about_dialog_adw(const char *appname,
         /* In order to have a better title. */
         dialog->title    = (char *) appname;
         dialog->contents = (char *) brief;
-        dialog->layout   = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
-        dialog->raw      = adw_window_new();
-        gtk_window_set_default_size(GTK_WINDOW(dialog->raw), 480, 400);
+        dialog->layout   = NULL;
+        dialog->raw      = adw_about_window_new();
 
-        GtkWidget *titlebar = adw_header_bar_new();
-        GtkWidget *title
-            = adw_window_title_new(dialog->title, "About Application");
-        GtkWidget *label = gtk_label_new("");
-        GtkWidget *brief_label = gtk_label_new(dialog->contents);
-        gtk_label_set_lines(GTK_LABEL(brief_label), 1);
-        nvd_set_margins_gtk4(brief_label);
-        nvd_set_margins_gtk4(label);
-        gtk_label_set_wrap(GTK_LABEL(brief_label), true);
-
-        char buffer[NVDIALOG_MAXBUF];
-        sprintf(buffer,
-                "<span font_desc=\"18.0\"><b>About %s:</b></span>",
-                dialog->title);
-        gtk_label_set_markup(GTK_LABEL(label), buffer);
-
-        adw_header_bar_set_title_widget(ADW_HEADER_BAR(titlebar), title);
-
-        gtk_box_append(GTK_BOX(dialog->layout), titlebar);
-        gtk_box_append(GTK_BOX(dialog->layout), label);
-        gtk_box_append(GTK_BOX(dialog->layout), brief_label);
-        adw_window_set_content(dialog->raw, dialog->layout);
+        if (logo)
+                adw_about_window_set_application_icon(dialog->raw, logo);
+        
+        /* This is a horrible workaround to make text appear on the main window. We'll take it though. */
+        adw_about_window_set_developer_name(dialog->raw, brief);
+        adw_about_window_set_application_name(dialog->raw, dialog->title);
         return dialog;
 }
 
 void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog,
                                       const char     *version) {
-        char buffer[NVDIALOG_MAXBUF];
-        
-        sprintf(buffer,
-                "<span font_desc=\"10.0\"><b>Running version %s</b></span>",
-                version);
-        GtkWidget *label = gtk_label_new("");
-
-        gtk_label_set_markup(GTK_LABEL(label), buffer);
-        nvd_set_margins_gtk4(label);
-        gtk_box_append(GTK_BOX(dialog->layout), label);
-        
-        return;
+        adw_about_window_set_version(dialog->raw, version);
 }
 
 void nvd_about_dialog_set_license_link_adw(NvdAboutDialog *dialog,
                                            const char *license_link,
                                            const char *txt) {
-        dialog->buttons[0]        = gtk_link_button_new_with_label(txt, license_link);
-        dialog->amount_of_buttons = 1;
-        gtk_widget_set_margin_start(dialog->buttons[0], 16);
-        gtk_widget_set_margin_end(dialog->buttons[0], 16);
-        gtk_box_append(GTK_BOX(dialog->layout),
-                               dialog->buttons[0]);
+        adw_about_window_add_link(dialog->raw, txt, license_link);
 }
 
 void nvd_show_about_dialog_adw(NvdAboutDialog *dialog) {
-        GtkGrid* grid = GTK_GRID(gtk_grid_new());
-        gtk_box_append (GTK_BOX(dialog->layout),
-                                GTK_WIDGET(grid));
-
         gtk_window_present(GTK_WINDOW(dialog->raw));
         while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
                 g_main_context_iteration(NULL, true);
