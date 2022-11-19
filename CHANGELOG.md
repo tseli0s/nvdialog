@@ -12,6 +12,7 @@
 - Added `pkg-config` script to make NvDialog compatible with other build systems.
 - Removed previously deprecated functions.
 - NvDialog can now build with other compilers than GCC and CLang.
+- On `Adwaita` backend, the `NvdAboutDialog` will now use `AdwAboutWindow` instead, to make development easier.
 
 # Changelog -- 0.3.0
 
