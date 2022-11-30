@@ -24,6 +24,7 @@ A backend using Gtk4 and `libadwaita`. This backend has replaced the (following)
 
 - **Gtk3 Backend**\
 Some older distributions do not have Adwaita / Gtk4 support yet. The Gtk3 backend can be used in such a situation. However Gtk3 is considered to be deprecated and has been replaced with the Adwaita backend.
+
 - **Win32 Backend**\
 Windows-specific backend, used only for Windows compatibility. This backend is mainly tested on GNU/Linux with `wine`, and so some bugs may not be detected. Open an issue if that's the case.
 
@@ -35,21 +36,11 @@ This is a simple cross-platform example of a simple message box greeting the use
 
 int main(int argc, char **argv)
 {
-        /*
-         * First we need to initialize NvDialog, otherwise
-         * we might end up with alot of runtime errors and bugs.
-        */
         if (nvd_init(argv[0]) != 0) {
                 puts("Failed to initialize NvDialog.\n");
                 exit(EXIT_FAILURE);
         }
 
-        /*
-         * "Building" the dialog.
-         * In this step we add all the data required to create
-         * a dialog into a single variable. The dialog will not be
-         * shown until we call nvd_show_dialog().
-        */
         NvdDialogBox* dialog = nvd_dialog_box_new(
                 "Hello, world!", // Title of the dialog
                 "Hello world ! This is a dialog box created using libnvdialog!", // Message of the dialog
@@ -57,35 +48,14 @@ int main(int argc, char **argv)
                                   // case, it represents a simple dialog with no context.
         );
 
-        /*
-         * And finally, showing the dialog to the user.
-         * Note that this will halt the thread running the dialog,
-         * so you may get things like "App not responding".
-        */
         nvd_show_dialog(dialog);
-
-        /*
-         * Once we are done with the dialog,
-         * we should free it so that it doesn't
-         * leak memory or waste resources.
-        */
         nvd_free_object(dialog);
         return 0;
 }
 ```
 
-# Screenshots
-<div align="center">
-        <img src="assets/warning_scr.png"></img>
-        <h5><i>Warning dialog using libnvdialog</i></h5>
-<img src="assets/info_scr.png"></img>
-        <h5><i>Info dialog using libnvdialog</i></h5>
-<img src="assets/error_scr.png"></img>
-        <h5><i>Error dialog using libnvdialog</i></h5>
-</div>
-
 # Installation
-Make sure you have installed [CMake](https://cmake.org) before doing anything else ! The library can only be installed using CMake. See [CMake's website](https://cmake.org/) for more information.
+Make sure you have installed [CMake](https://cmake.org) before doing anything else ! See [CMake's website](https://cmake.org/) for more information.
 - First, download the source code in your preferred way. The [Releases](https://github.com/AndroGR/nvdialog/releases/) are recommended if you are looking for stability, but you can also optionally compile from
 the GitHub repository directly, by cloning the source code.
 - Compile the library:
