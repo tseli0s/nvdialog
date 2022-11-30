@@ -40,6 +40,13 @@ nvd_dialog_box_adw(const char *title, const char *message, NvdDialogType type);
 NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
                                         const char *file_extensions);
 
+/* 
+ * Returns the filename chosen from the file dialog given to
+ * the parameter 'savebuf'. This function is also used to show the
+ * actual dialog.
+ */
+void nvd_get_file_location_adw(NvdFileDialog *dialog, char **savebuf);
+
 /* Creates a dialog box with the usual yes, no and cancel buttons. */
 NvdQuestionBox *nvd_question_adw(const char       *title,
                                  const char       *question,
@@ -91,5 +98,14 @@ void *nvd_about_dialog_get_raw_adw    (NvdAboutDialog *dialog);
 void *nvd_dialog_box_get_raw_adw      (NvdDialogBox   *dialog);
 void *nvd_dialog_question_get_raw_adw (NvdQuestionBox *dialog);
 void *nvd_open_file_dialog_get_raw_adw(NvdFileDialog  *dialog);
+
+/* Creates a new CSS manager compatible with libadwaita. */
+NvdCSSManager *nvd_css_manager_adw();
+
+/* TODO: Add comments here. */
+int nvd_css_manager_attach_string_stylesheet_adw(NvdCSSManager *mgr,
+                                             const char    *str);
+int nvd_css_manager_attach_stylesheet_adw(NvdCSSManager *mgr, const char *filename);
+int nvd_css_manager_use_style_adw        (NvdCSSManager *mgr, void       *raw_handle);
 
 #endif /* __nvdialog_adw_h__ */
