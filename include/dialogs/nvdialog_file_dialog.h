@@ -35,9 +35,18 @@ typedef struct _NvdFileDialog NvdFileDialog;
  * @note INCOMPLETE FUNCTION - Do not use please.
  * @returns The filename path on success, otherwise NULL.
  */
-NvdFileDialog* nvd_open_file_dialog_new(const char *title,
-                                     const char *file_extensions);
+NvdFileDialog *nvd_open_file_dialog_new(const char *title,
+                                        const char *file_extensions);
 
+/**
+ * @brief Creates a file dialog that can be used to save a file
+ * into the location chosen by the user.
+ * @param title The title of the dialog, default is "Save file"
+ * @param default_filename The default filename to use.
+ * @return A handle to the dialog for future use.
+ */
+NvdFileDialog *nvd_save_file_dialog_new(const char *title,
+                                        const char *default_filename);
 /**
  * @brief Returns a raw location on the filesystem from the dialog given.
  * @details This function will return the raw location of the dialog (eg. /home/someone/.local/share/)
