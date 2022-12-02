@@ -13,6 +13,7 @@
 - Removed previously deprecated functions.
 - NvDialog can now build with other compilers than GCC and CLang.
 - On `Adwaita` backend, the `NvdAboutDialog` will now use `AdwAboutWindow` instead, to make development easier.
+- Added `NvdFileDialog` support for save file dialog, mostly working.
 
 # Changelog -- 0.3.0
 
