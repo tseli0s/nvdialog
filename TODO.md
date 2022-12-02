@@ -4,5 +4,5 @@
 - [x] Setup CI (Done)
 - [ ] Use environment variables to hint a backend. (Targeted for 0.6.0)
 - [x] Add custom CSS support. (Done)
-- [ ] Add save file dialog (Targeted for 0.5.0)
+- [x] Add save file dialog (Done)
 - [ ] Move to version 1.0 (Targeted for 0.7.0 and afterwards).
