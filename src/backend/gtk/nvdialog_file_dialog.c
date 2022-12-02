@@ -55,7 +55,7 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
         return dialog;
 }
 
-NvdFileDialog *nvd_save_file_dialog_adw(const char *title,
+NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
                                         const char *default_filename) {
         NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
