@@ -32,6 +32,7 @@
 struct _NvdFileDialog {
         char *filename, file_extensions;
         bool  location_was_chosen;
+        bool  is_save_dialog;
 };
 
 NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
@@ -39,12 +40,22 @@ NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
         NvdFileDialog *dialog
             = (NvdFileDialog *)malloc(sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
+
+        dialog->is_save_dialog = false;
         return dialog;
 }
 
-void nvd_get_file_location_win32(NvdFileDialog *dialog, const char** savebuf) {
-        /* TODO: Move all this code in the function above for obvious reasons.
-         */
+NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
+                                          const char *default_filename) {
+        NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
+        NVD_RETURN_IF_NULL(dialog);
+
+        dialog->is_save_dialog = true;
+        return dialog;
+}
+
+void nvd_get_file_location_win32(NvdFileDialog *dialog,
+                                 const char   **savebuf) {
         OPENFILENAME ofn;
         char         file[NVDIALOG_MAXBUF];
         ZeroMemory(&ofn, sizeof(ofn));
@@ -64,7 +75,8 @@ void nvd_get_file_location_win32(NvdFileDialog *dialog, const char** savebuf) {
         ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
         file[NVDIALOG_MAXBUF - 1] = '\0';
-        GetOpenFileName(&ofn);
+        if (dialog->is_save_dialog) GetSaveFileName(&ofn);
+        else GetOpenFileName(&ofn);
 
         dialog->filename = ofn.lpstrFile;
         dialog->location_was_chosen = true;

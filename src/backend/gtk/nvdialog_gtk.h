@@ -32,9 +32,12 @@
 NvdDialogBox *
 nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type);
 
-/* Opens a file dialog using Gtk3. Not working yet. */
+/* Opens a file dialog using Gtk3.*/
 NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
                                         const char *file_extensions);
+
+NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
+                                        const char *default_filename);
 
 /* Creates a dialog box with the usual yes, no and cancel buttons. */
 NvdQuestionBox *nvd_question_gtk(const char       *title,

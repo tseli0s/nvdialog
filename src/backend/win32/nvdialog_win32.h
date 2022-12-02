@@ -35,6 +35,9 @@ NvdDialogBox *nvd_dialog_box_win32(const char   *title,
 NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
                                           const char *file_extensions);
 
+NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
+                                          const char *default_filename);
+
 NvdQuestionBox *nvd_question_win32(const char       *title,
                                    const char       *question,
                                    NvdQuestionButton buttons);
