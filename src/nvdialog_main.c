@@ -263,6 +263,17 @@ void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
 #endif /* _WIN32 */
 }
 
+NvdFileDialog *nvd_save_file_dialog_new(const char *title,
+                                        const char *default_filename) {
+#if defined(_WIN32)
+        return nvd_save_file_dialog_win32(title, default_filename);
+#elif defined(NVD_USE_GTK4)
+        return nvd_save_file_dialog_adw(title, default_filename);
+#else
+        return nvd_save_file_dialog_gtk(title, default_filename);
+#endif /* _WIN32 */
+}
+
 void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
                                        const char *license_link,
                                        const char *txt) {
