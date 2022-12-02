@@ -30,7 +30,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 #define NVDIALOG_VERSION_MAJOR 0
-#define NVDIALOG_VERSION_MINOR 3
+#define NVDIALOG_VERSION_MINOR 5
 #define NVDIALOG_VERSION_PATCH 0
 
 /** @brief A macro to set the version at compile time. */

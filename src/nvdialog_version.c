@@ -26,10 +26,10 @@
 
 /* The versions of nvdialog are held as statics in the global scope. */
 static short __vermajor = 0;
-static short __verminor = 3;
+static short __verminor = 5;
 static short __verpatch = 0;
 
 NvdVersion nvd_get_version() {
-        NvdVersion version = {__vermajor, __verminor, __verpatch, "0.3.0"};
+        NvdVersion version = {__vermajor, __verminor, __verpatch, "0.5.0"};
         return version;
 }
