@@ -33,12 +33,17 @@
 #include <adwaita.h>
 
 /* Shows a simple dialog box using libadwaita. */
-NvdDialogBox *
-nvd_dialog_box_adw(const char *title, const char *message, NvdDialogType type);
+NvdDialogBox *nvd_dialog_box_adw(const char *title,
+                                 const char *message,
+                                 NvdDialogType type);
 
 /* Opens a file dialog using libadwaita. */
 NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
                                         const char *file_extensions);
+
+/* Save file dialog. */
+NvdFileDialog *nvd_save_file_dialog_adw(const char *title,
+                                        const char *default_filename);
 
 /* 
  * Returns the filename chosen from the file dialog given to
