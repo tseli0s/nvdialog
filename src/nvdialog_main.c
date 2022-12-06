@@ -38,6 +38,8 @@
 #include <dlfcn.h>
 #ifdef NVD_USE_GTK4
 #include "backend/adw/nvdialog_adw.h"
+#elif NVD_USE_COCOA
+#include "backend/cocoa/nvdialog_cocoa.h"
 #else
 #include "backend/gtk/nvdialog_gtk.h"
 #endif /* NVD_USE_GTK4 */

@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.18)
 project(libnvdialog LANGUAGES C VERSION 0.5.0 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
 option(WIN32_TARGET "Build the library for Windows usage. Requires x86_64-w64-mingw32." OFF)
+option(COCOA_TARGET "Build the library for MacOS/Cocoa usage." OFF)
 option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental." ON) # Default since 0.2.0-plus-some-commits.
 option(NVD_BUILD_STATIC "Build NvDialog as a static library. Experimental." OFF)
 
@@ -80,6 +81,25 @@ if (WIN32 OR WIN32_TARGET)
         endif(NVD_BUILD_STATIC)
         message("-- Compiling a Windows library.")
         target_link_libraries(nvdialog comdlg32 shell32 user32)
+elseif(COCOA_TARGET)
+        set(NVD_COCOA_SOURCES src/backend/cocoa/nvdialog_file_dialog.m
+                              src/backend/cocoa/nvdialog_dialog_box.m
+                              src/backend/cocoa/nvdialog_question_dialog.m)
+        set(NVD_SOURCES ${NVD_COCOA_SOURCES}
+                        src/nvdialog_capab.c
+                        src/core/nvdialog_structs.c
+                        src/nvdialog_error.c
+                        src/nvdialog_main.c
+                        src/nvdialog_version.c)
+        message("The source code files are:\n  ${NVD_SOURCES}")
+        if (NVD_BUILD_STATIC)
+                add_library(nvdialog STATIC ${NVD_SOURCES})
+        else(NVD_BUILD_STATIC)
+                add_library(nvdialog SHARED ${NVD_SOURCES})
+                add_compile_definitions(NVD_STATIC_LINKAGE)
+        endif(NVD_BUILD_STATIC)
+        message("-- Compiling a MacOS/Cocoa library.")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework AppKit")
 else(WIN32 OR WIN32_TARGET)
                 find_package(PkgConfig)
                 if (PKG_CONFIG_FOUND)
