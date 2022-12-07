@@ -1,4 +1,4 @@
-# Changelog -- 0.5.0 (Not yet released)
+# Changelog -- 0.5.0
 
 - Added custom CSS stylesheet support (`NvdCSSManager`).
 - Added notification support (`NvdNotification`).

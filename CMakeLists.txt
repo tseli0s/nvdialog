@@ -17,9 +17,16 @@ set(NVDIALOG_MAXBUF 4096)
 # 2. Most linkers shipped with distributions do not search on /usr/local for shared libraries.
 # This means the library won't be found at runtime unless LD_LIBRARY_PATH is set to do so.
 # For that reason, we set the prefix to /usr.
-if (UNIX)
+if (LINUX)
         set(CMAKE_INSTALL_PREFIX /usr)
 endif()
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR APPLE)
+        set(MACOSX TRUE)
+else()
+        set(MACOSX FALSE)
+endif()
+
 
 if(WIN32_TARGET)
         set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
@@ -36,6 +43,31 @@ endif()
 
 message("-- Compiling with flags:\n  ${CMAKE_C_FLAGS}")
 add_compile_definitions(NVDIALOG_MAXBUF=${NVDIALOG_MAXBUF})
+
+# TODO: Implement this for Windows too.
+if (MACOSX)
+        if (NVD_USE_GTK4 OR WIN32_TARGET)
+                message(CRITICAL "Attempted to compile NvDialog with a foreign backend for the platform.")
+        else()
+                # Temporary: Please explicitly list the backend files
+                # instead of using a GLOB.
+                file(GLOB NVD_COCOA_GLOB_SOURCES "src/backend/cocoa/*.c*")
+                set(NVD_COCOA_SOURCES ${NVD_COCOA_GLOB_SOURCES})
+                set(NVD_SOURCES ${NVD_COCOA_SOURCES}
+                                src/core/nvdialog_structs.c
+                                src/nvdialog_error.c
+                                src/nvdialog_capab.c
+                                src/nvdialog_version.c
+                                src/nvdialog_main.c)
+                if (NVD_BUILD_STATIC)
+                        add_library(nvdialog SHARED ${NVD_SOURCES})
+                else(NVD_BUILD_STATIC)
+                        add_library(nvdialog SHARED ${NVD_SOURCES})
+                endif(NVD_BUILD_STATIC)
+                target_compile_definitions(nvdialog NVD_USE_COCOA=1)
+        endif()
+endif()
+
 if (NOT NVD_USE_GTK4)
         set(NVD_GTK_SOURCES src/backend/gtk/nvdialog_about_dialog.c
                             src/backend/gtk/nvdialog_file_dialog.c
