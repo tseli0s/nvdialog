@@ -22,10 +22,11 @@ NvdDialogBox *nvd_dialog_box_cocoa(const char *title, const char *message, NvdDi
 	dialog->type = type;
 	NSAlert *nativedlg = dialog->window_handle = [[NSAlert alloc] init];
 
-	nativedlg.messageText = [NSString stringWithCString: dialog->msg];
-	nativedlg.informativeText = [NSString stringWithCString: dialog->content];
+	nativedlg.messageText = @(dialog->msg);
+	nativedlg.informativeText = @(dialog->content);
 
 	switch (type) {
+    default:
 	case NVD_DIALOG_SIMPLE:
 		nativedlg.alertStyle = NSAlertStyleInformational;
 		break;
@@ -40,8 +41,13 @@ NvdDialogBox *nvd_dialog_box_cocoa(const char *title, const char *message, NvdDi
 	return dialog;
 }
 
-void nvd_show_dialog_box_cocoa(NvdDialogBox *dialog)
+void nvd_show_dialog_cocoa(NvdDialogBox *dialog)
 {
 	[dialog->window_handle runModal];
 	[dialog->window_handle release];
+}
+
+void *nvd_dialog_box_get_raw_cocoa(NvdDialogBox *dlg)
+{
+	return dlg->window_handle;
 }

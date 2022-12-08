@@ -74,11 +74,12 @@ int nvd_init(char *program) {
         setlinebuf(stderr);
 #endif /* _WIN32 */
         nvd_argv_0 = program;
-#if !defined(_WIN32) /* On Windows the DISPLAY variable isn't set at all */
+#if !defined(_WIN32) && !defined(NVD_USE_COCOA) /* On Windows the DISPLAY variable isn't set at all */
         if (!getenv("DISPLAY")) {
                 nvd_set_error(NVD_NO_DISPLAY);
                 return -1;
         }
+
 /* Apparently in Gtk4 the gtk_init function doesn't require any arguments. */
 #if !defined(NVD_USE_GTK4)
         int    __argc__ = 1;
@@ -132,26 +133,28 @@ int nvd_init(char *program) {
         dlclose(lib); /* We are going to load it seperately once needed. */
         adw_init();
 #endif /* NVD_USE_GTK4 */
-#endif /* _WIN32 */
+#endif /* _WIN32 && NVD_USE_COCOA */
         return 0;
 }
 
 NvdFileDialog *nvd_open_file_dialog_new(const char *title,
                                         const char *file_extensions) {
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(NVD_USE_COCOA)
 #if !defined(NVD_USE_GTK4)
         return nvd_open_file_dialog_gtk(title, file_extensions);
 #else
         return nvd_open_file_dialog_adw(title, file_extensions);
 #endif /* NVD_USE_GTK4 */
+#elif defined(NVD_USE_COCOA)
+	return nvd_open_file_dialog_cocoa(title, file_extensions);
 #else
         return nvd_open_file_dialog_win32(title, file_extensions);
-#endif /* _WIN32 */
+#endif /* _WIN32 && NVD_USE_COCOA */
 }
 
 NvdDialogBox *
 nvd_dialog_box_new(const char *title, const char *message, NvdDialogType type) {
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(NVD_USE_COCOA)
 #if !defined(NVD_USE_GTK4)
         NvdDialogBox *dialog = nvd_dialog_box_gtk(title, message, type);
         if (!dialog)
@@ -163,20 +166,24 @@ nvd_dialog_box_new(const char *title, const char *message, NvdDialogType type) {
                 nvd_set_error(NVD_INTERNAL_ERROR);
         return dialog;
 #endif /* NVD_USE_GTK4 */
+#elif defined(NVD_USE_COCOA)
+	return nvd_dialog_box_cocoa(title, message, type);
 #else
         return nvd_dialog_box_win32(title, message, type);
-#endif /* _WIN32 */
+#endif /* _WIN32 && NVD_USE_COCOA */
 }
 
 NvdQuestionBox *nvd_dialog_question_new(const char       *title,
                                         const char       *question,
                                         NvdQuestionButton button) {
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(NVD_USE_COCOA)
 #if !defined(NVD_USE_GTK4)
         return nvd_question_gtk(title, question, button);
 #else
         return nvd_question_adw(title, question, button);
 #endif /* NVD_USE_GTK4 */
+#elif defined(NVD_USE_COCOA)
+	return nvd_question_cocoa(title, question, button);
 #else
         return nvd_question_win32(title, question, button);
 #endif /* _WIN32 */
@@ -186,6 +193,8 @@ NvdQuestionBox *nvd_dialog_question_new(const char       *title,
 NvdReply nvd_get_reply(NvdQuestionBox *question) {
 #if defined(NVD_USE_GTK4)
         return nvd_get_reply_adw(question);
+#elif defined(NVD_USE_COCOA)
+	return nvd_get_reply_cocoa(question);
 #elif defined(_WIN32)
         return nvd_get_reply_win32(question);
 #else
@@ -198,6 +207,8 @@ NvdAboutDialog *nvd_about_dialog_new(const char *name,
                                      const char *logo_path) {
 #if defined(_WIN32)
         return nvd_about_dialog_win32(name, description, logo_path);
+#elif defined(NVD_USE_COCOA)
+	return NULL; /*TODO: Implement*/
 #else
 #if !defined(NVD_USE_GTK4)
         return nvd_about_dialog_gtk(name, description, logo_path);
@@ -229,6 +240,8 @@ void nvd_show_dialog(NvdDialogBox *dialog) {
         nvd_show_dialog_adw(dialog);
 #elif defined(_WIN32)
         nvd_show_dialog_win32(dialog);
+#elif defined(NVD_USE_COCOA)
+	nvd_show_dialog_cocoa(dialog);
 #elif !defined(NVD_USE_GTK4)
         nvd_show_dialog_gtk(dialog);
 #else
@@ -239,6 +252,8 @@ void nvd_show_dialog(NvdDialogBox *dialog) {
 void nvd_show_about_dialog(NvdAboutDialog *dialog) {
 #if defined(_WIN32)
         nvd_show_about_dialog_win32(dialog);
+#elif defined(NVD_USE_COCOA)
+	return;
 #elif defined(NVD_USE_GTK4)
         nvd_show_about_dialog_adw(dialog);
 #else
@@ -249,7 +264,7 @@ void nvd_show_about_dialog(NvdAboutDialog *dialog) {
 void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version) {
 #if defined(NVD_USE_GTK4)
         nvd_about_dialog_set_version_adw(dialog, version);
-#elif defined(_WIN32)
+#elif defined(_WIN32) || defined(NVD_USE_COCOA)
 #else
         nvd_about_dialog_set_version_gtk(dialog, version);
 #endif /* NVD_USE_GTK4 */
@@ -258,6 +273,8 @@ void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version) {
 void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
 #if defined(_WIN32)
         nvd_get_file_location_win32(dialog, savebuf);
+#elif defined(NVD_USE_COCOA)
+	nvd_get_file_location_cocoa(dialog, savebuf);
 #elif defined(NVD_USE_GTK4)
         nvd_get_file_location_adw(dialog, (char**) savebuf);
 #else
@@ -269,6 +286,8 @@ NvdFileDialog *nvd_save_file_dialog_new(const char *title,
                                         const char *default_filename) {
 #if defined(_WIN32)
         return nvd_save_file_dialog_win32(title, default_filename);
+#elif defined(NVD_USE_COCOA)
+	return nvd_save_file_dialog_cocoa(title, default_filename);
 #elif defined(NVD_USE_GTK4)
         return nvd_save_file_dialog_adw(title, default_filename);
 #else
@@ -281,6 +300,8 @@ void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
                                        const char *txt) {
 #if defined  (_WIN32)
         nvd_about_dialog_set_license_link_win32(dialog, license_link, txt);
+#elif defined(NVD_USE_COCOA)
+	return;
 #elif defined(NVD_USE_GTK4)
         nvd_about_dialog_set_license_link_adw(dialog, license_link, txt);
 #else
@@ -293,6 +314,8 @@ NvdNotification *nvd_notification_new(const char *title,
                                       NvdNotifyType type) {
 #if   defined(_WIN32)
         return nvd_notification_win32(title, msg, type);
+#elif defined(NVD_USE_COCOA)
+	return nvd_notification_cocoa(title, msg, type);
 #elif defined(NVD_USE_GTK4)
         return nvd_notification_adw(title, msg, type);
 #else
@@ -303,6 +326,8 @@ NvdNotification *nvd_notification_new(const char *title,
 void nvd_send_notification(NvdNotification *notification) {
 #if   defined(_WIN32)
         nvd_send_notification_win32(notification);
+#elif defined(NVD_USE_COCOA)
+	nvd_send_notification_cocoa(notification);
 #elif defined(NVD_USE_GTK4)
         nvd_send_notification_adw(notification);
 #else
@@ -313,7 +338,7 @@ void nvd_send_notification(NvdNotification *notification) {
 NvdCSSBackend nvd_get_css_backend() {
 #if   defined(NVD_USE_GTK4)
         return NVD_GTK4_CSS_BACKEND;
-#elif defined(_WIN32)
+#elif defined(_WIN32) || defined(NVD_USE_COCOA)
         return NVD_NO_CSS_BACKEND;
 #else
         return NVD_GTK3_CSS_BACKEND;
@@ -323,7 +348,7 @@ NvdCSSBackend nvd_get_css_backend() {
 NvdCSSManager *nvd_css_manager_new() {
 #if   defined(NVD_USE_GTK4)
         return nvd_css_manager_adw();
-#elif defined(_WIN32)
+#elif defined(_WIN32) || defined(NVD_USE_COCOA)
         return NULL;
 #else
         return nvd_css_manager_gtk();
@@ -333,7 +358,7 @@ NvdCSSManager *nvd_css_manager_new() {
 int nvd_css_manager_attach_stylesheet(NvdCSSManager *mgr, const char *filename) {
 #if   defined(NVD_USE_GTK4)
         return nvd_css_manager_attach_stylesheet_adw(mgr, filename);
-#elif defined(_WIN32)
+#elif defined(_WIN32) || defined(NVD_USE_COCOA)
         nvd_set_error(NVD_BACKEND_INVALID);
         return -1;
 #else
@@ -344,7 +369,7 @@ int nvd_css_manager_attach_stylesheet(NvdCSSManager *mgr, const char *filename) 
 int nvd_css_manager_use_style(NvdCSSManager *mgr, void *raw_handle) {
 #if   defined(NVD_USE_GTK4)
         return nvd_css_manager_use_style_adw(mgr, raw_handle);
-#elif defined(_WIN32)
+#elif defined(_WIN32) || defined(NVD_USE_COCOA)
         nvd_set_error(NVD_BACKEND_INVALID);
         return -1;
 #else
@@ -355,6 +380,8 @@ int nvd_css_manager_use_style(NvdCSSManager *mgr, void *raw_handle) {
 void *nvd_dialog_box_get_raw(NvdDialogBox *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_dialog_box_get_raw_adw(dialog);
+#elif defined(NVD_USE_COCOA)
+	return nvd_dialog_box_get_raw_cocoa(dialog);
 #elif   defined(_WIN32)
         return NULL;
 #else
@@ -365,7 +392,7 @@ void *nvd_dialog_box_get_raw(NvdDialogBox *dialog) {
 void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_about_dialog_get_raw_adw(dialog);
-#elif   defined(_WIN32)
+#elif   defined(_WIN32) || defined(NVD_USE_COCOA)
         return NULL;
 #else
         return nvd_about_dialog_get_raw_gtk(dialog);
@@ -375,6 +402,8 @@ void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog) {
 void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_dialog_question_get_raw_adw(dialog);
+#elif   defined(NVD_USE_COCOA)
+	return nvd_dialog_question_get_raw_cocoa(dialog);
 #elif   defined(_WIN32)
         return NULL;
 #else
@@ -385,6 +414,8 @@ void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog) {
 void *nvd_open_file_dialog_get_raw(NvdFileDialog *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_open_file_dialog_get_raw_adw(dialog);
+#elif defined(NVD_USE_COCOA)
+	return nvd_open_file_dialog_get_raw_cocoa(dialog);
 #elif   defined(_WIN32)
         return NULL;
 #else

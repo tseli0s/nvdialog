@@ -22,22 +22,22 @@ NvdQuestionBox *nvd_question_cocoa(const char *title, const char *question, NvdQ
 	box->reply = 0;
 
 	NSAlert *dlg = box->window_handle = [[NSAlert alloc] init];
-	dlg.messageText = [NSString stringWithCString: title];
-	dlg.informativeText = [NSString stringWithCString: question];
+	dlg.messageText = @(title);
+	dlg.informativeText = @(question);
 
 
 	//added buttons are in reverse
 	switch (buttons) {
         	case NVD_YES_NO_CANCEL:
-			[dlg addButtonWithTitle: [NSString stringWithCString: "Cancel"]];
+			[dlg addButtonWithTitle: @"Cancel"];
         	case NVD_YES_NO:
-			[dlg addButtonWithTitle: [NSString stringWithCString: "No"]];
-			[dlg addButtonWithTitle: [NSString stringWithCString: "Yes"]];
+			[dlg addButtonWithTitle: @"No"];
+			[dlg addButtonWithTitle: @"Yes"];
 			break;
 		
         	case NVD_YES_CANCEL:
-			[dlg addButtonWithTitle: [NSString stringWithCString: "Cancel"]];
-			[dlg addButtonWithTitle: [NSString stringWithCString: "Yes"]];
+			[dlg addButtonWithTitle: @"Cancel"];
+			[dlg addButtonWithTitle: @"Yes"];
           		break;
         }
 
@@ -47,7 +47,7 @@ NvdQuestionBox *nvd_question_cocoa(const char *title, const char *question, NvdQ
 NvdReply nvd_get_reply_cocoa(NvdQuestionBox *box)
 {
 	NSAlert *dlg = box->window_handle;
-	int resp = [dlg runModal];
+	long resp = [dlg runModal];
 
 	NvdReply repl = 0;
 	switch (resp) {
@@ -63,15 +63,17 @@ NvdReply nvd_get_reply_cocoa(NvdQuestionBox *box)
 			 	repl = NVD_REPLY_NO;
 			break;
 
-		case NSAlertThirdButtonReturn:
-			repl = NVD_REPLY_CANCEL;
-			break;
-			
 		default:
+		case NSAlertThirdButtonReturn:
 			repl = NVD_REPLY_CANCEL;
 			break;
 	}
 	
 	[dlg release];
 	return repl;
+}
+
+void *nvd_dialog_question_get_raw_cocoa(NvdQuestionBox *dlg)
+{
+	return dlg->window_handle;
 }
