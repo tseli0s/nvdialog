@@ -176,10 +176,13 @@ install(FILES ${NVD_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/)
 enable_testing()
 file(GLOB NVDIALOG_TEST_FILES "tests/test_*.c")
 
-set(NVDIALOG_TESTS init;dialogs;multithreading;)
+set(NVDIALOG_TESTS init;dialogs;multithreading;aboutdlg;question)
 foreach(test_executable ${NVDIALOG_TESTS})
         add_executable(nvdialog_${test_executable}_test tests/test_${test_executable}.c)
         target_compile_definitions(nvdialog_${test_executable}_test PRIVATE NVDIALOG_TESTING)
         target_link_libraries(nvdialog_${test_executable}_test nvdialog)
+        # This is required as testing takes place before installing. 
+        # What kind of logic is that CMake?
+        target_include_directories(nvdialog_${test_executable}_test PUBLIC ${CMAKE_SOURCE_DIR}/include/)
         add_test(NAME nvdialog_${test_executable}_test COMMAND $<TARGET_FILE:nvdialog_${test_executable}_test>)
 endforeach(test_executable)
