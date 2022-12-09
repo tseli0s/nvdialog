@@ -173,18 +173,13 @@ install(DIRECTORY DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/dialogs)
 install(FILES ${NVD_EXTRA_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/dialogs)
 install(FILES ${NVD_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/)
 
-# Just keep it out for now.
-if (NOT MSVC)
-        enable_testing()
-        add_executable(nvdialog_test ${CMAKE_SOURCE_DIR}/tests/nvdialog_test.c)
-        if (LINUX)
-                target_link_libraries(nvdialog_test PRIVATE nvdialog notify)
-        else(LINUX)
-                target_link_libraries(nvdialog_test PRIVATE nvdialog)
-        endif(LINUX)
-        target_include_directories(nvdialog_test PRIVATE ${CMAKE_SOURCE_DIR}/include/) # Required
-        add_test(
-                NAME    nvdialog_test
-                COMMAND $<TARGET_FILE:nvdialog_test>
-        )
-endif()
+enable_testing()
+file(GLOB NVDIALOG_TEST_FILES "tests/test_*.c")
+
+set(NVDIALOG_TESTS init;dialogs;multithreading;)
+foreach(test_executable ${NVDIALOG_TESTS})
+        add_executable(nvdialog_${test_executable}_test tests/test_${test_executable}.c)
+        target_compile_definitions(nvdialog_${test_executable}_test PRIVATE NVDIALOG_TESTING)
+        target_link_libraries(nvdialog_${test_executable}_test nvdialog)
+        add_test(NAME nvdialog_${test_executable}_test COMMAND $<TARGET_FILE:nvdialog_${test_executable}_test>)
+endforeach(test_executable)
