@@ -1,4 +1,4 @@
-#include <nvdialog/nvdialog.h>
+#include <nvdialog.h>
 #include <stdio.h>
 
 int main(int argc, char **argv) {

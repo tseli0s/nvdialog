@@ -1,4 +1,4 @@
-#include <nvdialog/nvdialog.h>
+#include <nvdialog.h>
 #include <stdio.h>
 #if defined(__linux__) || defined(__gnu_linux__)
 #include <pthread.h>
