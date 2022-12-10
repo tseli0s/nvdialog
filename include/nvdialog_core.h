@@ -42,47 +42,25 @@ typedef void *NvdParentWindow;
 
 /**
  * @brief Initializes the library.
- * This function is only required for compatibility with every platform. You
- * can safely ignore this function if you only target a specific platform.
  * @param program The argv[0] of your program.
  * @return 0 on success, else a negative error code indicating failure.
  */
 int nvd_init(char *program);
 
 /**
- * @brief Sets a custom domain name for your application.
- * @details This function sets a custom domain name for your application, to be
- * used with the 'libadwaita' backend
- * @param domain The domain name to set.
- * @note Thread-unsafe function.
+ * @brief Sets the application name to use inside NvDialog.
+ * @details This function sets the application name that NvDialog will use if an application name
+ * is needed. By default, the application name is set to "NvDialog Application". The application name
+ * is used in notifications, so it is important to set the actual application name.
+ * @param application_name The application name to use.
  */
-void nvd_set_domain_name(char *domain);
+void nvd_set_application_name(const char* application_name);
 
 /**
- * @brief Creates a new context, that wraps around your application to
- * initialize a backend.
- * @details This function will create a new context and wrap around the
- * application calling this function. This is needed for the libadwaita backend,
- * since libadwaita requires an application to work properly.
- * @note This function has no effect if there is no libadwaita backend
- * available.
- * @sa nvd_set_domain_name
- * @return const NvdContext*
+ * @brief Returns the application name set inside NvDialog.
+ * @return The application name.
  */
-#if defined(__clang__) || defined(__GNUC__)
-__attribute__((deprecated("Contexts have been removed from NvDialog since v0.3.0. Remove them from your code.")))
-#endif
-NvdContext *nvd_bind_context(void);
-
-/**
- * @brief Returns the current domain name of the NvDialog context.
- * @details This function returns the current domain name of the NvDialog
- * context. By default, it is set to 'io.androgr.nvdialog', and it can be
- * changed using @ref nvd_set_domain_name.
- * @return The domain name of NvDialog currently set (Defaults to
- * io.androgr.nvdialog)
- */
-const char *nvd_get_domain_name(void);
+const char *nvd_get_application_name();
 
 /**
  * @brief Returns the argv[0] given to nvdialog.
