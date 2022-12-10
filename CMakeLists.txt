@@ -9,6 +9,9 @@ option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwa
 option(NVD_BUILD_STATIC "Build NvDialog as a static library. Experimental." OFF)
 
 set(NVDIALOG_MAXBUF 4096)
+# This is another temporary solution to fix CI on Windows.
+# It will be replaced soon anyways.
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # On GNU/Linux, by default CMake installs the libraries and headers under
 # /usr/local. There are two problems with this approach:
