@@ -14,30 +14,33 @@ NvdNotification *nvd_notification_cocoa(const char *title,
                                         const char *msg,
                                         NvdNotifyType type)
 {
-    NvdNotification *notif = malloc(sizeof(struct _NvdNotification));
-    notif->type = type;
-    notif->permitted = notif->responded = false;
+    return nil;
 
-    [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions: UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionList | UNNotificationPresentationOptionBanner | UNNotificationPresentationOptionSound
-                                                                      completionHandler: ^(BOOL b, NSError *_Nullable err) {
-                                                                          notif->permitted = b && err;
-                                                                          notif->responded = true;
-                                                                      }];
+    // NvdNotification *notif = malloc(sizeof(struct _NvdNotification));
+    // notif->type = type;
+    // notif->permitted = notif->responded = false;
 
-    notif->raw = [[UNMutableNotificationContent alloc] init];
-    notif->raw.title = @(title);
-    notif->raw.body = @(msg);
+    // [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions: UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionList | UNNotificationPresentationOptionBanner | UNNotificationPresentationOptionSound
+    //                                                                   completionHandler: ^(BOOL b, NSError *_Nullable err) {
+    //                                                                       notif->permitted = b && err;
+    //                                                                       notif->responded = true;
+    //                                                                   }];
 
-	return notif;
+    // notif->raw = [[UNMutableNotificationContent alloc] init];
+    // notif->raw.title = @(title);
+    // notif->raw.body = @(msg);
+
+	// return notif;
 }
 
 void nvd_send_notification_cocoa(NvdNotification *notification)
 {
-    while (!notification->responded);
-    if (!notification->permitted) return;
-    [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest: [UNNotificationRequest requestWithIdentifier: NSBundle.mainBundle.bundleIdentifier
-                                                                                                                     content: notification->raw 
-                                                                                                                     trigger: nil] 
-                                                         withCompletionHandler: ^(NSError * _Nullable _){(void)_;}];
-    [notification->raw release];
+    return;
+    // while (!notification->responded);
+    // if (!notification->permitted) return;
+    // [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest: [UNNotificationRequest requestWithIdentifier: NSBundle.mainBundle.bundleIdentifier
+    //                                                                                                                  content: notification->raw 
+    //                                                                                                                  trigger: nil] 
+    //                                                      withCompletionHandler: ^(NSError * _Nullable _){(void)_;}];
+    // [notification->raw release];
 }
