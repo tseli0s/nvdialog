@@ -41,35 +41,22 @@ NvdFileDialog *nvd_save_file_dialog_cocoa(const char *title, const char *default
 
 	NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
 	NVD_RETURN_IF_NULL(dialog);
-	NSSavePanel *dialog_raw = [NSSavePanel savePanel];
-	dialog_raw.title = @(title);
-
-	dialog->raw = dialog_raw;
+	dialog->raw = [NSSavePanel savePanel];
+	dialog->raw.title = @(title);
 	return dialog;
 }
 
 
 void nvd_get_file_location_cocoa(NvdFileDialog *dlg, const char **out)
 {
-	NSSavePanel *rawdlg = dlg->raw;
-	[rawdlg makeKeyAndOrderFront:nil];
-	NSModalResponse resp = [rawdlg runModal];
+	[dlg->raw makeKeyAndOrderFront:nil];
+	NSModalResponse resp = [dlg->raw runModal];
 
-	switch (resp) {
-		case NSModalResponseContinue:
-		case NSModalResponseOK:
-			*out = strdup(rawdlg.URL.absoluteString.UTF8String);
-			dlg->location_was_chosen = true;
-			break;
-
-		default:
-			dlg->location_was_chosen = false;
-			break;
-	}
-
+	dlg->location_was_chosen = resp == NSModalResponseContinue || resp == NSModalResponseOK;
+	if (dlg->location_was_chosen)
+		*out = strdup(dlg->raw.URL.absoluteString.UTF8String);
 
 	[dlg->raw release];
-	return;
 }
 
 void *nvd_open_file_dialog_get_raw_cocoa(NvdFileDialog *dlg)
