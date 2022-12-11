@@ -1,46 +1,36 @@
 #include "nvdialog_cocoa.h"
 
 #include <AppKit/AppKit.h>
-#include <UserNotifications/UserNotifications.h>
+#include <Foundation/Foundation.h>
 
 struct _NvdNotification {
     NvdNotifyType type;
-    bool responded, permitted;
-
-    UNMutableNotificationContent *raw;
+    const char *title,* body;
 };
+
 
 NvdNotification *nvd_notification_cocoa(const char *title,
                                         const char *msg,
                                         NvdNotifyType type)
 {
-    return nil;
-
-    // NvdNotification *notif = malloc(sizeof(struct _NvdNotification));
-    // notif->type = type;
-    // notif->permitted = notif->responded = false;
-
-    // [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions: UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionList | UNNotificationPresentationOptionBanner | UNNotificationPresentationOptionSound
-    //                                                                   completionHandler: ^(BOOL b, NSError *_Nullable err) {
-    //                                                                       notif->permitted = b && err;
-    //                                                                       notif->responded = true;
-    //                                                                   }];
-
-    // notif->raw = [[UNMutableNotificationContent alloc] init];
-    // notif->raw.title = @(title);
-    // notif->raw.body = @(msg);
-
-	// return notif;
+    NvdNotification *notif = malloc(sizeof(struct _NvdNotification));
+    notif->type = type;
+    notif->title = title;
+    notif->body = msg;
+	return notif;
 }
 
 void nvd_send_notification_cocoa(NvdNotification *notification)
 {
-    return;
-    // while (!notification->responded);
-    // if (!notification->permitted) return;
-    // [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest: [UNNotificationRequest requestWithIdentifier: NSBundle.mainBundle.bundleIdentifier
-    //                                                                                                                  content: notification->raw 
-    //                                                                                                                  trigger: nil] 
-    //                                                      withCompletionHandler: ^(NSError * _Nullable _){(void)_;}];
-    // [notification->raw release];
+    int pid = [NSProcessInfo processInfo].processIdentifier;
+    NSPipe *pipe = [NSPipe pipe];
+    NSFileHandle *file = pipe.fileHandleForReading;
+
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = @"/usr/bin/osascript";
+    task.arguments = @[@"-e", [NSString stringWithFormat:   @"tell application \"System Events\" to display notification \"%s\" with title \"%s\" sound name \"default\"", 
+                                                            notification->body, notification->title]];
+    task.standardOutput = pipe;
+
+    [task launch];
 }
