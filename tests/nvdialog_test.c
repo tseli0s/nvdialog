@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <nvdialog.h>
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
         (void) argc; /* Fine now MSVC? */
         if (nvd_init(argv[0]) != 0) {
                 printf(
@@ -50,10 +50,6 @@ int main(int argc, char **argv) {
         NvdDialogBox *error_dialog   = nvd_dialog_box_new(dialog_title,
                                                         dialog_msg,
                                                         NVD_DIALOG_ERROR);
-
-        nvd_send_notification(nvd_notification_new("test", "body", 0));
-
-
         if (!dialog || !warning_dialog || !error_dialog) {
                 puts("Error: Couldn't create dialog box");
                 exit(EXIT_FAILURE);
