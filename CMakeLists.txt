@@ -25,6 +25,7 @@ if (LINUX)
 endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR APPLE)
+        set(CMAKE_C_COMPILER clang)
         set(MACOSX TRUE)
 else()
         set(MACOSX FALSE)
@@ -58,7 +59,8 @@ if (MACOSX)
                 set(NVD_COCOA_SOURCES src/backend/cocoa/nvdialog_dialog_box.m
                                       src/backend/cocoa/nvdialog_file_dialog.m
                                       src/backend/cocoa/nvdialog_question_dialog.m
-                                      src/backend/cocoa/nvdialog_notification.m)
+                                      src/backend/cocoa/nvdialog_notification.m
+                                      src/backend/cocoa/nvdialog_about_dialog.m)
                 set(NVD_SOURCES ${NVD_COCOA_SOURCES}
                                 src/core/nvdialog_structs.c
                                 src/nvdialog_error.c
@@ -74,7 +76,8 @@ if (MACOSX)
                 target_link_libraries(nvdialog
                         "-framework AppKit"
                         "-framework Cocoa"
-                        "-framework Foundation")
+                        "-framework Foundation"
+                        "-framework UserNotifications")
         endif()
 endif()
 

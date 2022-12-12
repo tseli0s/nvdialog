@@ -204,7 +204,7 @@ NvdAboutDialog *nvd_about_dialog_new(const char *name,
 #if defined(_WIN32)
         return nvd_about_dialog_win32(name, description, logo_path);
 #elif defined(NVD_USE_COCOA)
-	return NULL; /*TODO: Implement*/
+	return nvd_about_dialog_cocoa(name, description, logo_path);
 #else
 #if !defined(NVD_USE_GTK4)
         return nvd_about_dialog_gtk(name, description, logo_path);
@@ -297,7 +297,7 @@ void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
 #if defined  (_WIN32)
         nvd_about_dialog_set_license_link_win32(dialog, license_link, txt);
 #elif defined(NVD_USE_COCOA)
-	return;
+	nvd_about_dialog_set_licence_link_cocoa(dialog, license_link, txt);
 #elif defined(NVD_USE_GTK4)
         nvd_about_dialog_set_license_link_adw(dialog, license_link, txt);
 #else
@@ -389,7 +389,7 @@ void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_about_dialog_get_raw_adw(dialog);
 #elif   defined(_WIN32) || defined(NVD_USE_COCOA)
-        return NULL;
+        return nvd_about_dialog_get_raw_cocoa(dialog);
 #else
         return nvd_about_dialog_get_raw_gtk(dialog);
 #endif  /* NVD_USE_GTK4 */

@@ -23,12 +23,21 @@ NvdNotification *nvd_notification_cocoa(const char *title,
                                         const char *msg,
                                         NvdNotifyType type);
 
+NvdAboutDialog *nvd_about_dialog_cocoa(const char *name,
+                                       const char *desc,
+                                       const char *imgpath);
+
+void nvd_about_dialog_set_licence_link_cocoa(NvdAboutDialog *dialog, const char *license_link, const char *txt);
+
+
 void nvd_show_dialog_cocoa(NvdDialogBox *dialog);
+void nvd_show_about_dialog_cocoa(NvdAboutDialog *dialog);
 void nvd_get_file_location_cocoa(NvdFileDialog *dlg, const char **out);
 NvdReply nvd_get_reply_cocoa(NvdQuestionBox *box);
 void nvd_send_notification_cocoa(NvdNotification *notification);
 
 void *nvd_dialog_box_get_raw_cocoa(NvdDialogBox *dlg);
+void *nvd_about_dialog_get_raw_cocoa(NvdAboutDialog *dlg);
 void *nvd_dialog_question_get_raw_cocoa(NvdQuestionBox *dlg);
 void *nvd_open_file_dialog_get_raw_cocoa(NvdFileDialog *dlg);
 
