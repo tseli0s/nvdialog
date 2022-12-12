@@ -10,6 +10,9 @@ option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwa
 option(NVD_BUILD_STATIC "Build NvDialog as a static library. Experimental." OFF)
 
 set(NVDIALOG_MAXBUF 4096)
+# This is another temporary solution to fix CI on Windows.
+# It will be replaced soon anyways.
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # On GNU/Linux, by default CMake installs the libraries and headers under
 # /usr/local. There are two problems with this approach:
@@ -183,18 +186,16 @@ install(DIRECTORY DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/dialogs)
 install(FILES ${NVD_EXTRA_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/dialogs)
 install(FILES ${NVD_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/)
 
-# Just keep it out for now.
-if (NOT MSVC)
-        enable_testing()
-        add_executable(nvdialog_test ${CMAKE_SOURCE_DIR}/tests/nvdialog_test.c)
-        if (LINUX)
-                target_link_libraries(nvdialog_test PRIVATE nvdialog notify)
-        else(LINUX)
-                target_link_libraries(nvdialog_test PRIVATE nvdialog)
-        endif(LINUX)
-        target_include_directories(nvdialog_test PRIVATE ${CMAKE_SOURCE_DIR}/include/) # Required
-        add_test(
-                NAME    nvdialog_test
-                COMMAND $<TARGET_FILE:nvdialog_test>
-        )
-endif()
+enable_testing()
+file(GLOB NVDIALOG_TEST_FILES "tests/test_*.c")
+
+set(NVDIALOG_TESTS init;dialogs;multithreading;aboutdlg;question)
+foreach(test_executable ${NVDIALOG_TESTS})
+        add_executable(nvdialog_${test_executable}_test tests/test_${test_executable}.c)
+        target_compile_definitions(nvdialog_${test_executable}_test PRIVATE NVDIALOG_TESTING)
+        target_link_libraries(nvdialog_${test_executable}_test nvdialog)
+        # This is required as testing takes place before installing. 
+        # What kind of logic is that CMake?
+        target_include_directories(nvdialog_${test_executable}_test PUBLIC ${CMAKE_SOURCE_DIR}/include/)
+        add_test(NAME nvdialog_${test_executable}_test COMMAND $<TARGET_FILE:nvdialog_${test_executable}_test>)
+endforeach(test_executable)

@@ -50,21 +50,11 @@
 
 extern void nvd_show_dialog_gtk(NvdDialogBox*);
 
-/*
- * The default domain name used for libadwaita applications.
- * This variable is modified from nvd_set_domain_name().
- */
-static char *nvd_domain_name = "io.androgr.libnvdialog";
-static char *nvd_argv_0 = NULL;
+
+static char *nvd_app_name = "NvDialog Application";
+static char *nvd_argv_0   = NULL;
 
 static NvdParentWindow nvd_parent_window = NULL;
-
-inline void nvd_set_domain_name(char *domain) {
-        NVD_ASSERT(domain != NULL);
-        nvd_domain_name = domain;
-}
-
-inline const char *nvd_get_domain_name(void) { return nvd_domain_name; }
 
 const char *nvd_get_argv() { return nvd_argv_0; }
 
@@ -104,7 +94,7 @@ int nvd_init(char *program) {
                         return -1;
                 }
 
-                if (!nvd_notify_init("NvDialog")) { /* TODO: Set application name here from the user */
+                if (!nvd_notify_init(nvd_app_name)) { /* TODO: Set application name here from the user */
                         dlclose(lib);
                         nvd_error_message("Couldn't initialize libnotify, stopping here.");
                         return -1;
@@ -124,7 +114,7 @@ int nvd_init(char *program) {
                         return -1;
                 }
 
-                if (!nvd_notify_init("NvDialog")) {
+                if (!nvd_notify_init(nvd_app_name)) {
                         dlclose(lib);
                         nvd_error_message("Couldn't initialize libnotify, stopping here.");
                         return -1;
@@ -136,6 +126,12 @@ int nvd_init(char *program) {
 #endif /* _WIN32 && NVD_USE_COCOA */
         return 0;
 }
+
+void nvd_set_application_name(const char *application_name) {
+        nvd_app_name = (char*) application_name;
+}
+
+const char *nvd_get_application_name() { return nvd_app_name; }
 
 NvdFileDialog *nvd_open_file_dialog_new(const char *title,
                                         const char *file_extensions) {
