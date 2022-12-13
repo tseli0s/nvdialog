@@ -30,3 +30,8 @@ examples/about-dialog/about-dialog-example
 # created and distributed, so we don't want to
 # push this into the main repository.
 prebuilt/
+
+cmake-build-*/
+
+.idea/
+.clang-format
