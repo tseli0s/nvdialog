@@ -1,7 +1,4 @@
-# TODO: Improve this workflow to make it better
-# for testing.
-
-name: Build CI
+name: Ubuntu Integration and Testing
 on:
   push:
     branches: [ "master" ]
