@@ -3,12 +3,6 @@ build/
 .vscode/
 .cache/
 
-# Rust files that would normally take gigabytes of storage
-# if not entirely excluded.
-rust/nvdialog-rs/target/
-rust/nvdialog-rs/Cargo.lock
-rust/nvdialog-rs/examples/hello-world/target
-
 # The directory where some features are being tested,
 # not uploaded because there's a mess inside it.
 testing/
@@ -31,7 +25,6 @@ examples/about-dialog/about-dialog-example
 # push this into the main repository.
 prebuilt/
 
+# IDE Stuff. We can ignore this too.
 cmake-build-*/
-
 .idea/
-.clang-format
