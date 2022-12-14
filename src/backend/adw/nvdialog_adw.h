@@ -65,8 +65,6 @@ NvdReply nvd_get_reply_adw(NvdQuestionBox *box);
 
 /*
  * About dialog box using libadwaita.
- * TODO: Add functions within NvDialog to allow adding additional
- * elements to the dialog box.
  */
 NvdAboutDialog *
 nvd_about_dialog_adw(const char *appname, const char *brief, const char *logo);
