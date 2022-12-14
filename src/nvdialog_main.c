@@ -388,7 +388,9 @@ void *nvd_dialog_box_get_raw(NvdDialogBox *dialog) {
 void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog) {
 #if     defined(NVD_USE_GTK4)
         return nvd_about_dialog_get_raw_adw(dialog);
-#elif   defined(_WIN32) || defined(NVD_USE_COCOA)
+#elif   defined(_WIN32)
+        return NULL; /* Windows dialogs are created immediately, no windows are held beforehand. */
+#elif   defined(NVD_USE_COCOA)
         return nvd_about_dialog_get_raw_cocoa(dialog);
 #else
         return nvd_about_dialog_get_raw_gtk(dialog);
