@@ -94,7 +94,7 @@ int nvd_init(char *program) {
                         return -1;
                 }
 
-                if (!nvd_notify_init(nvd_app_name)) { /* TODO: Set application name here from the user */
+                if (!nvd_notify_init(nvd_app_name)) {
                         dlclose(lib);
                         nvd_error_message("Couldn't initialize libnotify, stopping here.");
                         return -1;
