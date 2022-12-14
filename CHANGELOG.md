@@ -2,6 +2,7 @@
 - Removed domain name support in favor of plain application names.
 - Added application name support.
 - Added MacOS X Support (Thanks to: @Frityet)
+- Fix `nvd_get_error` return type.
 
 # Changelog -- 0.5.0
 
