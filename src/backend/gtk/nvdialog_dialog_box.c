@@ -41,6 +41,11 @@ static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
         gtk_widget_set_margin_bottom(widget, 16);
 }
 
+static inline void nvd_destroy_and_quit(GtkWidget *widget) {
+        gtk_widget_destroy(GTK_WIDGET(widget));
+        gtk_main_quit();
+}
+
 NvdDialogBox *
 nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         NvdDialogBox *dialog = malloc(sizeof(struct _NvdDialogBox));
@@ -91,9 +96,9 @@ nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
                           GTK_WIDGET(grid));
 
         g_signal_connect_swapped(
-            dialog->window_handle, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+            dialog->window_handle, "destroy", G_CALLBACK(nvd_destroy_and_quit), dialog->window_handle);
         g_signal_connect_swapped(
-            button, "clicked", G_CALLBACK(gtk_main_quit), NULL);
+            button, "clicked", G_CALLBACK(nvd_destroy_and_quit), dialog->window_handle);
 
         return dialog;
 }
