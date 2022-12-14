@@ -3,6 +3,7 @@
 - Added application name support.
 - Added MacOS X Support (Thanks to: @Frityet)
 - Fix `nvd_get_error` return type.
+- Dialogs will now be destroyed immediately after closing them.
 
 # Changelog -- 0.5.0
 
