@@ -48,14 +48,10 @@ endif()
 message("-- Compiling with flags:\n  ${CMAKE_C_FLAGS}")
 add_compile_definitions(NVDIALOG_MAXBUF=${NVDIALOG_MAXBUF})
 
-# TODO: Implement this for Windows too.
 if (MACOSX)
-        
-        if (WIN32_TARGET)
+        if (WIN32_TARGET OR NVD_USE_GTK4)
                 message(CRITICAL "Attempted to compile NvDialog with a foreign backend for the platform.")
         else()
-                message("Using MacOS")
-                
                 set(NVD_COCOA_SOURCES src/backend/cocoa/nvdialog_dialog_box.m
                                       src/backend/cocoa/nvdialog_file_dialog.m
                                       src/backend/cocoa/nvdialog_question_dialog.m
