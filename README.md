@@ -24,6 +24,10 @@ A backend using Gtk4 and `libadwaita`. This backend has replaced the (following)
 
 - **Gtk3 Backend**\
 Some older distributions do not have Adwaita / Gtk4 support yet. The Gtk3 backend can be used in such a situation. However Gtk3 is considered to be deprecated and has been replaced with the Adwaita backend.
+
+- **Cocoa Backend**\
+The Cocoa backend was recently added to NvDialog for MacOS X support. It is written in Objective-C for better integration with the OS, and is still in the experimental stage. Please report any bugs or features that need to be fixed / implemented.
+
 - **Win32 Backend**\
 Windows-specific backend, used only for Windows compatibility. This backend is mainly tested on GNU/Linux with `wine`, and so some bugs may not be detected. Open an issue if that's the case.
 
