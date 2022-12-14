@@ -59,7 +59,7 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname,
         sprintf(buffer,
                 "%s%s",
                 "/usr/share/icons/hicolor/",
-                icon_name); // TODO: Fix this to use the icon theme.
+                icon_name);
         GdkPixbuf *img = gdk_pixbuf_new_from_file(buffer, NULL);
         if (!img) {
                 img = gdk_pixbuf_new_from_file(
