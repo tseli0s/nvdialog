@@ -1,6 +1,7 @@
 # Changelog -- 0.6.0 (Not yet released)
 - Removed domain name support in favor of plain application names.
 - Added application name support.
+- Added MacOS X Support (Thanks to: @Frityet)
 
 # Changelog -- 0.5.0
 
