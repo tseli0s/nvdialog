@@ -40,9 +40,9 @@
  * The error code has to be manually be transformed into a string
  * using nvd_stringify_error. Else, use the NvdError enum to check for
  * the error manually.
- * @returns The error code as a uint32_t.
+ * @returns The error code.
  */
-int nvd_get_error(void);
+NvdError nvd_get_error(void);
 
 /**
  * @brief Transforms an error code into a string representation, that can be
