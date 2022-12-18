@@ -11,10 +11,11 @@ url="https://androgr.github.io/libnvdialog/"
 _repo="https://github.com/AndroGR/nvdialog.git"
 license=('MIT')
 groups=()
-depends=(gtk4 libadwaita glibc gcc cmake) # Arch Linux is modern enough to safely say that
-					  # libadwaita won't cause any problems as the default
-					  # backend.
-makedepends=(cmake git ninja)
+depends=(gtk4 libadwaita glibc) # Arch Linux is modern enough to safely say that
+				# libadwaita won't cause any problems as the default
+				# backend.
+				
+makedepends=(git ninja gcc cmake)
 checkdepends=()
 optdepends=()
 provides=(libnvdialog)
