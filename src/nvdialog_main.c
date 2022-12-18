@@ -319,6 +319,11 @@ NvdNotification *nvd_notification_new(const char *title,
 #endif /* _WIN32 */
 }
 
+void nvd_delete_notification(NvdNotification *notification) {
+        NVD_ASSERT(notification != NULL);
+        free(notification); /* TODO: For each backend, handle cleanup properly. */
+}
+
 void nvd_send_notification(NvdNotification *notification) {
 #if   defined(_WIN32)
         nvd_send_notification_win32(notification);
