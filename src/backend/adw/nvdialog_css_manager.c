@@ -61,7 +61,11 @@ NvdCSSManager *nvd_css_manager_adw() {
 
 int nvd_css_manager_attach_string_stylesheet_adw(NvdCSSManager *mgr,
                                                  const char    *str) {
-        chdir("/tmp"); /* So we don't harm anything we shouldn't. */
+        uint32_t chdir_result = chdir("/tmp"); /* So we don't harm anything we shouldn't. */
+        if (chdir_result != 0) {
+                nvd_set_error(NVD_FILE_INACCESSIBLE);
+                return -1;
+        }
 
         char *new_filename = calloc(1, sizeof(char) * 13);
         __nvd_string_gen(new_filename, 12);
