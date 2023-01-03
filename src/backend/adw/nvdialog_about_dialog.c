@@ -39,13 +39,6 @@ struct _NvdAboutDialog {
         void *layout;
 };
 
-static void nvd_set_margins_gtk4(GtkWidget *widget) {
-        gtk_widget_set_margin_start(widget, 12);
-        gtk_widget_set_margin_end(widget, 12);
-        gtk_widget_set_margin_top(widget, 12);
-        gtk_widget_set_margin_bottom(widget, 12);
-}
-
 NvdAboutDialog *
 nvd_about_dialog_adw(const char *appname,
                      const char *brief,
