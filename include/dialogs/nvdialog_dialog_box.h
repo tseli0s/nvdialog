@@ -43,8 +43,8 @@ typedef struct _NvdQuestionBox NvdQuestionBox;
  * and returns an opaque handle to it for use with @ref nvd_show_dialog().
  * @return The dialog handle on success, else NULL.
  */
-NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
-                                 NvdDialogType type);
+NVD_API NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
+                                         NvdDialogType type);
 
 /**
  * @brief Shows a dialog to the system shell.
@@ -53,7 +53,7 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
  * @param dialog The dialog to show.
  * @note Obsolete function, currently unnecessary.
  */
-void nvd_show_dialog(NvdDialogBox *dialog);
+NVD_API void nvd_show_dialog(NvdDialogBox *dialog);
 
 /**
  * @brief Creates a question dialog box with the given parameters.
@@ -66,7 +66,7 @@ void nvd_show_dialog(NvdDialogBox *dialog);
  * more.
  * @since  v0.1.1
  */
-NvdQuestionBox* nvd_dialog_question_new(const char *title, const char *question,
+NVD_API NvdQuestionBox* nvd_dialog_question_new(const char *title, const char *question,
                                         NvdQuestionButton button);
 
 /**
@@ -74,18 +74,18 @@ NvdQuestionBox* nvd_dialog_question_new(const char *title, const char *question,
  * @param box The box to use to show the reply.
  * @return The reply from the dialog box.
  */
-NvdReply nvd_get_reply(NvdQuestionBox *box);
+NVD_API NvdReply nvd_get_reply(NvdQuestionBox *box);
 
 /**
  * @brief Returns the raw object behind the dialog.
  * @param dialog The dialog to retrieve the object from.
  * @return void* The raw toolkit-created object.
  */ 
-void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog);
+NVD_API void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog);
 
 /**
  * @brief Returns the raw object behind the dialog.
  * @param dialog The dialog to retrieve the object from.
  * @return void* The raw toolkit-created object.
  */
-void *nvd_dialog_box_get_raw(NvdDialogBox *dialog);
+NVD_API void *nvd_dialog_box_get_raw(NvdDialogBox *dialog);
