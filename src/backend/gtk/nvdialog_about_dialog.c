@@ -61,11 +61,6 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname,
                 "/usr/share/icons/hicolor/",
                 icon_name);
         GdkPixbuf *img = gdk_pixbuf_new_from_file(buffer, NULL);
-        if (!img) {
-                img = gdk_pixbuf_new_from_file(
-                    "/usr/share/icons/hicolor/48x48/status/computer.png", NULL);
-                NVD_RETURN_IF_NULL(img);
-        }
 
         dialog->raw = gtk_about_dialog_new();
         gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog->raw),
