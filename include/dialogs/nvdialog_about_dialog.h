@@ -42,7 +42,7 @@ typedef struct _NvdAboutDialog NvdAboutDialog;
  * @return NULL on failure, otherwise a handle to a heap allocated object containing
  * the actual dialog.
  */
-NvdAboutDialog *nvd_about_dialog_new(const char *name,
+NVD_API NvdAboutDialog *nvd_about_dialog_new(const char *name,
                                      const char *description,
                                      const char *logo);
 
@@ -53,7 +53,7 @@ NvdAboutDialog *nvd_about_dialog_new(const char *name,
  * @param txt A text string to set as the link's text. Can be NULL if the link
  * can be used as the text too.
  */
-void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
+NVD_API void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
                                        const char *license_link,
                                        const char* txt);
 
@@ -62,17 +62,17 @@ void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
  * @param dialog The dialog to set the version to.
  * @param version A string to represent the version of your application.
  */
-void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version);
+NVD_API void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version);
 
 /**
  * @brief Shows the About dialog given to the user.
  * @param dialog The dialog to show.
  */
-void nvd_show_about_dialog(NvdAboutDialog *dialog);
+NVD_API void nvd_show_about_dialog(NvdAboutDialog *dialog);
 
 /**
  * @brief Returns the raw object behind the dialog.
  * @param dialog The dialog to retrieve the object from.
  * @return void* The raw toolkit-created object.
  */
-void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog);
+NVD_API void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog);
