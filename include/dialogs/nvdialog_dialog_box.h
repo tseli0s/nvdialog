@@ -22,6 +22,7 @@
  * IN THE SOFTWARE.
  */
 
+#include "nvdialog.h"
 #include "../nvdialog_types.h"
 
 /**
