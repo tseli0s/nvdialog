@@ -35,8 +35,8 @@ typedef struct _NvdFileDialog NvdFileDialog;
  * @note INCOMPLETE FUNCTION - Do not use please.
  * @returns The filename path on success, otherwise NULL.
  */
-NvdFileDialog *nvd_open_file_dialog_new(const char *title,
-                                        const char *file_extensions);
+NVD_API NvdFileDialog *nvd_open_file_dialog_new(const char *title,
+                                                const char *file_extensions);
 
 /**
  * @brief Creates a file dialog that can be used to save a file
@@ -45,8 +45,8 @@ NvdFileDialog *nvd_open_file_dialog_new(const char *title,
  * @param default_filename The default filename to use.
  * @return A handle to the dialog for future use.
  */
-NvdFileDialog *nvd_save_file_dialog_new(const char *title,
-                                        const char *default_filename);
+NVD_API NvdFileDialog *nvd_save_file_dialog_new(const char *title,
+                                                const char *default_filename);
 /**
  * @brief Returns a raw location on the filesystem from the dialog given.
  * @details This function will return the raw location of the dialog (eg. /home/someone/.local/share/)
@@ -54,11 +54,11 @@ NvdFileDialog *nvd_save_file_dialog_new(const char *title,
  * @param dialog The file dialog to use for the operation.
  * @param savebuf A pointer to a buffer where the location will be saved.
  */
-void nvd_get_file_location(NvdFileDialog* dialog, const char** savebuf);
+NVD_API void nvd_get_file_location(NvdFileDialog* dialog, const char** savebuf);
 
 /**
  * @brief Returns the raw object behind the dialog.
  * @param dialog The dialog to retrieve the object from.
  * @return void* The raw toolkit-created object.
  */
-void *nvd_open_file_dialog_get_raw(NvdFileDialog *dialog);
+NVD_API void *nvd_open_file_dialog_get_raw(NvdFileDialog *dialog);
