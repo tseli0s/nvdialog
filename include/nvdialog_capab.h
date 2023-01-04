@@ -22,6 +22,7 @@
  * IN THE SOFTWARE.
  */
 
+#include "nvdialog.h"
 #ifdef __nvdialog_capab_h__
 #error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
 #endif /* __nvdialog_capab_h__ */
@@ -53,6 +54,6 @@ enum {
  * @param query Which capabilities to query.
  * @return true if the requested @ref query is supported, else false.
  */
-bool nvd_get_capabilities(int query);
+NVD_API bool nvd_get_capabilities(int query);
 
 #endif /* __nvdialog_capab_h__ */

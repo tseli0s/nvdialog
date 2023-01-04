@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "nvdialog.h"
 #ifndef __nvdialog_notification_h__
 #define __nvdialog_notification_h__ 1
 
@@ -55,20 +56,20 @@ typedef struct _NvdNotification NvdNotification;
  * @param  type The type of the notification, see @ref NvdNotifyType.
  * @return An empty notification object.
  */
-NvdNotification* nvd_notification_new(const char   *title,
-                                      const char   *msg,
-                                      NvdNotifyType type);
+NVD_API NvdNotification* nvd_notification_new(const char   *title,
+                                              const char   *msg,
+                                              NvdNotifyType type);
 
 /**
  * @brief Sends the notification to the system.
  * @param notification The notification object to use.
  */
-void nvd_send_notification(NvdNotification* notification);
+NVD_API void nvd_send_notification(NvdNotification* notification);
 
 /**
  * @brief Deletes a notification object from NvDialog.
  * @note  You should only use this to free notifications. Do not use @ref nvd_free_object please.
  * @param notification The notification object to delete.
  */
-void nvd_delete_notification(NvdNotification* notification);
+NVD_API void nvd_delete_notification(NvdNotification* notification);
 #endif /**/

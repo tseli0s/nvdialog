@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "nvdialog.h"
 #ifndef __nvdialog_css_manager_h__
 #define __nvdialog_css_manager_h__ 1
 
@@ -59,7 +60,7 @@ typedef struct _NvdCSSManager NvdCSSManager;
  * @brief Returns the @ref NvdCSSBackend.
  * @return The CSS backend used as an enumerator.
  */
-NvdCSSBackend nvd_get_css_backend(void);
+NVD_API NvdCSSBackend nvd_get_css_backend(void);
 
 /**
  * @brief Returns a new NvdCSSManager.
@@ -70,7 +71,7 @@ NvdCSSBackend nvd_get_css_backend(void);
  * and will be reflected in every dialog created.
  * @return An empty, initialized @ref NvdCSSManager.
  */
-NvdCSSManager* nvd_css_manager_new(void);
+NVD_API NvdCSSManager* nvd_css_manager_new(void);
 
 /**
  * @brief Attaches a CSS stylesheet from the 'str' parameter given below.
@@ -81,7 +82,7 @@ NvdCSSManager* nvd_css_manager_new(void);
  * Prefer using a file instead.
  * @return 0 if succesful, otherwise -1 and sets the error code. See @ref nvd_get_error for details.
  */
-int nvd_css_manager_attach_string_stylesheet(NvdCSSManager *mgr, const char *str);
+NVD_API int nvd_css_manager_attach_string_stylesheet(NvdCSSManager *mgr, const char *str);
 
 /**
  * @brief Attaches a CSS stylesheet from the specified filename.
@@ -89,7 +90,7 @@ int nvd_css_manager_attach_string_stylesheet(NvdCSSManager *mgr, const char *str
  * @param filename The filename of the stylesheet file to parse and attach.
  * @return int 
  */
-int nvd_css_manager_attach_stylesheet(NvdCSSManager *mgr, const char *filename);
+NVD_API int nvd_css_manager_attach_stylesheet(NvdCSSManager *mgr, const char *filename);
 
 /**
  * @brief Uses the stylesheet attached to the manager for the dialog specified.
@@ -97,5 +98,5 @@ int nvd_css_manager_attach_stylesheet(NvdCSSManager *mgr, const char *filename);
  * @param raw_handle Returned from an object-specific function as the backend object.
  * @return 0 on success, otherwise -1 and sets the error code. See @ref nvd_get_error.
  */
-int nvd_css_manager_use_style(NvdCSSManager *mgr, void *raw_handle);
+NVD_API int nvd_css_manager_use_style(NvdCSSManager *mgr, void *raw_handle);
 #endif /* __nvdialog_css_manager_h__ */

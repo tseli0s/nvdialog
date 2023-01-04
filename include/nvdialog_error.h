@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "nvdialog.h"
 #ifdef __nvdialog_error_h__
 #error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
 #endif /* __nvdialog_error_h__ */
@@ -42,7 +43,7 @@
  * the error manually.
  * @returns The error code.
  */
-NvdError nvd_get_error(void);
+NVD_API NvdError nvd_get_error(void);
 
 /**
  * @brief Transforms an error code into a string representation, that can be
@@ -50,6 +51,6 @@ NvdError nvd_get_error(void);
  * the library's errors instead of manually logging them yourself.
  * @returns The string representation of the error, or NULL on failure.
  */
-const char *nvd_stringify_error(NvdError err);
+NVD_API const char *nvd_stringify_error(NvdError err);
 
 #endif /* __nvdialog_error_h__ */

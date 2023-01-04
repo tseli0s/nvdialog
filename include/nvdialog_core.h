@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "nvdialog.h"
 #ifdef __nvdialog_core_h__
 #error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
 #endif /* __nvdialog_core_h__ */
@@ -45,7 +46,7 @@ typedef void *NvdParentWindow;
  * @param program The argv[0] of your program.
  * @return 0 on success, else a negative error code indicating failure.
  */
-int nvd_init(char *program);
+NVD_API int nvd_init(char *program);
 
 /**
  * @brief Sets the application name to use inside NvDialog.
@@ -54,13 +55,13 @@ int nvd_init(char *program);
  * is used in notifications, so it is important to set the actual application name.
  * @param application_name The application name to use.
  */
-void nvd_set_application_name(const char* application_name);
+NVD_API void nvd_set_application_name(const char* application_name);
 
 /**
  * @brief Returns the application name set inside NvDialog.
  * @return The application name.
  */
-const char *nvd_get_application_name();
+NVD_API const char *nvd_get_application_name();
 
 /**
  * @brief Returns the argv[0] given to nvdialog.
@@ -68,7 +69,7 @@ const char *nvd_get_application_name();
  * nvd_init. It is mainly intended to be used internally.
  * @return The argv[0] given to nvdialog on success, otherwise NULL.
  */
-const char *nvd_get_argv(void);
+NVD_API const char *nvd_get_argv(void);
 
 /**
  * @brief Sets a window as the parent of all dialogs created from NvDialog.
@@ -78,21 +79,21 @@ const char *nvd_get_argv(void);
  * @param parent The window to set as the parent.
  * @return 0 on success, otherwise -1, call nvd_get_error() for more.
  */
-int nvd_set_parent(NvdParentWindow parent);
+NVD_API int nvd_set_parent(NvdParentWindow parent);
 
 /**
  * @brief Returns the window attached as the parent of all dialogs of NvDialog.
  * @return The currently set parent window, or NULL if no parent window is
  * currently set.
  */
-NvdParentWindow nvd_get_parent(void);
+NVD_API NvdParentWindow nvd_get_parent(void);
 
 /**
  * @brief Unmarks the window set from @ref nvd_set_parent as the parent window.
  * @details This will reset the changes made by @ref nvd_set_parent, by
  * unmarking the window that is given as the parent from NvDialog.
  */
-void nvd_delete_parent(void);
+NVD_API void nvd_delete_parent(void);
 
 /**
  * @brief Deletes an object creates by NvDialog.
@@ -102,6 +103,6 @@ void nvd_delete_parent(void);
  * behavior.
  * @param object The object to be deleted.
  */
-void nvd_free_object(void *object);
+NVD_API void nvd_free_object(void *object);
 
 #endif /* __nvdialog_core_h__ */
