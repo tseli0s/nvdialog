@@ -68,7 +68,7 @@ static bool __nvd_check_libnotify(NvdNotification *notification) {
 }
 
 static inline char *__nvd_match_notif_type(NvdNotifyType type) {
-        static char *icon_name;
+        static char *icon_name = NULL;
         
         switch (type) {
         case NVD_NOTIFICATION_SIMPLE:
@@ -80,7 +80,6 @@ static inline char *__nvd_match_notif_type(NvdNotifyType type) {
         case NVD_NOTIFICATION_ERROR:
                 icon_name = "dialog-error";
                 break;
-        default: return NULL;
         }
 
         return icon_name;
@@ -90,9 +89,9 @@ NvdNotification *nvd_notification_adw(const char   *title,
                                       const char   *msg,
                                       NvdNotifyType type) {
         NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
-        NVD_RETURN_IF_NULL(notification);
+        NVD_RETURN_IF_NULL(notification)
 
-        notification->lib                  = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
+        notification->lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
         if (!__nvd_check_libnotify(notification)) nvd_set_error(NVD_BACKEND_INVALID);
 
         nvd_notify_new_t notify_new  = dlsym(notification->lib, "notify_notification_new");
@@ -142,4 +141,5 @@ void nvd_delete_notification_adw(NvdNotification *notification) {
         NVD_ASSERT_FATAL(notification != NULL); /* Fatal to avoid some pretty scary bugs. */
         dlclose(notification->lib);
         free(notification);
+        return; /* See -Wmissing-noreturn */
 }
