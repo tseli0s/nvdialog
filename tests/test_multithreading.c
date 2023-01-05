@@ -9,7 +9,7 @@ struct Args {
         char **argv;
 };
 
-int return_code = -1;
+static int return_code = -1;
 static void create_dialog(struct Args arg) {
         nvd_init(arg.argv[0]);
 
