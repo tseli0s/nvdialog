@@ -6,6 +6,8 @@
 - Dialogs will now be destroyed immediately after closing them.
 - Added `NVD_API` macro to export functions to Windows (or import them).
 - Fixed `nvd_about_dialog_gtk` not working properly under the Gtk4 backend when custom icons were used instead of the default ones.
+- New function: `nvd_add_notification_action`. The description of this function is rather long,
+  see `include/nvdialog_notification.h` for the declaration and its documentation.
 
 # Changelog -- 0.5.0
 
