@@ -40,5 +40,8 @@ void *nvd_dialog_box_get_raw_cocoa(NvdDialogBox *dlg);
 void *nvd_about_dialog_get_raw_cocoa(NvdAboutDialog *dlg);
 void *nvd_dialog_question_get_raw_cocoa(NvdQuestionBox *dlg);
 void *nvd_open_file_dialog_get_raw_cocoa(NvdFileDialog *dlg);
-
+void nvd_add_notification_action_cocoa(NvdNotification* notification,
+                                       const char* action,
+                                       int  value_to_set,
+                                       int* value_to_return);
 #endif //__nvdialog_adw_h__
