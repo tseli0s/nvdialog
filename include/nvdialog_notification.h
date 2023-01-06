@@ -72,4 +72,16 @@ NVD_API void nvd_send_notification(NvdNotification* notification);
  * @param notification The notification object to delete.
  */
 NVD_API void nvd_delete_notification(NvdNotification* notification);
+
+/**
+ * @brief Adds another button with a specified action to do when it is clicked.
+ * @note Please make sure you don't register the same action twice on the same notification.
+ * @param notification The notification to add the said action to.
+ * @param action A string defining the action as well as the label of the button for the action.
+ * @param value_to_return An integer to return if the action was detected (Pressed, held, released, ...)
+ */
+NVD_API void nvd_add_notification_action(NvdNotification* notification,
+                                         const char* action,
+                                         int  value_to_set,
+                                         int* value_to_return);
 #endif /**/
