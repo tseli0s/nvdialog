@@ -57,10 +57,10 @@ void nvd_send_notification_win32(NvdNotification *notification) {
          */
 }
 
-void nvd_add_notification_action(NvdNotification* unused,
-                                 const char* _unused,
-                                 int __unused,
-                                 int* ___unused) {
+void nvd_add_notification_action_win32(NvdNotification* unused,
+                                       const char* _unused,
+                                       int __unused,
+                                       int* ___unused) {
         (void) unused;
         (void) _unused;
         (void) __unused;
