@@ -425,3 +425,18 @@ void *nvd_open_file_dialog_get_raw(NvdFileDialog *dialog) {
         return nvd_open_file_dialog_get_raw_gtk(dialog);
 #endif  /* NVD_USE_GTK4 */
 }
+
+void nvd_add_notification_action(NvdNotification* notification,
+                                 const char* action,
+                                 int  value_to_set,
+                                 int* value_to_return) {
+#if defined(NVD_USE_GTK4)
+        nvd_add_notification_action_adw(notification, action, value_to_set, value_to_return);
+#elif defined(NVD_USE_COCOA)
+        nvd_add_notification_action_cocoa(notification, action, value_to_set, value_to_return);
+#elif defined(_WIN32)
+        nvd_add_notification_action_win32(notification, action, value_to_set, value_to_return);
+#else
+        return nvd_add_notification_action_gtk(notification, action, value_to_set, value_to_return);
+#endif /* NVD_USE_GTK4 */
+}
