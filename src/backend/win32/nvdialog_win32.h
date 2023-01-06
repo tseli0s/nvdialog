@@ -60,3 +60,8 @@ void nvd_get_file_location_win32(NvdFileDialog *dialog, const char** savebuf);
 NvdNotification *nvd_notification_win32(const char   *title,
                                         const char   *msg,
                                         NvdNotifyType type);
+
+void nvd_add_notification_action_win32(NvdNotification* notification,
+                                     const char* action,
+                                     int  value_to_set,
+                                     int* value_to_return);

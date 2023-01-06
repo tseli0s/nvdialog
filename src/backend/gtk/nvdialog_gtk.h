@@ -108,4 +108,13 @@ void *nvd_dialog_box_get_raw_gtk      (NvdDialogBox   *dialog);
 void *nvd_dialog_question_get_raw_gtk (NvdQuestionBox *dialog);
 void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog  *dialog);
 
+/*
+ * Sets the action specified to the notification given.
+ * (Gtk3 implementation / backend)
+*/
+void nvd_add_notification_action_gtk(NvdNotification* notification,
+                                     const char* action,
+                                     int  value_to_set,
+                                     int* value_to_return);
+
 #endif /* __nvdialog_adw_h__ */

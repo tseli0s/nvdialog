@@ -107,8 +107,17 @@ NvdCSSManager *nvd_css_manager_adw();
 
 /* TODO: Add comments here. */
 int nvd_css_manager_attach_string_stylesheet_adw(NvdCSSManager *mgr,
-                                             const char    *str);
+                                                 const char    *str);
 int nvd_css_manager_attach_stylesheet_adw(NvdCSSManager *mgr, const char *filename);
 int nvd_css_manager_use_style_adw        (NvdCSSManager *mgr, void       *raw_handle);
+
+/*
+ * Sets the specified action for the notification.
+ * (Adwaita implementation)
+*/
+void nvd_add_notification_action_adw(NvdNotification* notification,
+                                     const char* action,
+                                     int  value_to_set,
+                                     int* value_to_return);
 
 #endif /* __nvdialog_adw_h__ */

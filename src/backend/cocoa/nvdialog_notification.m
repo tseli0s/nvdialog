@@ -34,3 +34,13 @@ void nvd_send_notification_cocoa(NvdNotification *notification)
 
     [task launch];
 }
+
+void nvd_add_notification_action_cocoa(NvdNotification* notification,
+                                     const char* action,
+                                     int  value_to_set,
+                                     int* value_to_return) {
+    (void) notification;
+    (void) action;
+    (void) value_to_set;
+    (void) value_to_return;
+}

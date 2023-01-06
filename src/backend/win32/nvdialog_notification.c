@@ -56,3 +56,13 @@ void nvd_send_notification_win32(NvdNotification *notification) {
          * statically link with NvDialog?
          */
 }
+
+void nvd_add_notification_action(NvdNotification* unused,
+                                 const char* _unused,
+                                 int __unused,
+                                 int* ___unused) {
+        (void) unused;
+        (void) _unused;
+        (void) __unused;
+        (void) ___unused;
+}

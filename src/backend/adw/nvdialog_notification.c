@@ -51,6 +51,18 @@ typedef nvd_notification_t (*nvd_notify_new_t)(const char*,
                                                 const char*,
                                                 const char*);
 
+struct NvdActionsArgs {
+        int* ptr;
+        int value;
+};
+
+static void nvd_set_action_ptr(void* notif, char* action, struct NvdActionsArgs *args) {
+        (void) notif;
+        (void) action;
+
+        *(int*) args->ptr = (int) args->value;
+}
+
 static bool __nvd_check_libnotify(NvdNotification *notification) {
         bool (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
                 if (!nvd_notify_init) {
@@ -142,4 +154,25 @@ void nvd_delete_notification_adw(NvdNotification *notification) {
         dlclose(notification->lib);
         free(notification);
         return; /* See -Wmissing-noreturn */
+}
+
+void nvd_add_notification_action_adw(NvdNotification* notification,
+                                     const char* action,
+                                     int  value_to_set,
+                                     int* value_to_return) {
+        NVD_ASSERT_FATAL(notification != NULL);
+        void (*fn) (void *notification,
+                    const char *action,
+                    const char *label,
+                    void (*fn_callback)(void*, char*, gpointer),
+                    gpointer user_data,
+                    GFreeFunc free_func) = dlsym(notification->lib,
+                                                 "notify_notification_add_action");
+                
+        struct NvdActionsArgs data = {
+                value_to_return,
+                value_to_set
+        };
+        
+        fn(notification->raw, action, action, (void*) &nvd_set_action_ptr, (gpointer) &data, NULL);
 }
