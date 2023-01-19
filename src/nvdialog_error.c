@@ -68,6 +68,9 @@ const char *nvd_stringify_error(NvdError err) {
         case NVD_NOT_INITIALIZED:
                 error = "The library wasn't initialized.";
                 break;
+        case NVD_ALREADY_INITIALIZED:
+                error = "The library has been already initialized.";
+                break;
         case NVD_STRING_EMPTY:
                 error = "Passed empty string as a parameter.";
                 break;
