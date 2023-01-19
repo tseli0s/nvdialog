@@ -8,6 +8,8 @@
 - Fixed `nvd_about_dialog_gtk` not working properly under the Gtk4 backend when custom icons were used instead of the default ones.
 - New function: `nvd_add_notification_action`. The description of this function is rather long,
   see `include/nvdialog_notification.h` for the declaration and its documentation.
+- `nvd_init` will check if the library has been initialized already and return if so.
+- When compiling with `gcc`, NvDialog will automatically be initialized at loading time thanks to the `__attribute__((constructor))` extension. This means you can sometimes omit `nvd_init`. (**NOTE:** Platform specific, non portable and often may malfunction. You won't need to check for any errors, the function automatically checks if the extension is supported).
 
 # Changelog -- 0.5.0
 
