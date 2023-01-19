@@ -54,12 +54,39 @@ extern void nvd_show_dialog_gtk(NvdDialogBox*);
 static char *nvd_app_name = "NvDialog Application";
 static char *nvd_argv_0   = NULL;
 
+static bool nvd_initialized              = false;
 static NvdParentWindow nvd_parent_window = NULL;
+static uint8_t nvd_times_initialized     = 0;
 
 const char *nvd_get_argv() { return nvd_argv_0; }
 
+#ifdef __GNUC__
+/*
+ * GCC offers an extension that will run a function before main().
+ * TODO: Preferably make this optional (Along with other extensions)
+ * at build time.
+*/
+__attribute__((constructor))
+#warning Nothing serious. Just verifying something.
+#endif
 int nvd_init(char *program) {
-#if !defined(_WIN32)
+        #ifdef __GNUC__
+        if (nvd_initialized) {
+                if (nvd_times_initialized >= 1) {
+                        nvd_set_error(NVD_ALREADY_INITIALIZED);
+                        return -3;
+                } else {
+                        nvd_times_initialized++;
+                        return 0;
+                }
+        }
+        #else
+        if (nvd_initialized) {
+                nvd_set_error(NVD_ALREADY_INITIALIZED);
+                return -NVD_ALREADY_INITIALIZED;
+        }
+        #endif /* __GNUC__ */
+#if defined (__linux__)
         setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
         setlinebuf(stderr);
 #endif /* _WIN32 */
@@ -124,6 +151,7 @@ int nvd_init(char *program) {
         adw_init();
 #endif /* NVD_USE_GTK4 */
 #endif /* _WIN32 && NVD_USE_COCOA */
+        nvd_initialized = true;
         return 0;
 }
 
