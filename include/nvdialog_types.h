@@ -57,6 +57,7 @@ typedef enum {
         NVD_STRING_EMPTY,
         NVD_OUT_OF_MEMORY,
         NVD_INTERNAL_ERROR,
+        NVD_ALREADY_INITIALIZED,
 } NvdError;
 
 /**
