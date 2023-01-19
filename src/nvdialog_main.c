@@ -47,9 +47,7 @@
 #include "backend/win32/nvdialog_win32.h"
 #endif /* _WIN32 */
 #include "nvdialog_types.h"
-
-extern void nvd_show_dialog_gtk(NvdDialogBox*);
-
+#include <stdint.h>
 
 static char *nvd_app_name = "NvDialog Application";
 static char *nvd_argv_0   = NULL;
