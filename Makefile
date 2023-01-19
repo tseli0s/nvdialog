@@ -21,3 +21,6 @@ install: $(OUTFILE) $(PUBHEADER)
 	@cp $(OUTFILE)   /usr/lib
 	@cp $(OUTFILE)   /usr/lib/$(OUTFILE).1 # Just to avoid compatibility issues.
 	@echo "Successful."
+
+clean: $(OUTFILE) build/
+	@rm -rv $(OUTFILE) build/ && echo "Done."
