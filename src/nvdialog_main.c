@@ -26,7 +26,7 @@
  * As honest as I can, I couldn't care less
  * about safety from a 30 year old function.
  */
-#define _CRT_SECURE_NO_WARNINGS 1
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
@@ -67,7 +67,6 @@ const char *nvd_get_argv() { return nvd_argv_0; }
  * at build time.
 */
 __attribute__((constructor))
-#warning Nothing serious. Just verifying something.
 #endif
 int nvd_init(char *program) {
         #ifdef __GNUC__
