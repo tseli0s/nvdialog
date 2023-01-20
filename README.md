@@ -13,7 +13,8 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 <img src="https://img.shields.io/github/license/AndroGR/nvdialog?color=blue&label=License">
 <img src="https://img.shields.io/github/issues/AndroGR/nvdialog">
 <img src="https://img.shields.io/github/commits-since/AndroGR/nvdialog/v0.5.0?label=Commits%20since%200.5.0&logo=git">
-<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/ci.yml?branch=master&label=GNU%2FLinux&logo=github">
+<br>
+<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/ubuntu.yml?label=Ubuntu">
 <img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/macosx.yml?branch=master&label=MacOS%20X&logo=github">
 <img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/win32-ci.yml?branch=master&label=Windows%2010&logo=github">
 <br> <br>
