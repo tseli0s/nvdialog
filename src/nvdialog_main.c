@@ -58,14 +58,6 @@ static uint8_t nvd_times_initialized     = 0;
 
 const char *nvd_get_argv() { return nvd_argv_0; }
 
-#ifdef __GNUC__
-/*
- * GCC offers an extension that will run a function before main().
- * TODO: Preferably make this optional (Along with other extensions)
- * at build time.
-*/
-__attribute__((constructor))
-#endif
 int nvd_init(char *program) {
         #ifdef __GNUC__
         if (nvd_initialized) {
