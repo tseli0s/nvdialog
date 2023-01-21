@@ -59,22 +59,10 @@ static uint8_t nvd_times_initialized     = 0;
 const char *nvd_get_argv() { return nvd_argv_0; }
 
 int nvd_init(char *program) {
-        #ifdef __GNUC__
-        if (nvd_initialized) {
-                if (nvd_times_initialized >= 1) {
-                        nvd_set_error(NVD_ALREADY_INITIALIZED);
-                        return -3;
-                } else {
-                        nvd_times_initialized++;
-                        return 0;
-                }
-        }
-        #else
         if (nvd_initialized) {
                 nvd_set_error(NVD_ALREADY_INITIALIZED);
                 return -NVD_ALREADY_INITIALIZED;
         }
-        #endif /* __GNUC__ */
 #if defined (__linux__)
         setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
         setlinebuf(stderr);
