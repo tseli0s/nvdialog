@@ -25,6 +25,7 @@
 #include "nvdialog_sandbox.h"
 #include "../../../nvdialog_assert.h"
 #include <stdlib.h>
+#include <gtk/gtk.h>
 
 #define TIMEOUT_MAX_SECONDS (25)
 
@@ -36,7 +37,7 @@ struct _NvdFileDialog {
 
 static char* _nvd_native_filename = NULL;
 
-static void file_callback(GtkNativeDialog *native,
+static void file_cb_response(GtkNativeDialog *native,
                           int              response) {
         if (response == GTK_RESPONSE_ACCEPT) {
                 GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
@@ -73,7 +74,7 @@ NvdFileDialog *nvd_open_file_dialog_sndbx(const char *title,
                                                              GTK_FILE_CHOOSER_ACTION_OPEN,
                                                              "Open",
                                                              "Cancel");
-        g_signal_connect(dialog->raw, "response", G_CALLBACK(file_callback), NULL);
+        g_signal_connect(dialog->raw, "response", G_CALLBACK(file_cb_response), NULL);
         return dialog;
 }
 

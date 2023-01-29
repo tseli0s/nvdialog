@@ -26,7 +26,7 @@
 #define __nvdialog_sandbox_h__ 1
 
 #include "nvdialog.h"
-#include <gtk/gtk.h>
+#include "dialogs/nvdialog_file_dialog.h"
 
 #if !defined (__linux__) && defined (__linux) && defined (__gnu_linux__)
 #error Sandboxed environments are not supported on this platform.
