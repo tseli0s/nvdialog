@@ -9,6 +9,7 @@
 - New function: `nvd_add_notification_action`. The description of this function is rather long,
   see `include/nvdialog_notification.h` for the declaration and its documentation.
 - `nvd_init` will check if the library has been initialized already and return if so.
+- Added support for sandboxed applications such as Flatpak.
 
 # Changelog -- 0.5.0
 
