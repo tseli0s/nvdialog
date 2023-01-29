@@ -8,6 +8,7 @@ option(WIN32_TARGET "Build the library for Windows usage. Requires x86_64-w64-mi
 option(COCOA_TARGET "Build the library for MacOS/Cocoa usage." ON)
 option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental." OFF) # Default since 0.2.0-plus-some-commits.
 option(NVD_BUILD_STATIC "Build NvDialog as a static library. Experimental." OFF)
+option(NVD_SANDBOX_SUPPORT "Include support for sandboxed applications (Flatpak, AppImage, Snaps, ...)" ON)
 
 set(NVDIALOG_MAXBUF 4096)
 
@@ -81,6 +82,9 @@ if (NOT NVD_USE_GTK4)
                             src/backend/gtk/nvdialog_question_dialog.c
                             src/backend/gtk/nvdialog_css_manager.c
                             src/backend/gtk/nvdialog_notification.c)
+        if (NVD_SANDBOX_SUPPORT)
+                add_subdirectory(${CMAKE_SOURCE_DIR}/src/backend/subbackend/sandboxed/ ${CMAKE_SOURCE_DIR}/build-extra/)
+        endif()
         set(NVD_SOURCES ${NVD_GTK_SOURCES} src/core/nvdialog_structs.c src/nvdialog_error.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
 else()
         add_compile_definitions(NVD_USE_GTK4)
@@ -150,7 +154,11 @@ else(WIN32 OR WIN32_TARGET)
                         add_compile_definitions(NVD_STATIC_LINKAGE)
                 else(NVD_BUILD_STATIC)
                         add_library(nvdialog SHARED ${NVD_SOURCES})
-                        target_link_libraries(nvdialog ${GTK_LIBRARIES})
+                        if (NVD_SANDBOX_SUPPORT)
+                                target_link_libraries(nvdialog ${GTK_LIBRARIES} nvdialog_sandbox_impl)
+                        else()
+                                target_link_libraries(nvdialog ${GTK_LIBRARIES})
+                        endif(NVD_SANDBOX_SUPPORT)
                 endif()
 endif(WIN32 OR WIN32_TARGET)
 
