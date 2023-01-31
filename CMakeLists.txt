@@ -9,6 +9,7 @@ option(COCOA_TARGET "Build the library for MacOS/Cocoa usage." ON)
 option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental." OFF) # Default since 0.2.0-plus-some-commits.
 option(NVD_BUILD_STATIC "Build NvDialog as a static library. Experimental." OFF)
 option(NVD_SANDBOX_SUPPORT "Include support for sandboxed applications (Flatpak, AppImage, Snaps, ...)" ON)
+option(NVD_INSTALL_PKGCONFIG "Install a configuration file for pkg-config (Recommended for Linux)" OFF)
 
 set(NVDIALOG_MAXBUF 4096)
 
@@ -175,8 +176,7 @@ target_include_directories(nvdialog PRIVATE include/)
 include(GNUInstallDirs)
 
 find_package(PkgConfig)
-if (PKG_CONFIG_FOUND)
-        message(STATUS "pkg-config was detected, NvDialog will generate a pkg-config script too.")
+if (PKG_CONFIG_FOUND AND NVD_INSTALL_PKGCONFIG)
         set(target1 nvdialog)
         set(pc_libs_private)
         set(pc_req_private)
