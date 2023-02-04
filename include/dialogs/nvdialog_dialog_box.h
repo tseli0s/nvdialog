@@ -23,6 +23,7 @@
  */
 
 #include "../nvdialog_platform.h"
+#include "../nvdialog_types.h"
 
 /**
  * @brief The core type for managing and identifying dialog boxes.
