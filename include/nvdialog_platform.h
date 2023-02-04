@@ -22,23 +22,33 @@
  * IN THE SOFTWARE.
  */
 
-#pragma once
+#ifndef __nvdialog_platform_h__
+#define __nvdialog_platform_h__ (1)
 
-#ifdef __nvdialog_dialog_h__
-#error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
-#endif /* __nvdialog_dialog_h__ */
+#if defined (_WIN32)    || defined (WIN32)
+#if defined (__clang__) || defined(__GNUC__)
+#define NVD_API_EXPORT __attribute__((dllexport))
+#else /* __clang__ */
+#define NVD_API_EXPORT __declspec(dllexport)
+#endif /* NVD_API */
+#else /* _WIN32 */
+#define NVD_API_EXPORT
+#endif /* _WIN32 */
 
-#ifndef __nvdialog_dialog_h__
-#define __nvdialog_dialog_h__ 1
+#if defined (_WIN32)    || defined (WIN32)
+#if defined (__clang__) || defined(__GNUC__)
+#define NVD_API_IMPORT __attribute__((dllimport))
+#else /* __clang__ */
+#define NVD_API_IMPORT __declspec(dllimport)
+#endif /* NVD_API */
+#else /* _WIN32 */
+#define NVD_API_IMPORT
+#endif /* _WIN32 */
 
-#ifndef __nvdialog_h__
-#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif /* __nvdialog_h__ */
+#if defined (NVD_EXPORT_SYMBOLS)
+#define NVD_API NVD_API_EXPORT
+#else
+#define NVD_API NVD_API_IMPORT
+#endif /* DLLEXPORT */
 
-#include "nvdialog_platform.h"
-
-#include "dialogs/nvdialog_about_dialog.h"
-#include "dialogs/nvdialog_dialog_box.h"
-#include "dialogs/nvdialog_file_dialog.h"
-
-#endif /* __nvdialog_dialog_h__ */
+#endif /* __nvdialog_platform_h__ */
