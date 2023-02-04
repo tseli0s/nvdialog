@@ -29,8 +29,42 @@
 extern "C" {
 #endif /* __cplusplus */
 
+/**
+ * @mainpage
+ * <b>Documentation</b>
+ * This manual documents the NvDialog library, a dialog box library written in C
+ * that uses the system theme.
+ *
+ * To get started, you should read about @ref NvdDialogBox, which is a simple dialog
+ * box with nothing special in it. NvDialog also provides the following features as part
+ * of its API\:
+ * - @ref NvdAboutDialog
+ * - @ref NvdQuestionDialog
+ * - @ref NvdFileDialog
+ * 
+ * <example>
+ * If you want to check out some code before using this library in your
+ * project, this is a simple example: (Taken directly from the <a href="https://github.com/AndroGR/nvdialog>GitHub README</a>)
+ * <code>
+ * #include <nvdialog/nvdialog.h>
+ * int main(int argc, char** argv) {
+ *      NvdDialogBox *dialog = nvd_dialog_box_new("Dialog Title", "Dialog Message", NVD_DIALOG_SIMPLE);
+ *      if (!dialog) return -1;
+ *
+ *      nvd_show_dialog(dialog);
+ *      nvd_free_object(dialog);
+ *
+ *      return 0;
+ * }
+ * </code>
+ * </example>
+ */
+
+/** Major version of NvDialog at compile time. */
 #define NVDIALOG_VERSION_MAJOR 0
+/** Minor version of NvDialog at compile time. */
 #define NVDIALOG_VERSION_MINOR 5
+/** Patch version of NvDialog at compile time. */
 #define NVDIALOG_VERSION_PATCH 0
 
 /** @brief A macro to set the version at compile time. */
@@ -80,9 +114,11 @@ extern "C" {
 
 /**
  * @brief Returns the version of nvdialog currently linked with.
- * For a compile time alternative implementation see the
+ * @details For a compile time alternative implementation see the
  * NVDIALOG_VERSION_MAJOR, NVDIALOG_VERSION_MINOR and NVDIALOG_VERSION_PATCH
  * constants.
+ * @note The versioning API was introduced in v0.2.0, and will cause problems with earlier versions.
+ * @returns The version of NvDialog linked with at runtime.
  */
 NvdVersion nvd_get_version();
 
