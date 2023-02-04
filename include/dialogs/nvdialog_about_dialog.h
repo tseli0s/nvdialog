@@ -22,6 +22,8 @@
  * IN THE SOFTWARE.
  */
 
+#include "../nvdialog_platform.h"
+
 /**
  * @brief An opaque handle to a dialog box created from
  * @ref nvd_about_dialog_new.
