@@ -40,13 +40,16 @@
  * - NVD_DIALOG_ERROR   -> An error message box.
  */
 typedef enum {
-        NVD_DIALOG_SIMPLE = 0xff,
-        NVD_DIALOG_WARNING,
-        NVD_DIALOG_ERROR,
+        NVD_DIALOG_SIMPLE = 0xff, /**< A simple dialog box, no decorations. */
+        NVD_DIALOG_WARNING,       /**< A warning message to be used for warnings, with warning color styling. */
+        NVD_DIALOG_ERROR,         /**< An error message box, with error styling. */
 } NvdDialogType;
 
-/** @brief The enumerator containing most
-   errors the library can handle. */
+/** 
+ * @brief The enumerator containing most
+ * errors the library can handle.
+ * @sa @ref nvd_stringify_error
+ */
 typedef enum {
         NVD_NO_ERROR   = 0,
         NVD_NO_DISPLAY = 0xff,
@@ -63,6 +66,8 @@ typedef enum {
 /**
  * @brief Enumerator containing the possible arguments for
  * nvd_dialog_question_new().
+ * @since v0.1.0
+ * @sa nvd_dialog_question_new
  */
 typedef enum {
         NVD_YES_NO = 0x04,
@@ -71,20 +76,28 @@ typedef enum {
 } NvdQuestionButton;
 
 /**
- * @brief This enum is returned as the reply of a question widget.
- * Usually you should use this instead of raw integers.
+ * @brief Returned value by @ref nvd_get_reply .
+ * @sa nvd_get_reply
+ * @since v0.1.1
  */
-typedef enum { NVD_REPLY_OK = 0x04, NVD_REPLY_CANCEL, NVD_REPLY_NO } NvdReply;
+typedef enum {
+        NVD_REPLY_OK = 0x04, /**< User accepted the question. */
+        NVD_REPLY_CANCEL,    /**< User cancelled the question. Also used as a fallback. */
+        NVD_REPLY_NO         /**< User rejected the question. */
+} NvdReply;
 
 /**
- * @brief A struct that identifies a version of nvdialog.
- * This struct is returned by nvd_get_version().
+ * @brief A struct that identifies the version of NvDialog.
+ * @details This struct contains a series of fields that hold information about
+ * NvDialog's version. The struct can be used at both compile-time and runtime
+ * using respectively @ref NVD_VERSION and @ref nvd_get_version .
+ * @sa nvd_get_version
  */
 typedef struct {
-        short major;
-        short minor;
-        short patch;
-        char *string;
+        short major;  /**< Major version of NvDialog. */
+        short minor;  /**< Minor version of NvDialog. */
+        short patch;  /**< Patch version of NvDialog. */
+        char *string; /**< String representation of the version for eg. printf() calls. */
 } NvdVersion;
 
 #endif /* __nvdialog_types_h__ */

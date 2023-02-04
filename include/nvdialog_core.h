@@ -26,7 +26,7 @@
 
 #include "nvdialog.h"
 #ifdef __nvdialog_core_h__
-#error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
+#error[ NVDIALOG ] Header file included twice, only #include <nvdialog/nvdialog.h>
 #endif /* __nvdialog_core_h__ */
 
 #ifndef __nvdialog_core_h__
@@ -42,8 +42,18 @@
 typedef void *NvdParentWindow;
 
 /**
- * @brief Initializes the library.
- * @param program The argv[0] of your program.
+ * @brief Initializes NvDialog.
+ * 
+ * This function initializes NvDialog. It's the first function that should be called
+ * when you create your program as without it, you cannot create any dialogs or use the
+ * library at all.
+ *
+ * @note You should call this function to the same thread you're creating your dialogs from.
+ * If you also happen to use a library used by NvDialog as the backend, make sure that the two libraries
+ * stay in the same thread to avoid race conditions.
+ * @param program The argv[0] of your program, required on some backends.
+ * @since v0.1.0
+ * @ingroup Core
  * @return 0 on success, else a negative error code indicating failure.
  */
 NVD_API int nvd_init(char *program);
@@ -60,6 +70,7 @@ NVD_API void nvd_set_application_name(const char* application_name);
 /**
  * @brief Returns the application name set inside NvDialog.
  * @return The application name.
+ * @since v0.5.0
  */
 NVD_API const char *nvd_get_application_name();
 
@@ -74,7 +85,8 @@ NVD_API const char *nvd_get_argv(void);
 /**
  * @brief Sets a window as the parent of all dialogs created from NvDialog.
  * @details Using the parameter given, a window will be set as the parent of all
- * dialogs that are created from within the library.
+ * dialogs that are created from within the library. The window has to match the
+ * window type used by the backend.
  * @note This is a very dangerous function, and may not work as expected.
  * @param parent The window to set as the parent.
  * @return 0 on success, otherwise -1, call nvd_get_error() for more.
@@ -90,8 +102,10 @@ NVD_API NvdParentWindow nvd_get_parent(void);
 
 /**
  * @brief Unmarks the window set from @ref nvd_set_parent as the parent window.
- * @details This will reset the changes made by @ref nvd_set_parent, by
+ *
+ * This will reset the changes made by @ref nvd_set_parent, by
  * unmarking the window that is given as the parent from NvDialog.
+ *
  */
 NVD_API void nvd_delete_parent(void);
 
@@ -99,8 +113,7 @@ NVD_API void nvd_delete_parent(void);
  * @brief Deletes an object creates by NvDialog.
  * @details Call this function when you are no longer interested in using the
  * parameter passed anymore, to free up any resources occupied by the object.
- * Note that calling this in the middle of an operation will cause undefined
- * behavior.
+ * Note that calling this in the middle of an operation will cause use after free.
  * @param object The object to be deleted.
  */
 NVD_API void nvd_free_object(void *object);

@@ -38,18 +38,21 @@
 
 /**
  * @brief Returns the current error code of the library.
+ *
  * The error code has to be manually be transformed into a string
- * using nvd_stringify_error. Else, use the NvdError enum to check for
+ * using @ref nvd_stringify_error. Else, use the @ref NvdError enum to check for
  * the error manually.
- * @returns The error code.
+ *
+ * @returns The error code (Will be automatically 0 if no errors were encountered).
  */
 NVD_API NvdError nvd_get_error(void);
 
 /**
  * @brief Transforms an error code into a string representation, that can be
- * used to print errors to the console. Recommended: Enable automatic logging of
- * the library's errors instead of manually logging them yourself.
+ * used to print errors to the console.
  * @returns The string representation of the error, or NULL on failure.
+ * @note The string returned is saved inside the function as static, and each call
+ * simply overwrites it.
  */
 NVD_API const char *nvd_stringify_error(NvdError err);
 

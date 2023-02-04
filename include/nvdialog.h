@@ -39,15 +39,15 @@ extern "C" {
  * box with nothing special in it. NvDialog also provides the following features as part
  * of its API\:
  * - @ref NvdAboutDialog
- * - @ref NvdQuestionDialog
+ * - @ref NvdQuestionBox
  * - @ref NvdFileDialog
  * 
- * <example>
  * If you want to check out some code before using this library in your
- * project, this is a simple example: (Taken directly from the <a href="https://github.com/AndroGR/nvdialog>GitHub README</a>)
- * <code>
+ * project, this is a simple example: (Taken directly from the [GitHub README](https://github.com/AndroGR/nvdialog)).
+ * @code
  * #include <nvdialog/nvdialog.h>
  * int main(int argc, char** argv) {
+ *      nvd_init(argv[0]);
  *      NvdDialogBox *dialog = nvd_dialog_box_new("Dialog Title", "Dialog Message", NVD_DIALOG_SIMPLE);
  *      if (!dialog) return -1;
  *
@@ -56,8 +56,7 @@ extern "C" {
  *
  *      return 0;
  * }
- * </code>
- * </example>
+ * @endcode
  */
 
 /** Major version of NvDialog at compile time. */
