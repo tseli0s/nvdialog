@@ -22,9 +22,6 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog.h"
-#include "../nvdialog_types.h"
-
 /**
  * @brief The core type for managing and identifying dialog boxes.
  * This struct should be returned from the library and not be shared across

@@ -22,8 +22,6 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog.h"
-
 /** @brief A type to represent a file dialog (Saving / Opening). */
 typedef struct _NvdFileDialog NvdFileDialog;
 
