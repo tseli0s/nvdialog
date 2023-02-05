@@ -24,37 +24,50 @@
 
 #include "../nvdialog_platform.h"
 
-/** @brief A type to represent a file dialog (Saving / Opening). */
+/**
+ * @brief An opaque file dialog type, representing either a file
+ * dialog that can be used to open a file or save a file.
+ * @since v0.1.0
+ */
 typedef struct _NvdFileDialog NvdFileDialog;
 
 /**
- * @brief Creates an open file dialog.
- * This function creates a dialog to open a file in the filesystem
- * through a GUI.
- * @param title The window title to display.
- * @param file_extensions If looking for specific file extension, put it here.
- * Else pass NULL.
- * @note INCOMPLETE FUNCTION - Do not use please.
- * @returns The filename path on success, otherwise NULL.
+ * @brief Creates a new, empty @ref NvdFileDialog to be used for
+ * retrieving a file and returns it.
+ *
+ * This creates a new file dialog and returns it. In order to use it, you must call
+ * @ref nvd_get_file_location and pass a pointer to write the file location to.
+ * @note This function creates problems with the Adwaita backend. Those problems should be
+ * fixed by the time v0.6.0 is officially released.
+ *
+ * @param title A string to put as the dialog title.
+ * @param file_extensions Unused legacy parameter, just pass NULL in here.
+ * @returns An empty @NvdFileDialog object if successful, otherwise NULL and an error retrievable
+ * through @ref nvd_get_error is set.
  */
 NVD_API NvdFileDialog *nvd_open_file_dialog_new(const char *title,
                                                 const char *file_extensions);
 
 /**
- * @brief Creates a file dialog that can be used to save a file
- * into the location chosen by the user.
+ * @brief Creates a new, empty @NvdFileDialog object that will be used to save a
+ * file in the selected (from the user) location.
  * @param title The title of the dialog, default is "Save file"
- * @param default_filename The default filename to use.
- * @return A handle to the dialog for future use.
+ * @param default_filename The default filename to use for saving.
+ * @return An @NvdFileDialog on success, otherwise NULL and @ref nvd_get_error should
+ * be called to get the failure reason.
  */
 NVD_API NvdFileDialog *nvd_save_file_dialog_new(const char *title,
                                                 const char *default_filename);
 /**
- * @brief Returns a raw location on the filesystem from the dialog given.
- * @details This function will return the raw location of the dialog (eg. /home/someone/.local/share/)
- * given to the buffer passed.
- * @param dialog The file dialog to use for the operation.
- * @param savebuf A pointer to a buffer where the location will be saved.
+ * @brief Returns the filesystem path chosen through the @ref NvdFileDialog passed.
+ *
+ * This function will return the path on the filesystem from the dialog chosen, that you can
+ * then use to either open or save the file given. It works with both save and open file dialog
+ * types.
+ *
+ * @sa nvd_open_file_dialog_new
+ * @param dialog The file dialog to take the filename from.
+ * @param savebuf A pointer to a buffer where the path will be written, must not be NULL.
  */
 NVD_API void nvd_get_file_location(NvdFileDialog* dialog, const char** savebuf);
 
