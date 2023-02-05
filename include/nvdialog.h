@@ -32,6 +32,7 @@ extern "C" {
 /**
  * @mainpage
  * <b>Documentation</b>
+ *
  * This manual documents the NvDialog library, a dialog box library written in C
  * that uses the system theme.
  *
@@ -41,7 +42,8 @@ extern "C" {
  * - @ref NvdAboutDialog
  * - @ref NvdQuestionBox
  * - @ref NvdFileDialog
- * 
+ *
+ * # Examples
  * If you want to check out some code before using this library in your
  * project, this is a simple example: (Taken directly from the [GitHub README](https://github.com/AndroGR/nvdialog)).
  * @code
@@ -57,6 +59,11 @@ extern "C" {
  *      return 0;
  * }
  * @endcode
+ * # Other Resources
+ * - [GitHub URL](https://github.com/AndroGR/nvdialog.git)
+ * - [Homepage](https://i.am.working.on.it)
+ * - [Bug Tracker](https://github.com/AndroGR/nvdialog/issues)
+ * - [Releases](https://github.com/AndroGR/nvdialog/releases)
  */
 
 /** Major version of NvDialog at compile time. */
