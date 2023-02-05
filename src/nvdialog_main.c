@@ -59,6 +59,7 @@ static uint8_t nvd_times_initialized     = 0;
 const char *nvd_get_argv() { return nvd_argv_0; }
 
 static int nvd_check_libnotify(void) {
+        #if defined (NVD_USE_GTK4) || defined (NVD_PLATFORM_LINUX)
         void *lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
         if (!lib) {
                 nvd_error_message("Couldn't load libnotify.so: %s", dlerror());
@@ -82,6 +83,8 @@ static int nvd_check_libnotify(void) {
                 }
         }
         dlclose(lib); /* We are going to load it seperately once needed. */
+        #endif /* NVD_USE_GTK4 || NVD_PLATFORM_LINUX */
+        return 0;
 }
 
 int nvd_init(char *program) {
