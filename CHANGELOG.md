@@ -9,7 +9,15 @@
 - New function: `nvd_add_notification_action`. The description of this function is rather long,
   see `include/nvdialog_notification.h` for the declaration and its documentation.
 - `nvd_init` will check if the library has been initialized already and return if so.
+- Fixed some build errors on newer distributions (Especially on the Adwaita backend).
+- Improved the documentation largely. Now `doxygen` will be used to generate documentation.
+- Setting the environment variable `NVD_NO_NOTIFS` to `1` will disable the `libnotify` dependency
+  on Unix systems.
 
+## **WIP:**
+- Adding Android support (Should be done by the next version).
+- Adding support for sandboxed environments, and by extension, immutable Linux distributions
+(such as VanillaOS).
 # Changelog -- 0.5.0
 
 - Added custom CSS stylesheet support (`NvdCSSManager`).
