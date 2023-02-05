@@ -94,6 +94,7 @@ set(NVD_HEADERS include/nvdialog_dialog.h
     include/nvdialog_capab.h
     include/nvdialog_types.h
     include/nvdialog_error.h
+    include/nvdialog_platform.h
     include/nvdialog.h)
 set(NVD_EXTRA_HEADERS include/dialogs/nvdialog_file_dialog.h include/dialogs/nvdialog_about_dialog.h include/dialogs/nvdialog_dialog_box.h)
 
