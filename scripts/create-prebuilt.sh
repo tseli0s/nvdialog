@@ -2,7 +2,7 @@
 
 #
 #     The MIT License (MIT)
-#     Copyright (c) 2022 Aggelos Tselios
+#     Copyright (c) 2023 Aggelos Tselios
 #     This file is part of NvDialog.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
