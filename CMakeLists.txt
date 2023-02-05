@@ -134,6 +134,8 @@ else(WIN32 OR WIN32_TARGET)
                                 set(NVD_SOURCES ${NVD_SOURCES} ${NVD_ADW_SOURCES})
                                 message("Sources are: ${NVD_SOURCES}")
                                 pkg_check_modules(GTK "libadwaita-1") # Well actually, libadwaita isn't Gtk4, but who cares anyways :P
+                                message(STATUS "DEBUG: libadwaita flags are: ${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}")
+                                add_definitions(${GTK_CFLAGS} ${GTK_CFLAGS_OTHER})
                         else(NVD_USE_GTK4)
                                 pkg_check_modules(GTK "gtk+-3.0")
                         endif(NVD_USE_GTK4)
