@@ -22,8 +22,12 @@
  * IN THE SOFTWARE.
  */
 
+#define NVD_APP_ID (32512)
+
 #include "../../nvdialog_assert.h"
 #include "nvdialog_win32.h"
+#include <stdint.h>
+#include <windows.h>
 
 struct _NvdNotification {
         char *title;
@@ -44,19 +48,54 @@ NvdNotification *nvd_notification_win32(const char   *title,
         notification->contents = (char*) msg;
         notification->type     = type;
         notification->shown    = false;
+        
+        /* Heap allocating to save it inside notification->raw */
+        NOTIFYICONDATA *nid = malloc(sizeof(NOTIFYICONDATA));;
+        if (!nid) {
+                nvd_set_error(NVD_OUT_OF_MEMORY);
+                free(notification);
+                return NULL;
+        }
 
+        uint32_t icon = 0x0;
+        switch (notification->type) {
+        case NVD_NOTIFICATION_SIMPLE:
+                icon = NIIF_INFO;
+                break;
+        case NVD_NOTIFICATION_WARNING:
+                icon = NIIF_WARNING;
+                break;
+        case NVD_NOTIFICATION_ERROR:
+                icon = NIIF_ERROR;
+                break;
+        default:
+                nvd_error_message("Invalid type (%d) for notification passed.", type);
+                icon = NIIF_INFO; /* Fallback. */
+                break;
+        }
+
+        nid->cbSize       = sizeof(NOTIFYICONDATA);
+        nid->hWnd         = nvd_get_parent();
+        nid->uID          = NVD_APP_ID;
+        nid->uFlags       = NIF_INFO | NIF_ICON | NIF_REALTIME;
+        nid->dwInfoFlags  = icon     | NIIF_RESPECT_QUIET_TIME;
+        nid->uTimeout     = 5000;
+
+        snprintf(nid->szInfo, 256, "%s", msg);
+        strcpy(nid->szInfoTitle, title);
+
+        notification->raw = nid;
         return notification;
 }
 
 void nvd_send_notification_win32(NvdNotification *notification) {
-        /* 
-         * TODO: Implement function. Unfortunately I couldn't find any C-only
-         * way to do this, because Microsoft likes to make my life harder.
-         * I imagine we could have a small C++ implementation that we will
-         * statically link with NvDialog?
-         */
+    Shell_NotifyIcon(NIM_ADD, notification->raw);
 }
 
+/* 
+ * This will require us to work with IToastNotification.
+ * Leave it for someone who knows I guess.
+ */
 void nvd_add_notification_action_win32(NvdNotification* unused,
                                        const char* _unused,
                                        int __unused,
