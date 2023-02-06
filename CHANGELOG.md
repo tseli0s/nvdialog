@@ -15,6 +15,7 @@
   on Unix systems.
 - New website for the library, created entirely with Doxygen: https://androgr.github.io/nv.dialog/ .
   From now on, the website will also be constantly updated with new documentation.
+- Added notification support for Windows (Vista and above will work only).
 
 ## **WIP:**
 - Adding Android support (Should be done by the next version).
