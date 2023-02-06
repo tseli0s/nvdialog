@@ -189,7 +189,7 @@ install(FILES ${NVD_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/)
 enable_testing()
 file(GLOB NVDIALOG_TEST_FILES "tests/test_*.c")
 
-set(NVDIALOG_TESTS init;dialogs;multithreading;aboutdlg;question)
+set(NVDIALOG_TESTS init;dialogs;multithreading;aboutdlg;question;notification)
 foreach(test_executable ${NVDIALOG_TESTS})
         add_executable(nvdialog_${test_executable}_test tests/test_${test_executable}.c)
         target_compile_definitions(nvdialog_${test_executable}_test PRIVATE NVDIALOG_TESTING)
