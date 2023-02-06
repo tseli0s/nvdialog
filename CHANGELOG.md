@@ -13,6 +13,8 @@
 - Improved the documentation largely. Now `doxygen` will be used to generate documentation.
 - Setting the environment variable `NVD_NO_NOTIFS` to `1` will disable the `libnotify` dependency
   on Unix systems.
+- New website for the library, created entirely with Doxygen: https://androgr.github.io/nv.dialog/ .
+  From now on, the website will also be constantly updated with new documentation.
 
 ## **WIP:**
 - Adding Android support (Should be done by the next version).
