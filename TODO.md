@@ -5,5 +5,5 @@
 - [x] Add save file dialog (Done)
 - [ ] Move to version 1.0 (Targeted for 0.7.0 and afterwards).
 - [ ] Work on Android Port (In progress).
-- [ ] Fix Gtk4 file dialog not working.
+- [x] Fix Gtk4 file dialog not working.
 - [ ] Add portal support (For sandboxed environments such as Flatpak).
