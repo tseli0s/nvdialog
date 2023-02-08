@@ -16,11 +16,13 @@
 - New website for the library, created entirely with Doxygen: https://androgr.github.io/nv.dialog/ .
   From now on, the website will also be constantly updated with new documentation.
 - Added notification support for Windows (Vista and above will work only).
+- Fixed the Gtk4 file dialog not working.
 
 ## **WIP:**
 - Adding Android support (Should be done by the next version).
 - Adding support for sandboxed environments, and by extension, immutable Linux distributions
 (such as VanillaOS).
+
 # Changelog -- 0.5.0
 
 - Added custom CSS stylesheet support (`NvdCSSManager`).
