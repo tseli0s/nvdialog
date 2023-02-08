@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2022 Aggelos Tselios
+ *  Copyright (c) 2023 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -24,6 +24,9 @@
 
 #ifndef __nvdialog_adw_h__
 #define __nvdialog_adw_h__
+
+#define GDK_DISABLE_DEPRECATED
+#define GTK_DISABLE_DEPRECATED
 
 #include "nvdialog.h"
 #include "dialogs/nvdialog_about_dialog.h"

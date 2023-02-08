@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2022 Aggelos Tselios
+ *  Copyright (c) 2023 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -58,33 +58,11 @@ static uint8_t nvd_times_initialized     = 0;
 
 const char *nvd_get_argv() { return nvd_argv_0; }
 
-int nvd_init(char *program) {
-        if (nvd_initialized) {
-                nvd_set_error(NVD_ALREADY_INITIALIZED);
-                return -NVD_ALREADY_INITIALIZED;
-        }
-#if defined (__linux__)
-        setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
-        setlinebuf(stderr);
-#endif /* _WIN32 */
-        nvd_argv_0 = program;
-#if !defined(_WIN32) && !defined(NVD_USE_COCOA) /* On Windows the DISPLAY variable isn't set at all */
-        if (!getenv("DISPLAY")) {
-                nvd_set_error(NVD_NO_DISPLAY);
-                return -1;
-        }
-
-/* Apparently in Gtk4 the gtk_init function doesn't require any arguments. */
-#if !defined(NVD_USE_GTK4)
-        int    __argc__ = 1;
-        char **__argv__ = {
-            &program,
-        };
-        gtk_init(&__argc__, &__argv__);
-
+static int nvd_check_libnotify(void) {
+        #if defined (NVD_USE_GTK4) || defined (NVD_PLATFORM_LINUX)
         void *lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
         if (!lib) {
-                nvd_error_message("Couldn't load libnotify.so, %s", dlerror());
+                nvd_error_message("Couldn't load libnotify.so: %s", dlerror());
                 return -1;
         } else {
                 /* 
@@ -94,37 +72,50 @@ int nvd_init(char *program) {
                 gboolean (*nvd_notify_init)(char*) = dlsym(lib, "notify_init");
                 if (!nvd_notify_init) {
                         dlclose(lib);
-                        nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
+                        nvd_error_message("libnotify is missing 'notify_init' symbol (Perhaps incompatible version?): %s", dlerror());
                         return -1;
                 }
 
                 if (!nvd_notify_init(nvd_app_name)) {
                         dlclose(lib);
-                        nvd_error_message("Couldn't initialize libnotify, stopping here.");
+                        nvd_error_message("Checking libnotify failed.");
                         return -1;
                 }
         }
         dlclose(lib); /* We are going to load it seperately once needed. */
+        #endif /* NVD_USE_GTK4 || NVD_PLATFORM_LINUX */
+        return 0;
+}
+
+int nvd_init(char *program) {
+        if (nvd_initialized) {
+                nvd_set_error(NVD_ALREADY_INITIALIZED);
+                return -NVD_ALREADY_INITIALIZED;
+        }
+#if defined (__linux__)
+        setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
+        setlinebuf(stderr);
+#endif /* __linux__ */
+        nvd_argv_0 = program;
+#if !defined(_WIN32) && !defined(NVD_USE_COCOA)
+
+/* Apparently in Gtk4 the gtk_init function doesn't require any arguments. */
+#if !defined(NVD_USE_GTK4)
+        int    __argc__ = 1;
+        char **__argv__ = {
+            &program,
+        };
+        gtk_init(&__argc__, &__argv__);
+
+        if (getenv("NVD_NO_NOTIFS") == NULL || atoi(getenv("NVD_NO_NOTIFS"))) {
+                /* Since this function used to be inlined here, make it easy for us and just return what it returns. */
+                return nvd_check_libnotify();
+        }
 #else
-        void *lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
-        if (!lib) {
-                nvd_error_message("Couldn't load libnotify.so, %s", dlerror());
-                return -1;
-        } else {
-                gboolean (*nvd_notify_init)(char*) = dlsym(lib, "notify_init");
-                if (!nvd_notify_init) {
-                        dlclose(lib);
-                        nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
-                        return -1;
-                }
-
-                if (!nvd_notify_init(nvd_app_name)) {
-                        dlclose(lib);
-                        nvd_error_message("Couldn't initialize libnotify, stopping here.");
-                        return -1;
-                }
+        if (getenv("NVD_NO_NOTIFS") == NULL || atoi(getenv("NVD_NO_NOTIFS"))) {
+                /* Since this function used to be inlined here, make it easy for us and just return what it returns. */
+                return nvd_check_libnotify();
         }
-        dlclose(lib); /* We are going to load it seperately once needed. */
         adw_init();
 #endif /* NVD_USE_GTK4 */
 #endif /* _WIN32 && NVD_USE_COCOA */

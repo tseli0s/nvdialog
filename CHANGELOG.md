@@ -9,7 +9,19 @@
 - New function: `nvd_add_notification_action`. The description of this function is rather long,
   see `include/nvdialog_notification.h` for the declaration and its documentation.
 - `nvd_init` will check if the library has been initialized already and return if so.
-- Added support for sandboxed applications such as Flatpak.
+- Fixed some build errors on newer distributions (Especially on the Adwaita backend).
+- Improved the documentation largely. Now `doxygen` will be used to generate documentation.
+- Setting the environment variable `NVD_NO_NOTIFS` to `1` will disable the `libnotify` dependency
+  on Unix systems.
+- New website for the library, created entirely with Doxygen: https://androgr.github.io/nv.dialog/ .
+  From now on, the website will also be constantly updated with new documentation.
+- Added notification support for Windows (Vista and above will work only).
+- Fixed the Gtk4 file dialog not working.
+
+## **WIP:**
+- Adding Android support (Should be done by the next version).
+- Adding support for sandboxed environments, and by extension, immutable Linux distributions
+(such as VanillaOS).
 
 # Changelog -- 0.5.0
 

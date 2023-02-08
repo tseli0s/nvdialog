@@ -37,7 +37,8 @@ if(WIN32_TARGET)
 else()
         if (MSVC)
                 message("NOTE: Compiling using MSVC is still experimental, prefer GCC or CLang if available.")
-                set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W3")
+                set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
+                add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
         else()
                 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-all -fstack-clash-protection -Wno-unused-parameter --param ssp-buffer-size=4 -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
         endif()
@@ -105,6 +106,7 @@ set(NVD_HEADERS include/nvdialog_dialog.h
     include/nvdialog_capab.h
     include/nvdialog_types.h
     include/nvdialog_error.h
+    include/nvdialog_platform.h
     include/nvdialog.h)
 set(NVD_EXTRA_HEADERS include/dialogs/nvdialog_file_dialog.h include/dialogs/nvdialog_about_dialog.h include/dialogs/nvdialog_dialog_box.h)
 
@@ -145,6 +147,8 @@ else(WIN32 OR WIN32_TARGET)
                                                     src/backend/adw/nvdialog_notification.c)
                                 set(NVD_SOURCES ${NVD_SOURCES} ${NVD_ADW_SOURCES})
                                 pkg_check_modules(GTK "libadwaita-1") # Well actually, libadwaita isn't Gtk4, but who cares anyways :P
+                                message(STATUS "DEBUG: libadwaita flags are: ${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}")
+                                add_definitions(${GTK_CFLAGS} ${GTK_CFLAGS_OTHER})
                         else(NVD_USE_GTK4)
                                 pkg_check_modules(GTK "gtk+-3.0")
                         endif(NVD_USE_GTK4)
@@ -199,7 +203,7 @@ install(FILES ${NVD_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nvdialog/)
 enable_testing()
 file(GLOB NVDIALOG_TEST_FILES "tests/test_*.c")
 
-set(NVDIALOG_TESTS init;dialogs;multithreading;aboutdlg;question)
+set(NVDIALOG_TESTS init;dialogs;multithreading;aboutdlg;question;notification)
 foreach(test_executable ${NVDIALOG_TESTS})
         add_executable(nvdialog_${test_executable}_test tests/test_${test_executable}.c)
         target_compile_definitions(nvdialog_${test_executable}_test PRIVATE NVDIALOG_TESTING)

@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2022 Aggelos Tselios
+ *  Copyright (c) 2023 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -34,6 +34,8 @@
 #ifndef __nvdialog_h__
 #error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
 #endif /* __nvdialog_h__ */
+
+#include "nvdialog_platform.h"
 
 #include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"

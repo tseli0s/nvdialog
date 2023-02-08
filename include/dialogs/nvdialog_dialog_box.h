@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2022 Aggelos Tselios
+ *  Copyright (c) 2023 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -22,26 +22,45 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog.h"
+#include "../nvdialog_platform.h"
 #include "../nvdialog_types.h"
 
 /**
- * @brief The core type for managing and identifying dialog boxes.
- * This struct should be returned from the library and not be shared across
- * multiple threads / uses.
+ * @brief A type to identify a single dialog box.
+ * @note You can only use a dialog box once. Reusing it is undefined behavior.
+ * <b>Example:</b>
+ * @code
+ * #include <nvdialog/nvdialog.h>
+ * int main(int argc, char** argv) {
+ *      nvd_init(argv[0]);
+ *      NvdDialogBox *dialog = nvd_dialog_box_new("Hello World!",
+ *                                                "A simple dialog box.",
+ *                                                NVD_DIALOG_SIMPLE);
+ *      if (!dialog) return -1;
+ *
+ *      nvd_show_dialog(dialog);
+ *      nvd_free_object(dialog);
+ *
+ *      return 0;
+ * }
+ * @endcode
+ * @since v0.1.0
  */
 typedef struct _NvdDialogBox NvdDialogBox;
 
 /**
  * @brief A similar struct to @ref NvdDialogBox, but
  * instead used for question dialogs.
+ * @since v0.1.0
  */
 typedef struct _NvdQuestionBox NvdQuestionBox;
 
 /**
  * @brief Creates a new dialog object and returns it.
+ *
  * This function creates a simple dialog with the specified arguments,
- * and returns an opaque handle to it for use with @ref nvd_show_dialog().
+ * and returns an opaque handle to it for use with @ref nvd_show_dialog.
+ *
  * @return The dialog handle on success, else NULL.
  */
 NVD_API NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,

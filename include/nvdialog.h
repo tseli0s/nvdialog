@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2022 Aggelos Tselios
+ *  Copyright (c) 2023 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -29,8 +29,48 @@
 extern "C" {
 #endif /* __cplusplus */
 
+/**
+ * @mainpage
+ * <b>Documentation</b>
+ *
+ * This manual documents the NvDialog library, a dialog box library written in C
+ * that uses the system theme.
+ *
+ * To get started, you should read about @ref NvdDialogBox, which is a simple dialog
+ * box with nothing special in it. NvDialog also provides the following features as part
+ * of its API\:
+ * - @ref NvdAboutDialog
+ * - @ref NvdQuestionBox
+ * - @ref NvdFileDialog
+ *
+ * # Examples
+ * If you want to check out some code before using this library in your
+ * project, this is a simple example: (Taken directly from the [GitHub README](https://github.com/AndroGR/nvdialog)).
+ * @code
+ * #include <nvdialog/nvdialog.h>
+ * int main(int argc, char** argv) {
+ *      nvd_init(argv[0]);
+ *      NvdDialogBox *dialog = nvd_dialog_box_new("Dialog Title", "Dialog Message", NVD_DIALOG_SIMPLE);
+ *      if (!dialog) return -1;
+ *
+ *      nvd_show_dialog(dialog);
+ *      nvd_free_object(dialog);
+ *
+ *      return 0;
+ * }
+ * @endcode
+ * # Other Resources
+ * - [GitHub URL](https://github.com/AndroGR/nvdialog.git)
+ * - [Homepage](https://i.am.working.on.it)
+ * - [Bug Tracker](https://github.com/AndroGR/nvdialog/issues)
+ * - [Releases](https://github.com/AndroGR/nvdialog/releases)
+ */
+
+/** Major version of NvDialog at compile time. */
 #define NVDIALOG_VERSION_MAJOR 0
+/** Minor version of NvDialog at compile time. */
 #define NVDIALOG_VERSION_MINOR 5
+/** Patch version of NvDialog at compile time. */
 #define NVDIALOG_VERSION_PATCH 0
 
 /** @brief A macro to set the version at compile time. */
@@ -40,6 +80,7 @@ extern "C" {
         (NvdVersion) x.patch = NVDIALOG_VERSION_PATCH; \
 }
 
+#if !defined(NVD_API_EXPORT) && !defined(NVD_API_IMPORT) && !defined(NVD_API)
 
 #if defined (_WIN32)    || defined (WIN32)
 #if defined (__clang__) || defined(__GNUC__)
@@ -67,6 +108,8 @@ extern "C" {
 #define NVD_API NVD_API_IMPORT
 #endif /* DLLEXPORT */
 
+#endif /* !defined(NVD_API_EXPORT) && !defined(NVD_API_IMPORT) && !defined(NVD_API) */
+
 #include "nvdialog_capab.h"
 #include "nvdialog_core.h"
 #include "nvdialog_dialog.h"
@@ -77,9 +120,11 @@ extern "C" {
 
 /**
  * @brief Returns the version of nvdialog currently linked with.
- * For a compile time alternative implementation see the
+ * @details For a compile time alternative implementation see the
  * NVDIALOG_VERSION_MAJOR, NVDIALOG_VERSION_MINOR and NVDIALOG_VERSION_PATCH
  * constants.
+ * @note The versioning API was introduced in v0.2.0, and will cause problems with earlier versions.
+ * @returns The version of NvDialog linked with at runtime.
  */
 NvdVersion nvd_get_version();
 

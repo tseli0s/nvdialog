@@ -22,38 +22,33 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog.h"
-#ifdef __nvdialog_capab_h__
-#error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
-#endif /* __nvdialog_capab_h__ */
+#ifndef __nvdialog_platform_h__
+#define __nvdialog_platform_h__ (1)
 
-#pragma once
-#ifndef __nvdialog_capab_h__
-#define __nvdialog_capab_h__ 1
+#if defined (_WIN32)    || defined (WIN32)
+#if defined (__clang__) || defined(__GNUC__)
+#define NVD_API_EXPORT __attribute__((dllexport))
+#else /* __clang__ */
+#define NVD_API_EXPORT __declspec(dllexport)
+#endif /* NVD_API */
+#else /* _WIN32 */
+#define NVD_API_EXPORT
+#endif /* _WIN32 */
 
-#include <stdbool.h>
+#if defined (_WIN32)    || defined (WIN32)
+#if defined (__clang__) || defined(__GNUC__)
+#define NVD_API_IMPORT __attribute__((dllimport))
+#else /* __clang__ */
+#define NVD_API_IMPORT __declspec(dllimport)
+#endif /* NVD_API */
+#else /* _WIN32 */
+#define NVD_API_IMPORT
+#endif /* _WIN32 */
 
-#ifndef __nvdialog_h__
-#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif /* __nvdialog_h__ */
+#if defined (NVD_EXPORT_SYMBOLS)
+#define NVD_API NVD_API_EXPORT
+#else
+#define NVD_API NVD_API_IMPORT
+#endif /* DLLEXPORT */
 
-enum {
-        /* Adwaita backend support */
-        NVD_ADW_BACKEND = 0x20,
-        /* Built as a static library */
-        NVD_STATIC_LIB,
-        /* Older version compatibility */
-        NVD_COMPAT_MODE
-};
-
-/**
- * @brief Returns the NvDialog's build time detected capabilities.
- * @details This function returns the NvDialog's build time capabilities, such
- * as backends enabled, linkage method and others. It is a work in progress
- * since most of the library isn't modular.
- * @param query Which capabilities to query.
- * @return true if the requested @ref query is supported, else false.
- */
-NVD_API bool nvd_get_capabilities(int query);
-
-#endif /* __nvdialog_capab_h__ */
+#endif /* __nvdialog_platform_h__ */

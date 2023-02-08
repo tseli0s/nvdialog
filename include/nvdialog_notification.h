@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2022 Aggelos Tselios
+ *  Copyright (c) 2023 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -33,27 +33,46 @@
 #endif /* __nvdialog_h__ */
 
 /**
- * @brief An enumerator to define the type of notification
- * that NvDialog will use.
+ * @brief Possible types of NvDialog notifications. Each field will create a slightly
+ * different dialog matching the requested type.
+ * @since v0.5.0
+ * @sa NvdNotification
  */
 typedef enum {
-       NVD_NOTIFICATION_SIMPLE,
-       NVD_NOTIFICATION_WARNING,
-       NVD_NOTIFICATION_ERROR
+       NVD_NOTIFICATION_SIMPLE, /**< A simple notification eg. to notify of something new in the app. */
+       NVD_NOTIFICATION_WARNING, /**< A warning notification. */
+       NVD_NOTIFICATION_ERROR /**< An error notification, preferably used before crashing. */
 } NvdNotifyType;
 
 /**
- * @brief A notification type that can be used to
- * send notifications to the system using NvDialog.
+ * @brief The base notification type used by NvDialog.
+ *
+ * NvDialog offers since v0.5.0 support for basic notifications that
+ * will be useful for anything. 
+ * @sa nvd_notification_new
  * @since v0.5.0
  */
 typedef struct _NvdNotification NvdNotification;
 
 /**
- * @brief  Creates a new NvDialog-compatible notification.
+ * @brief  Creates a new notification object and returns it.
  * @param  title The title of the notification, can be NULL if no title is desired.
  * @param  msg The message to show (Required, can't be NULL).
  * @param  type The type of the notification, see @ref NvdNotifyType.
+ * <b>Example:</b>
+ * @code
+   #include <nvdialog/nvdialog.h>
+   int main(int argc, char** argv) {
+       nvd_init(argv[0]);
+       NvdNotification *notif = nvd_notification_new("Notification",
+                                                     "A notification for your app.",
+                                                     NVD_NOTIFICATION_SIMPLE);
+       if (!notif) return -1;
+       nvd_send_notification(notif);
+       nvd_delete_notification(notif);
+       return 0;
+   }
+ * @endcode
  * @return An empty notification object.
  */
 NVD_API NvdNotification* nvd_notification_new(const char   *title,
@@ -63,12 +82,13 @@ NVD_API NvdNotification* nvd_notification_new(const char   *title,
 /**
  * @brief Sends the notification to the system.
  * @param notification The notification object to use.
+ * @since v0.5.0
  */
 NVD_API void nvd_send_notification(NvdNotification* notification);
 
 /**
  * @brief Deletes a notification object from NvDialog.
- * @note  You should only use this to free notifications. Do not use @ref nvd_free_object please.
+ * @note  You should only use this to free notifications. <b>Do not use @ref nvd_free_object please.</b>
  * @param notification The notification object to delete.
  */
 NVD_API void nvd_delete_notification(NvdNotification* notification);
@@ -78,10 +98,11 @@ NVD_API void nvd_delete_notification(NvdNotification* notification);
  * @note Please make sure you don't register the same action twice on the same notification.
  * @param notification The notification to add the said action to.
  * @param action A string defining the action as well as the label of the button for the action.
- * @param value_to_return An integer to return if the action was detected (Pressed, held, released, ...)
+ * @param value_to_set The value to set when the action is triggered.
+ * @param value_to_return A pointer to an integer to save the value passed to @ref value_to_set .
  */
 NVD_API void nvd_add_notification_action(NvdNotification* notification,
                                          const char* action,
                                          int  value_to_set,
                                          int* value_to_return);
-#endif /**/
+#endif /* __nvdialog_notification_h__ */
