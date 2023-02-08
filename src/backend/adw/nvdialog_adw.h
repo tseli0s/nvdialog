@@ -25,6 +25,9 @@
 #ifndef __nvdialog_adw_h__
 #define __nvdialog_adw_h__
 
+#define GDK_DISABLE_DEPRECATED
+#define GTK_DISABLE_DEPRECATED
+
 #include "nvdialog.h"
 #include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
