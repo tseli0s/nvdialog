@@ -101,17 +101,32 @@ int nvd_init(char *program) {
 
 /* Apparently in Gtk4 the gtk_init function doesn't require any arguments. */
 #if !defined(NVD_USE_GTK4)
-        int    __argc__ = 1;
-        char **__argv__ = {
-            &program,
-        };
-        gtk_init(&__argc__, &__argv__);
+        (void) program;
+        if (!gtk_init_check()) {
+                /*
+                 * Most likely a Gtk4 failure occurs because there's no display.
+                 * Since Gtk won't just tell us what went wrong we'll assume that
+                 * the display is not available.
+                 */
+                nvd_set_error(NVD_NO_DISPLAY);
+                return -NVD_NO_DISPLAY;
+        }
 
         if (getenv("NVD_NO_NOTIFS") == NULL || atoi(getenv("NVD_NO_NOTIFS"))) {
                 /* Since this function used to be inlined here, make it easy for us and just return what it returns. */
                 return nvd_check_libnotify();
         }
 #else
+        (void) program;
+        if (!gtk_init_check()) {
+                /*
+                 * Most likely a Gtk4 failure occurs because there's no display.
+                 * Since Gtk won't just tell us what went wrong we'll assume that
+                 * the display is not available.
+                 */
+                nvd_set_error(NVD_NO_DISPLAY);
+                return -NVD_NO_DISPLAY;
+        }
         if (getenv("NVD_NO_NOTIFS") == NULL || atoi(getenv("NVD_NO_NOTIFS"))) {
                 /* Since this function used to be inlined here, make it easy for us and just return what it returns. */
                 return nvd_check_libnotify();
