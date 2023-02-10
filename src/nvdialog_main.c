@@ -102,7 +102,7 @@ int nvd_init(char *program) {
 /* Apparently in Gtk4 the gtk_init function doesn't require any arguments. */
 #if !defined(NVD_USE_GTK4)
         (void) program;
-        if (!gtk_init_check()) {
+        if (!gtk_init_check(0, NULL)) {
                 /*
                  * Most likely a Gtk4 failure occurs because there's no display.
                  * Since Gtk won't just tell us what went wrong we'll assume that
