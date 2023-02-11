@@ -13,7 +13,7 @@ However it only received the said update as part of the 0.5.0 upgrade.
 | Version | Supported          |
 | ------- | ------------------ |
 | 0.5.x   | :white_check_mark: |
-| 0.3.x   | 〰️                  |
+| 0.3.x   | :x:                |
 | 0.2.x   | :x:                |
 | < 0.2.0 | :x:                |
 
