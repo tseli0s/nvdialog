@@ -21,6 +21,12 @@ if (LINUX)
         set(CMAKE_INSTALL_PREFIX /usr)
 endif()
 
+if (UNIX)
+        # Finding the Gtk+ / Libadwaita libraries in Unix is generally
+        # only possible using PkgConfig.
+        find_package(PkgConfig REQUIRED)
+endif()
+
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR APPLE)
         set(CMAKE_C_COMPILER clang)
         set(MACOSX TRUE)
