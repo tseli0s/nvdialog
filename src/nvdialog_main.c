@@ -226,10 +226,8 @@ NvdAboutDialog *nvd_about_dialog_new(const char *name,
 }
 
 inline int nvd_set_parent(NvdParentWindow parent) {
-        if (!parent)
-                return -1;
-        else
-                nvd_parent_window = parent;
+        if (!parent) return -1;
+        else nvd_parent_window = parent;
         return 0;
 }
 

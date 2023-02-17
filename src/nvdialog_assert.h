@@ -32,6 +32,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define NVD_BUFFER_MULTIPLIER (10)
+
 #if defined(__clang__) || defined(__GNUC__)
 __attribute__((format(printf, 1, 2)))
 #endif
@@ -39,9 +41,9 @@ static void nvd_print_assert(const char *msg, ...) {
         va_list args;
         va_start(args, msg);
 
-        char buffer[NVD_BUFFER_SIZE * 16]; /* I know. Huge buffer. But we could
+        char buffer[NVD_BUFFER_SIZE * NVD_BUFFER_MULTIPLIER]; /* I know. Huge buffer. But we could
                                               be dealing with worse things. */
-        sprintf(buffer, "%s \x1B[1m%s\x1B[0m", TERMINAL_PREFIX, msg);
+        snprintf(buffer, sizeof(buffer), "%s \x1B[1m%s\x1B[0m", TERMINAL_PREFIX, msg);
         vfprintf(stderr, buffer, args);
 
         va_end(args);
@@ -65,7 +67,7 @@ static void nvd_print_assert(const char *msg, ...) {
 
 #define NVD_RETURN_IF_NULL(x)                                                  \
         do {                                                                   \
-                if (!x) {                                                      \
+                if (!(x)) {                                                    \
                         NVD_ASSERT(x                                           \
                                    != NULL); /* Just for the error message. */ \
                         return NULL;                                           \

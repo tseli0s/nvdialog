@@ -25,11 +25,10 @@
 #include "nvdialog.h"
 
 /* The versions of nvdialog are held as statics in the global scope. */
-static short __vermajor = 0;
-static short __verminor = 5;
-static short __verpatch = 0;
+const static short vermajor = NVDIALOG_VERSION_MAJOR;
+const static short verminor = NVDIALOG_VERSION_MINOR;
+const static short verpatch = NVDIALOG_VERSION_PATCH;
 
 NvdVersion nvd_get_version() {
-        NvdVersion version = {__vermajor, __verminor, __verpatch, "0.5.0"};
-        return version;
+        return ((NvdVersion) {vermajor, verminor, verpatch, "0.5.0"});
 }

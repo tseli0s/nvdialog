@@ -24,30 +24,31 @@
 
 #include "nvdialog.h"
 
-static bool __nvd_has_adw_gtk =
+const static bool nvd_has_adw_gtk =
 #if defined(NVD_USE_GTK4)
     true;
 #else
     false;
 #endif
 
-static bool __nvd_built_static =
+const static bool nvd_built_static =
 #if !defined(NVD_STATIC_LINKAGE)
     true;
 #else
     false;
 #endif
 
-static bool __nvd_compat_mode = false;
+const static bool nvd_compat_mode = false;
 
 bool nvd_get_capabilities(int query) {
         switch (query) {
         case NVD_ADW_BACKEND:
-                return __nvd_has_adw_gtk;
+                return nvd_has_adw_gtk;
         case NVD_STATIC_LIB:
-                return __nvd_built_static;
+                return nvd_built_static;
         case NVD_COMPAT_MODE:
-                return __nvd_compat_mode;
+                return nvd_compat_mode;
+        default: return false;
         }
         return false; /* Just to silence compiler warnings */
 }
