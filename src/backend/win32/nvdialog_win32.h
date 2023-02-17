@@ -22,6 +22,11 @@
  * IN THE SOFTWARE.
  */
 
+#pragma once
+
+#ifndef __nvdialog_win32_h__
+#define __nvdialog_win32_h__ 1
+
 #include <nvdialog.h>
 #include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
@@ -65,3 +70,5 @@ void nvd_add_notification_action_win32(NvdNotification* notification,
                                      const char* action,
                                      int  value_to_set,
                                      int* value_to_return);
+
+#endif /* __nvdialog_win32_h__ */
