@@ -104,6 +104,37 @@ $ cd nvdialog/
 $ makepkg --clean --install
 ```
 
+# OS Versions Supported
+## Windows
+Although most functions used by NvDialog were introduced back in Windows XP, they have not been tested for stability before Windows 8.1 (The oldest officially supported release by NvDialog) and if you are writing an application for such old systems you are on your own, either fork the codebase or open an issue.
+
+## macOS
+Only the very latest versions of macOS are supported. Older releases will at best throw a compiler error if compiling from source or a linking error otherwise.
+
+## GNU/Linux
+Since there are well over 1000 distributions, there is no specific distribution requirement. However, your system must have these installed:
+- Gtk 3 or `libadwaita` + Gtk4, the latest releases of each.
+- A modern version of `glibc`, preferably 2.33 or newer.
+- Linux kernel 2.6 or newer (All modern distros include at least 4.x kernels so nothing to worry here).
+- X11 or Wayland as the display server. Mir is not supported.
+Immutable distros are `NOT` yet supported due to software restrictions.
+
+Common distros officially supported:
+| Distro | Version |
+|   ---  |   ---   |
+| Arch Linux | (Rolling) |
+| Ubuntu and derivatives | >16.04 |
+| Debian and derivatives | >Debian 7 |
+| Slackware Linux | Latest |
+
+## Android
+Android support is still under development, see the `android-port` branch for more.
+If you wish to help with development please make a pull request there.
+
+## FreeBSD
+FreeBSD is supported only under X11 and with the Gtk3 backend.
+For other BSD projects, no support is provided.
+
 # License
 `nvdialog` is licensed under the MIT license. See [COPYING](./COPYING) for more.
 All contributions made to the library are assumed to be licensed under the MIT license as well. However, you may specify a different license if you wish.
