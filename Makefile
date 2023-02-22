@@ -3,7 +3,7 @@
 # want to use this Makefile. Instead, you're advised to use the CMake script which
 # is much more reliable and maintainable.
 
-CC=clang
+CC=gcc
 SRC=src/*.c src/backend/gtk/*.c src/core/*.c
 PUBHEADER=include/*/*
 CFLAGS=-Wall -Wextra -O3 -s -Wno-unused-parameter -fstack-protector-all -fPIC -shared -Iinclude/
