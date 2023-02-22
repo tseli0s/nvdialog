@@ -51,7 +51,7 @@ NvdQuestionBox *nvd_question_win32(const char       *title,
 }
 
 NvdReply nvd_get_reply_win32(NvdQuestionBox *box) {
-        uint32_t flag;
+        uint32_t flag = 0;
         switch (box->buttons) {
         case NVD_YES_NO:
         case NVD_YES_CANCEL:
