@@ -29,13 +29,6 @@
 #include <windows.h>
 #include <winuser.h>
 
-struct _NvdQuestionBox {
-        void             *window_handle;
-        char             *title, *contents;
-        NvdReply          reply;
-        NvdQuestionButton buttons;
-};
-
 NvdQuestionBox *nvd_question_win32(const char       *title,
                                    const char       *question,
                                    NvdQuestionButton buttons) {

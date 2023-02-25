@@ -29,15 +29,6 @@
 #include <stdint.h>
 #include <windows.h>
 
-struct _NvdNotification {
-        char *title;
-        char *contents;
-        NvdNotifyType type;
-        bool shown;
-        void *raw;
-        void *lib;
-};
-
 NvdNotification *nvd_notification_win32(const char   *title,
                                         const char   *msg,
                                         NvdNotifyType type) {

@@ -28,13 +28,7 @@
 #include "../../nvdialog_assert.h"
 #include <stdio.h>
 #include <unistd.h>
-
-struct _NvdCSSManager {
-        void *raw;
-        bool used;
-        char *filename;
-        void *extra_data;
-};
+#include <errno.h>
 
 static char *__nvd_string_gen(char *str, size_t size) {
     const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJ";
@@ -62,7 +56,11 @@ NvdCSSManager *nvd_css_manager_gtk() {
 
 int nvd_css_manager_attach_string_stylesheet_gtk(NvdCSSManager *mgr,
                                                  const char    *str) {
-        chdir("/tmp"); /* So we don't harm anything we shouldn't. */
+        int chdir_result = chdir("/tmp");
+        if (chdir_result != 0) {
+                NVD_ASSERT(chdir_result != 0);
+                return errno;
+        }
 
         char *new_filename = calloc(1, sizeof(char) * 13);
         __nvd_string_gen(new_filename, 12);

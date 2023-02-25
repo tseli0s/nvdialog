@@ -32,6 +32,7 @@
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
 #include "nvdialog_notification.h"
+#include "nvdialog_typeimpl.h"
 
 NvdDialogBox *nvd_dialog_box_win32(const char   *title,
                                    const char   *message,

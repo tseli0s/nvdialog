@@ -29,12 +29,6 @@
 #include <windows.h>
 #include <winuser.h>
 
-struct _NvdFileDialog {
-        char *filename, file_extensions;
-        bool  location_was_chosen;
-        bool  is_save_dialog;
-};
-
 NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
                                           const char *file_extensions) {
         NvdFileDialog *dialog

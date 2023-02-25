@@ -26,14 +26,6 @@
 #include "../../nvdialog_macros.h"
 #include "nvdialog_adw.h"
 
-struct _NvdDialogBox {
-        void         *window_handle;
-        const char   *msg;
-        const char   *content;
-        NvdDialogType type;
-};
-#define NvdDialogBox struct _NvdDialogBox
-
 NvdDialogBox *
 nvd_dialog_box_adw(const char *title, const char *message, NvdDialogType type) {
         NvdDialogBox *dialog = malloc(sizeof(struct _NvdDialogBox));

@@ -30,13 +30,6 @@ struct NvdQuestionData {
         NvdReply reply;
 };
 
-struct _NvdQuestionBox {
-        void             *window_handle;
-        char             *title, *contents;
-        NvdReply          reply;
-        NvdQuestionButton buttons;
-};
-
 inline static void nvd_reply_write_ok(NvdReply *reply) {
         *reply = NVD_REPLY_OK;
 }

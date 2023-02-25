@@ -28,12 +28,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct _NvdFileDialog {
-        char *filename, *file_extensions;
-        bool  location_was_chosen;
-        void *raw;
-};
-
 NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
                                         const char *file_extensions) {
         NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));

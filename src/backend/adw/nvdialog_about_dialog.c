@@ -26,19 +26,6 @@
 #include "../../nvdialog_assert.h"
 #include <stdio.h>
 
-struct _NvdAboutDialog {
-        void *raw;
-        char *title, *contents;
-        char *version;
-        char *hyperlinks[6];
-        short amount_of_hyperlinks;
-        char *image_name;
-        bool  image_from_icon;
-        void *buttons[4];
-        short amount_of_buttons;
-        void *layout;
-};
-
 NvdAboutDialog *
 nvd_about_dialog_adw(const char *appname,
                      const char *brief,

@@ -1,7 +1,8 @@
 #ifndef __nvdialog_cocoa_h__
-#define __nvdialog_cocoa_h__
+#define __nvdialog_cocoa_h__  1
 
 #include "nvdialog.h"
+#include "nvdialog_typeimpl.h"
 
 /* Shows a dialog box using Cocoa */
 NvdDialogBox *nvd_dialog_box_cocoa(const char *title,
@@ -44,4 +45,4 @@ void nvd_add_notification_action_cocoa(NvdNotification* notification,
                                        const char* action,
                                        int  value_to_set,
                                        int* value_to_return);
-#endif //__nvdialog_adw_h__
+#endif /* __nvdialog_cocoa_h__ */

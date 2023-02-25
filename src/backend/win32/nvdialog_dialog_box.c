@@ -29,13 +29,6 @@
 #include <windows.h>
 #include <winuser.h>
 
-struct _NvdDialogBox {
-        void         *window_handle;
-        const char   *msg;
-        const char   *content;
-        NvdDialogType type;
-};
-
 NvdDialogBox *nvd_dialog_box_win32(const char   *title,
                                    const char   *message,
                                    NvdDialogType type) {

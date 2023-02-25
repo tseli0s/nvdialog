@@ -27,12 +27,6 @@
 #include "nvdialog_adw.h"
 #include <stdlib.h>
 
-struct _NvdFileDialog {
-        char *filename, *file_extensions;
-        bool  location_was_chosen;
-        void *raw;
-};
-
 static void nvd_file_dialog_response_adw(GtkDialog     *dialog,
                                          int32_t        response,
                                          NvdFileDialog* data) {

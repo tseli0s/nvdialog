@@ -28,13 +28,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-struct _NvdCSSManager {
-        void *raw;
-        bool used;
-        char *filename;
-        void *extra_data;
-};
-
 static char *__nvd_string_gen(char *str, size_t size) {
     const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJ";
     if (size) {

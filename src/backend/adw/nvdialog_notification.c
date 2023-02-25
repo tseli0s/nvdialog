@@ -32,15 +32,6 @@
 #include <dlfcn.h>
 #include <stdlib.h>
 
-struct _NvdNotification {
-        char *title;
-        char *contents;
-        NvdNotifyType type;
-        bool shown;
-        void *raw;
-        void *lib;
-};
-
 #if !defined (NVD_PREINCLUDE_HEADERS)
 typedef void*              nvd_notification_t;
 #else

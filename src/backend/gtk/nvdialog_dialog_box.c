@@ -27,13 +27,6 @@
 #include "../../nvdialog_macros.h"
 #include "nvdialog_gtk.h"
 
-struct _NvdDialogBox {
-        void         *window_handle;
-        const char   *msg;
-        const char   *content;
-        NvdDialogType type;
-};
-
 static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
         gtk_widget_set_margin_start(widget, 16);
         gtk_widget_set_margin_end(widget, 16);
