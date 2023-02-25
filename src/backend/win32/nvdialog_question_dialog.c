@@ -32,13 +32,12 @@
 NvdQuestionBox *nvd_question_win32(const char       *title,
                                    const char       *question,
                                    NvdQuestionButton buttons) {
-        NvdQuestionBox *box
-            = (NvdQuestionBox *)malloc(sizeof(struct _NvdQuestionBox));
+        NvdQuestionBox *box = malloc(sizeof(struct _NvdQuestionBox));
         NVD_RETURN_IF_NULL(box);
 
-        box->title = (char *)title;
+        box->title    = (char *)title;
         box->contents = (char *)question;
-        box->buttons = buttons;
+        box->buttons  = buttons;
 
         return box;
 }
@@ -58,9 +57,9 @@ NvdReply nvd_get_reply_win32(NvdQuestionBox *box) {
                 return -1;
         }
         int32_t reply = MessageBox(nvd_get_parent(),
-                                    box->contents,
-                                    box->title,
-                                    (unsigned int)flag | MB_ICONQUESTION);
+                                   box->contents,
+                                   box->title,
+                                   (unsigned int) flag | MB_ICONQUESTION);
         switch (reply) {
         case IDYES:
                 box->reply = NVD_REPLY_OK;

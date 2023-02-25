@@ -32,16 +32,15 @@
 NvdDialogBox *nvd_dialog_box_win32(const char   *title,
                                    const char   *message,
                                    NvdDialogType type) {
-        NVD_ASSERT(title != NULL);
+        NVD_ASSERT(title   != NULL);
         NVD_ASSERT(message != NULL);
 
-        NvdDialogBox *dialog
-            = (NvdDialogBox *)malloc(sizeof(struct _NvdDialogBox));
+        NvdDialogBox *dialog = (NvdDialogBox *)malloc(sizeof(struct _NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
-        dialog->msg = title;
+        dialog->msg     = title;
         dialog->content = message;
-        dialog->type = type;
+        dialog->type    = type;
 
         return dialog;
 }
@@ -60,6 +59,5 @@ void nvd_show_dialog_win32(NvdDialogBox *dialog) {
                 break;
         }
 
-        MessageBox(
-            nvd_get_parent(), dialog->content, dialog->msg, MB_OK | flag);
+        MessageBox(nvd_get_parent(), dialog->content, dialog->msg, MB_OK | flag);
 }
