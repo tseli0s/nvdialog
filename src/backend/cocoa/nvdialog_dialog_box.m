@@ -5,6 +5,13 @@
 
 #include "../../nvdialog_assert.h"
 
+struct _NvdDialogBox {
+	NSAlert         *window_handle;
+	const char      *msg;
+	const char      *content;
+	NvdDialogType   type;
+};
+
 NvdDialogBox *nvd_dialog_box_cocoa(const char *title, const char *message, NvdDialogType type)
 {
 	NvdDialogBox *dialog = malloc(sizeof(struct _NvdDialogBox));
