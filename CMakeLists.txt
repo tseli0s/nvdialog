@@ -50,6 +50,7 @@ endif()
 message("-- Compiling with flags:\n  ${CMAKE_C_FLAGS}")
 add_compile_definitions(NVDIALOG_MAXBUF=${NVDIALOG_MAXBUF})
 add_compile_definitions(NVD_EXPORT_SYMBOLS)
+include_directories(${CMAKE_SOURCE_DIR}/src/impl/)
 
 if (MACOSX)
         if (WIN32_TARGET OR NVD_USE_GTK4)
@@ -61,7 +62,6 @@ if (MACOSX)
                                       src/backend/cocoa/nvdialog_notification.m
                                       src/backend/cocoa/nvdialog_about_dialog.m)
                 set(NVD_SOURCES ${NVD_COCOA_SOURCES}
-                                src/core/nvdialog_structs.c
                                 src/nvdialog_error.c
                                 src/nvdialog_capab.c
                                 src/nvdialog_version.c
@@ -87,7 +87,7 @@ if (NOT NVD_USE_GTK4)
                             src/backend/gtk/nvdialog_question_dialog.c
                             src/backend/gtk/nvdialog_css_manager.c
                             src/backend/gtk/nvdialog_notification.c)
-        set(NVD_SOURCES ${NVD_GTK_SOURCES} src/core/nvdialog_structs.c src/nvdialog_error.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
+        set(NVD_SOURCES ${NVD_GTK_SOURCES} src/nvdialog_error.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
 else()
         add_compile_definitions(NVD_USE_GTK4)
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c)
@@ -113,7 +113,6 @@ if (WIN32 OR WIN32_TARGET)
                               src/backend/win32/nvdialog_notification.c)
         set(NVD_SOURCES ${NVD_WIN32_SOURCES}
                         src/nvdialog_capab.c
-                        src/core/nvdialog_structs.c
                         src/nvdialog_error.c
                         src/nvdialog_main.c
                         src/nvdialog_version.c)
