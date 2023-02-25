@@ -1,5 +1,5 @@
 ---
-Checks:          'clang-diagnostic-*,clang-analyzer-*,*,clang-analyzer-security-*, -portability-restrict-system-includes, -cppcoreguidelines-avoid-non-const-global-variables, -llvm-else-after-return, -readability-braces-around-statements'
+Checks:          'clang-diagnostic-*,clang-analyzer-*'
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
 AnalyzeTemporaryDtors: false
