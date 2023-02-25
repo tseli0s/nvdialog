@@ -7,3 +7,4 @@
 - [ ] Work on Android Port (In progress).
 - [x] Fix Gtk4 file dialog not working.
 - [ ] Add portal support (For sandboxed environments such as Flatpak).
+- [ ] Make accept, cancel and reject buttons have custom text if needed (Targeted for 0.7.0)
