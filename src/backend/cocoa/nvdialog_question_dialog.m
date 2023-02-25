@@ -6,13 +6,6 @@
 
 #include "../../nvdialog_assert.h"
 
-struct _NvdQuestionBox {
-	NSAlert          *window_handle;
-	const char       *title, *contents;
-	NvdReply          reply;
-	NvdQuestionButton buttons;
-};
-
 NvdQuestionBox *nvd_question_cocoa(const char *title, const char *question, NvdQuestionButton buttons)
 {
 	NvdQuestionBox *box = malloc(sizeof(struct _NvdQuestionBox));

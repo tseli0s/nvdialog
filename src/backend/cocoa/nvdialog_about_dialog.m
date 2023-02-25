@@ -4,10 +4,6 @@
 #include <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
 
-struct _NvdAboutDialog {
-    NSMutableDictionary<NSAboutPanelOptionKey, id> *options;
-};
-
 NvdAboutDialog *nvd_about_dialog_cocoa(const char *name,
                                        const char *desc,
                                        const char *imgpath)

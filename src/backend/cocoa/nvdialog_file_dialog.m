@@ -6,14 +6,6 @@
 
 #include "../../nvdialog_assert.h"
 
-struct _NvdFileDialog {
-	char *filename, *file_extensions;
-	bool location_was_chosen;
-
-	//NSOpenPanel inherits from NSSavePanel
-	NSSavePanel *raw;
-};
-
 NvdFileDialog *nvd_open_file_dialog_cocoa(const char *title, const char *file_extensions)
 {
 	NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
