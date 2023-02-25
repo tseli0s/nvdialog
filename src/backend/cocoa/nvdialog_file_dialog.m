@@ -46,7 +46,7 @@ void nvd_get_file_location_cocoa(NvdFileDialog *dlg, const char **out)
 
 	dlg->location_was_chosen = resp == NSModalResponseContinue || resp == NSModalResponseOK;
 	if (dlg->location_was_chosen)
-		*out = strdup(((NSSavePanel)dlg->raw).URL.absoluteString.UTF8String);
+		*out = strdup(dlg->((NSSavePanel)raw).URL.absoluteString.UTF8String);
 
 	[dlg->raw release];
 }
