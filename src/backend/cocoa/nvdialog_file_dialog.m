@@ -6,8 +6,8 @@
 
 #include "../../nvdialog_assert.h"
 
-static NSSavePanel raw;
-static NSOpenPanel raw_open;
+NVD_INTERNAL_FUNCTION NSSavePanel raw;
+NVD_INTERNAL_FUNCTION NSOpenPanel raw_open;
 
 NvdFileDialog *nvd_open_file_dialog_cocoa(const char *title, const char *file_extensions)
 {
