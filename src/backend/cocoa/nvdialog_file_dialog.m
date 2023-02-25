@@ -7,6 +7,7 @@
 #include "../../nvdialog_assert.h"
 
 static NSSavePanel raw;
+static NSOpenPanel raw_open;
 
 NvdFileDialog *nvd_open_file_dialog_cocoa(const char *title, const char *file_extensions)
 {
@@ -25,7 +26,7 @@ NvdFileDialog *nvd_open_file_dialog_cocoa(const char *title, const char *file_ex
 		dialog_raw.allowedFileTypes = [@(file_extensions) componentsSeparatedByString: @";"];
 
 	dialog->raw = dialog_raw;
-	raw = dialog_raw; /* Bad workaround but should work for now. */
+	raw_open = dialog_raw; /* Bad workaround but should work for now. */
 
 	return dialog;
 }
@@ -37,7 +38,8 @@ NvdFileDialog *nvd_save_file_dialog_cocoa(const char *title, const char *default
 	NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
 	NVD_RETURN_IF_NULL(dialog);
 	dialog->raw = [NSSavePanel savePanel];
-	dialog->raw.title = @(title);
+	raw = dialog->raw;
+	raw.title = @(title);
 	return dialog;
 }
 
@@ -49,7 +51,7 @@ void nvd_get_file_location_cocoa(NvdFileDialog *dlg, const char **out)
 
 	dlg->location_was_chosen = resp == NSModalResponseContinue || resp == NSModalResponseOK;
 	if (dlg->location_was_chosen)
-		*out = strdup(raw.URL.absoluteString.UTF8String);
+		*out = strdup(raw_open.URL.absoluteString.UTF8String);
 
 	[dlg->raw release];
 }
