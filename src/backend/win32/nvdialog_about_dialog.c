@@ -23,8 +23,9 @@
  */
 
 #include "nvdialog_win32.h"
-#include <shellapi.h>
 #include "../../nvdialog_assert.h"
+
+extern int ShellAbout(void*, const char*, const char*, void*);
 
 NvdAboutDialog *nvd_about_dialog_win32(const char *appname,
                                        const char *brief,
@@ -52,12 +53,12 @@ void nvd_about_dialog_set_license_link_win32(NvdAboutDialog *dialog,
 }
 
 void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
-        bool result = ShellAbout(nvd_get_parent(),
-                                 dialog->title,
-                                 dialog->contents,
-                                 NULL /* Another TODO: Make it so icons can be added to Windows
-                                         dialogs. */
-                      );
+        int result = ShellAbout(nvd_get_parent(),
+                                dialog->title,
+                                dialog->contents,
+                                NULL /* Another TODO: Make it so icons can be added to Windows
+                                        dialogs. */
+                     );
 
         if (!result) nvd_set_error(NVD_INTERNAL_ERROR);
 }
