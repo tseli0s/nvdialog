@@ -30,5 +30,5 @@ const static short verminor = NVDIALOG_VERSION_MINOR;
 const static short verpatch = NVDIALOG_VERSION_PATCH;
 
 NvdVersion nvd_get_version() {
-        return ((NvdVersion) {vermajor, verminor, verpatch, "0.5.0"});
+        return ((NvdVersion) {vermajor, verminor, verpatch, "0.6.0"});
 }

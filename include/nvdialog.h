@@ -69,7 +69,7 @@ extern "C" {
 /** Major version of NvDialog at compile time. */
 #define NVDIALOG_VERSION_MAJOR 0
 /** Minor version of NvDialog at compile time. */
-#define NVDIALOG_VERSION_MINOR 5
+#define NVDIALOG_VERSION_MINOR 6
 /** Patch version of NvDialog at compile time. */
 #define NVDIALOG_VERSION_PATCH 0
 
