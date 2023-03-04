@@ -68,8 +68,8 @@ NvdNotification *nvd_notification_win32(const char   *title,
         nid->cbSize       = sizeof(NOTIFYICONDATA);
         nid->hWnd         = nvd_get_parent();
         nid->uID          = NVD_APP_ID;
-        nid->uFlags       = NIF_INFO | NIF_ICON | NIF_REALTIME;
-        nid->dwInfoFlags  = icon     | NIIF_RESPECT_QUIET_TIME;
+        nid->uFlags       = NIF_INFO | NIF_ICON;
+        nid->dwInfoFlags  = icon;
         nid->uTimeout     = 5000;
 
         snprintf(nid->szInfo, 256, "%s", msg);
