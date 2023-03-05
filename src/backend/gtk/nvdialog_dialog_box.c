@@ -44,6 +44,7 @@ nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         NvdDialogBox *dialog = malloc(sizeof(struct _NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
+        dialog->accept_label  = "Okay";
         dialog->content       = message;
         dialog->msg           = title;
         dialog->type          = type;
@@ -72,7 +73,7 @@ nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         gtk_grid_set_column_spacing(grid, 16);
 
         GtkWidget *text = gtk_label_new(dialog->content);
-        GtkWidget *button = gtk_button_new_with_label("Okay");
+        GtkWidget *button = gtk_button_new_with_label(dialog->accept_label);
 
         nvd_set_margins_gtk3(text);
         nvd_set_margins_gtk3(button);
@@ -88,8 +89,7 @@ nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         gtk_container_add(GTK_CONTAINER(dialog->window_handle),
                           GTK_WIDGET(grid));
 
-        g_signal_connect_swapped(
-            dialog->window_handle, "destroy", G_CALLBACK(nvd_destroy_and_quit), dialog->window_handle);
+        g_signal_connect_swapped(dialog->window_handle, "destroy", G_CALLBACK(nvd_destroy_and_quit), dialog->window_handle);
         g_signal_connect_swapped(
             button, "clicked", G_CALLBACK(nvd_destroy_and_quit), dialog->window_handle);
 
