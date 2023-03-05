@@ -1,6 +1,5 @@
 # Changelog -- 0.7.0
-- Non-exported C functions will now be totally hidden (Using `-fvisibility=hidden`)
-  to both conserve space and restrict access to internal functions.
+
 
 # Changelog -- 0.6.0
 - Removed domain name support in favor of plain application names.
