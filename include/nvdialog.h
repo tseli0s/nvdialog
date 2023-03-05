@@ -34,7 +34,8 @@ extern "C" {
  * <b>Documentation</b>
  *
  * This manual documents the NvDialog library, a dialog box library written in C
- * that uses the system theme.
+ * that uses the system theme. Instructions on how to build the library can be
+ * found in @ref building "this page".
  *
  * To get started, you should read about @ref NvdDialogBox, which is a simple dialog
  * box with nothing special in it. NvDialog also provides the following features as part

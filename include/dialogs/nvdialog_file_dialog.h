@@ -49,11 +49,11 @@ NVD_API NvdFileDialog *nvd_open_file_dialog_new(const char *title,
                                                 const char *file_extensions);
 
 /**
- * @brief Creates a new, empty @NvdFileDialog object that will be used to save a
+ * @brief Creates a new, empty @ref NvdFileDialog object that will be used to save a
  * file in the selected (from the user) location.
  * @param title The title of the dialog, default is "Save file"
  * @param default_filename The default filename to use for saving.
- * @return An @NvdFileDialog on success, otherwise NULL and @ref nvd_get_error should
+ * @return An @ref NvdFileDialog on success, otherwise NULL and @ref nvd_get_error should
  * be called to get the failure reason.
  */
 NVD_API NvdFileDialog *nvd_save_file_dialog_new(const char *title,
