@@ -38,6 +38,9 @@ NvdDialogBox *nvd_dialog_box_win32(const char   *title,
         NvdDialogBox *dialog = (NvdDialogBox *)malloc(sizeof(struct _NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
+        dialog->accept_label = "Ok";
+        dialog->reject_label = "Deny";
+
         dialog->msg     = title;
         dialog->content = message;
         dialog->type    = type;
