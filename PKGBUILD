@@ -2,7 +2,7 @@
 
 pkgname=nvdialog
 _pkgname=nvdialog
-pkgver=0.5.0
+pkgver=0.6.0
 pkgrel=1
 epoch=
 pkgdesc="Cross-platform dialog box library written in C, using the host's standard backend."
@@ -12,8 +12,8 @@ _repo="https://github.com/AndroGR/nvdialog.git"
 license=('MIT')
 groups=()
 depends=(gtk4 libadwaita glibc) # Arch Linux is modern enough to safely say that
-				# libadwaita won't cause any problems as the default
-				# backend.
+								# libadwaita won't cause any problems as the default
+								# backend.
 				
 makedepends=(git ninja gcc cmake)
 checkdepends=()
