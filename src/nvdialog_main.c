@@ -54,7 +54,6 @@ static char *nvd_argv_0   = NULL;
 
 static bool nvd_initialized              = false;
 static NvdParentWindow nvd_parent_window = NULL;
-static uint8_t nvd_times_initialized     = 0;
 
 const char *nvd_get_argv() { return nvd_argv_0; }
 
@@ -99,17 +98,15 @@ int nvd_init(char *program) {
         nvd_argv_0 = program;
 #if !defined(_WIN32) && !defined(NVD_USE_COCOA)
 
-/* Apparently in Gtk4 the gtk_init function doesn't require any arguments. */
 #if !defined(NVD_USE_GTK4)
-        (void) program;
-        if (!gtk_init_check(0, NULL)) {
-                /*
-                 * Most likely a Gtk4 failure occurs because there's no display.
-                 * Since Gtk won't just tell us what went wrong we'll assume that
-                 * the display is not available.
-                 */
-                nvd_set_error(NVD_NO_DISPLAY);
-                return -NVD_NO_DISPLAY;
+        int __argc = 1;
+        char* argv[] = {
+                program
+        };
+        if (!gtk_init_check(&__argc, (char***) &argv)) {
+                if (!getenv("DISPLAY")) nvd_set_error(NVD_NO_DISPLAY);
+                else nvd_set_error(NVD_BACKEND_FAILURE);
+                return NVD_NO_DISPLAY;
         }
 
         if (getenv("NVD_NO_NOTIFS") == NULL || atoi(getenv("NVD_NO_NOTIFS"))) {
