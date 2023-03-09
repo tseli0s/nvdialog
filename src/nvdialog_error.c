@@ -53,7 +53,7 @@ NVD_INTERNAL_FUNCTION NVD_FORCE_INLINE void nvd_set_error(NvdError error) {
 NVD_FORCE_INLINE NvdError nvd_get_error(void) { return ___error; }
 
 const char *nvd_stringify_error(NvdError err) {
-        static char *error = NULL; /* Marked as static because we need it to stay persistent. */
+        static char *error = NULL;
         switch (err) {
         case NVD_NO_ERROR:
                 error = "No error";
@@ -61,6 +61,9 @@ const char *nvd_stringify_error(NvdError err) {
         case NVD_NO_DISPLAY:
                 error = "No display found (Is X.org or a Wayland compositor "
                         "running?)";
+                break;
+        case NVD_BACKEND_FAILURE:
+                error = "Backend initialization was unsuccesful (Invalid parameters?).";
                 break;
         case NVD_INVALID_PARAM:
                 error = "Invalid parameter passed.";
