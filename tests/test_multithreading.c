@@ -10,8 +10,8 @@ struct Args {
 };
 
 static int return_code = -1;
-static void create_dialog(struct Args arg) {
-        nvd_init(arg.argv[0]);
+static void* create_dialog(struct Args* arg) {
+        nvd_init(arg->argv[0]);
 
         NvdDialogBox* dlg = nvd_dialog_box_new("Hello World!",
                                                "Hello World!",
@@ -23,6 +23,7 @@ static void create_dialog(struct Args arg) {
         
         nvd_free_object(dlg);
         return_code = 0;
+        return NULL;
 }
 
 int main(int argc, char **argv) {
@@ -35,7 +36,7 @@ int main(int argc, char **argv) {
         int result = pthread_create(
                 &thread,
                 NULL,
-                create_dialog,
+                (void* (*)(void*)) create_dialog,
                 &arg
         );
         
