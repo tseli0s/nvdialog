@@ -53,6 +53,7 @@ typedef enum {
 typedef enum {
         NVD_NO_ERROR   = 0,
         NVD_NO_DISPLAY = 0xff,
+        NVD_BACKEND_FAILURE,
         NVD_INVALID_PARAM,
         NVD_NOT_INITIALIZED,
         NVD_BACKEND_INVALID,
