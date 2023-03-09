@@ -2,7 +2,7 @@
 
 pkgname=nvdialog
 _pkgname=nvdialog
-pkgver=0.6.0
+pkgver=0.6.1
 pkgrel=1
 epoch=
 pkgdesc="Cross-platform dialog box library written in C, using the host's standard backend."

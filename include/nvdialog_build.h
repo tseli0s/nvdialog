@@ -30,7 +30,7 @@
 
 /**
  * @page building BuildingNvDialog
- * @version v0.6.0
+ * @version v0.6.1
  * @author Aggelos Tselios
  * 
  * # Building NvDialog
