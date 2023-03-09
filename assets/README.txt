@@ -6,15 +6,15 @@ You are expected to have this file along with a prebuilt version of NvDialog, an
 headers as well from somewhere, perhaps from the Releases. If that's the case, keep reading
 to get started. Otherwise, visit https://github.com/AndroGR/nvdialog/ and see there for more.
 
-You should have either a .so file file in the same folder in this file. This is the actual
+You should have either a .so file or a .dll file in the same folder in this file. This is the actual
 library itself. You can copy this somewhere in your project or even on a system-wide path,
-like /usr/lib. The prebuilt library shipped is a 64-bit, hardened library with the Adwaita backend
-enabled. Just make sure your project finds it at runtime, usually by setting LD_LIBRARY_PATH.
+like /usr/lib for GNU/Linux. The prebuilt library shipped is a 64-bit binary with aggressive (-O3) optimizations
+as well as CMake-specific ones. Just make sure your project finds it at runtime, usually by setting LD_LIBRARY_PATH.
 
 There should also be another folder named 'include'. This folder contains all the headers.
 You should copy this folder EXACTLY with the same layout structure as it is, somewhere
-that your project can find. Also indicate to your compiler the headers are there in the first place.
-Otherwise, 
+that your project can find. Also indicate to your compiler the headers are there in the first place, by using
+the -I flag or by setting it in your IDE.
 
 For support, open an issue on the GitHub of NvDialog: https://github.com/AndroGR/nvdialog/issues.
 Feel free to also use the discussions, for suggestions or questions you may have.
