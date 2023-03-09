@@ -1,5 +1,7 @@
-# Changelog -- 0.7.0
-
+# Changelog -- 0.6.1
+- Fixed initialization call failing on Gtk3.
+- New `NvdError` member: `NVD_BACKEND_FAILURE`.
+- Fixed some build warnings.
 
 # Changelog -- 0.6.0
 - Removed domain name support in favor of plain application names.
