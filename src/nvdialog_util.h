@@ -30,7 +30,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-#if defined(NVD_PLATFORM_UNIX)
+#if defined (unix)
+#include <sys/types.h>
 #include <unistd.h>
 #else
 #include <processthreadsapi.h>
