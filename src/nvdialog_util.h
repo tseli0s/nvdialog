@@ -30,7 +30,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#if defined (unix)
+#if defined (unix) || defined(__APPLE__)
 #include <sys/types.h>
 #include <unistd.h>
 #else

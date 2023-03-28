@@ -26,7 +26,7 @@
 #include <stdbool.h>
 
 NvdProcessID nvd_create_process(void) {
-    #if defined (unix)
+    #if defined (unix) || defined(__APPLE__)
     return (NvdProcessID) fork();
     #else
     return (NvdProcessID) GetCurrentProcessID();
