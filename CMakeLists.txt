@@ -65,7 +65,8 @@ if (MACOSX)
                                 src/nvdialog_error.c
                                 src/nvdialog_capab.c
                                 src/nvdialog_version.c
-                                src/nvdialog_main.c)
+                                src/nvdialog_main.c
+                                src/nvdialog_util.c)
                 if (NVD_BUILD_STATIC)
                         add_library(nvdialog SHARED ${NVD_SOURCES})
                 else(NVD_BUILD_STATIC)
@@ -87,10 +88,10 @@ if (NOT NVD_USE_GTK4)
                             src/backend/gtk/nvdialog_question_dialog.c
                             src/backend/gtk/nvdialog_css_manager.c
                             src/backend/gtk/nvdialog_notification.c)
-        set(NVD_SOURCES ${NVD_GTK_SOURCES} src/nvdialog_error.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
+        set(NVD_SOURCES ${NVD_GTK_SOURCES} src/nvdialog_error.c src/nvdialog_util.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
 else()
         add_compile_definitions(NVD_USE_GTK4)
-        set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c)
+        set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c src/nvdialog_util.c)
 endif()
 set(NVD_HEADERS include/nvdialog_dialog.h
     include/nvdialog_css_manager.h
@@ -115,7 +116,8 @@ if (WIN32 OR WIN32_TARGET)
                         src/nvdialog_capab.c
                         src/nvdialog_error.c
                         src/nvdialog_main.c
-                        src/nvdialog_version.c)
+                        src/nvdialog_version.c
+                        src/nvdialog_util.c)
         message("The source code files are:\n  ${NVD_SOURCES}")
         if (NVD_BUILD_STATIC)
                 add_library(nvdialog STATIC ${NVD_SOURCES})
