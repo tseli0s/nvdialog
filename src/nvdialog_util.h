@@ -30,49 +30,31 @@
 #include <string.h>
 #include <stdlib.h>
 
-/**
- * @brief Places NULL bytes to @ref p until @ref size is reached.
- * Can be useful for uninitialized variables / fields.
- * @param p The pointer to write NULL bytes to.
- * @param size The amount of bytes to write.
- * @returns 0 on success, -1 if p is NULL, 1 if size is 0.
- * @note This function does no bound checking. It's up to you to ensure
- * the function won't write more bytes than the total owned bytes of @ref p
- */
-int nvd_zero_memory(void* p, size_t size);
+#if defined(NVD_PLATFORM_UNIX)
+#include <unistd.h>
+#else
+#include <processthreadsapi.h>
+#endif /* NVD_PLATFORM_UNIX */
 
 /**
- * @brief Returns the length of a C string.
- * @param str The string to find the length of.
- * @note This function is only implemented as a faster alternative
- * to `strlen`, for large strings.
- * @return The length of the string as a `size_t`.
+ * @brief An identifier to match
+ * @details Similar to the `pid_t` type (And similarly defined), this type
+ * keeps the process ID for a forked process.
+ * @note On Windows, this function does nothing. You should use `CreateProcess` manually
+ * instead, which is guaranteed to work as expected.
+ * @sa @ref nvd_create_process
+ * @since v0.7.0
  */
-inline size_t nvd_strlen(const char* str) {
-    size_t size = 0;
-
-    #pragma unroll /* This saves the most time basically. */
-    for (int i = 0; str[i] != '\0'; i++) {
-        size = i;
-    }
-    return size;
-}
+typedef signed long NvdProcessID;
 
 /**
- * @brief A wrapper around malloc with library-oriented error handling.
- * @param size The amount of memory the pointer needs to have.
- * @note  You still need to check for NULL when using this function.
- * @return A pointer to heap-allocated memory of size @ref size , or NULL on failure.
+ * @brief Creates a new process by forking.
+ * @details This function is used to fork the current process.
+ * On success, the @ref is returned to the parent, and 0 is returned to 
+ * the child.
+ * @since v0.7.0
+ * @sa @ref NvdProcessID
  */
-void* nvd_malloc(size_t size);
-
-/**
- * @brief A wrapper around calloc with library-oriented error handling.
- * @param size The amount of memory the pointer needs to have.
- * @note  You still need to check for NULL when using this function.
- * @return A pointer to heap-allocated memory of size @ref size , or NULL on failure.
- * The pointer returned has all memory zeroed.
- */
-void* nvd_calloc();
+NvdProcessID nvd_create_process(void);
 
 #endif /* __nvdialog_util_h__ */

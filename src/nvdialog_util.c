@@ -23,45 +23,12 @@
  */
 
 #include "nvdialog_util.h"
-#include "nvdialog_error.h"
-#include "nvdialog_assert.h"
+#include <stdbool.h>
 
-int nvd_zero_memory(void* p, size_t size) {
-    if (size <= 0) return 1;
-    if (!p) return -1;
-
-    size_t i = 0;
-
-    #pragma unroll
-    while (i != size) {
-        ((char*)p)[i] = '\0';
-        i++;
-    }
-    return 0;
-}
-
-void* nvd_malloc(size_t size) {
-    if (size < 0) {
-        nvd_set_error(NVD_INVALID_PARAM);
-        return NULL;
-    }
-
-    void* p = malloc(size);
-    if (p == NULL) {
-        NVD_ASSERT(p != NULL); /* For the error message. */
-        return NULL;
-    }
-
-    return p;
-}
-
-void* nvd_calloc(size_t size) {
-    NVD_ASSERT(size > 0);
-
-    void* calloc_ptr = nvd_malloc(size);
-    if (calloc_ptr) {
-        nvd_zero_memory(calloc_ptr, size);
-        return calloc_ptr;
-    }
-    else return NULL;
+NvdProcessID nvd_create_process(void) {
+    #if defined(NVD_PLATFORM_UNIX)
+    return (NvdProcessID) fork();
+    #else
+    return (NvdProcessID) GetCurrentProcessID();
+    #endif
 }
