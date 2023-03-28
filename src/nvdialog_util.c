@@ -26,7 +26,7 @@
 #include <stdbool.h>
 
 NvdProcessID nvd_create_process(void) {
-    #if defined(NVD_PLATFORM_UNIX)
+    #if defined (unix)
     return (NvdProcessID) fork();
     #else
     return (NvdProcessID) GetCurrentProcessID();
