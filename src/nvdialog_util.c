@@ -29,6 +29,6 @@ NvdProcessID nvd_create_process(void) {
     #if defined (unix) || defined(__APPLE__)
     return (NvdProcessID) fork();
     #else
-    return (NvdProcessID) GetCurrentProcessID();
+    return (NvdProcessID) GetCurrentProcessId();
     #endif
 }
