@@ -103,7 +103,7 @@ int nvd_init(char *program) {
         char* argv[] = {
                 program
         };
-        if (!gtk_init_check(&__argc, (char***) &argv)) {
+        if (!gtk_init_check(NULL, NULL)) {
                 if (!getenv("DISPLAY")) nvd_set_error(NVD_NO_DISPLAY);
                 else nvd_set_error(NVD_BACKEND_FAILURE);
                 return NVD_NO_DISPLAY;
