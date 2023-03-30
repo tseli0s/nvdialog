@@ -56,15 +56,15 @@ static void nvd_set_action_ptr(void* notif, char* action, struct NvdActionsArgs 
 
 static bool __nvd_check_libnotify(NvdNotification *notification) {
         bool (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
-                if (!nvd_notify_init) {
-                        dlclose(notification->lib);
+                if (nvd_notify_init == NULL) {
                         nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
+                        dlclose(notification->lib);
                         return false;
                 }
 
-                if (!nvd_notify_init("NvDialog")) {
-                        dlclose(notification->lib);
+                if (!nvd_notify_init(nvd_get_application_name())) {
                         nvd_error_message("Couldn't initialize libnotify, stopping here.");
+                        dlclose(notification->lib);
                         return false;
         }
         return true;
@@ -95,8 +95,11 @@ NvdNotification *nvd_notification_gtk(const char   *title,
         NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
         NVD_RETURN_IF_NULL(notification);
 
-        notification->lib                  = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
-        if (!__nvd_check_libnotify(notification)) nvd_set_error(NVD_BACKEND_INVALID);
+        notification->lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
+        if (!__nvd_check_libnotify(notification)) {
+                nvd_set_error(NVD_BACKEND_INVALID);
+                return NULL;
+        }
 
         nvd_notify_new_t notify_new  = dlsym(notification->lib, "notify_notification_new");
         
@@ -143,7 +146,10 @@ void nvd_send_notification_gtk(NvdNotification *notification) {
 
 void nvd_delete_notification_gtk(NvdNotification *notification) {
         NVD_ASSERT_FATAL(notification != NULL); /* Fatal to avoid some pretty scary bugs. */
-        dlclose(notification->lib);
+        if (dlclose(notification->lib) < 0) {
+                nvd_set_error(NVD_INTERNAL_ERROR);
+                abort();
+        }
         free(notification);
 }
 
