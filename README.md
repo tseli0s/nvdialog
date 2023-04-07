@@ -20,6 +20,14 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 <br> <br>
 </div>
 
+# Features
+- Simple, high level C API with low overhead (See [examples/](./examples/)).
+- 100% guaranteed native looking file dialogs.
+- MIT Licensed.
+- Cross-compiler (Actively tested with `gcc`, `clang` and MSVC).
+- Supports most desktop platforms through 3 different implementations (Backends).
+- Legacy version support (See [OS Versions Supported](#os-versions-supported))
+
 # Backends
 - **Adwaita Backend**\
 A backend using Gtk4 and `libadwaita`. This backend has replaced the (following) Gtk3 backend since 0.2.0 was released. Also note, this backend makes use of hardware acceleration, which sometimes breaks games in Wayland.
