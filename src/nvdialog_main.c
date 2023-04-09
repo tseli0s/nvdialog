@@ -49,6 +49,17 @@
 #include "nvdialog_types.h"
 #include <stdint.h>
 
+/* 
+ * A helper macro to check if NvDialog has been
+ * initialized before proceeding with the actual implementation.
+ */
+#define NVD_IF_NOT_INITIALIZED(...) \
+        if (!nvd_initialized) { \
+                NVD_ASSERT(nvd_initialized == true); \
+                nvd_set_error(NVD_NOT_INITIALIZED); \
+                __VA_ARGS__ ; \
+        }
+
 static char *nvd_app_name = "NvDialog Application";
 static char *nvd_argv_0   = NULL;
 
@@ -58,6 +69,7 @@ static NvdParentWindow nvd_parent_window = NULL;
 const char *nvd_get_argv() { return nvd_argv_0; }
 
 static int nvd_check_libnotify(void) {
+        NVD_IF_NOT_INITIALIZED(return -NVD_NOT_INITIALIZED);
         #if defined (NVD_USE_GTK4) || defined (NVD_PLATFORM_LINUX)
         void *lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
         if (!lib) {
@@ -106,7 +118,7 @@ int nvd_init(char *program) {
         if (!gtk_init_check(NULL, NULL)) {
                 if (!getenv("DISPLAY")) nvd_set_error(NVD_NO_DISPLAY);
                 else nvd_set_error(NVD_BACKEND_FAILURE);
-                return NVD_NO_DISPLAY;
+                return -NVD_NO_DISPLAY;
         }
 
         if (getenv("NVD_NO_NOTIFS") == NULL || atoi(getenv("NVD_NO_NOTIFS"))) {
@@ -143,6 +155,7 @@ const char *nvd_get_application_name() { return nvd_app_name; }
 
 NvdFileDialog *nvd_open_file_dialog_new(const char *title,
                                         const char *file_extensions) {
+        NVD_IF_NOT_INITIALIZED(return NULL);
 #if !defined(_WIN32) && !defined(NVD_USE_COCOA)
 #if !defined(NVD_USE_GTK4)
         return nvd_open_file_dialog_gtk(title, file_extensions);
@@ -158,6 +171,7 @@ NvdFileDialog *nvd_open_file_dialog_new(const char *title,
 
 NvdDialogBox *
 nvd_dialog_box_new(const char *title, const char *message, NvdDialogType type) {
+        NVD_IF_NOT_INITIALIZED(return NULL);
 #if !defined(_WIN32) && !defined(NVD_USE_COCOA)
 #if !defined(NVD_USE_GTK4)
         NvdDialogBox *dialog = nvd_dialog_box_gtk(title, message, type);
@@ -180,6 +194,7 @@ nvd_dialog_box_new(const char *title, const char *message, NvdDialogType type) {
 NvdQuestionBox *nvd_dialog_question_new(const char       *title,
                                         const char       *question,
                                         NvdQuestionButton button) {
+        NVD_IF_NOT_INITIALIZED(return NULL);
 #if !defined(_WIN32) && !defined(NVD_USE_COCOA)
 #if !defined(NVD_USE_GTK4)
         return nvd_question_gtk(title, question, button);
@@ -194,7 +209,17 @@ NvdQuestionBox *nvd_dialog_question_new(const char       *title,
         return NULL;
 }
 
+/*
+ * FIXME: NvdReply, like all enums, does not have an "invalid" variant to be used when
+ * the library fails. This leaves failing code to be used like everything went fine.
+ * In this case, we are working around this by casting a negative variant of NvdError
+ * into the return type and returning it.
+ * The best solution is to simply add new variants into those enums. The next best
+ * solution is to assert that the reply is actually valid.
+ */
 NvdReply nvd_get_reply(NvdQuestionBox *question) {
+        NVD_ASSERT_FATAL(question != NULL);
+        NVD_IF_NOT_INITIALIZED(return ((NvdReply) -NVD_NOT_INITIALIZED));
 #if defined(NVD_USE_GTK4)
         return nvd_get_reply_adw(question);
 #elif defined(NVD_USE_COCOA)
@@ -209,6 +234,7 @@ NvdReply nvd_get_reply(NvdQuestionBox *question) {
 NvdAboutDialog *nvd_about_dialog_new(const char *name,
                                      const char *description,
                                      const char *logo_path) {
+        NVD_IF_NOT_INITIALIZED(return NULL);
 #if defined(_WIN32)
         return nvd_about_dialog_win32(name, description, logo_path);
 #elif defined(NVD_USE_COCOA)
@@ -222,7 +248,7 @@ NvdAboutDialog *nvd_about_dialog_new(const char *name,
 #endif /* _WIN32 */
 }
 
-inline int nvd_set_parent(NvdParentWindow parent) {
+int nvd_set_parent(NvdParentWindow parent) {
         if (!parent) return -1;
         else nvd_parent_window = parent;
         return 0;
@@ -233,11 +259,14 @@ NvdParentWindow nvd_get_parent(void) { return nvd_parent_window; }
 void nvd_delete_parent() { nvd_parent_window = NULL; }
 
 void nvd_free_object(void *obj) {
+        NVD_ASSERT_FATAL(nvd_initialized == true);
         NVD_ASSERT(obj != NULL);
         free(obj);
 }
 
 void nvd_show_dialog(NvdDialogBox *dialog) {
+        NVD_ASSERT(dialog != NULL);
+        NVD_IF_NOT_INITIALIZED(return);
 #if !defined(_WIN32) && defined(NVD_USE_GTK4)
         nvd_show_dialog_adw(dialog);
 #elif defined(_WIN32)
@@ -252,6 +281,8 @@ void nvd_show_dialog(NvdDialogBox *dialog) {
 }
 
 void nvd_show_about_dialog(NvdAboutDialog *dialog) {
+        NVD_ASSERT(dialog != NULL);
+        NVD_IF_NOT_INITIALIZED(return);
 #if defined(_WIN32)
         nvd_show_about_dialog_win32(dialog);
 #elif defined(NVD_USE_COCOA)
@@ -264,6 +295,10 @@ void nvd_show_about_dialog(NvdAboutDialog *dialog) {
 }
 
 void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version) {
+        NVD_ASSERT(dialog != NULL);
+        NVD_IF_NOT_INITIALIZED(return);
+
+        if (!version) return;
 #if defined(NVD_USE_GTK4)
         nvd_about_dialog_set_version_adw(dialog, version);
 #elif defined(_WIN32) || defined(NVD_USE_COCOA)
@@ -273,6 +308,9 @@ void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version) {
 }
 
 void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
+        NVD_ASSERT_FATAL(savebuf != NULL);
+        NVD_ASSERT(dialog != NULL);
+        NVD_IF_NOT_INITIALIZED(return);
 #if defined(_WIN32)
         nvd_get_file_location_win32(dialog, savebuf);
 #elif defined(NVD_USE_COCOA)
@@ -286,6 +324,8 @@ void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
 
 NvdFileDialog *nvd_save_file_dialog_new(const char *title,
                                         const char *default_filename) {
+        NVD_ASSERT(title != NULL);
+        NVD_IF_NOT_INITIALIZED(return NULL);
 #if defined(_WIN32)
         return nvd_save_file_dialog_win32(title, default_filename);
 #elif defined(NVD_USE_COCOA)
@@ -300,6 +340,10 @@ NvdFileDialog *nvd_save_file_dialog_new(const char *title,
 void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
                                        const char *license_link,
                                        const char *txt) {
+        NVD_IF_NOT_INITIALIZED(return);
+        NVD_ASSERT_FATAL(dialog != NULL);
+        NVD_ASSERT(license_link != NULL);
+        NVD_ASSERT(txt != NULL);
 #if defined  (_WIN32)
         nvd_about_dialog_set_license_link_win32(dialog, license_link, txt);
 #elif defined(NVD_USE_COCOA)
@@ -314,6 +358,10 @@ void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
 NvdNotification *nvd_notification_new(const char *title,
                                       const char *msg,
                                       NvdNotifyType type) {
+        NVD_IF_NOT_INITIALIZED(return NULL);
+        NVD_ASSERT(title != NULL);
+        NVD_ASSERT(msg != NULL);
+
 #if   defined(_WIN32)
         return nvd_notification_win32(title, msg, type);
 #elif defined(NVD_USE_COCOA)
@@ -331,6 +379,8 @@ void nvd_delete_notification(NvdNotification *notification) {
 }
 
 void nvd_send_notification(NvdNotification *notification) {
+        NVD_IF_NOT_INITIALIZED(return);
+        NVD_ASSERT(notification != NULL);
 #if   defined(_WIN32)
         nvd_send_notification_win32(notification);
 #elif defined(NVD_USE_COCOA)
@@ -385,57 +435,38 @@ int nvd_css_manager_use_style(NvdCSSManager *mgr, void *raw_handle) {
 }
 
 void *nvd_dialog_box_get_raw(NvdDialogBox *dialog) {
-#if     defined(NVD_USE_GTK4)
-        return nvd_dialog_box_get_raw_adw(dialog);
-#elif defined(NVD_USE_COCOA)
-	return nvd_dialog_box_get_raw_cocoa(dialog);
-#elif   defined(_WIN32)
-        return NULL;
-#else
-        return nvd_dialog_box_get_raw_gtk(dialog);
-#endif  /* NVD_USE_GTK4 */
+        NVD_ASSERT_FATAL(dialog != NULL);
+        NVD_IF_NOT_INITIALIZED(return NULL);
+        return dialog->window_handle;
 }
 
 void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog) {
-#if     defined(NVD_USE_GTK4)
-        return nvd_about_dialog_get_raw_adw(dialog);
-#elif   defined(_WIN32)
-        return NULL; /* Windows dialogs are created immediately, no windows are held beforehand. */
-#elif   defined(NVD_USE_COCOA)
-        return nvd_about_dialog_get_raw_cocoa(dialog);
-#else
-        return nvd_about_dialog_get_raw_gtk(dialog);
-#endif  /* NVD_USE_GTK4 */
+        NVD_ASSERT_FATAL(dialog != NULL);
+        NVD_IF_NOT_INITIALIZED(return NULL);
+        return dialog->raw;
 }
 
 void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog) {
-#if     defined(NVD_USE_GTK4)
-        return nvd_dialog_question_get_raw_adw(dialog);
-#elif   defined(NVD_USE_COCOA)
-	return nvd_dialog_question_get_raw_cocoa(dialog);
-#elif   defined(_WIN32)
-        return NULL;
-#else
-        return nvd_dialog_question_get_raw_gtk(dialog);
-#endif  /* NVD_USE_GTK4 */
+        NVD_ASSERT_FATAL(dialog != NULL);
+        NVD_IF_NOT_INITIALIZED(return NULL);
+        return dialog->window_handle;
 }
 
 void *nvd_open_file_dialog_get_raw(NvdFileDialog *dialog) {
-#if     defined(NVD_USE_GTK4)
-        return nvd_open_file_dialog_get_raw_adw(dialog);
-#elif defined(NVD_USE_COCOA)
-	return nvd_open_file_dialog_get_raw_cocoa(dialog);
-#elif   defined(_WIN32)
-        return NULL;
-#else
-        return nvd_open_file_dialog_get_raw_gtk(dialog);
-#endif  /* NVD_USE_GTK4 */
+        NVD_ASSERT_FATAL(dialog != NULL);
+        NVD_IF_NOT_INITIALIZED(return NULL);
+        return dialog->raw;
 }
 
 void nvd_add_notification_action(NvdNotification* notification,
                                  const char* action,
                                  int  value_to_set,
                                  int* value_to_return) {
+        NVD_IF_NOT_INITIALIZED(return);
+        NVD_ASSERT_FATAL(notification != NULL);
+        NVD_ASSERT(action != NULL);
+        NVD_ASSERT(value_to_return != NULL);
+        
 #if defined(NVD_USE_GTK4)
         nvd_add_notification_action_adw(notification, action, value_to_set, value_to_return);
 #elif defined(NVD_USE_COCOA)
