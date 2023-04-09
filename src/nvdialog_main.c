@@ -28,9 +28,9 @@
  */
 #define _CRT_SECURE_NO_WARNINGS
 
+#include "nvdialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
-#include "nvdialog.h"
 #include "nvdialog_assert.h"
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
@@ -46,6 +46,8 @@
 #else
 #include "backend/win32/nvdialog_win32.h"
 #endif /* _WIN32 */
+
+#include "impl/nvdialog_typeimpl.h"
 #include "nvdialog_types.h"
 #include <stdint.h>
 
