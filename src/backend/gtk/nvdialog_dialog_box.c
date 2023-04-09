@@ -51,6 +51,10 @@ nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         dialog->window_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
         gtk_widget_set_hexpand(dialog->window_handle, true);
+        gtk_widget_set_vexpand(dialog->window_handle, true);
+        gtk_window_set_title(GTK_WINDOW(dialog->window_handle), title);
+        gtk_window_set_modal(GTK_WINDOW(dialog->window_handle), true);
+
         GtkWidget *img;
         switch (type) {
         case NVD_DIALOG_WARNING:
