@@ -20,7 +20,7 @@ set(NVDIALOG_MAXBUF 4096)
 if (LINUX)
         set(CMAKE_INSTALL_PREFIX /usr)
 endif()
-
+        
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR APPLE)
         set(CMAKE_C_COMPILER clang)
         set(MACOSX TRUE)
@@ -35,7 +35,7 @@ if (UNIX AND NOT MACOSX)
 endif()
 
 if(WIN32_TARGET)
-        set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
+        set(CMAKE_C_COMPILER /usr/bin/i686-w64-mingw32-gcc-win32)
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-stack-protector -Wno-unused-parameter -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
 else()
         if (MSVC)
