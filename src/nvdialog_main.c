@@ -71,7 +71,6 @@ static NvdParentWindow nvd_parent_window = NULL;
 const char *nvd_get_argv() { return nvd_argv_0; }
 
 static int nvd_check_libnotify(void) {
-        NVD_IF_NOT_INITIALIZED(return -NVD_NOT_INITIALIZED);
         #if defined (NVD_USE_GTK4) || defined (NVD_PLATFORM_LINUX)
         void *lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
         if (!lib) {
@@ -145,6 +144,7 @@ int nvd_init(char *program) {
         adw_init();
 #endif /* NVD_USE_GTK4 */
 #endif /* _WIN32 && NVD_USE_COCOA */
+
         nvd_initialized = true;
         return 0;
 }
