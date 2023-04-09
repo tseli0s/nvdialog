@@ -32,3 +32,24 @@ NvdProcessID nvd_create_process(void) {
     return (NvdProcessID) GetCurrentProcessId();
     #endif
 }
+
+/* 
+ * For some explanation, here's my answer on StackOverflow:
+ * https://stackoverflow.com/questions/75274925/is-there-a-way-to-find-out-if-i-am-running-inside-a-flatpak-appimage-or-another
+ */
+bool nvd_is_sandboxed(void) {
+    #if defined(_WIN32) || defined(NVD_USE_COCOA)
+    return false; // see documentation
+    #else
+
+    if (getenv("container")) {
+        return true;
+    } else if (getenv("APPIMAGE")) {
+        return true;
+    } else if (getenv("SNAP")) {
+        return true;
+    }
+    return false;
+
+    #endif
+}
