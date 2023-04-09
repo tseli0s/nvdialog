@@ -4,7 +4,7 @@
 # is much more reliable and maintainable.
 
 CC=gcc
-SRC=src/*.c src/backend/gtk/*.c src/core/*.c
+SRC=src/*.c src/backend/gtk/*.c
 PUBHEADER=include/*/*
 CFLAGS=-Wall -Wextra -O3 -s -Wno-unused-parameter -fstack-protector-all -fPIC -shared -Iinclude/
 OUTFILE=libnvdialog.so
