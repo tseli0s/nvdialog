@@ -29,6 +29,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #if defined (unix) || defined(__APPLE__)
 #include <sys/types.h>
@@ -39,11 +40,9 @@
 #endif /* NVD_PLATFORM_UNIX */
 
 /**
- * @brief An identifier to match
+ * @brief An identifier to match a new process ID spawned by @ref nvd_create_process
  * @details Similar to the `pid_t` type (And similarly defined), this type
  * keeps the process ID for a forked process.
- * @note On Windows, this function does nothing. You should use `CreateProcess` manually
- * instead, which is guaranteed to work as expected.
  * @sa @ref nvd_create_process
  * @since v0.7.0
  */
@@ -54,9 +53,21 @@ typedef signed long NvdProcessID;
  * @details This function is used to fork the current process.
  * On success, the @ref is returned to the parent, and 0 is returned to 
  * the child.
+ * @note On Windows, this function does nothing. You should use `CreateProcess` manually
+ * instead, which is guaranteed to work as expected.
  * @since v0.7.0
  * @sa @ref NvdProcessID
  */
 NvdProcessID nvd_create_process(void);
+
+/**
+ * @brief Returns a boolean to indicate whether the host is running the application through
+ * a container (eg. Flatpak). It's accuracy generally varies and the definition is actually
+ * pretty hacky.
+ * @note NvDialog does not consider Windows as a sandboxed environment regardless of what's the actual case.
+ * @attention As a general rule, most macOS applications are sandboxed, and either way, it wouldn't change anything. This function won't return true on macOS **EVER**.
+ * @since v0.7.0
+ */
+bool nvd_is_sandboxed(void);
 
 #endif /* __nvdialog_util_h__ */
