@@ -1,3 +1,10 @@
+# Changelog -- 0.7.0
+- Gtk dialogs will now be guaranteed to have their title set.
+- Gtk dialogs are now modal, meaning the user can't skip over them without
+  responding to them.
+- NvDialog will check if it has been initialized before **any** API call.
+- Added extra null pointer / invalid parameter checking.
+
 # Changelog -- 0.6.1
 - Fixed initialization call failing on Gtk3.
 - New `NvdError` member: `NVD_BACKEND_FAILURE`.
