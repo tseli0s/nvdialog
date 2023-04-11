@@ -52,17 +52,12 @@ static void nvd_print_assert(const char *msg, ...) {
 
 #define NVD_STRING(s) #s
 
-#define NVD_ASSERT(eq)                                                         \
-        do {                                                                   \
-                if (!(eq)) {                                                   \
-                        nvd_print_assert(                                      \
-                            "Assertion failure: %s\n  Line: %d\n  Filename: "  \
-                            "%s\n  Function: %s\n",                            \
-                            NVD_STRING(eq),                                    \
-                            __LINE__,                                          \
-                            __FILE__,                                          \
-                            NVD_FN_IDENT);                                     \
-                }                                                              \
+#define NVD_ASSERT(eq)                                                                      \
+        do {                                                                                \
+                if (!(eq)) {                                                                \
+                        nvd_print_assert("%s:%d (%s): assertion %s failed\n",               \
+                                         __FILE__, __LINE__, NVD_FN_IDENT, NVD_STRING(eq)); \
+                }                                                                           \
         } while (0)
 
 #define NVD_RETURN_IF_NULL(x)                                                  \
