@@ -56,7 +56,7 @@
  * initialized before proceeding with the actual implementation.
  */
 #define NVD_IF_NOT_INITIALIZED(...) \
-        if (!nvd_initialized) { \
+        if (nvd_initialized != true) { \
                 NVD_ASSERT(nvd_initialized == true); \
                 nvd_set_error(NVD_NOT_INITIALIZED); \
                 __VA_ARGS__ ; \
@@ -96,6 +96,7 @@ static int nvd_check_libnotify(void) {
         }
         dlclose(lib); /* We are going to load it seperately once needed. */
         #endif /* NVD_USE_GTK4 || NVD_PLATFORM_LINUX */
+        nvd_initialized = true;
         return 0;
 }
 
@@ -112,10 +113,6 @@ int nvd_init(char *program) {
 #if !defined(_WIN32) && !defined(NVD_USE_COCOA)
 
 #if !defined(NVD_USE_GTK4)
-        int __argc = 1;
-        char* argv[] = {
-                program
-        };
         if (!gtk_init_check(NULL, NULL)) {
                 if (!getenv("DISPLAY")) nvd_set_error(NVD_NO_DISPLAY);
                 else nvd_set_error(NVD_BACKEND_FAILURE);
@@ -128,6 +125,7 @@ int nvd_init(char *program) {
         }
 #else
         (void) program;
+        int result = 0;
         if (!gtk_init_check()) {
                 /*
                  * Most likely a Gtk4 failure occurs because there's no display.
@@ -139,13 +137,16 @@ int nvd_init(char *program) {
         }
         if (getenv("NVD_NO_NOTIFS") == NULL || atoi(getenv("NVD_NO_NOTIFS"))) {
                 /* Since this function used to be inlined here, make it easy for us and just return what it returns. */
-                return nvd_check_libnotify();
+                result = nvd_check_libnotify();
         }
         adw_init();
+        nvd_initialized = true;
+        return result;
 #endif /* NVD_USE_GTK4 */
 #endif /* _WIN32 && NVD_USE_COCOA */
 
         nvd_initialized = true;
+        nvd_error_message("Value of nvd_initialized: %s (line %d)", nvd_initialized == true ? "true" : "false", __LINE__);
         return 0;
 }
 
@@ -261,7 +262,6 @@ NvdParentWindow nvd_get_parent(void) { return nvd_parent_window; }
 void nvd_delete_parent() { nvd_parent_window = NULL; }
 
 void nvd_free_object(void *obj) {
-        NVD_ASSERT_FATAL(nvd_initialized == true);
         NVD_ASSERT(obj != NULL);
         free(obj);
 }
