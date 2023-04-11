@@ -47,8 +47,15 @@
 #include "backend/win32/nvdialog_win32.h"
 #endif /* _WIN32 */
 
+#if defined(linux) || defined(__linux__) || defined(__linux)
+#if defined(NVD_SANDBOX_SUPPORT)
+#include "backend/sandbox/nvdialog_sbx.h"
+#endif /* NVD_SANDBOX_SUPPORT */
+#endif /* linux */
+
 #include "impl/nvdialog_typeimpl.h"
 #include "nvdialog_types.h"
+#include "nvdialog_util.h"
 #include <stdint.h>
 
 /* 
@@ -66,6 +73,7 @@ static char *nvd_app_name = "NvDialog Application";
 static char *nvd_argv_0   = NULL;
 
 static bool nvd_initialized              = false;
+static bool nvd_is_process_container     = false;
 static NvdParentWindow nvd_parent_window = NULL;
 
 const char *nvd_get_argv() { return nvd_argv_0; }
@@ -105,6 +113,7 @@ int nvd_init(char *program) {
                 nvd_set_error(NVD_ALREADY_INITIALIZED);
                 return -NVD_ALREADY_INITIALIZED;
         }
+        nvd_is_process_container = nvd_is_sandboxed();
 #if defined (__linux__)
         setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
         setlinebuf(stderr);
@@ -310,7 +319,6 @@ void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version) {
 }
 
 void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
-        NVD_ASSERT_FATAL(savebuf != NULL);
         NVD_ASSERT(dialog != NULL);
         NVD_IF_NOT_INITIALIZED(return);
 #if defined(_WIN32)
