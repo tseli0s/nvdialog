@@ -4,11 +4,11 @@
 cmake_minimum_required(VERSION 3.18)
 project(libnvdialog LANGUAGES C VERSION 0.6.1 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
-option(WIN32_TARGET "Build the library for Windows usage. Requires x86_64-w64-mingw32." OFF)
+option(WIN32_TARGET "Build the library for Windows usage. Requires i686-w64-mingw32-gcc-win32." OFF)
 option(COCOA_TARGET "Build the library for MacOS/Cocoa usage." ON)
 option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental." OFF) # Default since 0.2.0-plus-some-commits.
 option(NVD_BUILD_STATIC "Build NvDialog as a static library. Experimental." OFF)
-
+option(NVD_SANDBOX_SUPPORT "Enable support for Flatpak applications on Linux" ON)
 set(NVDIALOG_MAXBUF 4096)
 
 # On GNU/Linux, by default CMake installs the libraries and headers under
@@ -21,6 +21,13 @@ if (LINUX)
         set(CMAKE_INSTALL_PREFIX /usr)
 endif()
         
+if (NVD_SANDBOX_SUPPORT)
+        if (NOT LINUX)
+                message(FATAL "Sandbox support is currently only available for GNU/Linux.")
+        endif()
+        add_compile_definitions(NVD_SANDBOX_SUPPORT=1)
+endif()
+
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR APPLE)
         set(CMAKE_C_COMPILER clang)
         set(MACOSX TRUE)
@@ -68,7 +75,7 @@ if (MACOSX)
                                 src/nvdialog_main.c
                                 src/nvdialog_util.c)
                 if (NVD_BUILD_STATIC)
-                        add_library(nvdialog SHARED ${NVD_SOURCES})
+                        add_library(nvdialog STATIC ${NVD_SOURCES})
                 else(NVD_BUILD_STATIC)
                         add_library(nvdialog SHARED ${NVD_SOURCES})
                 endif(NVD_BUILD_STATIC)
@@ -88,7 +95,15 @@ if (NOT NVD_USE_GTK4)
                             src/backend/gtk/nvdialog_question_dialog.c
                             src/backend/gtk/nvdialog_css_manager.c
                             src/backend/gtk/nvdialog_notification.c)
-        set(NVD_SOURCES ${NVD_GTK_SOURCES} src/nvdialog_error.c src/nvdialog_util.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
+        if (NVD_SANDBOX_SUPPORT)
+                set(NVD_SBX_SOURCES src/backend/sandbox/nvdialog_about_dialog.c
+                                    src/backend/sandbox/nvdialog_file_dialog.c
+                                    src/backend/sandbox/nvdialog_dialog_box.c
+                                    src/backend/sandbox/nvdialog_question_dialog.c
+                                    src/backend/sandbox/nvdialog_css_manager.c
+                                    src/backend/sandbox/nvdialog_notification.c)
+        endif(NVD_SANDBOX_SUPPORT)
+        set(NVD_SOURCES ${NVD_GTK_SOURCES} ${NVD_SBX_SOURCES} src/nvdialog_error.c src/nvdialog_util.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
 else()
         add_compile_definitions(NVD_USE_GTK4)
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c src/nvdialog_util.c)
