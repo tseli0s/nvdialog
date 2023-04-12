@@ -42,55 +42,18 @@ static char *__nvd_string_gen(char *str, size_t size) {
 }
 
 NvdCSSManager *nvd_css_manager_adw() {
-        /* Only using calloc() here because I don't want to assign NULL everywhere :P */
-        NvdCSSManager *mgr = calloc(1, sizeof(struct _NvdCSSManager));
-        NVD_RETURN_IF_NULL(mgr);
-
-        mgr->raw  = gtk_css_provider_new();
-        mgr->used = false;
-
-        return mgr;
+        return NULL;
 }
 
 int nvd_css_manager_attach_string_stylesheet_adw(NvdCSSManager *mgr,
                                                  const char    *str) {
-        int32_t chdir_result = chdir("/tmp"); /* So we don't harm anything we shouldn't. */
-        if (chdir_result != 0) {
-                nvd_set_error(NVD_FILE_INACCESSIBLE);
-                return -1;
-        }
-
-        char *new_filename = calloc(1, sizeof(char) * 13);
-        __nvd_string_gen(new_filename, 12);
-
-        FILE *stream = fopen(new_filename, "w");
-        fputs (str, stream);
-        fclose(stream);
-
-        char filename[NVDIALOG_MAXBUF];
-        sprintf(filename, "%s%s", "/tmp/", new_filename);
-
-        gtk_css_provider_load_from_path ((GtkCssProvider*) mgr->raw,
-                                                      filename);
-        /*
-         * Well, we could store it in 'mgr' but then why even create a random
-         * string for its filename?
-         */
-        free(new_filename);
-        return 0;
+        return -1;
 }
 
 int nvd_css_manager_attach_stylesheet_adw(NvdCSSManager *mgr, const char *filename) {
-        gtk_css_provider_load_from_path(mgr->raw,
-                                        filename);
-        return 0;
+        return -1;
 }
 
 int nvd_css_manager_use_style_adw(NvdCSSManager *mgr, void *raw_handle) {
-        gtk_style_context_add_provider(
-                gtk_widget_get_style_context(GTK_WIDGET(raw_handle)),
-                mgr->raw,
-                GTK_STYLE_PROVIDER_PRIORITY_USER
-        );
-        return 0;
+        return -1;
 }
