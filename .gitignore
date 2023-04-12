@@ -4,9 +4,11 @@ build-extra/
 .vscode/
 .cache/
 
-# The directory where some features are being tested,
-# not uploaded because there's a mess inside it.
-testing/
+# Pretty self-explanatory, there are GBs of trash data in there
+.flatpak/
+.flatpak-builder/
+build-dir/
+nvd-flatpak-test
 
 # The documentation will be uploaded on the website anyways,
 # so no point on storing it here.
