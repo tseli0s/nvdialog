@@ -69,12 +69,16 @@
                 __VA_ARGS__ ; \
         }
 
-static char *nvd_app_name = "NvDialog Application";
-static char *nvd_argv_0   = NULL;
-
-static bool nvd_initialized              = false;
-static bool nvd_is_process_container     = false;
-static NvdParentWindow nvd_parent_window = NULL;
+/*
+ * These are marked as volatile since sometimes aggressive optimization may actually
+ * cause them to be inlined and cause all sorts of weird runtime bugs.
+ * As a general rule, everything in the global / static scope must be volatile.
+*/
+static volatile char *nvd_app_name                = "NvDialog Application";
+static volatile char *nvd_argv_0                  = NULL;
+static volatile bool nvd_initialized              = false;
+static volatile bool nvd_is_process_container     = false;
+static volatile NvdParentWindow nvd_parent_window = NULL;
 
 const char *nvd_get_argv() { return nvd_argv_0; }
 
@@ -113,7 +117,13 @@ int nvd_init(char *program) {
                 nvd_set_error(NVD_ALREADY_INITIALIZED);
                 return -NVD_ALREADY_INITIALIZED;
         }
+        #if defined(NVD_SANDBOX_SUPPORT)
         nvd_is_process_container = nvd_is_sandboxed();
+        if (nvd_is_process_container) {
+                nvd_error_message("NOTE: NvDialog has detected being run in a container. "
+                                  "This is still a work in progress.");
+        }
+        #endif /* NVD_SANDBOX_SUPPORT */
 #if defined (__linux__)
         setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
         setlinebuf(stderr);
@@ -168,57 +178,68 @@ const char *nvd_get_application_name() { return nvd_app_name; }
 NvdFileDialog *nvd_open_file_dialog_new(const char *title,
                                         const char *file_extensions) {
         NVD_IF_NOT_INITIALIZED(return NULL);
-#if !defined(_WIN32) && !defined(NVD_USE_COCOA)
-#if !defined(NVD_USE_GTK4)
-        return nvd_open_file_dialog_gtk(title, file_extensions);
-#else
+
+        #if defined(__linux__) && !defined(NVD_USE_GTK4)
+        if (nvd_is_process_container) return nvd_open_file_dialog_sbx(title, file_extensions);
+        else return nvd_open_file_dialog_gtk(title, file_extensions);
+        
+        #elif defined(__linux__) && defined(NVD_USE_GTK4)
         return nvd_open_file_dialog_adw(title, file_extensions);
-#endif /* NVD_USE_GTK4 */
-#elif defined(NVD_USE_COCOA)
-	return nvd_open_file_dialog_cocoa(title, file_extensions);
-#else
+
+        #elif defined(__APPLE__)
+        return nvd_open_file_dialog_cocoa(title, file_extensions);
+
+        #elif defined(_WIN32)
         return nvd_open_file_dialog_win32(title, file_extensions);
-#endif /* _WIN32 && NVD_USE_COCOA */
+
+        #else
+        #error Unable to find appropriate backend implementation.
+        #endif /* __linux__ */
 }
 
 NvdDialogBox *
 nvd_dialog_box_new(const char *title, const char *message, NvdDialogType type) {
         NVD_IF_NOT_INITIALIZED(return NULL);
-#if !defined(_WIN32) && !defined(NVD_USE_COCOA)
-#if !defined(NVD_USE_GTK4)
-        NvdDialogBox *dialog = nvd_dialog_box_gtk(title, message, type);
-        if (!dialog)
-                nvd_set_error(NVD_INTERNAL_ERROR);
-        return dialog;
-#else
-        NvdDialogBox *dialog = nvd_dialog_box_adw(title, message, type);
-        if (!dialog)
-                nvd_set_error(NVD_INTERNAL_ERROR);
-        return dialog;
-#endif /* NVD_USE_GTK4 */
-#elif defined(NVD_USE_COCOA)
-	return nvd_dialog_box_cocoa(title, message, type);
-#else
+
+        #if defined(__linux__) && !defined(NVD_USE_GTK4)
+        if (nvd_is_process_container) return nvd_dialog_box_sbx(title, message, type);
+        else return nvd_dialog_box_gtk(title, message, type);
+        
+        #elif defined(__linux__) && defined(NVD_USE_GTK4)
+        return nvd_dialog_box_adw(title, message, type);
+
+        #elif defined(__APPLE__)
+        return nvd_dialog_box_cocoa(title, message, type);
+
+        #elif defined(_WIN32)
         return nvd_dialog_box_win32(title, message, type);
-#endif /* _WIN32 && NVD_USE_COCOA */
+
+        #else
+        #error Unable to find appropriate backend implementation.
+        #endif /* __linux__ */
 }
 
 NvdQuestionBox *nvd_dialog_question_new(const char       *title,
                                         const char       *question,
                                         NvdQuestionButton button) {
         NVD_IF_NOT_INITIALIZED(return NULL);
-#if !defined(_WIN32) && !defined(NVD_USE_COCOA)
-#if !defined(NVD_USE_GTK4)
-        return nvd_question_gtk(title, question, button);
-#else
+
+        #if defined(__linux__) && !defined(NVD_USE_GTK4)
+        if (nvd_is_process_container) return nvd_question_sbx(title, question, button);
+        else return nvd_question_gtk(title, question, button);
+        
+        #elif defined(__linux__) && defined(NVD_USE_GTK4)
         return nvd_question_adw(title, question, button);
-#endif /* NVD_USE_GTK4 */
-#elif defined(NVD_USE_COCOA)
-	return nvd_question_cocoa(title, question, button);
-#else
+
+        #elif defined(__APPLE__)
+        return nvd_question_cocoa(title, question, button);
+
+        #elif defined(_WIN32)
         return nvd_question_win32(title, question, button);
-#endif /* _WIN32 */
-        return NULL;
+
+        #else
+        #error Unable to find appropriate backend implementation.
+        #endif /* __linux__ */
 }
 
 /*
