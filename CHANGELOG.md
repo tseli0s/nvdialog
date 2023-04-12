@@ -4,6 +4,8 @@
   responding to them.
 - NvDialog will check if it has been initialized before **any** API call.
 - Added extra null pointer / invalid parameter checking.
+- `nvd_init`: The parameter 'program' of the function is now deprecated.
+- Initial work towards sandbox support (See #36), based off the Gtk3 backend.
 
 # Changelog -- 0.6.1
 - Fixed initialization call failing on Gtk3.
