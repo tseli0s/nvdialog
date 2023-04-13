@@ -96,8 +96,15 @@ NvdNotification *nvd_notification_gtk(const char   *title,
         NVD_RETURN_IF_NULL(notification);
 
         notification->lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
+        if (!notification->lib) {
+                nvd_set_error(NVD_FILE_INACCESSIBLE);
+                nvd_error_message("Unable to open /usr/lib/libnotify.so: %s", dlerror());
+                free(notification);
+                return NULL;
+        }
         if (!__nvd_check_libnotify(notification)) {
                 nvd_set_error(NVD_BACKEND_INVALID);
+                free(notification);
                 return NULL;
         }
 
@@ -157,7 +164,6 @@ void nvd_add_notification_action_gtk(NvdNotification* notification,
                                      const char* action,
                                      int  value_to_set,
                                      int* value_to_return) {
-        NVD_ASSERT_FATAL(notification != NULL);
         void (*fn) (void *notification,
                     const char *action,
                     const char *label,
