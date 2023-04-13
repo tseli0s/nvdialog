@@ -70,4 +70,19 @@ NvdProcessID nvd_create_process(void);
  */
 bool nvd_is_sandboxed(void);
 
+/**
+ * @brief Splits a string of words separated by a semicolon into separate words.
+ *
+ * This function takes a string of words separated by a semicolon, and splits
+ * it into separate words. The words are returned as an array of char pointers,
+ * with a null pointer indicating the end of the array. The words are allocated
+ * in a single block of memory, and can be freed using a single call to free().
+ *
+ * @param str The input string of words.
+ *
+ * @return An array of char pointers containing the separate words, or NULL if
+ * there was an error allocating memory.
+ */
+char** nvd_seperate_args(const char* str);
+
 #endif /* __nvdialog_util_h__ */
