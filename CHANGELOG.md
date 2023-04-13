@@ -7,6 +7,7 @@
 - `nvd_init`: The parameter 'program' of the function is now deprecated.
 - Initial work towards sandbox support (See #36), based off the Gtk3 backend.
 - File dialogs now support extension filters. See documentation.
+- Fixed notifications on Linux failing, NvDialog will now handle `dlopen()` errors.
 
 # Changelog -- 0.6.1
 - Fixed initialization call failing on Gtk3.
