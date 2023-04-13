@@ -25,6 +25,7 @@
 #include "../../nvdialog_assert.h"
 #include "nvdialog_win32.h"
 #include <stdbool.h>
+#include <string.h>
 #include <wchar.h>
 #include <windows.h>
 #include <winuser.h>
@@ -52,13 +53,12 @@ void nvd_get_file_location_win32(NvdFileDialog *dialog,
         OPENFILENAME ofn;
         char         file[NVDIALOG_MAXBUF];
         ZeroMemory(&ofn, sizeof(ofn));
-
         ofn.lStructSize    = sizeof(ofn);
         ofn.hwndOwner      = nvd_get_parent();
         ofn.lpstrFile      = file;
         ofn.lpstrFile[0]   = '\0';
         ofn.nMaxFile       = sizeof(file) - 1; /* NULL byte manually set */
-        ofn.lpstrFilter    = "";
+        ofn.lpstrFilter    = "All Files (*)";  /* Temporary; Due to NvDialog's design we have to keep it like this for now */
         ofn.nFilterIndex   = 1;
         ofn.lpstrFileTitle = NULL;
         ofn.nMaxFileTitle  = 0;
