@@ -53,3 +53,43 @@ bool nvd_is_sandboxed(void) {
 
     #endif
 }
+
+char** nvd_seperate_args(const char* str) {
+    int count = 1;
+    const char* ptr = str;
+    while (*ptr != '\0') {
+        if(*ptr == ';') {
+            count++;
+        }
+        ptr++;
+    }
+    
+    char* words_buffer = (char*)malloc(strlen(str) + 1);
+    char** words = (char**)malloc((count + 1) * sizeof(char*));
+    if (words_buffer == NULL || words == NULL) {
+        free(words_buffer);
+        free(words);
+        return NULL;
+    }
+    
+    int i = 0;
+    ptr = str;
+    words[i] = words_buffer;
+    while (*ptr != '\0') {
+        if (*ptr == ';') {
+            *words_buffer = '\0';
+            words_buffer++;
+            i++;
+            words[i] = words_buffer;
+        } else {
+            *words_buffer = *ptr;
+            words_buffer++;
+        }
+        ptr++;
+    }
+    *words_buffer = '\0';
+    i++;
+    words[i] = NULL;
+    
+    return words;
+}
