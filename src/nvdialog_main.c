@@ -494,7 +494,6 @@ void nvd_add_notification_action(NvdNotification* notification,
                                  int  value_to_set,
                                  int* value_to_return) {
         NVD_IF_NOT_INITIALIZED(return);
-        NVD_ASSERT_FATAL(notification != NULL);
         NVD_ASSERT(action != NULL);
         NVD_ASSERT(value_to_return != NULL);
         
