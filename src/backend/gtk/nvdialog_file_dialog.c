@@ -24,6 +24,7 @@
 
 #include "dialogs/nvdialog_file_dialog.h"
 #include "../../nvdialog_assert.h"
+#include "../../nvdialog_util.h"
 #include "nvdialog_gtk.h"
 #include <stdlib.h>
 #include <string.h>
@@ -43,9 +44,28 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
                                           "Open",
                                           GTK_RESPONSE_OK,
                                           NULL);
-
+        if (!dialog_raw) {
+                free(dialog);
+                return NULL;
+        }
         dialog->raw = dialog_raw;
 
+        GtkFileFilter* filter = gtk_file_filter_new();
+        gtk_file_filter_set_name(filter, "Filter by extension...");
+        char** words = nvd_seperate_args(file_extensions);
+        
+        size_t i = 0;
+        while (words[i] != NULL) {
+                // Normally, we would use NVDIALOG_MAXBUF for the size of this array. In this case however,
+                // it seems like an overkill to do so. So instead we will limit it to just 32 characters.
+                const char buffer[32];
+                snprintf(buffer, sizeof(buffer), "*.%s", words[i]);
+                gtk_file_filter_add_pattern(filter, buffer);
+                i++; 
+        }
+        gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog->raw), filter);
+
+        free(words);
         return dialog;
 }
 
@@ -63,7 +83,7 @@ NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
                                                   GTK_RESPONSE_ACCEPT,
                                                   NULL);
         if (!dialog->raw) {
-                nvd_set_error(NVD_BACKEND_INVALID);
+                nvd_set_error(NVD_BACKEND_FAILURE);
                 free(dialog);
         }
 
@@ -94,7 +114,7 @@ void nvd_get_file_location_gtk(NvdFileDialog *dialog, const char **savebuf) {
         }
 
         while (gtk_events_pending())
-                gtk_main_iteration();
+               gtk_main_iteration();
 
         *savebuf = dialog->filename;
 }
