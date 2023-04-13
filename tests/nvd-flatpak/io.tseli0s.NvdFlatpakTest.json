@@ -1,0 +1,52 @@
+{
+    "app-id": "io.tseli0s.NvdFlatpakTest",
+    "runtime": "org.freedesktop.Platform",
+    "runtime-version": "22.08",
+    "sdk": "org.freedesktop.Sdk",
+    "command": "nvd-flatpak-test",
+    "finish-args": [
+        "--share=ipc",
+        "--socket=x11"
+    ],
+    "build-options": {
+        "env": {
+            "LD_LIBRARY_PATH": "/app/lib"
+        }
+    },
+    "modules": [
+        {
+            "name": "nvdialog",
+            "buildsystem": "cmake",
+            "no-parallel-make": false,
+            "config-opts": [
+                "-DCMAKE_INSTALL_PREFIX=/app",
+                "-DNVD_USE_GTK4=OFF",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DNVD_SANDBOX_SUPPORT=ON",
+                "-DNVD_BUILD_STATIC=OFF",
+                "-DNVDIALOG_MAXBUF=128",
+                "-Wdev"       
+            ],
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "../../"
+                }
+            ]
+        },
+        {
+            "name": "nvd-flatpak-test",
+            "buildsystem": "simple",
+            "build-commands": [
+                "make -j32",
+                "install -Dm755 ./nvd-flatpak-test -t /app/bin/"
+            ],
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "./"
+                }
+            ]
+        }
+    ]
+}
