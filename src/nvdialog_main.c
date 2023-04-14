@@ -165,7 +165,6 @@ int nvd_init(char *program) {
 #endif /* _WIN32 && NVD_USE_COCOA */
 
         nvd_initialized = true;
-        nvd_error_message("Value of nvd_initialized: %s (line %d)", nvd_initialized == true ? "true" : "false", __LINE__);
         return 0;
 }
 
