@@ -50,22 +50,23 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
         }
         dialog->raw = dialog_raw;
 
-        GtkFileFilter* filter = gtk_file_filter_new();
-        gtk_file_filter_set_name(filter, "Filter by extension...");
-        char** words = nvd_seperate_args(file_extensions);
+        if (file_extensions) {
+                GtkFileFilter* filter = gtk_file_filter_new();
+                gtk_file_filter_set_name(filter, "Filter by extension...");
+                char** words = nvd_seperate_args(file_extensions);
         
-        size_t i = 0;
-        while (words[i] != NULL) {
-                // Normally, we would use NVDIALOG_MAXBUF for the size of this array. In this case however,
-                // it seems like an overkill to do so. So instead we will limit it to just 32 characters.
-                const char buffer[32];
-                snprintf(buffer, sizeof(buffer), "*.%s", words[i]);
-                gtk_file_filter_add_pattern(filter, buffer);
-                i++; 
+                size_t i = 0;
+                while (words[i] != NULL) {
+                        // Normally, we would use NVDIALOG_MAXBUF for the size of this array. In this case however,
+                        // it seems like an overkill to do so. So instead we will limit it to just 32 characters.
+                        const char buffer[32];
+                        snprintf(buffer, sizeof(buffer), "*.%s", words[i]);
+                        gtk_file_filter_add_pattern(filter, buffer);
+                        i++; 
+                }
+                gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog->raw), filter);
+                free(words);
         }
-        gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog->raw), filter);
-
-        free(words);
         return dialog;
 }
 
@@ -90,7 +91,7 @@ NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
         return dialog;
 }
 
-inline void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog *dlg) {
+void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog *dlg) {
         NVD_ASSERT(dlg != NULL);
         return dlg->raw;
 }
