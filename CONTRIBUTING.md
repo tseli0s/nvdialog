@@ -1,5 +1,5 @@
 # Contributing to NvDialog
-NvDialog is an open source project, which apart from all the freedoms it gives you on distribution and usage, it also allows other developers (And not only!) to develop it at the same time. This is entirely voluntary: NvDialog doesn't rely on a lot of developers anyways, and development won't halt if not enough people are interested in contributions.
+NvDialog is an open source project, which apart from all the freedoms it gives you on distribution and usage, it also allows other developers (And not only!) to develop it at the same time.
 
 ## 1. Creating merge requests:
 NvDialog uses `git` as it VCS. Although you are expected to know how to use it, here are some simple instructions on creating a pull request from a local copy of the repository:
@@ -49,7 +49,7 @@ if (there_was_something_wrong) {
 
 /* And they should also be entirely avoided when possible: */
 if (something) nvd_print_error("%s", "something");
-else nvd_print_error("%s", "nothing");
+else           nvd_print_error("%s", "nothing");
 
 switch (type) {
 case 0: cleanup();
