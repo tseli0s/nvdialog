@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static NvdError ___error = NVD_NO_ERROR;
+NVD_THREAD_LOCAL(NvdError ___error) = NVD_NO_ERROR;
 
 NVD_INTERNAL_FUNCTION const char *nvd_fmt_error_message(const char *fmt) {
         assert(fmt != NULL);

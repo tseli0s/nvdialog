@@ -71,18 +71,18 @@ static void nvd_print_assert(const char *msg, ...) {
 
 /* This is supposed to be called only when the library cannot be used anymore.
  */
-#define NVD_ASSERT_FATAL(eq)                                                   \
-        do {                                                                   \
-                if (!(eq)) {                                                   \
-                        nvd_print_assert("**CRITICAL ASSERTION FAILURE**: "    \
-                                         "%s\n  Line: %d\n  Filename: "        \
-                                         "%s\n  Function: %s\n",               \
-                                         #eq,                                  \
-                                         __LINE__,                             \
-                                         __FILE__,                             \
-                                         __func__);                            \
-                }                                                              \
-                abort();                                                       \
+#define NVD_ASSERT_FATAL(eq)                                                \
+        do {                                                                \
+                if (!(eq)) {                                                \
+                        nvd_print_assert("**CRITICAL ASSERTION FAILURE**: " \
+                                         "%s\n  Line: %d\n  Filename: "     \
+                                         "%s\n  Function: %s\n",            \
+                                         #eq,                               \
+                                         __LINE__,                          \
+                                         __FILE__,                          \
+                                         __func__);                         \
+                }                                                           \
+                abort();                                                    \
         } while (0)
 
 #endif /* __nvdialog_assert_h__ */

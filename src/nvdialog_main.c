@@ -74,11 +74,11 @@
  * cause them to be inlined and cause all sorts of weird runtime bugs.
  * As a general rule, everything in the global / static scope must be volatile.
 */
-static volatile char *nvd_app_name                = "NvDialog Application";
-static volatile char *nvd_argv_0                  = NULL;
-static volatile bool nvd_initialized              = false;
-static volatile bool nvd_is_process_container     = false;
-static volatile NvdParentWindow nvd_parent_window = NULL;
+NVD_THREAD_LOCAL(char *nvd_app_name               ) = "NvDialog Application";
+NVD_THREAD_LOCAL(char *nvd_argv_0                 ) = NULL;
+NVD_THREAD_LOCAL(bool nvd_initialized             ) = false;
+NVD_THREAD_LOCAL(bool nvd_is_process_container    ) = false;
+NVD_THREAD_LOCAL(NvdParentWindow nvd_parent_window) = NULL;
 
 const char *nvd_get_argv() { return nvd_argv_0; }
 
