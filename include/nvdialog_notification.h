@@ -48,7 +48,9 @@ typedef enum {
  * @brief The base notification type used by NvDialog.
  *
  * NvDialog offers since v0.5.0 support for basic notifications that
- * will be useful for anything. 
+ * will be useful for many applications. The notification API is cross-platform
+ * and should reduce the required setup to send a simple notification.
+ * 
  * @sa nvd_notification_new
  * @since v0.5.0
  */
@@ -81,6 +83,9 @@ NVD_API NvdNotification* nvd_notification_new(const char   *title,
 
 /**
  * @brief Sends the notification to the system.
+ * It's safe to assume that the same notification can be sent multiple times.
+ * Just make sure the notification is still valid (Not freed yet).
+ * 
  * @param notification The notification object to use.
  * @since v0.5.0
  */
