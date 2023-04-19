@@ -22,7 +22,7 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 
 # Features
 - Simple, high level C API with low overhead (See [examples/](./examples/)).
-- 100% guaranteed native looking file dialogs.
+- 100% guaranteed native looking dialogs.
 - MIT Licensed.
 - Cross-compiler (Actively tested with `gcc`, `clang` and MSVC).
 - Supports most desktop platforms through 3 different implementations (Backends).
@@ -125,7 +125,6 @@ Since there are well over 1000 distributions, there is no specific distribution 
 - A modern version of `glibc`, preferably 2.33 or newer.
 - Linux kernel 2.6 or newer (All modern distros include at least 4.x kernels so nothing to worry here).
 - X11 or Wayland as the display server. Mir is not supported.
-Immutable distros are `NOT` yet supported due to software restrictions.
 
 Common distros officially supported:
 | Distro | Version |
