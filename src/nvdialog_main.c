@@ -58,6 +58,11 @@
 #include "nvdialog_util.h"
 #include <stdint.h>
 
+/* Safeguard for Windows basically, since CMake handles other platforms. Thanks MSVC :) */
+#if __STDC_VERSION__ <= 2011L || !defined(__STDC_VERSION__)
+#error NvDialog needs to be built using C11. If your compiler does not support it, you should use another version.
+#endif /* __STDC_VERSION__ */
+
 /* 
  * A helper macro to check if NvDialog has been
  * initialized before proceeding with the actual implementation.
