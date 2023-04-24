@@ -8,6 +8,11 @@
 - Initial work towards sandbox support (See #36), based off the Gtk3 backend.
 - File dialogs now support extension filters. See documentation.
 - Fixed notifications on Linux failing, NvDialog will now handle `dlopen()` errors.
+- All global static variables now are thread local, to improve safety on some platforms.
+- GitHub workflows now use a target triple naming (*arch*-*device*-*os*-*toolchain*, eg. 
+**x86_64-pc-windows-msvc**)
+- C standard is now required to be at least 2011 or newer (See https://github.com/tseli0s/nvdialog/commit/c7e68a04fded266e819e46851b13d74de64cb133).
+- Deprecated styling support (Now all backends will just return a "fail value" like a **`NULL`** pointer or a negative integer).
 
 # Changelog -- 0.6.1
 - Fixed initialization call failing on Gtk3.
