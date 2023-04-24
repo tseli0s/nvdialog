@@ -1,4 +1,4 @@
-name: Ubuntu Integration and Testing
+name: x86_64-pc-linux-gnu.yml
 on:
   push:
     branches: [ "master" ]

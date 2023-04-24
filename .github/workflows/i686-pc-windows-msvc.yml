@@ -1,4 +1,4 @@
-name: Windows Integration
+name: i686-pc-windows-msvc
 
 on:
   push:
