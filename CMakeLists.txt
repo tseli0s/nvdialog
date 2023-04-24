@@ -9,6 +9,8 @@ option(COCOA_TARGET "Build the library for MacOS/Cocoa usage." ON)
 option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental." OFF) # Default since 0.2.0-plus-some-commits.
 option(NVD_BUILD_STATIC "Build NvDialog as a static library. Experimental." OFF)
 option(NVD_SANDBOX_SUPPORT "Enable support for Flatpak applications on Linux" ON)
+
+set(CMAKE_C_STANDARD 11)
 set(NVDIALOG_MAXBUF 4096)
 
 # On GNU/Linux, by default CMake installs the libraries and headers under
@@ -17,14 +19,11 @@ set(NVDIALOG_MAXBUF 4096)
 # 2. Most linkers shipped with distributions do not search on /usr/local for shared libraries.
 # This means the library won't be found at runtime unless LD_LIBRARY_PATH is set to do so.
 # For that reason, we set the prefix to /usr.
-if (LINUX AND NOT DEFINED ENV{FLATPAK_ID})
+if (NOT DEFINED ENV{FLATPAK_ID})
         set(CMAKE_INSTALL_PREFIX /usr)
 endif()
         
 if (NVD_SANDBOX_SUPPORT)
-        if (NOT LINUX)
-                message(FATAL "Sandbox support is currently only available for GNU/Linux.")
-        endif()
         add_compile_definitions(NVD_SANDBOX_SUPPORT=1)
 endif()
 
