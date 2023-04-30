@@ -2,7 +2,7 @@ prefix="@CMAKE_INSTALL_PREFIX@"
 
 Name: @PROJECT_NAME@
 Description: @CMAKE_PROJECT_DESCRIPTION@
-URL: https://androgr.github.io/libnvdialog/
+URL: https://tseli0s.github.io/nv.dialog/
 Version: @PROJECT_VERSION@
 Requires: @pc_req_public@
 Requires.private: @pc_req_private@
