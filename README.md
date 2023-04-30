@@ -10,13 +10,13 @@
 for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3 / Gtk4</a> on Linux and other Unix like OSes, <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html">the Cocoa API</a> on MacOS X or the <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">WinAPI</a> for Windows) to achieve a look and feel that follows the system theme and design guidelines. In addition, NvDialog allows custom styling support for certain backends to make it easier to follow your application's style if necessary.
 <br>
 <br>
-<img src="https://img.shields.io/github/license/AndroGR/nvdialog?color=blue&label=License">
-<img src="https://img.shields.io/github/issues/AndroGR/nvdialog">
-<img src="https://img.shields.io/github/commits-since/AndroGR/nvdialog/v0.5.0?label=Commits%20since%200.5.0&logo=git">
+<img src="https://img.shields.io/github/license/tseli0s/nvdialog?color=blue&label=License">
+<img src="https://img.shields.io/github/issues/tseli0s/nvdialog">
+<img src="https://img.shields.io/github/commits-since/tseli0s/nvdialog/v0.5.0?label=Commits%20since%200.5.0&logo=git">
 <br>
-<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/ubuntu.yml?label=Ubuntu">
-<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/macosx.yml?branch=master&label=MacOS%20X&logo=github">
-<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/win32-ci.yml?branch=master&label=Windows%2010&logo=github">
+<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/x86_64-pc-linux-gnu.yml?label=Ubuntu">
+<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/x86_64-apple-darwin.yml?branch=master&label=MacOS%20X&logo=github">
+<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/i686-pc-windows-msvc.yml?branch=master&label=Windows%2010&logo=github">
 <br> <br>
 </div>
 
@@ -114,10 +114,12 @@ $ makepkg --clean --install
 
 # OS Versions Supported
 ## Windows
-Although most functions used by NvDialog were introduced back in Windows XP, they have not been tested for stability before Windows 8.1 (The oldest officially supported release by NvDialog) and if you are writing an application for such old systems you are on your own, either fork the codebase or open an issue.
+Although all functions used by NvDialog were introduced back in Windows XP, they have not been tested for stability before Windows 8.1 (The oldest officially supported release by NvDialog) and if you are writing an application for such old systems you are on your own, either fork the codebase or open an issue.
 
 ## macOS
 Only the very latest versions of macOS are supported. Older releases will at best throw a compiler error if compiling from source or a linking error otherwise.
+
+Some deprecated functions are used here and there when building for macOS. This shouldn't worry you since Apple does give enough time for developers to switch away without enforcing it.
 
 ## GNU/Linux
 Since there are well over 1000 distributions, there is no specific distribution requirement. However, your system must have these installed:
@@ -135,12 +137,13 @@ Common distros officially supported:
 | Slackware Linux | Latest |
 
 ## Android
-Android support is still under development, see the `android-port` branch for more.
-If you wish to help with development please make a pull request there.
+Android support will not be implemented anytime soon (Neither iOS support). You are advised instead to use Android's `AlertDialog` class or your UI library, which would achieve the same effect.
 
-## FreeBSD
-FreeBSD is supported only under X11 and with the Gtk3 backend.
-For other BSD projects, no support is provided.
+## Other OSes
+Other OSes are assumed to be supported. To make sure they do indeed work, you need to make sure the given OS supports **all** of the following features:
+- Unix-like, or alternatively, **very closely** resembling Windows.
+- X11 or Wayland as the windowing system
+- Gtk3, or Gtk4 and Libadwaita
 
 # License
 `nvdialog` is licensed under the MIT license. See [COPYING](./COPYING) for more.
