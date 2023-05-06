@@ -7,12 +7,12 @@
         <a href="https://github.com/AndroGR/nvdialog/releases">Releases</a>
         <h5><b>A simple, cross-platform dialog box library.</b></h5>
 <code>libnvdialog</code> is a simple dialog box library written in C
-for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3 / Gtk4</a> on Linux and other Unix like OSes, <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html">the Cocoa API</a> on MacOS X or the <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">WinAPI</a> for Windows) to achieve a look and feel that follows the system theme and design guidelines. In addition, NvDialog allows custom styling support for certain backends to make it easier to follow your application's style if necessary.
+for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3 / Gtk4</a> on Linux and other Unix like OSes, <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html">the Cocoa API</a> on MacOS X or the <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">WinAPI</a> for Windows) to achieve a look and feel that follows the system theme and design guidelines.
 <br>
 <br>
 <img src="https://img.shields.io/github/license/tseli0s/nvdialog?color=blue&label=License">
 <img src="https://img.shields.io/github/issues/tseli0s/nvdialog">
-<img src="https://img.shields.io/github/commits-since/tseli0s/nvdialog/v0.5.0?label=Commits%20since%200.5.0&logo=git">
+<img src="https://img.shields.io/github/commits-since/tseli0s/nvdialog/v0.6.1?label=Commits%20since%200.6.1&logo=git">
 <br>
 <img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/x86_64-pc-linux-gnu.yml?label=Ubuntu">
 <img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/x86_64-apple-darwin.yml?branch=master&label=MacOS%20X&logo=github">

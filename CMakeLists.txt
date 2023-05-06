@@ -2,7 +2,7 @@
 # This file is part of libnvdialog and is released under the MIT license.
 
 cmake_minimum_required(VERSION 3.18)
-project(libnvdialog LANGUAGES C VERSION 0.6.1 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+project(libnvdialog LANGUAGES C VERSION 0.7.0 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
 option(WIN32_TARGET "Build the library for Windows usage. Requires i686-w64-mingw32-gcc-win32." OFF)
 option(COCOA_TARGET "Build the library for MacOS/Cocoa usage." ON)

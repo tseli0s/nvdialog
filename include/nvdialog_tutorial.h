@@ -39,8 +39,6 @@
  * This page provides a simple tutorial of the NvDialog library. For more information about the
  * library itself, see <b>https://androgr.github.io/nv.dialog</b>.
  * Proper documentation of the API used in this tutorial is also available in the documentation.
- * If you are interested in it, visit https://androgr.github.io/nv.dialog/index.html .
- *
  * This tutorial assumes you have already installed NvDialog in your system. If not, visit the [GitHub Repo](https://github.com/AndroGR/nvdialog/#installation).
  * NvDialog is compiler and platform independent, so this tutorial should work as expected on all platforms.
  * # 1. Creating our environment.
