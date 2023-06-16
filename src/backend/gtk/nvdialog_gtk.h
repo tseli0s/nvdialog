@@ -22,8 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef __nvdialog_adw_h__
-#define __nvdialog_adw_h__
+#ifndef __nvdialog_gtk_h__
+#define __nvdialog_gtk_h__
 
 #include "nvdialog.h"
 #include <gtk/gtk.h>
@@ -118,4 +118,9 @@ void nvd_add_notification_action_gtk(NvdNotification* notification,
                                      int  value_to_set,
                                      int* value_to_return);
 
-#endif /* __nvdialog_adw_h__ */
+/* 
+ * Called to change the accept label of the dialog given. The new label must be set
+ * first within the NvdDialogBox requested.
+ */
+void nvd_gtk_update_accept_label(NvdDialogBox* dialog);
+#endif /* __nvdialog_gtk_h__ */
