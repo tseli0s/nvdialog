@@ -45,8 +45,8 @@ nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->accept_label  = "Okay";
-        dialog->content       = message;
-        dialog->msg           = title;
+        dialog->content       = (char*) message;
+        dialog->msg           = (char*) title;
         dialog->type          = type;
         dialog->window_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
@@ -97,6 +97,7 @@ nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         g_signal_connect_swapped(
             button, "clicked", G_CALLBACK(nvd_destroy_and_quit), dialog->window_handle);
 
+	dialog->accept_button = button;
         return dialog;
 }
 
@@ -108,4 +109,9 @@ inline void *nvd_dialog_box_get_raw_gtk(NvdDialogBox *dlg) {
 void nvd_show_dialog_gtk(NvdDialogBox *dialog) {
         gtk_widget_show_all(dialog->window_handle);
         gtk_main();
+}
+
+void nvd_gtk_update_accept_label(NvdDialogBox* dialog) {
+	NVD_ASSERT(dialog != NULL);
+	gtk_button_set_label(dialog->accept_button, dialog->accept_label);
 }
