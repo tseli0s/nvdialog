@@ -37,6 +37,7 @@ struct _NvdDialogBox {
         char *msg;
         char *content;
         char *accept_label, reject_label;
+	void* accept_button;
         NvdDialogType type;
 };
 
