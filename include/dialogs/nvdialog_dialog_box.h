@@ -116,4 +116,4 @@ NVD_API void *nvd_dialog_box_get_raw(NvdDialogBox *dialog);
  * @param accept_text The new label of the dialog button. May not be NULL.
  * @since v0.8.0
  */
-NVD_API void nvd_dialog_box_set_accept_text(NvdDialogBox* dialog, const char* accept_text)
+NVD_API void nvd_dialog_box_set_accept_text(NvdDialogBox* dialog, const char* accept_text);
