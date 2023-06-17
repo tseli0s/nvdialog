@@ -109,3 +109,11 @@ NVD_API void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog);
  * @return void* The raw toolkit-created object.
  */
 NVD_API void *nvd_dialog_box_get_raw(NvdDialogBox *dialog);
+
+/**
+ * @brief Sets the accept text for the dialog (The "Ok" button label).
+ * @param dialog The dialog to change the button label.
+ * @param accept_text The new label of the dialog button. May not be NULL.
+ * @since v0.8.0
+ */
+NVD_API void nvd_dialog_box_set_accept_text(NvdDialogBox* dialog, const char* accept_text);

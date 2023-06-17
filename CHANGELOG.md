@@ -1,3 +1,6 @@
+# Changelog -- 0.8.0
+- You can now set the dialog button text to something else.
+
 # Changelog -- 0.7.0
 - Gtk dialogs will now be guaranteed to have their title set.
 - Gtk dialogs are now modal, meaning the user can't skip over them without

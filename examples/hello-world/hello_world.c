@@ -21,6 +21,10 @@ int main(int argc, char** argv) {
                                                   "This is a dialog box "
                                                   "created with NvDialog.",
                                                   NVD_DIALOG_SIMPLE);
+	/* This is not required, but we can set the accept label to something custom. */
+	nvd_dialog_box_set_accept_text(dialog, "Close dialog!");
+
+	/* If the dialog returned isn't valid (Probably NULL) then something went wrong and we must stop execution. */
         if (!dialog) {
                 puts("Error: Could not construct the dialog.");
                 return -ENOMEM;

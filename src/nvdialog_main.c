@@ -74,11 +74,6 @@
                 __VA_ARGS__ ; \
         }
 
-/*
- * These are marked as volatile since sometimes aggressive optimization may actually
- * cause them to be inlined and cause all sorts of weird runtime bugs.
- * As a general rule, everything in the global / static scope must be volatile.
-*/
 NVD_THREAD_LOCAL(char *nvd_app_name               ) = "NvDialog Application";
 NVD_THREAD_LOCAL(char *nvd_argv_0                 ) = NULL;
 NVD_THREAD_LOCAL(bool nvd_initialized             ) = false;
@@ -510,4 +505,13 @@ void nvd_add_notification_action(NvdNotification* notification,
 #else
         return nvd_add_notification_action_gtk(notification, action, value_to_set, value_to_return);
 #endif /* NVD_USE_GTK4 */
+}
+
+void nvd_dialog_box_set_accept_text(NvdDialogBox* dialog, const char* text) {
+	NVD_ASSERT_FATAL(dialog != NULL);
+	NVD_ASSERT(text != NULL); // Not fatal because some backends may allow it. Although discouraged.
+	dialog->accept_label = (char*) text;
+	#if defined(__linux__) || defined(linux)
+	nvd_gtk_update_accept_label(dialog);
+	#endif /* __linux__ */
 }
