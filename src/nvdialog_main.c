@@ -508,6 +508,8 @@ void nvd_add_notification_action(NvdNotification* notification,
 }
 
 void nvd_dialog_box_set_accept_text(NvdDialogBox* dialog, const char* text) {
+	NVD_ASSERT_FATAL(dialog != NULL);
+	NVD_ASSERT(text != NULL); // Not fatal because some backends may allow it. Although discouraged.
 	dialog->accept_label = (char*) text;
 	#if defined(__linux__) || defined(linux)
 	nvd_gtk_update_accept_label(dialog);
