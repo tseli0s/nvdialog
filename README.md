@@ -18,6 +18,7 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 <img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/x86_64-apple-darwin.yml?branch=master&label=MacOS%20X&logo=github">
 <img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/i686-pc-windows-msvc.yml?branch=master&label=Windows%2010&logo=github">
 <br> <br>
+<h6><i>This project is in immediate need of macOS-based contributors for the Cocoa backend. If you use this library consider contributing to support it.</i></h6>
 </div>
 
 # Features
