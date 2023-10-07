@@ -1,5 +1,8 @@
 # Changelog -- 0.8.0
 - You can now set the dialog button text to something else.
+- Dialogs in Gtk3 are now unresizable, due to artifacts formed on some systems
+  when resizing and looks.
+- Dialogs are now marked as popup windows and not toplevel ones.
 
 # Changelog -- 0.7.0
 - Gtk dialogs will now be guaranteed to have their title set.
