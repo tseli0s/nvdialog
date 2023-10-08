@@ -77,7 +77,7 @@ NvdNotification *nvd_notification_win32(const char   *title,
 }
 
 void nvd_send_notification_win32(NvdNotification *notification) {
-    Shell_NotifyIcon(NIM_ADD, notification->raw);
+    NVD_ASSERT(Shell_NotifyIcon(NIM_ADD, notification->raw) == TRUE);
 }
 
 /* 
