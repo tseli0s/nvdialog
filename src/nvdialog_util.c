@@ -24,6 +24,7 @@
 
 #include "nvdialog_util.h"
 #include <stdbool.h>
+#include <stddef.h>
 
 NvdProcessID nvd_create_process(void) {
     #if defined (unix) || defined(__APPLE__)
@@ -55,7 +56,7 @@ bool nvd_is_sandboxed(void) {
 }
 
 char** nvd_seperate_args(const char* str) {
-    int count = 1;
+    size_t count = 1;
     const char* ptr = str;
     while (*ptr != '\0') {
         if(*ptr == ';') {
