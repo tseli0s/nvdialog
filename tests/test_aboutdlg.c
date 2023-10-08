@@ -16,6 +16,6 @@ int main(int argc, char **argv) {
         }
 
         nvd_free_object(dlg);
-        puts("nvdialog: NvdDialogBox succesfully tested.");
+        puts("nvdialog: NvdAboutDialog succesfully tested.");
         return 0;
 }

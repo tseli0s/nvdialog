@@ -17,6 +17,7 @@ int main(int argc, char **argv) {
 
         nvd_send_notification(notification);
         nvd_delete_notification(notification);
+        printf("nvdialog: NvdNotification tested succesfully.\n");
 
         return 0;
 }
