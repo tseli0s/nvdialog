@@ -34,6 +34,22 @@
 
 #define NVD_BUFFER_MULTIPLIER (10)
 
+#if defined(__clang__) || defined(__GNUC__)
+__attribute__((format(printf, 1, 2)))
+#endif
+static void nvd_print_assert(const char *msg, ...) {
+        va_list args;
+        va_start(args, msg);
+
+        char buffer[NVD_BUFFER_SIZE * NVD_BUFFER_MULTIPLIER]; /* I know. Huge buffer. But we could
+                                              be dealing with worse things. */
+        snprintf(buffer, sizeof(buffer), "%s \x1B[1m%s\x1B[0m", TERMINAL_PREFIX, msg);
+        vfprintf(stderr, buffer, args);
+
+        va_end(args);
+        fflush(stderr);
+}
+
 #define NVD_STRING(s) #s
 
 #define NVD_ASSERT(eq)                                                                      \
