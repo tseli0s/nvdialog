@@ -95,8 +95,6 @@ static void nvd_delete_notification_gtk(NvdNotification *notification) {
                 nvd_set_error(NVD_INTERNAL_ERROR);
                 abort();
         }
-
-        free(notification);
 }
 
 NvdNotification *nvd_notification_gtk(const char   *title,
