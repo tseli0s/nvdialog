@@ -62,7 +62,7 @@ static bool __nvd_check_libnotify(NvdNotification *notification) {
                         return false;
                 }
 
-                if (!nvd_notify_init(nvd_get_application_name())) {
+                if (!nvd_notify_init((char*)nvd_get_application_name())) {
                         nvd_error_message("Couldn't initialize libnotify, stopping here.");
                         dlclose(notification->lib);
                         return false;
@@ -87,6 +87,16 @@ static inline char *__nvd_match_notif_type(NvdNotifyType type) {
         }
 
         return icon_name;
+}
+
+static void nvd_delete_notification_gtk(NvdNotification *notification) {
+        NVD_ASSERT_FATAL(notification != NULL); /* Fatal to avoid some pretty scary bugs. */
+        if (dlclose(notification->lib) < 0) {
+                nvd_set_error(NVD_INTERNAL_ERROR);
+                abort();
+        }
+
+        free(notification);
 }
 
 NvdNotification *nvd_notification_gtk(const char   *title,
@@ -118,15 +128,16 @@ NvdNotification *nvd_notification_gtk(const char   *title,
                 return NULL;
         }
 
-        const char *icon_name  = __nvd_match_notif_type(type);
+        const char *icon_name    = __nvd_match_notif_type(type);
 
-        notification->title    = (char*) title;
-        notification->contents = (char*) msg;
-        notification->raw      = (void*) notify_new(notification->title,
-                                                    notification->contents,
-                                                    icon_name);
-        notification->type     = type;
-        notification->shown    = false;
+        notification->title      = (char*) title;
+        notification->contents   = (char*) msg;
+        notification->destructor = nvd_delete_notification_gtk;
+        notification->raw        = (void*) notify_new(notification->title,
+                                                      notification->contents,
+                                                      icon_name);
+        notification->type       = type;
+        notification->shown      = false;
         
         if (notification->type == NVD_NOTIFICATION_ERROR) {
                 const char *fn_name = "notify_notification_set_urgency";
@@ -149,15 +160,6 @@ void nvd_send_notification_gtk(NvdNotification *notification) {
         }
         
         show_fn(notification->raw, NULL);
-}
-
-void nvd_delete_notification_gtk(NvdNotification *notification) {
-        NVD_ASSERT_FATAL(notification != NULL); /* Fatal to avoid some pretty scary bugs. */
-        if (dlclose(notification->lib) < 0) {
-                nvd_set_error(NVD_INTERNAL_ERROR);
-                abort();
-        }
-        free(notification);
 }
 
 void nvd_add_notification_action_gtk(NvdNotification* notification,
