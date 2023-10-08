@@ -3,6 +3,9 @@
 - Dialogs in Gtk3 are now unresizable, due to artifacts formed on some systems
   when resizing and looks.
 - Dialogs are now marked as popup windows and not toplevel ones.
+- On the Windows backend, NvDialog will now check if sending the notification to the user was succesfull.
+- Added destructors on notification objects, to avoid memory leaks.
+- Fixed some compiler warnings when compiling the library.
 
 # Changelog -- 0.7.0
 - Gtk dialogs will now be guaranteed to have their title set.
