@@ -42,11 +42,8 @@ NvdNotification *nvd_notification_win32(const char   *title,
         
         /* Heap allocating to save it inside notification->raw */
         NOTIFYICONDATA *nid = malloc(sizeof(NOTIFYICONDATA));;
-        if (!nid) {
-                nvd_set_error(NVD_OUT_OF_MEMORY);
-                free(notification);
-                return NULL;
-        }
+        if (!nid) nvd_set_error(NVD_OUT_OF_MEMORY);
+        NVD_CHECK_INTERNAL(nid, notification, NULL);
 
         uint32_t icon = 0x0;
         switch (notification->type) {

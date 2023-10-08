@@ -56,16 +56,16 @@ static void nvd_set_action_ptr(void* notif, char* action, struct NvdActionsArgs 
 
 static bool __nvd_check_libnotify(NvdNotification *notification) {
         bool (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
-                if (nvd_notify_init == NULL) {
-                        nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
-                        dlclose(notification->lib);
-                        return false;
-                }
+        if (nvd_notify_init == NULL) {
+                nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
+                dlclose(notification->lib);
+                return false;
+        }
 
-                if (!nvd_notify_init(nvd_get_application_name())) {
-                        nvd_error_message("Couldn't initialize libnotify, stopping here.");
-                        dlclose(notification->lib);
-                        return false;
+        if (!nvd_notify_init(nvd_get_application_name())) {
+                nvd_error_message("Couldn't initialize libnotify, stopping here.");
+                dlclose(notification->lib);
+                return false;
         }
         return true;
 }

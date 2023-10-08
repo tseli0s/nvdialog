@@ -54,12 +54,7 @@ NvdQuestionBox *nvd_question_adw(const char       *title,
         dialog->window_handle = (AdwMessageDialog *)adw_message_dialog_new(
             nvd_get_parent(), dialog->title, dialog->contents);
 
-        /* TODO: Make this a macro. */
-        if (!dialog->window_handle) {
-                NVD_ASSERT(dialog->window_handle != NULL);
-                free(dialog);
-                return NULL;
-        }
+        NVD_CHECK_INTERNAL(dialog->window_handle, dialog, NULL);
 
         switch (buttons) {
         case NVD_YES_NO:
