@@ -76,6 +76,7 @@ struct _NvdNotification {
         bool shown;
         void *raw;
         void *lib;
+        void (*destructor)(NvdNotification* self);
 };
 
 struct _NvdCSSManager {
