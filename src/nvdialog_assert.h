@@ -60,6 +60,20 @@ static void nvd_print_assert(const char *msg, ...) {
                 }                                                                           \
         } while (0)
 
+/*
+ * Long story short: If ptr is NULL, this macro will print an error message, free obj
+ * and return retval from the function. It's to be used exclusively on constructors
+ * where this pattern is common.
+ */
+#define NVD_CHECK_INTERNAL(ptr, obj, retval)                                   \
+        do {                                                                   \
+                if (!(ptr)) {                                                  \
+                        NVD_ASSERT(ptr != NULL);                               \
+                        free(obj);                                             \
+                        return retval;                                         \
+                }                                                              \
+        } while (0);
+
 #define NVD_RETURN_IF_NULL(x)                                                  \
         do {                                                                   \
                 if (!(x)) {                                                    \
