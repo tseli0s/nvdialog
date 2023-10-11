@@ -1,5 +1,4 @@
 #include "nvdialog_cocoa.h"
-
 #include <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
 
@@ -11,6 +10,7 @@ NvdNotification *nvd_notification_cocoa(const char *title,
     notif->type = type;
     notif->title = title;
     notif->body = msg;
+    notif->destructor = NULL;
 	return notif;
 }
 
