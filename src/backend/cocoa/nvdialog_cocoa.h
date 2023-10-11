@@ -2,6 +2,7 @@
 #define __nvdialog_cocoa_h__  1
 
 #include "nvdialog.h"
+#include "nvdialog_typeimpl.h"
 
 /* Shows a dialog box using Cocoa */
 NvdDialogBox *nvd_dialog_box_cocoa(const char *title,
