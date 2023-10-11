@@ -3,12 +3,6 @@
 #include <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
 
-struct _NvdNotification {
-    NvdNotifyType type;
-    const char *title,* body;
-};
-
-
 NvdNotification *nvd_notification_cocoa(const char *title,
                                         const char *msg,
                                         NvdNotifyType type)
