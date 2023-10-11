@@ -35,10 +35,11 @@ NvdNotification *nvd_notification_win32(const char   *title,
         NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
         NVD_RETURN_IF_NULL(notification);
 
-        notification->title    = (char*) title;
-        notification->contents = (char*) msg;
-        notification->type     = type;
-        notification->shown    = false;
+        notification->title      = (char*) title;
+        notification->contents   = (char*) msg;
+        notification->destructor = NULL;
+        notification->type       = type;
+        notification->shown      = false;
         
         /* Heap allocating to save it inside notification->raw */
         NOTIFYICONDATA *nid = malloc(sizeof(NOTIFYICONDATA));;
