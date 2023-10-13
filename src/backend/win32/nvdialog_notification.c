@@ -36,7 +36,7 @@ NvdNotification *nvd_notification_win32(const char   *title,
         NVD_RETURN_IF_NULL(notification);
 
         notification->title      = (char*) title;
-        notification->contents   = (char*) msg;
+        notification->body       = (char*) msg;
         notification->destructor = NULL;
         notification->type       = type;
         notification->shown      = false;

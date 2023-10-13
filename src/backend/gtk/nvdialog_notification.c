@@ -129,7 +129,7 @@ NvdNotification *nvd_notification_gtk(const char   *title,
         const char *icon_name    = __nvd_match_notif_type(type);
 
         notification->title      = (char*) title;
-        notification->contents   = (char*) msg;
+        notification->body       = (char*) msg;
         notification->destructor = nvd_delete_notification_gtk;
         notification->raw        = (void*) notify_new(notification->title,
                                                       notification->contents,
