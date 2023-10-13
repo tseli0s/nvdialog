@@ -70,8 +70,8 @@ struct _NvdQuestionBox {
 };
 
 struct _NvdNotification {
-        const char *title;
-        const char *contents;
+        char *title;
+        char *body;
         NvdNotifyType type;
         bool shown;
         void *raw;
