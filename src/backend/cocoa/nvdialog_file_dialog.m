@@ -36,7 +36,7 @@ NvdFileDialog *nvd_save_file_dialog_cocoa(const char *title, const char *default
 	NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
 	NVD_RETURN_IF_NULL(dialog);
 	
-	NSSavePanel raw = [NSSavePanel savePanel];
+	NSSavePanel* raw = [NSSavePanel savePanel];
 	raw.title = @(title);
 
 	dialog->raw = raw;
