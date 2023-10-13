@@ -36,6 +36,9 @@ A backend using Gtk4 and `libadwaita`. This backend has replaced the (following)
 - **Gtk3 Backend**\
 Some older distributions do not have Adwaita / Gtk4 support yet. The Gtk3 backend can be used in such a situation. However Gtk3 is considered to be deprecated and has been replaced with the Adwaita backend.
 
+- **Sandbox Backend**\
+The sandbox backend is used in place of the other backends when the process is under some kind of sandbox (Flatpak, AppImage, etc). It is mostly identical to the Gtk3 one but differs slightly in the implementation. This one is chosen automatically if enabled at compile time.
+
 - **Cocoa Backend**\
 The Cocoa backend was recently added to NvDialog for MacOS X support. It is written in Objective-C for better integration with the OS, and is still in the experimental stage. Please report any bugs or features that need to be fixed / implemented.
 
