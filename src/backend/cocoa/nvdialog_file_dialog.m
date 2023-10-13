@@ -46,14 +46,15 @@ NvdFileDialog *nvd_save_file_dialog_cocoa(const char *title, const char *default
 
 void nvd_get_file_location_cocoa(NvdFileDialog *dlg, const char **out)
 {
-	[dlg->raw makeKeyAndOrderFront:nil];
-	NSModalResponse resp = [dlg->raw runModal];
+	NSSavePanel* raw = dlg->raw;
+	[raw makeKeyAndOrderFront:nil];
+	NSModalResponse resp = [raw runModal];
 
 	dlg->location_was_chosen = resp == NSModalResponseContinue || resp == NSModalResponseOK;
 	if (dlg->location_was_chosen)
-		*out = strdup(dlg->raw.URL.absoluteString.UTF8String);
+		*out = strdup(raw.URL.absoluteString.UTF8String);
 
-	[dlg->raw release];
+	[raw release];
 }
 
 void *nvd_open_file_dialog_get_raw_cocoa(NvdFileDialog *dlg)
