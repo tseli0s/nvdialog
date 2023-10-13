@@ -114,9 +114,9 @@ NvdNotification *nvd_notification_sbx(const char   *title,
         const char *icon_name  = __nvd_match_notif_type(type);
 
         notification->title    = (char*) title;
-        notification->contents = (char*) msg;
+        notification->body     = (char*) msg;
         notification->raw      = (void*) notify_new(notification->title,
-                                                    notification->contents,
+                                                    notification->body,
                                                     icon_name);
         notification->type     = type;
         notification->shown    = false;
