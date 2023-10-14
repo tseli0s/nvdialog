@@ -90,6 +90,7 @@ const char *nvd_stringify_error(NvdError err) {
                 error = "Internal library error - Open an issue on GitHub.";
                 break;
         default:
+                nvd_set_error(NVD_INVALID_PARAM);
                 return NULL;
         }
         return error;
