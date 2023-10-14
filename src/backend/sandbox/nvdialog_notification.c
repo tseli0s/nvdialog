@@ -62,7 +62,7 @@ static bool __nvd_check_libnotify(NvdNotification *notification) {
                 return false;
         }
 
-        if (!nvd_notify_init(nvd_get_application_name())) {
+        if (!nvd_notify_init((char*) nvd_get_application_name())) {
                 nvd_error_message("Couldn't initialize libnotify, stopping here.");
                 dlclose(notification->lib);
                 return false;
