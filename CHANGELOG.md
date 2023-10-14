@@ -5,7 +5,10 @@
 - Dialogs are now marked as popup windows and not toplevel ones.
 - On the Windows backend, NvDialog will now check if sending the notification to the user was succesfull.
 - Added destructors on notification objects, to avoid memory leaks.
-- Fixed some compiler warnings when compiling the library.
+- Fixed some compiler warnings regarding `const` assignments when compiling the library.
+- Fixed Cocoa backend using different implementations of (public) types due to unmaintained code.
+- `nvd_get_capabilities()` will now set an error code if the query is not supported (eg. Invalid enum).
+- Removed unused functions within the library.
 
 # Changelog -- 0.7.0
 - Gtk dialogs will now be guaranteed to have their title set.
