@@ -45,8 +45,8 @@ nvd_dialog_box_sbx(const char *title, const char *message, NvdDialogType type) {
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->accept_label  = "Okay";
-        dialog->content       = message;
-        dialog->msg           = title;
+        dialog->content       = (char*) message;
+        dialog->msg           = (char*) title;
         dialog->type          = type;
         dialog->window_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
