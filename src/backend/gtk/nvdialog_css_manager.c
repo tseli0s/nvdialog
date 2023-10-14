@@ -30,19 +30,6 @@
 #include <unistd.h>
 #include <errno.h>
 
-static char *__nvd_string_gen(char *str, size_t size) {
-    const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJ";
-    if (size) {
-        --size;
-        for (size_t n = 0; n < size; n++) {
-            int key = rand() % (int)(sizeof charset - 1);
-            str[n] = charset[key];
-        }
-        str[size] = '\0';
-    }
-    return str;
-}
-
 NvdCSSManager *nvd_css_manager_gtk() {
         return NULL;
 }
