@@ -23,6 +23,7 @@
  */
 
 #include "nvdialog.h"
+#include "nvdialog_error.h"
 
 static const bool nvd_has_adw_gtk =
 #if defined(NVD_USE_GTK4)
@@ -48,7 +49,9 @@ bool nvd_get_capabilities(int query) {
                 return nvd_built_static;
         case NVD_COMPAT_MODE:
                 return nvd_compat_mode;
-        default: return false;
+        default: 
+            nvd_set_error(NVD_INVALID_PARAM);
+            return false;
         }
         return false; /* Just to silence compiler warnings */
 }
