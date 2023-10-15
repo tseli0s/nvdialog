@@ -135,7 +135,7 @@ int nvd_init(char *program) {
         if (!gtk_init_check(NULL, NULL)) {
                 if (!getenv("DISPLAY")) nvd_set_error(NVD_NO_DISPLAY);
                 else nvd_set_error(NVD_BACKEND_FAILURE);
-                return -NVD_NO_DISPLAY;
+                return (int) -nvd_get_error();
         }
 
         if (getenv("NVD_NO_NOTIFS") == NULL || atoi(getenv("NVD_NO_NOTIFS"))) {
