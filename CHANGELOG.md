@@ -9,6 +9,9 @@
 - Fixed Cocoa backend using different implementations of (public) types due to unmaintained code.
 - `nvd_get_capabilities()` will now set an error code if the query is not supported (eg. Invalid enum).
 - Removed unused functions within the library.
+- Fixed `nvd_dialog_box_set_accept_text` crashing on Linux.
+- Reduced memory usage by the library (See 3d967e7)
+- Fixed missing declaration warning on the Gtk backend.
 
 # Changelog -- 0.7.0
 - Gtk dialogs will now be guaranteed to have their title set.
