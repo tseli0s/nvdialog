@@ -123,4 +123,10 @@ void nvd_add_notification_action_gtk(NvdNotification* notification,
  * first within the NvdDialogBox requested.
  */
 void nvd_gtk_update_accept_label(NvdDialogBox* dialog);
+
+/*
+ * All these months we didn't provide a declaration,
+ * but at least now we won't get a warning for no reason.
+ */
+void nvd_show_dialog_gtk(NvdDialogBox* dialog);
 #endif /* __nvdialog_gtk_h__ */
