@@ -40,6 +40,16 @@
 #endif /* NVD_PLATFORM_UNIX */
 
 /**
+ * @brief A data structure to hold information about a Linux
+ * distribution. It should be returned by @ref nvd_get_distribution_info;
+ */
+typedef struct _NvdDistroInfo {
+    char* name;
+    long version_m;
+    long version_s;
+} NvdDistroInfo;
+
+/**
  * @brief An identifier to match a new process ID spawned by @ref nvd_create_process
  * @details Similar to the `pid_t` type (And similarly defined), this type
  * keeps the process ID for a forked process.
@@ -84,5 +94,23 @@ bool nvd_is_sandboxed(void);
  * there was an error allocating memory.
  */
 char** nvd_seperate_args(const char* str);
+
+/**
+ * @brief Returns the distribution information on Linux, lik
+ * @note This function will return NULL if the OS is not GNU/Linux. It will also only return data related
+ * to the base of the distribution, NOT the exact distribution you're running (eg. on Ubuntu you will get Debian).
+ * @return A @ref NvdDistroInfo filled out with all the necessary information,
+ * or NULL if there is a failure (Will set the error accordingly unless not on GNU/Linux).
+ */
+NvdDistroInfo nvd_get_distro_branch();
+
+/**
+ * @brief Returns the path to `libnotify` on the system for `dlopen`.
+ * @note Linux-only function, will not work on Windows/macOS. The pointer returned was dynamically allocated
+ * and hence should be freed using `free()`.
+ *
+ * @return The path to libnotify on each platform if succesfull, otherwise NULL.
+ */
+char* nvd_get_libnotify_path();
 
 #endif /* __nvdialog_util_h__ */
