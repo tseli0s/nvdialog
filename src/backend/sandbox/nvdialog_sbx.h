@@ -93,18 +93,6 @@ NvdNotification *nvd_notification_sbx(const char   *title,
 /* Sends the notification to the system. (Sandbox version) */
 void nvd_send_notification_sbx(NvdNotification *notification);
 
-/* Returns an empty CSS Manager (Sandbox version) */
-NvdCSSManager *nvd_css_manager_sbx(void);
-
-/* Self explanatory I guess, otherwise see include/nvdialog_css_manager.h */
-int nvd_css_manager_attach_string_stylesheet_sbx(NvdCSSManager *mgr,
-                                                 const char    *str);
-
-int nvd_css_manager_attach_stylesheet_sbx(NvdCSSManager *mgr, const char *filename);
-
-/* Uses the stylesheet loaded for the widget provided. */
-int nvd_css_manager_use_style_sbx(NvdCSSManager *mgr, void *raw_handle);
-
 /* Pretty self-explanatory; See the headers otherwise. */
 void *nvd_about_dialog_get_raw_sbx    (NvdAboutDialog *dialog);
 void *nvd_dialog_box_get_raw_sbx      (NvdDialogBox   *dialog);
