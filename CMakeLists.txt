@@ -178,7 +178,7 @@ else(WIN32 OR WIN32_TARGET)
                 endif()
 endif(WIN32 OR WIN32_TARGET)
 
-set_target_properties(nvdialog PROPERTIES SOVERSION 1)
+set_target_properties(nvdialog PROPERTIES SOVERSION 2)
 set_target_properties(nvdialog PROPERTIES VERSION ${PROJECT_VERSION})
 target_include_directories(nvdialog PRIVATE include/)
 # Required to find the system paths easier.
