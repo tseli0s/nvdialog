@@ -92,14 +92,12 @@ if (NOT NVD_USE_GTK4)
                             src/backend/gtk/nvdialog_file_dialog.c
                             src/backend/gtk/nvdialog_dialog_box.c
                             src/backend/gtk/nvdialog_question_dialog.c
-                            src/backend/gtk/nvdialog_css_manager.c
                             src/backend/gtk/nvdialog_notification.c)
         if (NVD_SANDBOX_SUPPORT)
                 set(NVD_SBX_SOURCES src/backend/sandbox/nvdialog_about_dialog.c
                                     src/backend/sandbox/nvdialog_file_dialog.c
                                     src/backend/sandbox/nvdialog_dialog_box.c
                                     src/backend/sandbox/nvdialog_question_dialog.c
-                                    src/backend/sandbox/nvdialog_css_manager.c
                                     src/backend/sandbox/nvdialog_notification.c)
         endif(NVD_SANDBOX_SUPPORT)
         set(NVD_SOURCES ${NVD_GTK_SOURCES} ${NVD_SBX_SOURCES} src/nvdialog_error.c src/nvdialog_util.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
