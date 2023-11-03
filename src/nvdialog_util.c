@@ -142,6 +142,11 @@ NVD_INTERNAL_FUNCTION NvdDistroInfo nvd_get_distro_branch() {
     NvdDistroInfo info;
     nvd_zero_memory(&info, sizeof(NvdDistroInfo));
 
+    #if !defined(__linux__) && !defined(__linux) && !defined (__gnu_linux__)
+    /* Yes we don't have a pointer here so we can't return NULL, so let's just return a zeroed-out struct instead. */
+    return info;
+    #endif
+
     /* We call nvd_read_os_release in each block separately since we also support rolling release distros. */
     if (nvd_file_exists("/etc/debian_version")) {
         info.name = "Debian";
