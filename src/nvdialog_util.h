@@ -41,7 +41,7 @@
 
 /**
  * @brief A data structure to hold information about a Linux
- * distribution. It should be returned by @ref nvd_get_distribution_info 
+ * distribution. It should be returned by @ref nvd_get_distribution_info;
  */
 typedef struct _NvdDistroInfo {
     char* name;
@@ -103,5 +103,14 @@ char** nvd_seperate_args(const char* str);
  * or NULL if there is a failure (Will set the error accordingly unless not on GNU/Linux).
  */
 NvdDistroInfo nvd_get_distro_branch();
+
+/**
+ * @brief Returns the path to `libnotify` on the system for `dlopen`.
+ * @note Linux-only function, will not work on Windows/macOS. The pointer returned was dynamically allocated
+ * and hence should be freed using `free()`.
+ *
+ * @return The path to libnotify on each platform if succesfull, otherwise NULL.
+ */
+char* nvd_get_libnotify_path();
 
 #endif /* __nvdialog_util_h__ */
