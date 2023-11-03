@@ -23,8 +23,51 @@
  */
 
 #include "nvdialog_util.h"
+#include "nvdialog_assert.h"
+#include "nvdialog_error.h"
+#include "nvdialog_macros.h"
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdio.h>
+#include <string.h>
+
+#ifdef _WIN32
+#include <io.h>
+#define access _access
+#else
+#include <unistd.h> // access()
+#endif
+
+// TODO
+static inline bool nvd_file_exists(const char* path) {
+    return (access(path, 0) == 0);
+}
+
+/**
+ * @brief Writes @ref size bytes to @ref ptr to ensure proper initialization.
+ * @param ptr A pointer to the data structure where the NULL bytes will be written.
+ * @param size The amount of NULL bytes to write before stopping.
+ */
+static void nvd_zero_memory(void* ptr, size_t size) {
+    memset(ptr, 0, size);
+}
+
+#if defined (__linux__) || defined (__linux) || defined (__gnu_linux__)
+static void nvd_read_os_release(NvdDistroInfo* info) {
+    FILE *file = fopen("/etc/os-release", "r");
+    NVD_ASSERT(file != NULL);
+
+    char line[NVD_BUFFER_SIZE];
+    while (fgets(line, sizeof(line), file)) {
+        if (strstr(line, "VERSION_ID=")) {
+            if (sscanf(line, "VERSION_ID=\"%ld", &info->version_m) == 1) {
+                fclose(file);
+                break;
+            }
+        }
+    }
+}
+#endif /* __linux__ */
 
 NvdProcessID nvd_create_process(void) {
     #if defined (unix) || defined(__APPLE__)
@@ -93,4 +136,24 @@ char** nvd_seperate_args(const char* str) {
     words[i] = NULL;
     
     return words;
+}
+
+NVD_INTERNAL_FUNCTION NvdDistroInfo nvd_get_distro_branch() {
+    NvdDistroInfo info;
+    nvd_zero_memory(&info, sizeof(NvdDistroInfo));
+
+    /* We call nvd_read_os_release in each block separately since we also support rolling release distros. */
+    if (nvd_file_exists("/etc/debian_version")) {
+        info.name = "Debian";
+        nvd_read_os_release(&info);
+    } else if (nvd_file_exists("/etc/pacman.conf")) {
+        info.name = "Arch";
+        info.version_m = -1; // Rolling release
+        info.version_s = -1;
+    } else if (nvd_file_exists("/etc/dnf/dnf.conf")) {
+        info.name = "Fedora";
+        nvd_read_os_release(&info);
+    } else info.name = "Unknown";
+    
+    return info;
 }
