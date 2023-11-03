@@ -127,7 +127,6 @@ extern "C" {
 #include "nvdialog_dialog.h"
 #include "nvdialog_error.h"
 #include "nvdialog_types.h"
-#include "nvdialog_css_manager.h"
 #include "nvdialog_notification.h"
 
 /**
