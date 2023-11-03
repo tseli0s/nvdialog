@@ -29,6 +29,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #ifdef _WIN32
@@ -161,4 +162,22 @@ NVD_INTERNAL_FUNCTION NvdDistroInfo nvd_get_distro_branch() {
     } else info.name = "Unknown";
     
     return info;
+}
+
+NVD_INTERNAL_FUNCTION char* nvd_get_libnotify_path() {
+    size_t max_pathlen = strlen("/usr/lib/x86_64-linux-gnu/libnotify.so");
+    char* buffer = malloc(max_pathlen + 16); // 16 byte padding
+    NVD_ASSERT_FATAL(buffer != NULL);
+
+    NvdDistroInfo info = nvd_get_distro_branch();
+
+    /* TODO: Please add more distribution checks here.*/
+    if (strcmp(info.name, "Debian") == 0)
+        strcpy(buffer, "/usr/lib/x86_64-linux-gnu/libnotify.so");
+    else if (strcmp(info.name, "Arch") == 0)
+        strcpy(buffer, "/usr/lib/libnotify.so");
+    else
+        strcpy(buffer, "/usr/lib/libnotify.so");
+
+    return buffer;
 }
