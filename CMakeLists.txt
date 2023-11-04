@@ -106,7 +106,6 @@ else()
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c src/nvdialog_util.c)
 endif()
 set(NVD_HEADERS include/nvdialog_dialog.h
-    include/nvdialog_css_manager.h
     include/nvdialog_notification.h
     include/nvdialog_core.h
     include/nvdialog_capab.h
