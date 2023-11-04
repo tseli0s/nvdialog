@@ -92,14 +92,12 @@ if (NOT NVD_USE_GTK4)
                             src/backend/gtk/nvdialog_file_dialog.c
                             src/backend/gtk/nvdialog_dialog_box.c
                             src/backend/gtk/nvdialog_question_dialog.c
-                            src/backend/gtk/nvdialog_css_manager.c
                             src/backend/gtk/nvdialog_notification.c)
         if (NVD_SANDBOX_SUPPORT)
                 set(NVD_SBX_SOURCES src/backend/sandbox/nvdialog_about_dialog.c
                                     src/backend/sandbox/nvdialog_file_dialog.c
                                     src/backend/sandbox/nvdialog_dialog_box.c
                                     src/backend/sandbox/nvdialog_question_dialog.c
-                                    src/backend/sandbox/nvdialog_css_manager.c
                                     src/backend/sandbox/nvdialog_notification.c)
         endif(NVD_SANDBOX_SUPPORT)
         set(NVD_SOURCES ${NVD_GTK_SOURCES} ${NVD_SBX_SOURCES} src/nvdialog_error.c src/nvdialog_util.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
@@ -108,7 +106,6 @@ else()
         set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c src/nvdialog_util.c)
 endif()
 set(NVD_HEADERS include/nvdialog_dialog.h
-    include/nvdialog_css_manager.h
     include/nvdialog_notification.h
     include/nvdialog_core.h
     include/nvdialog_capab.h
@@ -178,7 +175,7 @@ else(WIN32 OR WIN32_TARGET)
                 endif()
 endif(WIN32 OR WIN32_TARGET)
 
-set_target_properties(nvdialog PROPERTIES SOVERSION 1)
+set_target_properties(nvdialog PROPERTIES SOVERSION 2)
 set_target_properties(nvdialog PROPERTIES VERSION ${PROJECT_VERSION})
 target_include_directories(nvdialog PRIVATE include/)
 # Required to find the system paths easier.
