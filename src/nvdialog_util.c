@@ -139,6 +139,7 @@ char** nvd_seperate_args(const char* str) {
     return words;
 }
 
+#if defined(__linux) || defined (__linux__) || defined (__gnu_linux__)
 NVD_INTERNAL_FUNCTION NvdDistroInfo nvd_get_distro_branch() {
     NvdDistroInfo info;
     nvd_zero_memory(&info, sizeof(NvdDistroInfo));
@@ -181,3 +182,4 @@ NVD_INTERNAL_FUNCTION char* nvd_get_libnotify_path() {
 
     return buffer;
 }
+#endif /* __linux__ */
