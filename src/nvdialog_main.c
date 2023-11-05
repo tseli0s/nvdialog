@@ -74,17 +74,18 @@
                 __VA_ARGS__ ; \
         }
 
-NVD_THREAD_LOCAL(char *nvd_app_name               ) = "NvDialog Application";
-NVD_THREAD_LOCAL(char *nvd_argv_0                 ) = NULL;
+NVD_THREAD_LOCAL(char* nvd_app_name               ) = "NvDialog Application";
+NVD_THREAD_LOCAL(char* nvd_argv_0                 ) = NULL;
 NVD_THREAD_LOCAL(bool nvd_initialized             ) = false;
 NVD_THREAD_LOCAL(bool nvd_is_process_container    ) = false;
 NVD_THREAD_LOCAL(NvdParentWindow nvd_parent_window) = NULL;
+NVD_THREAD_LOCAL(char* nvd_libnotify_path         ) = NULL; // Initialized in nvd_init
 
 const char *nvd_get_argv() { return nvd_argv_0; }
 
 static int nvd_check_libnotify(void) {
         #if defined (NVD_USE_GTK4) || defined (NVD_PLATFORM_LINUX)
-        void *lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
+        void *lib = dlopen(nvd_libnotify_path, RTLD_LAZY);
         if (!lib) {
                 nvd_error_message("Couldn't load libnotify.so: %s", dlerror());
                 return -1;
@@ -125,6 +126,12 @@ int nvd_init(char *program) {
         }
         #endif /* NVD_SANDBOX_SUPPORT */
 #if defined (__linux__)
+        nvd_libnotify_path = nvd_get_libnotify_path();
+        if (!nvd_libnotify_path) {
+                nvd_error_message("nvd_libnotify_path is NULL, setting it to /usr/lib/libnotify.so as a fallback.");
+                nvd_libnotify_path = "/usr/lib/libnotify.so";
+        }
+
         setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
         setlinebuf(stderr);
 #endif /* __linux__ */
