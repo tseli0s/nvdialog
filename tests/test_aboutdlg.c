@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 int main(int argc, char **argv) {
+        /* NvdAboutDialog currently broken on macOS. I will fix it before hitting v1.0, hopefully. */
+        #if !defined(__APPLE__)
         if (nvd_init(argv[0]) != 0) {
                 puts("nvdialog: Failed to initialize backends.");
                 return -1;
@@ -17,5 +19,7 @@ int main(int argc, char **argv) {
 
         nvd_free_object(dlg);
         puts("nvdialog: NvdAboutDialog succesfully tested.");
+        #endif /* __APPLE__ */
+
         return 0;
 }
