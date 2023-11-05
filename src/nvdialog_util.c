@@ -168,7 +168,6 @@ NVD_INTERNAL_FUNCTION NvdDistroInfo nvd_get_distro_branch() {
 NVD_INTERNAL_FUNCTION char* nvd_get_libnotify_path() {
     size_t max_pathlen = strlen("/usr/lib/x86_64-linux-gnu/libnotify.so");
     char* buffer = malloc(max_pathlen + 16); // 16 byte padding
-    NVD_ASSERT_FATAL(buffer != NULL);
 
     NvdDistroInfo info = nvd_get_distro_branch();
 
