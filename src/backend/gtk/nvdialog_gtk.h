@@ -28,6 +28,7 @@
 #include "nvdialog.h"
 #include <gtk/gtk.h>
 #include "nvdialog_typeimpl.h"
+#include "../nvdialog_util.h"
 
 /* Shows a simple dialog box using Gtk3. */
 NvdDialogBox *

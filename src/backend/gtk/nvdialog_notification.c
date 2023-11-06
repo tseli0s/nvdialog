@@ -90,7 +90,7 @@ static inline char *__nvd_match_notif_type(NvdNotifyType type) {
 }
 
 static void nvd_delete_notification_gtk(NvdNotification *notification) {
-        NVD_ASSERT_FATAL(notification != NULL); /* Fatal to avoid some pretty scary bugs. */
+        NVD_ASSERT(notification != NULL);
         if (dlclose(notification->lib) < 0) {
                 nvd_set_error(NVD_INTERNAL_ERROR);
                 abort();
@@ -103,7 +103,7 @@ NvdNotification *nvd_notification_gtk(const char   *title,
         NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
         NVD_RETURN_IF_NULL(notification);
 
-        notification->lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
+        notification->lib = dlopen(nvd_path_to_libnotify(), RTLD_LAZY);
         if (!notification->lib) {
                 nvd_set_error(NVD_FILE_INACCESSIBLE);
                 nvd_error_message("Unable to open /usr/lib/libnotify.so: %s", dlerror());
