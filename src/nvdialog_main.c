@@ -175,6 +175,10 @@ int nvd_init(char *program) {
         return 0;
 }
 
+NVD_INTERNAL_FUNCTION const char* nvd_path_to_libnotify() {
+        return nvd_libnotify_path;
+}
+
 void nvd_set_application_name(const char *application_name) {
         nvd_app_name = (char*) application_name;
 }
