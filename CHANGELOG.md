@@ -14,6 +14,8 @@
 - Fixed missing declaration warning on the Gtk backend.
 - Completely removed styling functions (Already deprecated since v0.7.0)
 - Increased shared file version to 2 (Output files may contain libnvdialog.so.2 now)
+- Fixed libnotify not loading on Linux (See #44 for details)
+- Fixed a bug where NvDialog would abort the entire process despite no failure happening.
 
 # Changelog -- 0.7.0
 - Gtk dialogs will now be guaranteed to have their title set.
