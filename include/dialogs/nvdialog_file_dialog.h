@@ -42,7 +42,7 @@ typedef struct _NvdFileDialog NvdFileDialog;
  *
  * @param title A string to put as the dialog title.
  * @param file_extensions Unused legacy parameter, just pass NULL in here.
- * @returns An empty @NvdFileDialog object if successful, otherwise NULL and an error retrievable
+ * @returns An empty @ref NvdFileDialog object if successful, otherwise NULL and an error retrievable
  * through @ref nvd_get_error is set.
  */
 NVD_API NvdFileDialog *nvd_open_file_dialog_new(const char *title,

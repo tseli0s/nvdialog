@@ -82,7 +82,7 @@ NVD_API void nvd_show_dialog(NvdDialogBox *dialog);
  * - Yes / No
  * - Yes / No / Cancel
  * - Yes / Cancel
- * @return The NvdReply on success, else -1 -- Check @ref nvd_get_error() for
+ * @return The NvdReply on success, else -1 -- Check @ref nvd_get_error for
  * more.
  * @since  v0.1.1
  */
