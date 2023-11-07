@@ -37,7 +37,7 @@ NvdDialogBox *nvd_dialog_box_cocoa(const char *title, const char *message, NvdDi
 void nvd_show_dialog_cocoa(NvdDialogBox *dialog)
 {
 	[dialog->window_handle runModal];
-	[dialog->window_handle release];
+	[dialog->window_handle orderOut];
 }
 
 void *nvd_dialog_box_get_raw_cocoa(NvdDialogBox *dlg)
