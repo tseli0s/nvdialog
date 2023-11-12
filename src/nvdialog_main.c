@@ -482,6 +482,10 @@ void nvd_dialog_box_set_accept_text(NvdDialogBox* dialog, const char* text) {
 	NVD_ASSERT(text != NULL); // Not fatal because some backends may allow it. Although discouraged.
 	dialog->accept_label = (char*) text;
 	#if defined(__linux__) || defined(linux)
+        #if !defined(NVD_USE_GTK4)
 	nvd_gtk_update_accept_label(dialog);
+        #else
+        // TODO: Implement this for libadwaita too
+        #endif /* NVD_USE_GTK4 */
 	#endif /* __linux__ */
 }
