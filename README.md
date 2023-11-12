@@ -26,15 +26,17 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 - 100% guaranteed native looking dialogs.
 - MIT Licensed.
 - Cross-compiler (Actively tested with `gcc`, `clang` and MSVC).
-- Supports most desktop platforms through 3 different implementations (Backends).
+- Supports most desktop platforms through 4 different implementations (Backends).
 - Legacy version support (See [OS Versions Supported](#os-versions-supported))
 
 # Backends
-- **Adwaita Backend**\
-A backend using Gtk4 and `libadwaita`. This backend has replaced the (following) Gtk3 backend since 0.2.0 was released. Also note, this backend makes use of hardware acceleration, which sometimes breaks games in Wayland.
-
 - **Gtk3 Backend**\
-Some older distributions do not have Adwaita / Gtk4 support yet. The Gtk3 backend can be used in such a situation. However Gtk3 is considered to be deprecated and has been replaced with the Adwaita backend.
+The most maintained backend, used mainly for GNU/Linux distributions (And FreeBSD). It is based off Gtk3 and has been the primary focus since this library was started.
+
+- **Adwaita Backend**\
+The Adwaita backend is more experimental and overall you can expect some bugs with it. However it provides
+better integration with Linux distributions that are based on the GNOME ecosystem. Do note that sometimes
+this backend can break games on Wayland due to hardware acceleration.
 
 - **Sandbox Backend**\
 The sandbox backend is used in place of the other backends when the process is under some kind of sandbox (Flatpak, AppImage, etc). It is mostly identical to the Gtk3 one but differs slightly in the implementation. This one is chosen automatically if enabled at compile time.
@@ -122,7 +124,7 @@ $ makepkg --clean --install
 
 # OS Versions Supported
 ## Windows
-Although all functions used by NvDialog were introduced back in Windows XP, they have not been tested for stability before Windows 8.1 (The oldest officially supported release by NvDialog) and if you are writing an application for such old systems you are on your own, either fork the codebase or open an issue.
+The oldest OS NvDialog has ran on is Windows XP, although some calls did not produce any change / output (But did not fail either). The recommended minumum is Windows 8 / 8.1, and any later version should work as expected.
 
 ## macOS
 Only the very latest versions of macOS are supported. Older releases will at best throw a compiler error if compiling from source or a linking error otherwise.
@@ -131,10 +133,10 @@ Some deprecated functions are used here and there when building for macOS. This 
 
 ## GNU/Linux
 Since there are well over 1000 distributions, there is no specific distribution requirement. However, your system must have these installed:
-- Gtk 3 or `libadwaita` + Gtk4, the latest releases of each.
-- A modern version of `glibc`, preferably 2.33 or newer.
+- Gtk 3 (3.18 or later) or `libadwaita` + Gtk4, the latest releases of each.
 - Linux kernel 2.6 or newer (All modern distros include at least 4.x kernels so nothing to worry here).
-- X11 or Wayland as the display server. Mir is not supported.
+- X11 or Wayland as the display server. Mir is not supported. Note that Wayland is more hardened that X11 and
+some planned features cannot be introduced to it reliably.
 
 Common distros officially supported:
 | Distro | Version |
@@ -149,7 +151,7 @@ Android support will not be implemented anytime soon (Neither iOS support). You 
 
 ## Other OSes
 Other OSes are assumed to be supported. To make sure they do indeed work, you need to make sure the given OS supports **all** of the following features:
-- Unix-like, or alternatively, **very closely** resembling Windows.
+- Unix-like, or alternatively, **very closely** resembling Windows (If the latter, ignore the following).
 - X11 or Wayland as the windowing system
 - Gtk3, or Gtk4 and Libadwaita
 
