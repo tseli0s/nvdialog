@@ -147,7 +147,6 @@ else(WIN32 OR WIN32_TARGET)
                                 set(NVD_ADW_SOURCES src/backend/adw/nvdialog_about_dialog.c
                                                     src/backend/adw/nvdialog_file_dialog.c
                                                     src/backend/adw/nvdialog_dialog_box.c
-                                                    src/backend/adw/nvdialog_css_manager.c
                                                     src/backend/adw/nvdialog_question_dialog.c
                                                     src/backend/adw/nvdialog_notification.c)
                                 set(NVD_SOURCES ${NVD_SOURCES} ${NVD_ADW_SOURCES})
