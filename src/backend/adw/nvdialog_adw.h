@@ -106,15 +106,6 @@ void *nvd_dialog_box_get_raw_adw      (NvdDialogBox   *dialog);
 void *nvd_dialog_question_get_raw_adw (NvdQuestionBox *dialog);
 void *nvd_open_file_dialog_get_raw_adw(NvdFileDialog  *dialog);
 
-/* Creates a new CSS manager compatible with libadwaita. */
-NvdCSSManager *nvd_css_manager_adw();
-
-/* TODO: Add comments here. */
-int nvd_css_manager_attach_string_stylesheet_adw(NvdCSSManager *mgr,
-                                                 const char    *str);
-int nvd_css_manager_attach_stylesheet_adw(NvdCSSManager *mgr, const char *filename);
-int nvd_css_manager_use_style_adw        (NvdCSSManager *mgr, void       *raw_handle);
-
 /*
  * Sets the specified action for the notification.
  * (Adwaita implementation)

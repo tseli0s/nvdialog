@@ -23,6 +23,7 @@
  */
 
 #include "../../nvdialog_assert.h"
+#include "nvdialog_typeimpl.h"
 #include "nvdialog_adw.h"
 #include "nvdialog_notification.h"
 /* So we reduce compile-time dependencies. */
@@ -109,13 +110,13 @@ NvdNotification *nvd_notification_adw(const char   *title,
 
         const char *icon_name  = __nvd_match_notif_type(type);
 
-        notification->title    = (char*) title;
-        notification->contents = (char*) msg;
-        notification->raw      = (void*) notify_new(notification->title,
-                                                    notification->contents,
+        notification->title = (char*) title;
+        notification->body  = (char*) msg;
+        notification->raw   = (void*) notify_new(notification->title,
+                                                    notification->body,
                                                     icon_name);
-        notification->type     = type;
-        notification->shown    = false;
+        notification->type  = type;
+        notification->shown = false;
         
         if (notification->type == NVD_NOTIFICATION_ERROR) {
                 const char *fn_name = "notify_notification_set_urgency";
