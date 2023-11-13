@@ -261,7 +261,6 @@ NvdQuestionBox *nvd_dialog_question_new(const char       *title,
  * solution is to assert that the reply is actually valid.
  */
 NvdReply nvd_get_reply(NvdQuestionBox *question) {
-        NVD_ASSERT_FATAL(question != NULL);
         NVD_IF_NOT_INITIALIZED(return ((NvdReply) -NVD_NOT_INITIALIZED));
 #if defined(NVD_USE_GTK4)
         return nvd_get_reply_adw(question);
