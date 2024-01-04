@@ -85,10 +85,10 @@ int main(int argc, char **argv)
 
 # Installation
 Make sure you have installed [CMake](https://cmake.org) before doing anything else ! The library can only be installed using CMake. See [CMake's website](https://cmake.org/) for more information.
-- First, download the source code in your preferred way. The [Releases](https://github.com/AndroGR/nvdialog/releases/) are recommended if you are looking for stability, but you can also optionally compile from the GitHub repository directly, by cloning the source code.
+- First, download the source code in your preferred way. The [Releases](https://github.com/AndroGR/nvdialog/releases/) are recommended if you are looking for stability, but you can also optionally compile from the `master` branch directly, by cloning the source code.
 - Install dependencies (This is only required on Linux, and only if you're building from source):
 ```sh
-$ sudo apt update && sudo apt install libgtk-3-dev
+$ sudo apt update && sudo apt install libgtk-3-dev build-essential gcc
 ```
 
 - Compile the library:
