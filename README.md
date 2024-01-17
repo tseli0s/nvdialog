@@ -114,7 +114,7 @@ $ sudo pacman -S git
 ```
 **Clone the repository (To download the source code)**
 ```bash
-$ git clone --depth=1 https://github.com/AndroGR/nvdialog.git
+$ git clone --depth=1 https://github.com/tseli0s/nvdialog.git
 $ cd nvdialog/
 ```
 **Build the package:**
