@@ -38,12 +38,8 @@ NvdAboutDialog *nvd_about_dialog_cocoa(const char *name,
 
 void nvd_about_dialog_set_licence_link_cocoa(NvdAboutDialog *dialog, const char *license_link, const char *txt)
 {
-    /* TODO: Fix this */
-    /*
     (void)txt;
-
-    dialog->options[NSAboutPanelOptionCredits] = @(license_link);
-    */
+    dialog->raw[NSAboutPanelOptionCredits] = @(license_link);
 }
 
 void *nvd_about_dialog_get_raw_cocoa(NvdAboutDialog *dlg)
