@@ -113,7 +113,7 @@ static int nvd_check_libnotify(void) {
         return 0;
 }
 
-int nvd_init(char *program) {
+int nvd_init() {
         if (nvd_initialized) {
                 nvd_set_error(NVD_ALREADY_INITIALIZED);
                 return -NVD_ALREADY_INITIALIZED;

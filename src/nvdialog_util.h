@@ -97,7 +97,7 @@ char** nvd_seperate_args(const char* str);
 
 /**
  * @brief Returns the distribution information on Linux, lik
- * @note This function will return NULL if the OS is not GNU/Linux. It will also only return data related
+ * @note This function will return `NULL` if the OS is not GNU/Linux. It will also only return data related
  * to the base of the distribution, NOT the exact distribution you're running (eg. on Ubuntu you will get Debian).
  * @return A @ref NvdDistroInfo filled out with all the necessary information,
  * or NULL if there is a failure (Will set the error accordingly unless not on GNU/Linux).
