@@ -53,6 +53,6 @@ void *nvd_about_dialog_get_raw_cocoa(NvdAboutDialog *dlg)
 
 void nvd_show_about_dialog_cocoa(NvdAboutDialog *dialog)
 {
-    [NSApp orderFrontStandardAboutPanelWithOptions: dialog->options];
-    [dialog->options release];
+    [NSApp orderFrontStandardAboutPanelWithOptions: dialog->raw];
+    [dialog->raw release];
 }
