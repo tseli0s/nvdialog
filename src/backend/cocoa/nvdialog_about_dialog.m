@@ -1,5 +1,7 @@
 #include "nvdialog.h"
 #include "nvdialog_cocoa.h"
+#include <assert.h>
+#include <stdlib.h>
 #include <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
 /*
@@ -19,23 +21,24 @@ NvdAboutDialog *nvd_about_dialog_cocoa(const char *name,
                                        const char *desc,
                                        const char *imgpath)
 {
-    /*
-    NvdAboutDialog *dlg = malloc(sizeof(struct _NvdAboutDialog));
+    NvdAboutDialog* dlg = malloc(sizeof(struct _NvdAboutDialog));
+    NSMutableDictionary<NSAboutPanelOptionKey, id>* options;
+    assert(dlg != nil); // TODO: Use the NvDialog assertion macro
 
-    dlg->options = [NSMutableDictionary dictionary];
-    dlg->options[NSAboutPanelOptionApplicationName] = @(name);
-    dlg->options[NSAboutPanelOptionVersion] = @(desc);
+    options = [NSMutableDictionary dictionary];
+    options[NSAboutPanelOptionApplicationName] = @(name);
+    options[NSAboutPanelOptionVersion]         = @(desc);
 
     if (imgpath != nil)
-        dlg->options[NSAboutPanelOptionApplicationIcon] = [[NSImage alloc] initWithContentsOfFile: @(imgpath)];
-
+        options[NSAboutPanelOptionApplicationIcon] = [[NSImage alloc] initWithContentsOfFile: @(imgpath)];
+    
+    dlg->raw = options;
     return dlg;
-    */
-    return NULL; /* To avoid memory corruption while >> */
 }
 
 void nvd_about_dialog_set_licence_link_cocoa(NvdAboutDialog *dialog, const char *license_link, const char *txt)
 {
+    /* TODO: Fix this */
     /*
     (void)txt;
 
@@ -50,8 +53,6 @@ void *nvd_about_dialog_get_raw_cocoa(NvdAboutDialog *dlg)
 
 void nvd_show_about_dialog_cocoa(NvdAboutDialog *dialog)
 {
-    /*
     [NSApp orderFrontStandardAboutPanelWithOptions: dialog->options];
     [dialog->options release];
-    */
 }
