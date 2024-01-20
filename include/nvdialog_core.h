@@ -51,12 +51,11 @@ typedef void *NvdParentWindow;
  * @note You should call this function to the same thread you're creating your dialogs from.
  * If you also happen to use a library used by NvDialog as the backend, make sure that the two libraries
  * stay in the same thread to avoid race conditions.
- * @param program The argv[0] of your program, required on some backends.
  * @since v0.1.0
  * @ingroup Core
  * @return 0 on success, else a negative error code indicating failure.
  */
-NVD_API int nvd_init(char *program);
+NVD_API int nvd_init();
 
 /**
  * @brief Sets the application name to use inside NvDialog.
@@ -78,6 +77,7 @@ NVD_API const char *nvd_get_application_name();
  * @brief Returns the argv[0] given to nvdialog.
  * @details This function returns the parameter passed to nvdialog during
  * nvd_init. It is mainly intended to be used internally.
+ * @deprecated This function is deprecated as of v0.8.1 and will only return NULL
  * @return The argv[0] given to nvdialog on success, otherwise NULL.
  */
 NVD_API const char *nvd_get_argv(void);
