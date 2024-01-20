@@ -52,9 +52,12 @@ NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
 
         dialog->is_save_dialog  = false;
         dialog->file_extensions = file_extensions;
+        dialog->title           = title;
+
         return dialog;
 }
 
+/* TODO: Add default filename support. */
 NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
                                           const char *default_filename) {
         NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
@@ -62,6 +65,7 @@ NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
 
         dialog->is_save_dialog  = true;
         dialog->file_extensions = NULL; /* Technically, we could add filters here, but how? */
+        dialog->title           = title;
         return dialog;
 }
 
