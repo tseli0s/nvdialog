@@ -75,13 +75,12 @@
         }
 
 NVD_THREAD_LOCAL(char* nvd_app_name               ) = "NvDialog Application";
-NVD_THREAD_LOCAL(char* nvd_argv_0                 ) = NULL;
 NVD_THREAD_LOCAL(bool nvd_initialized             ) = false;
 NVD_THREAD_LOCAL(bool nvd_is_process_container    ) = false;
 NVD_THREAD_LOCAL(NvdParentWindow nvd_parent_window) = NULL;
 NVD_THREAD_LOCAL(char* nvd_libnotify_path         ) = NULL; // Initialized in nvd_init
 
-const char *nvd_get_argv() { return nvd_argv_0; }
+const char *nvd_get_argv() { return NULL; }
 
 static int nvd_check_libnotify(void) {
         #if defined (NVD_USE_GTK4) || defined (NVD_PLATFORM_LINUX)
@@ -135,7 +134,6 @@ int nvd_init() {
         setlinebuf(stdout); /* Windows doesn't support this call (Yet?) */
         setlinebuf(stderr);
 #endif /* __linux__ */
-        nvd_argv_0 = program;
 #if !defined(_WIN32) && !defined(NVD_USE_COCOA)
 
 #if !defined(NVD_USE_GTK4)
@@ -150,7 +148,6 @@ int nvd_init() {
                 return nvd_check_libnotify();
         }
 #else
-        (void) program;
         int result = 0;
         if (!gtk_init_check()) {
                 /*
