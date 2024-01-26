@@ -25,6 +25,20 @@
 #include "nvdialog_win32.h"
 #include "../../nvdialog_assert.h"
 
+static HICON nvd_load_hicon_win32(const char* path) {
+    const HICON icon = (HICON) LoadImage(
+        NULL,
+        path,
+        IMAGE_ICON,
+        0,
+        0,
+        LR_LOADFROMFILE
+    );
+
+    NVD_RETURN_IF_NULL(icon);
+    return icon;
+}
+
 NvdAboutDialog *nvd_about_dialog_win32(const char *appname,
                                        const char *brief,
                                        const char *logo) {
@@ -47,16 +61,25 @@ void nvd_about_dialog_set_version_win32(NvdAboutDialog *dialog,
 void nvd_about_dialog_set_license_link_win32(NvdAboutDialog *dialog,
                                             const char      *license_link, 
                                             const char      *txt) {
+        (void) dialog;
+        (void) license_link;
+        (void) txt;
+
         return; /* Unfortunately can't be implemented with the WinAPI. */
 }
 
 void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
+        HICON app_icon = NULL;
+        if (dialog->image_name != NULL) {
+                // load icon
+        }
+
         int result = ShellAbout(nvd_get_parent(),
                                 dialog->title,
                                 dialog->contents,
-                                NULL /* Another TODO: Make it so icons can be added to Windows
-                                        dialogs. */
-                      );
+                                app_icon
+                        );
 
+        (app_icon != NULL) ? DestroyIcon(app_icon): (void) app_icon;
         if (!result) nvd_set_error(NVD_INTERNAL_ERROR);
 }
