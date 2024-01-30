@@ -71,7 +71,8 @@ void nvd_about_dialog_set_license_link_win32(NvdAboutDialog *dialog,
 void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
         HICON app_icon = NULL;
         if (dialog->image_name != NULL) {
-                // load icon
+                app_icon = nvd_load_hicon_win32(dialog->image_name);
+                NVD_ASSERT(app_icon != NULL);
         }
 
         int result = ShellAbout(nvd_get_parent(),
