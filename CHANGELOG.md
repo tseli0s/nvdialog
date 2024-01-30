@@ -1,7 +1,8 @@
 # Changelog -- 0.8.1
 - MacOS about dialog support returned
-- Removed first parameter on `nvd_init`, which was already unused since v0.7
+- (**BREAKING**) Removed first parameter on `nvd_init`, which was already unused since v0.7
 - Fixed some warnings on Windows.
+- Add icon support for `NvdAboutDialog` on Windows.
 
 # Changelog -- 0.8.0
 - You can now set the dialog button text to something else.
