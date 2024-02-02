@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 int main(int argc, char** argv) {
-    if (nvd_init(argv[0]) != 0) {
+    if (nvd_init() != 0) {
         printf("NvDialog couldn't initialize: %s", nvd_stringify_error(nvd_get_error()));
         exit(EXIT_FAILURE);
     }

@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
          * on Linux to avoid undefined behaviour.
          * Call this function before any other.
          */
-        int result = nvd_init(argv[0]);
+        int result = nvd_init();
         if (result != 0) {
                 /* Initialization failed, exit now. */
                 puts("Error: Couldn't initialize NvDialog.");
