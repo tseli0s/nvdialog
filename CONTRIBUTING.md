@@ -18,21 +18,21 @@ $ git push -u origin new-feature
 ```
 ## 2. Commit Messages
 NvDialog uses a very simple model for commit messages:
-- If an include was changed or new functions were added, the commit message will start with the file name. Eg:
+- If an include was changed or new functions were added, the commit message will start with the new function's name or the filename (without the extension, the `nvdialog_` prefix, and any dirs). Eg:
 ```sh
-$ git commit -m "src/nvdialog_main.c: Fix incorrect include." -m "Fixed an incorrect include within the file causing a compile error due to recent changes."
+$ git commit -m "main: Fix incorrect include." -m "Fixed an incorrect include within the file causing a compile error due to recent changes."
 ```
-- If a new function was added, then the function name will be used instead:
+- If a new function was added, for the public API (Aka what the end user is going to use), the function name should be used.
 ```sh
-$ git commit -m "nvdialog_dialog_box_win32: Implement function." -m "Implemented new API function for the WinAPI backend."
+$ git commit -m "nvd_dialog_box_new_improved: Implement function." -m "Implemented new function."
 ```
-- For some directory-wide changes (Like adding a new API set), the directory name should be used (Not as a nested directory, see below). 
+- For backend-wide changes such as implementing a platform-dependent functionality, use the backend/&gt;BACKEND&lt;
 ```sh
-$ git commit -m "gtk/: Add notification support for Gtk3 backend."
+$ git commit -m "backend/gtk: Add notification support for Gtk3 backend."
 ```
-- For everything else, you can just say the commit message, omitting filenames, functions etc. Eg:
+- For everything else, you can just use the commit message, omitting filenames, functions etc. Eg:
 ```sh
-$ git commit -m "Fixed crash when using the Adwaita backend."
+$ git commit -m "tree: Fix compilation errors on Windows 11."
 ```
 - **Descriptions of the commit should just extend the first commit message, adding notices if necessary, and if needed, also specifying which commit do they fix.**
 
