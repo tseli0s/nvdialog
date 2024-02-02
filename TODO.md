@@ -1,4 +1,10 @@
-# Features to implement in the future versions:
-- [ ] Move to version 1.0 (Targeted for 0.7.0 and afterwards).
-- [ ] Make accept, cancel and reject buttons have custom text if needed (Targeted for >=0.7.1)
-- [ ] Add raw window handle support (X11, Wayland, ...).
+# NvDialog: TODOs
+This is a compiled example of features that are planned to be added to NvDialog before hitting release v1.0.
+You can read the [contribution guide](./CONTRIBUTING.md) to implement any of these and contribute to NvDialog's development. In other words, this is a roadmap to the first stable release.
+
+- [ ] Android backend*.
+- [x] Improved FFI support for Rust and other potential languages.
+- [ ] Close all issues and fix any known bugs so far.
+- [ ] Rewrite the [CMakeLists.txt](./CMakeLists.txt) file since it's very messy and cluttered.
+- [ ] Optimizations for GNOME.
+- [ ] Improved `libadwaita` support on GNU/Linux.
