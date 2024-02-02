@@ -23,7 +23,6 @@
  */
 
 #include "../../nvdialog_assert.h"
-#include "nvdialog_typeimpl.h"
 #include "nvdialog_adw.h"
 #include "nvdialog_notification.h"
 /* So we reduce compile-time dependencies. */
@@ -57,22 +56,22 @@ static void nvd_set_action_ptr(void* notif, char* action, struct NvdActionsArgs 
 
 static bool __nvd_check_libnotify(NvdNotification *notification) {
         bool (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
-                if (!nvd_notify_init) {
-                        dlclose(notification->lib);
+                if (nvd_notify_init == NULL) {
                         nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
+                        dlclose(notification->lib);
                         return false;
                 }
 
-                if (!nvd_notify_init("NvDialog")) {
-                        dlclose(notification->lib);
+                if (!nvd_notify_init((char*)nvd_get_application_name())) {
                         nvd_error_message("Couldn't initialize libnotify, stopping here.");
+                        dlclose(notification->lib);
                         return false;
         }
         return true;
 }
 
 static inline char *__nvd_match_notif_type(NvdNotifyType type) {
-        static char *icon_name = NULL;
+        static char *icon_name;
         
         switch (type) {
         case NVD_NOTIFICATION_SIMPLE:
@@ -84,19 +83,38 @@ static inline char *__nvd_match_notif_type(NvdNotifyType type) {
         case NVD_NOTIFICATION_ERROR:
                 icon_name = "dialog-error";
                 break;
+        default: return NULL;
         }
 
         return icon_name;
+}
+
+static void nvd_delete_notification_adw(NvdNotification *notification) {
+        NVD_ASSERT(notification != NULL);
+        if (dlclose(notification->lib) < 0) {
+                nvd_set_error(NVD_INTERNAL_ERROR);
+                abort();
+        }
 }
 
 NvdNotification *nvd_notification_adw(const char   *title,
                                       const char   *msg,
                                       NvdNotifyType type) {
         NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
-        NVD_RETURN_IF_NULL(notification)
+        NVD_RETURN_IF_NULL(notification);
 
-        notification->lib = dlopen("/usr/lib/libnotify.so", RTLD_LAZY);
-        if (!__nvd_check_libnotify(notification)) nvd_set_error(NVD_BACKEND_INVALID);
+        notification->lib = dlopen(nvd_path_to_libnotify(), RTLD_LAZY);
+        if (!notification->lib) {
+                nvd_set_error(NVD_FILE_INACCESSIBLE);
+                nvd_error_message("Unable to open /usr/lib/libnotify.so: %s", dlerror());
+                free(notification);
+                return NULL;
+        }
+        if (!__nvd_check_libnotify(notification)) {
+                nvd_set_error(NVD_BACKEND_INVALID);
+                free(notification);
+                return NULL;
+        }
 
         nvd_notify_new_t notify_new  = dlsym(notification->lib, "notify_notification_new");
         
@@ -108,15 +126,16 @@ NvdNotification *nvd_notification_adw(const char   *title,
                 return NULL;
         }
 
-        const char *icon_name  = __nvd_match_notif_type(type);
+        const char *icon_name    = __nvd_match_notif_type(type);
 
-        notification->title = (char*) title;
-        notification->body  = (char*) msg;
-        notification->raw   = (void*) notify_new(notification->title,
-                                                    notification->body,
-                                                    icon_name);
-        notification->type  = type;
-        notification->shown = false;
+        notification->title      = (char*) title;
+        notification->body       = (char*) msg;
+        notification->destructor = nvd_delete_notification_adw;
+        notification->raw        = (void*) notify_new(notification->title,
+                                                      notification->body,
+                                                      icon_name);
+        notification->type       = type;
+        notification->shown      = false;
         
         if (notification->type == NVD_NOTIFICATION_ERROR) {
                 const char *fn_name = "notify_notification_set_urgency";
@@ -141,18 +160,10 @@ void nvd_send_notification_adw(NvdNotification *notification) {
         show_fn(notification->raw, NULL);
 }
 
-void nvd_delete_notification_adw(NvdNotification *notification) {
-        NVD_ASSERT_FATAL(notification != NULL); /* Fatal to avoid some pretty scary bugs. */
-        dlclose(notification->lib);
-        free(notification);
-        return; /* See -Wmissing-noreturn */
-}
-
 void nvd_add_notification_action_adw(NvdNotification* notification,
                                      const char* action,
                                      int  value_to_set,
                                      int* value_to_return) {
-        NVD_ASSERT_FATAL(notification != NULL);
         void (*fn) (void *notification,
                     const char *action,
                     const char *label,

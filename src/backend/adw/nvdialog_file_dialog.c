@@ -92,6 +92,7 @@ void nvd_get_file_location_adw(NvdFileDialog *dialog, char **savebuf) {
                           G_CALLBACK (nvd_file_dialog_response_adw),
                           dialog);
         while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
-                g_main_context_iteration(NULL, true);
-        *savebuf = dialog->filename;
+                g_main_context_iteration(NULL, false);
+
+        *savebuf = (char*) dialog->filename;
 }

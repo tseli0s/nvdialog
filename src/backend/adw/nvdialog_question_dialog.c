@@ -109,9 +109,7 @@ NvdReply nvd_get_reply_adw(NvdQuestionBox *box) {
                                  &box->reply);
 
         gtk_window_present(GTK_WINDOW(box->window_handle));
-        while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0) {
-                g_main_context_iteration(NULL, true);
-        }
+        g_main_context_iteration(NULL, true);
         return box->reply;
 }
 
