@@ -412,9 +412,9 @@ NvdNotification *nvd_notification_new(const char *title,
 
 void nvd_delete_notification(NvdNotification *notification) {
         NVD_ASSERT(notification != NULL);
-        if (notification->destructor) // Some backends may not need destructors
+        if (notification->destructor)
                 notification->destructor(notification);
-        free(notification); /* TODO: For each backend, handle cleanup properly. */
+        free(notification);
 }
 
 void nvd_send_notification(NvdNotification *notification) {
