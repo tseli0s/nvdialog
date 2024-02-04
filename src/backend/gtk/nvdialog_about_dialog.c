@@ -25,6 +25,7 @@
 #include "../../nvdialog_assert.h"
 #include "nvdialog_gtk.h"
 #include <stdio.h>
+#include <string.h>
 
 static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
         gtk_widget_set_margin_start(widget, 16);
@@ -36,24 +37,48 @@ static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
 NvdAboutDialog *nvd_about_dialog_gtk(const char *appname,
                                      const char *brief,
                                      const char *icon_name) {
+        GdkPixbuf *img         = NULL;
         NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
         
         dialog->title          = (char *)appname;
         dialog->contents       = (char *)brief;
 
-        char buffer[NVDIALOG_MAXBUF];
-        sprintf(buffer,
-                "%s%s",
-                "/usr/share/icons/hicolor/",
-                icon_name);
-        GdkPixbuf *img = gdk_pixbuf_new_from_file(buffer, NULL);
-
+        
+        
         dialog->raw = gtk_about_dialog_new();
         gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog->raw),
                                           appname);
         gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog->raw), brief);
-        gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog->raw), img);
+        if (icon_name) {
+                size_t len = 0;
+                const char *icons_path = "/usr/share/icons/hicolor/256x256/apps/";
+                GError *err = NULL;
+                len += strlen(icons_path);
+                len += strlen(icon_name);
+                len += 1; // NULL byte
+                char *buffer = malloc(len * sizeof(char));
+                if (!buffer) {
+                        NVD_ASSERT(buffer != NULL);
+                        nvd_set_error(NVD_OUT_OF_MEMORY);
+                        return NULL;
+                }
+                sprintf(buffer,
+                        "%s%s",
+                        icons_path,
+                        icon_name);
+                buffer[len] = '\0';
+                img = gdk_pixbuf_new_from_file(buffer, &err);
+                if (!img) {
+                        NVD_ASSERT(img != NULL);
+                        nvd_set_error(NVD_INTERNAL_ERROR);
+                        nvd_error_message("Failed to load '%s': %s.", buffer, err->message);
+                        return NULL;
+                }
+
+                gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog->raw), img);
+        }
+        
         return dialog;
 }
 
