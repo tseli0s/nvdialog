@@ -5,6 +5,7 @@
 - Add icon support for `NvdAboutDialog` on Windows.
 - Many improvements in `NvdAboutDialog` on Gtk3.
 - Documentation improvements
+- Fix `NvdAboutDialog` on Linux not having an icon.
 
 # Changelog -- 0.8.0
 - You can now set the dialog button text to something else.
