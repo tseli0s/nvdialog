@@ -50,7 +50,7 @@ extern "C" {
  * @code
  * #include <nvdialog/nvdialog.h>
  * int main(int argc, char** argv) {
- *      nvd_init(argv[0]);
+ *      nvd_init();
  *      NvdDialogBox *dialog = nvd_dialog_box_new("Dialog Title", "Dialog Message", NVD_DIALOG_SIMPLE);
  *      if (!dialog) return -1;
  *

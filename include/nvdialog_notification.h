@@ -35,6 +35,7 @@
 /**
  * @brief Possible types of NvDialog notifications. Each field will create a slightly
  * different dialog matching the requested type.
+ * @ingroup Notification
  * @since v0.5.0
  * @sa NvdNotification
  */
@@ -51,6 +52,7 @@ typedef enum {
  * will be useful for many applications. The notification API is cross-platform
  * and should reduce the required setup to send a simple notification.
  * 
+ * @ingroup Notification
  * @sa nvd_notification_new
  * @since v0.5.0
  */
@@ -75,6 +77,7 @@ typedef struct _NvdNotification NvdNotification;
        return 0;
    }
  * @endcode
+ * @ingroup Notification
  * @return An empty notification object.
  */
 NVD_API NvdNotification* nvd_notification_new(const char   *title,
@@ -87,6 +90,7 @@ NVD_API NvdNotification* nvd_notification_new(const char   *title,
  * Just make sure the notification is still valid (Not freed yet).
  * 
  * @param notification The notification object to use.
+ * @ingroup Notification
  * @since v0.5.0
  */
 NVD_API void nvd_send_notification(NvdNotification* notification);
@@ -95,6 +99,7 @@ NVD_API void nvd_send_notification(NvdNotification* notification);
  * @brief Deletes a notification object from NvDialog.
  * @note  You should only use this to free notifications. <b>Do not use @ref nvd_free_object please.</b>
  * @param notification The notification object to delete.
+ * @ingroup Notification
  */
 NVD_API void nvd_delete_notification(NvdNotification* notification);
 
@@ -105,6 +110,7 @@ NVD_API void nvd_delete_notification(NvdNotification* notification);
  * @param action A string defining the action as well as the label of the button for the action.
  * @param value_to_set The value to set when the action is triggered.
  * @param value_to_return A pointer to an integer to save the value passed to @ref value_to_set .
+ * @ingroup Notification
  */
 NVD_API void nvd_add_notification_action(NvdNotification* notification,
                                          const char* action,

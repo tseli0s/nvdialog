@@ -43,6 +43,7 @@
  * using @ref nvd_stringify_error. Else, use the @ref NvdError enum to check for
  * the error manually.
  *
+ * @ingroup Error
  * @returns The error code (Will be automatically 0 if no errors were encountered).
  */
 NVD_API NvdError nvd_get_error(void);
@@ -51,6 +52,7 @@ NVD_API NvdError nvd_get_error(void);
  * @brief Transforms an error code into a string representation, that can be
  * used to print errors to the console.
  * @returns The string representation of the error, or NULL on failure.
+ * @ingroup Error
  * @note The string returned is saved inside the function as static, and each call
  * simply overwrites it.
  */

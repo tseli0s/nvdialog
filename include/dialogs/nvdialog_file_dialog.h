@@ -28,6 +28,7 @@
  * @brief An opaque file dialog type, representing either a file
  * dialog that can be used to open a file or save a file.
  * @since v0.1.0
+ * @ingroup FileDialog
  */
 typedef struct _NvdFileDialog NvdFileDialog;
 
@@ -44,6 +45,7 @@ typedef struct _NvdFileDialog NvdFileDialog;
  * @param file_extensions Unused legacy parameter, just pass NULL in here.
  * @returns An empty @ref NvdFileDialog object if successful, otherwise NULL and an error retrievable
  * through @ref nvd_get_error is set.
+ * @ingroup FileDialog
  */
 NVD_API NvdFileDialog *nvd_open_file_dialog_new(const char *title,
                                                 const char *file_extensions);
@@ -55,6 +57,7 @@ NVD_API NvdFileDialog *nvd_open_file_dialog_new(const char *title,
  * @param default_filename The default filename to use for saving.
  * @return An @ref NvdFileDialog on success, otherwise NULL and @ref nvd_get_error should
  * be called to get the failure reason.
+ * @ingroup FileDialog
  */
 NVD_API NvdFileDialog *nvd_save_file_dialog_new(const char *title,
                                                 const char *default_filename);
@@ -68,6 +71,7 @@ NVD_API NvdFileDialog *nvd_save_file_dialog_new(const char *title,
  * @sa nvd_open_file_dialog_new
  * @param dialog The file dialog to take the filename from.
  * @param savebuf A pointer to a buffer where the path will be written, must not be NULL.
+ * @ingroup FileDialog
  */
 NVD_API void nvd_get_file_location(NvdFileDialog* dialog, const char** savebuf);
 
@@ -75,5 +79,6 @@ NVD_API void nvd_get_file_location(NvdFileDialog* dialog, const char** savebuf);
  * @brief Returns the raw object behind the dialog.
  * @param dialog The dialog to retrieve the object from.
  * @return void* The raw toolkit-created object.
+ * @ingroup FileDialog
  */
 NVD_API void *nvd_open_file_dialog_get_raw(NvdFileDialog *dialog);

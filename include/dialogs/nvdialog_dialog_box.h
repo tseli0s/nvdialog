@@ -52,6 +52,7 @@ typedef struct _NvdDialogBox NvdDialogBox;
  * @brief A similar struct to @ref NvdDialogBox, but
  * instead used for question dialogs.
  * @since v0.1.0
+ * @ingroup QuestionDialog
  */
 typedef struct _NvdQuestionBox NvdQuestionBox;
 
@@ -61,6 +62,7 @@ typedef struct _NvdQuestionBox NvdQuestionBox;
  * This function creates a simple dialog with the specified arguments,
  * and returns an opaque handle to it for use with @ref nvd_show_dialog.
  *
+ * @ingroup QuestionDialog
  * @return The dialog handle on success, else NULL.
  */
 NVD_API NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
@@ -71,6 +73,7 @@ NVD_API NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
  * @details The dialog given is rendered to the screen when this function is called.
  * This function is not yet useful since some API changes may be required to work.
  * @param dialog The dialog to show.
+ * @ingroup QuestionDialog
  * @note Obsolete function, currently unnecessary.
  */
 NVD_API void nvd_show_dialog(NvdDialogBox *dialog);
@@ -82,6 +85,7 @@ NVD_API void nvd_show_dialog(NvdDialogBox *dialog);
  * - Yes / No
  * - Yes / No / Cancel
  * - Yes / Cancel
+ * @ingroup QuestionDialog
  * @return The NvdReply on success, else -1 -- Check @ref nvd_get_error for
  * more.
  * @since  v0.1.1
@@ -92,6 +96,7 @@ NVD_API NvdQuestionBox* nvd_dialog_question_new(const char *title, const char *q
 /**
  * @brief Shows the dialog box given to the system and returns the choice given
  * @param box The box to use to show the reply.
+ * @ingroup QuestionDialog
  * @return The reply from the dialog box.
  */
 NVD_API NvdReply nvd_get_reply(NvdQuestionBox *box);
@@ -99,6 +104,7 @@ NVD_API NvdReply nvd_get_reply(NvdQuestionBox *box);
 /**
  * @brief Returns the raw object behind the dialog.
  * @param dialog The dialog to retrieve the object from.
+ * @ingroup QuestionDialog
  * @return void* The raw toolkit-created object.
  */ 
 NVD_API void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog);
@@ -106,6 +112,7 @@ NVD_API void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog);
 /**
  * @brief Returns the raw object behind the dialog.
  * @param dialog The dialog to retrieve the object from.
+ * @ingroup QuestionDialog
  * @return void* The raw toolkit-created object.
  */
 NVD_API void *nvd_dialog_box_get_raw(NvdDialogBox *dialog);
@@ -113,6 +120,7 @@ NVD_API void *nvd_dialog_box_get_raw(NvdDialogBox *dialog);
 /**
  * @brief Sets the accept text for the dialog (The "Ok" button label).
  * @param dialog The dialog to change the button label.
+ * @ingroup QuestionDialog
  * @param accept_text The new label of the dialog button. May not be NULL.
  * @since v0.8.0
  */
