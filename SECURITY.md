@@ -21,6 +21,6 @@ However it only received the said update as part of the 0.5.0 upgrade.
 | < 0.2.0 | :x:                |
 
 ## Reporting a Vulnerability
-If you find a vulnerability, make sure to immediately report it to the [Issues](https://github.com/AndroGR/nvdialog/issues) page so it can be fixed as soon as
+If you find a vulnerability, make sure to immediately report it to the [Issues](https://github.com/tseli0s/nvdialog/issues) page so it can be fixed as soon as
 possible. Vulnerabilities will usually be prioritized unless they are not threatening (eg. an integer overflow that could cause a segmentation fault can be fixed with a cast), and are expected to be
 fixed at most in one to two weeks.
