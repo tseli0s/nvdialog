@@ -48,12 +48,12 @@ nvd_dialog_box_gtk(const char *title, const char *message, NvdDialogType type) {
         dialog->content       = (char*) message;
         dialog->msg           = (char*) title;
         dialog->type          = type;
-        dialog->window_handle = gtk_window_new(GTK_WINDOW_POPUP);
+        dialog->window_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
         gtk_widget_set_hexpand(dialog->window_handle, true);
         gtk_widget_set_vexpand(dialog->window_handle, true);
         gtk_window_set_title(GTK_WINDOW(dialog->window_handle), title);
-        gtk_window_set_resizable(GTK_WINDOW(dialog->window_handle), true);
+        gtk_window_set_resizable(GTK_WINDOW(dialog->window_handle), false);
         gtk_window_set_decorated(GTK_WINDOW(dialog->window_handle), true);
         gtk_window_set_modal(GTK_WINDOW(dialog->window_handle), true);
 
