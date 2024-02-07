@@ -6,6 +6,7 @@
 - Many improvements in `NvdAboutDialog` on Gtk3.
 - Documentation improvements
 - Fix `NvdAboutDialog` on Linux not having an icon.
+- `NvdDialogBox` will no longer be marked as a popup on Linux/Gtk3. This will fix incorrect positioning on Wayland.
 
 # Changelog -- 0.8.0
 - You can now set the dialog button text to something else.
