@@ -23,7 +23,7 @@ NvdAboutDialog *nvd_about_dialog_cocoa(const char *name,
 {
     NvdAboutDialog* dlg = malloc(sizeof(struct _NvdAboutDialog));
     NSMutableDictionary<NSAboutPanelOptionKey, id>* options;
-    assert(dlg != nil); // TODO: Use the NvDialog assertion macro
+    NVD_ASSERT(dlg != nil);
 
     options = [NSMutableDictionary dictionary];
     options[NSAboutPanelOptionApplicationName] = @(name);
