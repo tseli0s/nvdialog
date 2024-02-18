@@ -39,7 +39,6 @@
 #include <unistd.h> // access()
 #endif
 
-// TODO
 static inline bool nvd_file_exists(const char* path) {
     return (access(path, 0) == 0);
 }
