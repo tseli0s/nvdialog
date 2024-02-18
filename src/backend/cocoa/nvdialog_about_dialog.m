@@ -1,6 +1,6 @@
 #include "nvdialog.h"
 #include "nvdialog_cocoa.h"
-#include <assert.h>
+#include "nvdialog_assert.h"
 #include <stdlib.h>
 #include <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
