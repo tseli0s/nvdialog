@@ -80,6 +80,8 @@ if (MACOSX)
                         add_library(nvdialog SHARED ${NVD_SOURCES})
                 endif(NVD_BUILD_STATIC)
                 add_compile_definitions(NVD_USE_COCOA=1)
+                # See #55
+                set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-objc-arc")
                 target_link_libraries(nvdialog
                         "-framework AppKit"
                         "-framework Cocoa"
@@ -139,8 +141,6 @@ if (WIN32 OR WIN32_TARGET)
         endif(NVD_BUILD_STATIC)
         message("-- Compiling a Windows library.")
         target_link_libraries(nvdialog comdlg32 shell32 user32)
-elseif(MACOSX)
-
 else(WIN32 OR WIN32_TARGET)
                 find_package(PkgConfig)
                 if (PKG_CONFIG_FOUND)
