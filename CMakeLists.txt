@@ -49,8 +49,6 @@ else()
                 message(WARNING "Compiling using MSVC is still experimental, prefer GCC or CLang if available.")
                 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
                 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
-        else()
-                set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-all -fstack-clash-protection -Wno-unused-parameter --param ssp-buffer-size=4 -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
         endif()
 endif()
 
