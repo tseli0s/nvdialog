@@ -1,3 +1,9 @@
+# Changelog -- 0.9.0 (Unreleased)
+- CMake will now only set `CMAKE_INSTALL_PREFIX` to `/usr` if the host is not Windows or macOS. This may fix some installation problems you might have had when previously installing the library.
+- Disabled ARC on the `macos` backend (ie. Fixes #55)
+- The library will no longer set the compiler flags manually, instead relying on CMake's default choices. Only exception is when cross-compiling from GNU/Linux to Windows.
+- Made the CMakeLists.txt options more user-friendly.
+
 # Changelog -- 0.8.1
 - MacOS about dialog support returned
 - (**BREAKING**) Removed first parameter on `nvd_init`, which was already unused since v0.7
