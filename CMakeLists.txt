@@ -4,9 +4,9 @@
 cmake_minimum_required(VERSION 3.18)
 project(libnvdialog LANGUAGES C VERSION 0.8.0 DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
-option(WIN32_TARGET "Build the library for Windows usage. Requires i686-w64-mingw32-gcc-win32." OFF)
-option(COCOA_TARGET "Build the library for MacOS/Cocoa usage." ON)
-option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental." OFF) # Default since 0.2.0-plus-some-commits.
+option(WIN32_TARGET "Cross-compile the library for Windows usage from GNU/Linux. Requires i686-w64-mingw32-gcc-win32." OFF)
+option(COCOA_TARGET "Build the library for MacOS/Cocoa usage. Please do not disable if you're not sure of what you're doing." ON)
+option(NVD_USE_GTK4 "Instead of using the old Gtk3 backend, use Gtk4 and libadwaita for Linux. Experimental." OFF)
 option(NVD_BUILD_STATIC "Build NvDialog as a static library. Experimental." OFF)
 option(NVD_SANDBOX_SUPPORT "Enable support for Flatpak applications on Linux" ON)
 
