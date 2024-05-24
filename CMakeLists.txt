@@ -19,7 +19,7 @@ set(NVDIALOG_MAXBUF 4096)
 # 2. Most linkers shipped with distributions do not search on /usr/local for shared libraries.
 # This means the library won't be found at runtime unless LD_LIBRARY_PATH is set to do so.
 # For that reason, we set the prefix to /usr.
-if (NOT DEFINED $ENV{FLATPAK_ID} AND CMAKE_HOST_UNIX AND NOT CMAKE_HOST_APPLE)
+if (NOT DEFINED ENV{FLATPAK_ID} AND CMAKE_HOST_UNIX AND NOT CMAKE_HOST_APPLE)
         set(CMAKE_INSTALL_PREFIX /usr)
 endif()
         
