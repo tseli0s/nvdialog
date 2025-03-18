@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -36,7 +36,7 @@ struct _NvdDialogBox {
         void *window_handle;
         char *msg;
         char *content;
-        char *accept_label, reject_label;
+        char *accept_label, *reject_label;
 	void* accept_button;
         NvdDialogType type;
 };
