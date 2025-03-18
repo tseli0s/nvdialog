@@ -1,3 +1,4 @@
+#include <nvdialog.h>
 #include <nvdialog_image.h>
 #include <stdint.h>
 #include <stb_image.h>
@@ -45,7 +46,7 @@ NvdImage *nvd_create_image(const uint8_t *data, size_t len) {
 
 void nvd_destroy_image(NvdImage *image) {
     if (image != NULL) {
-        stbi_image_free((void*) image->data);
+        free((void*) image->data);
         free(image);
     }
 }
