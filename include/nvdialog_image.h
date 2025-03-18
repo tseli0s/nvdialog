@@ -34,6 +34,7 @@
 #include "nvdialog_types.h"
 #include "nvdialog.h"
 #include <stdint.h>
+#include <stddef.h>
 
 #ifndef __nvdialog_h__
 #error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
