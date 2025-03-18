@@ -55,7 +55,7 @@ endif()
 message("-- Compiling with flags:\n  ${CMAKE_C_FLAGS}")
 add_compile_definitions(NVDIALOG_MAXBUF=${NVDIALOG_MAXBUF})
 add_compile_definitions(NVD_EXPORT_SYMBOLS)
-include_directories(${CMAKE_SOURCE_DIR}/src/impl/)
+include_directories(${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
 
 if (MACOSX)
         if (WIN32_TARGET OR NVD_USE_GTK4)
@@ -70,6 +70,7 @@ if (MACOSX)
                                 src/nvdialog_error.c
                                 src/nvdialog_capab.c
                                 src/nvdialog_version.c
+                                src/nvdialog_image.c
                                 src/nvdialog_main.c
                                 src/nvdialog_util.c)
                 if (NVD_BUILD_STATIC)
@@ -101,10 +102,10 @@ if (NOT NVD_USE_GTK4)
                                     src/backend/sandbox/nvdialog_question_dialog.c
                                     src/backend/sandbox/nvdialog_notification.c)
         endif(NVD_SANDBOX_SUPPORT)
-        set(NVD_SOURCES ${NVD_GTK_SOURCES} ${NVD_SBX_SOURCES} src/nvdialog_error.c src/nvdialog_util.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
+        set(NVD_SOURCES ${NVD_GTK_SOURCES} ${NVD_SBX_SOURCES} src/nvdialog_error.c src/nvdialog_image.c  src/nvdialog_util.c src/nvdialog_capab.c src/nvdialog_version.c src/nvdialog_main.c)
 else()
         add_compile_definitions(NVD_USE_GTK4)
-        set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c src/nvdialog_util.c)
+        set(NVD_SOURCES src/nvdialog_error.c src/nvdialog_version.c src/nvdialog_main.c src/nvdialog_image.c src/nvdialog_util.c)
 endif()
 set(NVD_HEADERS include/nvdialog_dialog.h
     include/nvdialog_notification.h
@@ -129,6 +130,7 @@ if (WIN32 OR WIN32_TARGET)
                         src/nvdialog_error.c
                         src/nvdialog_main.c
                         src/nvdialog_version.c
+                        src/nvdialog_image.c
                         src/nvdialog_util.c)
         message("The source code files are:\n  ${NVD_SOURCES}")
         if (NVD_BUILD_STATIC)
