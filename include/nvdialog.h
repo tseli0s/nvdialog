@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -122,6 +122,7 @@ extern "C" {
 #define NVD_THREAD_LOCAL(var) var
 #endif /* _WIN32 */
 
+#include "nvdialog_image.h"
 #include "nvdialog_capab.h"
 #include "nvdialog_core.h"
 #include "nvdialog_dialog.h"
