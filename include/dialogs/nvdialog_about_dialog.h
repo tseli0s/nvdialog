@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -23,6 +23,7 @@
  */
 
 #include "../nvdialog_platform.h"
+#include "../nvdialog_image.h"
 
 /**
  * @brief An opaque handle to a dialog box created from
@@ -83,3 +84,12 @@ NVD_API void nvd_show_about_dialog(NvdAboutDialog *dialog);
  * @ingroup AboutDialog
  */
 NVD_API void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog);
+
+/** 
+ * @brief Sets the dialog's icon to display.
+ * @param dialog The dialog to set the icon to.
+ * @param image The image to display as the dialog's icon, returned from @ref nvd_create_image
+ * @ingroup AboutDialog
+ * @since v0.9.0
+*/
+NVD_API void nvd_dialog_set_icon(NvdAboutDialog* dialog, NvdImage *image);
