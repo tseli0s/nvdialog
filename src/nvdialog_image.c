@@ -1,13 +1,12 @@
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
 #include <nvdialog.h>
 #include <nvdialog_image.h>
 #include <stdint.h>
-#include <stb_image.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "nvdialog_assert.h"
-
-#define STB_IMAGE_IMPLEMENTATION
-
 struct _NvdImage {
     const uint8_t *data;
     size_t len;
