@@ -59,22 +59,25 @@ typedef struct _NvdImage NvdImage;
  * @param filename The path to the file to be loaded. For best compatibility, provide a full path
  * or use @ref NvdFileDialog
  * @param len A pointer to a variable to hold the length of the data in bytes. (Can be NULL although not recommended)
+ * @param width A pointer to a variable to hold the width of the image
+ * @param height A pointer to a variable to hold the height of the image
  * @ingroup Image
  * @since v0.9.0
  * @return A pointer to dynamically allocated image data. The returned pointer must not be freed manually; Instead use @ref nvd_destroy_image.
  */
-NVD_API const uint8_t *nvd_image_from_filename(const char *filename, size_t *len);
+NVD_API const uint8_t *nvd_image_from_filename(const char *filename, int *width, int *height);
 
 /**
  * @brief Creates an `NvdImage` from the given buffer (data). 
  * Although recommended, it is not necessary to use @ref nvd_image_from_filename since other libraries can also
  * provide RGBA data.
- * @param data The data to use as the image 
- * @param len The length of the data. If this is 0, NvDialog will stop reading at the first instance of `0x0` in the buffer.
+ * @param data The data to use as the image
+ * @param width The width of the image
+ * @param height The height of the image
  * @ingroup Image
  * @return NvdImage* A pointer to an `NvdImage` object.
  */
-NVD_API NvdImage* nvd_create_image(const uint8_t *data, size_t len);
+NVD_API NvdImage* nvd_create_image(const uint8_t *data, int width, int height);
 
 /**
  * @brief Destroys an @ref NvdImage.
