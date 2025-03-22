@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -24,6 +24,7 @@
 
 #include "nvdialog_win32.h"
 #include "../../nvdialog_assert.h"
+#include <windef.h>
 
 static HICON nvd_load_hicon_win32(const char* path) {
     const HICON icon = (HICON) LoadImage(
@@ -37,6 +38,37 @@ static HICON nvd_load_hicon_win32(const char* path) {
 
     NVD_RETURN_IF_NULL(icon);
     return icon;
+}
+
+NVD_INTERNAL_FUNCTION static HICON nvd_hicon_from_bytes(const uint8_t *data, int width, int height) {
+        HBITMAP bitmap, mask;
+        HDC hdc = GetDC(NULL);
+        HDC memDC = CreateCompatibleDC(hdc);
+
+        BITMAPINFO bmi = {0};
+        bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+        bmi.bmiHeader.biWidth = width;
+        bmi.bmiHeader.biHeight = -height;
+        bmi.bmiHeader.biPlanes = 1;
+        bmi.bmiHeader.biBitCount = 32;
+        bmi.bmiHeader.biCompression = BI_RGB;
+
+        bitmap = CreateDIBitmap(hdc, &bmi.bmiHeader, CBM_INIT, data, &bmi, DIB_RGB_COLORS);
+        mask = CreateBitmap(width, height, 1, 1, NULL);
+
+        ICONINFO ii = {0};
+        ii.fIcon = TRUE;
+        ii.hbmColor = bitmap;
+        ii.hbmMask = mask;
+
+        HICON hIcon = CreateIconIndirect(&ii);
+
+        DeleteObject(bitmap);
+        DeleteObject(mask);
+        DeleteDC(memDC);
+        ReleaseDC(NULL, hdc);
+
+        return hIcon;
 }
 
 NvdAboutDialog *nvd_about_dialog_win32(const char *appname,
@@ -78,7 +110,7 @@ void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
         int result = ShellAbout(nvd_get_parent(),
                                 dialog->title,
                                 dialog->contents,
-                                app_icon
+                                (dialog->image != NULL) ? nvd_hicon_from_bytes(dialog->image->data, dialog->image->width, dialog->image->height) : app_icon
                         );
 
         (app_icon != NULL) ? DestroyIcon(app_icon): (void) app_icon;
