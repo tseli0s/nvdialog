@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -23,6 +23,8 @@
  */
 
 #include "../../nvdialog_assert.h"
+#include "gdk-pixbuf/gdk-pixbuf.h"
+#include "gtk/gtk.h"
 #include "nvdialog_gtk.h"
 #include <stdio.h>
 #include <string.h>
@@ -104,4 +106,18 @@ void nvd_show_about_dialog_gtk(NvdAboutDialog *dialog) {
 void *nvd_about_dialog_get_raw_gtk(NvdAboutDialog *dialog) {
         NVD_ASSERT(dialog != NULL);
         return dialog->raw;
+}
+
+void nvd_dialog_set_icon_gtk(NvdAboutDialog *dialog, NvdImage *image) {
+        NVD_ASSERT(dialog->raw != NULL);
+        NVD_ASSERT(dialog->image_from_icon == true);
+
+        GdkPixbuf *pixels = gdk_pixbuf_new_from_data(image->data,
+                                         GDK_COLORSPACE_RGB,
+                                          true, 8,
+                                              image->width,
+                                              image->height,
+                                              image->width * 4,
+                                              NULL, NULL);
+        gtk_about_dialog_set_logo(dialog->raw, pixels);
 }
