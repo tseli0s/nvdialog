@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -67,6 +67,8 @@ void nvd_get_file_location_win32(NvdFileDialog *dialog, const char** savebuf);
 NvdNotification *nvd_notification_win32(const char   *title,
                                         const char   *msg,
                                         NvdNotifyType type);
+
+void nvd_send_notification_win32(NvdNotification *notification);
 
 void nvd_add_notification_action_win32(NvdNotification* notification,
                                      const char* action,
