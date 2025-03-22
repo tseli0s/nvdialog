@@ -19,7 +19,7 @@ install: $(OUTFILE) $(PUBHEADER)
 	@[ -d /usr/include/nvdialog ] || mkdir /usr/include/nvdialog
 	@cp $(PUBHEADER) /usr/include/nvdialog/
 	@cp $(OUTFILE)   /usr/lib
-	@cp $(OUTFILE)   /usr/lib/$(OUTFILE).1 # Just to avoid compatibility issues.
+	@cp $(OUTFILE)   /usr/lib/$(OUTFILE).2 # Just to avoid compatibility issues.
 	@echo "Successful."
 
 clean: $(OUTFILE) build/
