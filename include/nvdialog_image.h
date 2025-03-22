@@ -47,6 +47,10 @@
  * The data format is RGBA for library-wide compatibility
  * across various operating systems. Other formats are supported
  * and automatically converted.
+ * 
+ * @note Using image functionality does not require @ref nvd_init, although doing anything
+ * useful with the image probably does. This may come in handy if you wish to load images early
+ * on and use them later, possibly caching them in memory.
  *
  * @ingroup Image
  * @since v0.9.0
