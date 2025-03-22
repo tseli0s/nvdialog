@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -118,4 +118,11 @@ void nvd_gtk_update_accept_label(NvdDialogBox* dialog);
  * but at least now we won't get a warning for no reason.
  */
 void nvd_show_dialog_gtk(NvdDialogBox* dialog);
+
+/*
+ * Sets the icon for the GtkAboutDialog provided.
+ * Requires pixbuf which is already provided by Gtk.
+*/
+void nvd_dialog_set_icon_gtk(NvdAboutDialog *dialog, NvdImage *image);
+
 #endif /* __nvdialog_gtk_h__ */
