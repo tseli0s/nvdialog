@@ -382,7 +382,7 @@ void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
         NVD_ASSERT(license_link != NULL);
         NVD_ASSERT(txt != NULL);
 #if defined  (_WIN32)
-        nvd_about_dialog_set_license_link_win32(dialog, license_link, txt);
+        //nvd_about_dialog_set_license_link_win32(dialog, license_link, txt);
 #elif defined(NVD_USE_COCOA)
 	nvd_about_dialog_set_licence_link_cocoa(dialog, license_link, txt);
 #elif defined(NVD_USE_GTK4)
@@ -484,4 +484,24 @@ void nvd_dialog_box_set_accept_text(NvdDialogBox* dialog, const char* text) {
         // TODO: Implement this for libadwaita too
         #endif /* NVD_USE_GTK4 */
 	#endif /* __linux__ */
+}
+
+
+void nvd_dialog_set_icon(NvdAboutDialog *dialog, NvdImage *image) {
+        NVD_IF_NOT_INITIALIZED(return);
+        NVD_ASSERT(dialog != NULL);
+        NVD_ASSERT(image != NULL);
+
+        dialog->image_from_icon = true;
+        dialog->image = image;
+        #if   defined(_WIN32)
+        return; // Windows will automatically use dialog->image when its time to show itself
+        #elif defined(NVD_USE_COCOA)
+	return; // macos is not supported yet
+        #elif defined(NVD_USE_GTK4)
+        // TODO: Implement this for libadwaita too
+        //nvd_dialog_set_icon_adw(dialog, image);
+        #else
+        nvd_dialog_set_icon_gtk(dialog, image);
+        #endif /* _WIN32 */
 }
