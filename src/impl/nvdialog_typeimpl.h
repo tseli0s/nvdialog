@@ -52,6 +52,7 @@ struct _NvdAboutDialog {
         void* buttons[4];
         short amount_of_buttons;
         void* layout;
+        NvdImage *image;
 };
 
 struct _NvdFileDialog {
@@ -85,5 +86,12 @@ struct _NvdCSSManager {
         const char *filename;
         void *extra_data;
 };
+
+struct _NvdImage {
+    const uint8_t *data;
+    size_t len;
+    int width, height;
+};
+    
 
 #endif /* __nvdialog_typeimpl_h */
