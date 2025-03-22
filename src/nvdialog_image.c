@@ -7,38 +7,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "nvdialog_assert.h"
-struct _NvdImage {
-    const uint8_t *data;
-    size_t len;
-};
+#include "impl/nvdialog_typeimpl.h"
 
 /* 
  * FIXME: This assumes that the laoded data is always RGBA (Only checks for the channels).
  * Since I haven't found a way to find how to determine the format of the image I just assume
  * it's always RGBA, but this will mess up many images.
  */
-const uint8_t *nvd_image_from_filename(const char *filename, size_t *len) {
-    NVD_ASSERT_FATAL(filename != NULL);
+const uint8_t *nvd_image_from_filename(const char *filename, int *width, int *height) {
+    NVD_ASSERT(filename != NULL);
     FILE *f = fopen(filename, "rb");
     NVD_RETURN_IF_NULL(f);
     int w, h, channels;
 	const uint8_t *data = stbi_load_from_file(f, &w, &h, &channels, 0);
-    NVD_ASSERT_FATAL(data != NULL);
+    NVD_ASSERT(data != NULL);
     NVD_ASSERT(channels == 4); // We need 4 channels per pixel (RGBA).
 
-    *len = (w * h * channels);
+    *width = w;
+    *height = h;
 
     fclose(f);
     return data;
 }
 
-NvdImage *nvd_create_image(const uint8_t *data, size_t len) {
+NvdImage *nvd_create_image(const uint8_t *data, int width, int height) {
     NvdImage *image = calloc(1, sizeof(struct _NvdImage));
-    NVD_ASSERT_FATAL(image != NULL);
-    NVD_ASSERT_FATAL(data  != NULL);
+    NVD_ASSERT(image != NULL);
+    NVD_ASSERT(data  != NULL);
 
-    image->data = data;
-    image->len  = len;
+    image->data   = data;
+    image->len    = 4 * (width * height);
+    image->width  = width;
+    image->height = height;
 
     return image;
 }
