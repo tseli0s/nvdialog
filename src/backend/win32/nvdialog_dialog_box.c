@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -49,7 +49,7 @@ NvdDialogBox *nvd_dialog_box_win32(const char   *title,
 }
 
 void nvd_show_dialog_win32(NvdDialogBox *dialog) {
-        uint32_t flag;
+        uint32_t flag = 0;
         switch (dialog->type) {
         case NVD_DIALOG_SIMPLE:
                 flag = MB_ICONINFORMATION;
