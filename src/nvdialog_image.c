@@ -9,17 +9,12 @@
 #include "nvdialog_assert.h"
 #include "impl/nvdialog_typeimpl.h"
 
-/* 
- * FIXME: This assumes that the laoded data is always RGBA (Only checks for the channels).
- * Since I haven't found a way to find how to determine the format of the image I just assume
- * it's always RGBA, but this will mess up many images.
- */
 const uint8_t *nvd_image_from_filename(const char *filename, int *width, int *height) {
     NVD_ASSERT(filename != NULL);
     FILE *f = fopen(filename, "rb");
     NVD_RETURN_IF_NULL(f);
     int w, h, channels;
-	const uint8_t *data = stbi_load_from_file(f, &w, &h, &channels, 0);
+	const uint8_t *data = stbi_load_from_file(f, &w, &h, &channels, STBI_rgb_alpha);
     NVD_ASSERT(data != NULL);
     NVD_ASSERT(channels == 4); // We need 4 channels per pixel (RGBA).
 
