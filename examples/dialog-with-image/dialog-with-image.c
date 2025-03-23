@@ -14,7 +14,6 @@ int main(void) {
     nvd_get_file_location(filedlg, &filename);
 
     if (filename) {
-        assert(width <= 1024 && height <= 1024);
         const uint8_t *buffer = nvd_image_from_filename(filename, &width, &height);
         NvdImage *image = nvd_create_image(buffer, width, height);
         assert(image != NULL);
