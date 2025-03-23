@@ -3,6 +3,9 @@
 - Disabled ARC on the `macos` backend (ie. Fixes #55)
 - The library will no longer set the compiler flags manually, instead relying on CMake's default choices. Only exception is when cross-compiling from GNU/Linux to Windows.
 - Made the CMakeLists.txt options more user-friendly.
+- Added support for custom images (See `NvdImage`)
+- Fixed a bug where a `char` was accidentally treated as a string (See #12)
+- Fixed a bug where the requested title wasn't applied to Windows
 
 # Changelog -- 0.8.1
 - MacOS about dialog support returned
