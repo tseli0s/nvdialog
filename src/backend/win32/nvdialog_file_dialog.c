@@ -80,7 +80,7 @@ void nvd_get_file_location_win32(NvdFileDialog *dialog,
         ofn.lpstrFile[0]   = '\0';
         ofn.nMaxFile       = sizeof(file) - 1; /* NULL byte manually set */
         ofn.nFilterIndex   = 1;
-        ofn.lpstrFileTitle = NULL;
+        ofn.lpstrFileTitle = (char*) dialog->title;
         ofn.nMaxFileTitle  = 0;
         ofn.lpstrInitialDir = NULL;
         ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
