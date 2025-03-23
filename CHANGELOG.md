@@ -4,8 +4,10 @@
 - The library will no longer set the compiler flags manually, instead relying on CMake's default choices. Only exception is when cross-compiling from GNU/Linux to Windows.
 - Made the CMakeLists.txt options more user-friendly.
 - Added support for custom images (See `NvdImage`)
-- Fixed a bug where a `char` was accidentally treated as a string (See #12)
-- Fixed a bug where the requested title wasn't applied to Windows
+- Fixed a bug where a `char` was accidentally treated as a string (See #56)
+- Fixed a bug where the requested title wasn't applied to Windows dialogs
+- Fixed a bug where an uninitialized variable was used in the Windows dialog box backend.
+- Removed certain backend-specific warnings for the Windows backend
 
 # Changelog -- 0.8.1
 - MacOS about dialog support returned
