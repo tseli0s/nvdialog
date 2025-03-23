@@ -88,10 +88,10 @@ void nvd_get_file_location_win32(NvdFileDialog *dialog,
         if (dialog->file_extensions) {
                 char** words = nvd_seperate_args(dialog->file_extensions);
                 size_t i     = 0;
-                const char buffer[NVDIALOG_MAXBUF];
+                char buffer[NVDIALOG_MAXBUF] = { 0 };
 
                 while (words[i] != NULL) {
-                        const char tmp_buffer[128];
+                        char tmp_buffer[128] = { 0 };
                         snprintf(buffer, sizeof(buffer), ".%s files (*.%s)", words[i], words[i]);
                         nvd_append_bytes(buffer, tmp_buffer);
                         i++;
