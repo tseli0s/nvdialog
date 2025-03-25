@@ -59,7 +59,7 @@ struct _NvdFileDialog {
         void* raw;
         const char* title;
         const char* filename, *file_extensions;
-        bool location_was_chosen, is_save_dialog;
+        bool location_was_chosen, is_save_dialog, is_dir_dialog;
 };
 
 struct _NvdQuestionBox {
