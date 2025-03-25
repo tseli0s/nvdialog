@@ -91,6 +91,25 @@ NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
         return dialog;
 }
 
+NvdFileDialog *nvd_open_folder_dialog_gtk(const char *title, const char *default_filename) {
+        NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
+        NVD_RETURN_IF_NULL(dialog);
+
+        dialog->raw = gtk_file_chooser_dialog_new(title,
+                                                  nvd_get_parent(),
+                                                  GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                                  "_Cancel",
+                                                  GTK_RESPONSE_CANCEL,
+                                                  NULL);
+        if (!dialog->raw) {
+                nvd_set_error(NVD_BACKEND_FAILURE);
+                free(dialog);
+                return NULL;
+        }
+
+        return dialog;
+}
+
 void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog *dlg) {
         NVD_ASSERT(dlg != NULL);
         return dlg->raw;

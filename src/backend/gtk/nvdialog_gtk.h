@@ -41,6 +41,9 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
 NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
                                         const char *default_filename);
 
+NvdFileDialog *nvd_open_folder_dialog_gtk(const char *title,
+                                          const char *default_path);
+
 /* Creates a dialog box with the usual yes, no and cancel buttons. */
 NvdQuestionBox *nvd_question_gtk(const char       *title,
                                  const char       *question,
