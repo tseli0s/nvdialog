@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -61,6 +61,20 @@ NVD_API NvdFileDialog *nvd_open_file_dialog_new(const char *title,
  */
 NVD_API NvdFileDialog *nvd_save_file_dialog_new(const char *title,
                                                 const char *default_filename);
+
+/**
+ * @brief Creates a new, empty @ref NvdFileDialog object that will be used to request a directory
+ * or folder in the filesystem.
+ * 
+ * @param title The title of the dialog, default is "Open directory"
+ * @param default_folder Path to the default folder to open. May be ignored in some platforms.
+ * @return An @ref NvdFileDialog on success or NULL otherwise. @ref nvd_get_error should be called
+ * for further information about the error occurring.
+ * @ingroup FileDialog
+ */
+NVD_API NvdFileDialog *nvd_open_folder_dialog_new(const char *title,
+                                                  const char *default_folder);
+
 /**
  * @brief Returns the filesystem path chosen through the @ref NvdFileDialog passed.
  *
