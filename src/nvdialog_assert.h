@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -96,6 +96,6 @@ static void nvd_print_assert(const char *msg, ...) {
                                          __func__);                         \
                 }                                                           \
                 abort();                                                    \
-        } while (0)
+        } while (0);
 
 #endif /* __nvdialog_assert_h__ */
