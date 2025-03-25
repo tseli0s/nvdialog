@@ -24,12 +24,16 @@
 
 #include "../../nvdialog_assert.h"
 #include "../../nvdialog_util.h"
+#include "nvdialog_typeimpl.h"
 #include "nvdialog_win32.h"
+#include "winnt.h"
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
 #include <windows.h>
 #include <winuser.h>
+#include <shlobj.h>
 
 static const char* nvd_append_bytes(char* dest, const char* src) {
     size_t dest_len = strlen(dest);
@@ -45,32 +49,7 @@ static const char* nvd_append_bytes(char* dest, const char* src) {
     return new_str;
 }
 
-NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
-                                          const char *file_extensions) {
-        NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
-        NVD_RETURN_IF_NULL(dialog);
-
-        dialog->is_save_dialog  = false;
-        dialog->file_extensions = file_extensions;
-        dialog->title           = title;
-
-        return dialog;
-}
-
-/* TODO: Add default filename support. */
-NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
-                                          const char *default_filename) {
-        NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
-        NVD_RETURN_IF_NULL(dialog);
-
-        dialog->is_save_dialog  = true;
-        dialog->file_extensions = NULL; /* Technically, we could add filters here, but how? */
-        dialog->title           = title;
-        return dialog;
-}
-
-void nvd_get_file_location_win32(NvdFileDialog *dialog,
-                                 const char   **savebuf) {
+static void nvd_file_only_dialog_win32(NvdFileDialog *dialog, const char **savebuf) {
         OPENFILENAME ofn;
         char         file[NVDIALOG_MAXBUF];
         ZeroMemory(&ofn, sizeof(ofn));
@@ -107,4 +86,62 @@ void nvd_get_file_location_win32(NvdFileDialog *dialog,
         dialog->filename = ofn.lpstrFile;
         dialog->location_was_chosen = true;
         *savebuf = dialog->filename;
+}
+
+static void nvd_dir_dialog_win32(NvdFileDialog *dialog, const char **savebuf) {
+        BROWSEINFO bi = { 0 };
+        char path[MAX_PATH];
+                                    
+        bi.lpszTitle = dialog->title;
+        bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
+        bi.lParam = (LPARAM) dialog->filename;
+
+        LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
+        if (pidl != NULL) {
+                if (SHGetPathFromIDList(pidl, path))
+                    *savebuf = strdup(path);
+                CoTaskMemFree(pidl);
+        }
+}
+
+NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
+                                          const char *file_extensions) {
+        NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
+        NVD_RETURN_IF_NULL(dialog);
+
+        dialog->is_save_dialog  = false;
+        dialog->file_extensions = file_extensions;
+        dialog->title           = title;
+
+        return dialog;
+}
+
+/* TODO: Add default filename support. */
+NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
+                                          const char *default_filename) {
+        NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
+        NVD_RETURN_IF_NULL(dialog);
+
+        dialog->is_save_dialog  = true;
+        dialog->file_extensions = NULL; /* Technically, we could add filters here, but how? */
+        dialog->title           = title;
+        return dialog;
+}
+
+NvdFileDialog *nvd_open_folder_dialog_win32(const char *title, const char *default_path) {
+        NvdFileDialog *dlg = calloc(1, sizeof(struct _NvdFileDialog));
+        NVD_RETURN_IF_NULL(dlg);
+
+        dlg->is_save_dialog = false;
+        dlg->filename = default_path;
+        dlg->title = title;
+        dlg->file_extensions = NULL;
+
+        return dlg;
+}
+
+void nvd_get_file_location_win32(NvdFileDialog *dialog,
+                                 const char   **savebuf) {
+        if (dialog->is_dir_dialog) nvd_dir_dialog_win32(dialog, savebuf);
+        else                       nvd_file_only_dialog_win32(dialog, savebuf);
 }
