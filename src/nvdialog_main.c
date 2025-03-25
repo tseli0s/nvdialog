@@ -374,6 +374,23 @@ NvdFileDialog *nvd_save_file_dialog_new(const char *title,
 #endif /* _WIN32 */
 }
 
+NvdFileDialog *nvd_open_folder_dialog_new(const char *title,
+                                          const char *default_filename) {
+        char *t = (char*) title;
+        if (!title) t = "Open directory";
+
+        NVD_IF_NOT_INITIALIZED(return NULL);
+#if defined(_WIN32)
+        return nvd_open_folder_dialog_win32(t, default_filename);
+#elif defined(NVD_USE_COCOA)
+        return nvd_open_folder_dialog_cocoa(t, default_filename);
+#elif defined(NVD_USE_GTK4)
+        return nvd_open_folder_dialog_adw(t, default_filename);
+#else
+        return nvd_open_folder_dialog_gtk(t, default_filename);
+#endif /* _WIN32 */
+}
+
 void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
                                        const char *license_link,
                                        const char *txt) {
