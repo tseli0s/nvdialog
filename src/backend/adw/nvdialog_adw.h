@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2024 Aggelos Tselios
+ *  Copyright (c) 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -34,6 +34,7 @@
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
 #include "nvdialog_notification.h"
+#include "../nvdialog_util.h"
 #include <adwaita.h>
 
 /* Shows a simple dialog box using libadwaita. */
@@ -92,8 +93,8 @@ void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog, const char *versio
  * A notification object using the Adwaita backend.
 */
 NvdNotification *nvd_notification_adw(const char   *title,
-                                        const char   *msg,
-                                        NvdNotifyType type);
+                                      const char   *msg,
+                                      NvdNotifyType type);
                                 
 /*
  * Sends the notification to the system.

@@ -4,7 +4,7 @@ but a simplified text version to instruct on how to get started.
 
 You are expected to have this file along with a prebuilt version of NvDialog, and its
 headers as well from somewhere, perhaps from the Releases. If that's the case, keep reading
-to get started. Otherwise, visit https://github.com/AndroGR/nvdialog/ and see there for more.
+to get started. Otherwise, visit https://github.com/tseli0s/nvdialog/ and see there for more.
 
 You should have either a .so file or a .dll file in the same folder in this file. This is the actual
 library itself. You can copy this somewhere in your project or even on a system-wide path,
@@ -16,5 +16,5 @@ You should copy this folder EXACTLY with the same layout structure as it is, som
 that your project can find. Also indicate to your compiler the headers are there in the first place, by using
 the -I flag or by setting it in your IDE.
 
-For support, open an issue on the GitHub of NvDialog: https://github.com/AndroGR/nvdialog/issues.
+For support, open an issue on the GitHub of NvDialog: https://github.com/tseli0s/nvdialog/issues.
 Feel free to also use the discussions, for suggestions or questions you may have.
