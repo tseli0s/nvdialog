@@ -32,7 +32,6 @@ elseif(MSVC)
     message(WARNING "MSVC is experimental; prefer GCC/Clang.")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
-elseif(LINUX)
 endif()
 
 set(NVD_HEADERS
