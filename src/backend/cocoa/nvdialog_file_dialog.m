@@ -55,7 +55,7 @@ NvdFileDialog *nvd_open_file_dialog_cocoa(const char *title, const char *file_ex
 
 NvdFileDialog *nvd_save_file_dialog_cocoa(const char *title, const char *default_filename)
 {
-	(void) default_filename;//TODO: This must be an option right?
+	(void) default_filename;
 
 	NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
 	NVD_RETURN_IF_NULL(dialog);
@@ -70,18 +70,52 @@ NvdFileDialog *nvd_save_file_dialog_cocoa(const char *title, const char *default
 
 void nvd_get_file_location_cocoa(NvdFileDialog *dlg, const char **out)
 {
-	NSSavePanel* raw = dlg->raw;
-	[raw makeKeyAndOrderFront:nil];
-	NSModalResponse resp = [raw runModal];
+	if (dlg->is_dir_dialog) {
+        NSOpenPanel *raw = dlg->raw;
+        [raw makeKeyAndOrderFront:nil];
 
-	dlg->location_was_chosen = resp == NSModalResponseContinue || resp == NSModalResponseOK;
-	if (dlg->location_was_chosen)
-		*out = strdup(raw.URL.absoluteString.UTF8String);
+        NSModalResponse resp = [raw runModal];
 
-	[raw release];
+        dlg->location_was_chosen = (resp == NSModalResponseOK || resp == NSModalResponseContinue);
+        
+        if (dlg->location_was_chosen) {
+            NSURL *url = [raw URL];
+            *out = strdup(url.absoluteString.UTF8String);
+        }
+
+        [raw release];
+    } else {
+        NSSavePanel* raw = dlg->raw;
+        [raw makeKeyAndOrderFront:nil];
+        NSModalResponse resp = [raw runModal];
+
+        dlg->location_was_chosen = resp == NSModalResponseContinue || resp == NSModalResponseOK;
+        if (dlg->location_was_chosen)
+            *out = strdup(raw.URL.absoluteString.UTF8String);
+
+        [raw release];
+    }
 }
 
 void *nvd_open_file_dialog_get_raw_cocoa(NvdFileDialog *dlg)
 {
 	return dlg->raw;
+}
+
+NvdFileDialog *nvd_open_folder_dialog_cocoa(const char *title, const char *default_filename) {
+	NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
+    NVD_RETURN_IF_NULL(dialog);
+
+    NSOpenPanel* dialog_raw = [NSOpenPanel openPanel];
+    dialog_raw.title = @(title);
+    dialog_raw.canChooseFiles = false;
+    dialog_raw.canChooseDirectories = true;
+    dialog_raw.allowsMultipleSelection = false;
+
+    if (default_filename != NULL) {
+        dialog_raw.directoryURL = [NSURL fileURLWithPath: @(default_filename)];
+    }
+
+    dialog->raw = dialog_raw;
+    return dialog;
 }

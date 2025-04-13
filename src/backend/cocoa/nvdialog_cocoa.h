@@ -39,6 +39,8 @@ NvdFileDialog *nvd_open_file_dialog_cocoa(const char *title, const char *file_ex
 /* Open file dialog using Cocoa */
 NvdFileDialog *nvd_save_file_dialog_cocoa(const char *title, const char *default_filename);
 
+NvdFileDialog *nvd_open_folder_dialog_cocoa(const char *title, const char *default_filename);
+
 /* Creates a dialog box with the usual yes, no and cancel buttons. */
 NvdQuestionBox *nvd_question_cocoa(const char *title,
                                    const char *question,
@@ -69,4 +71,5 @@ void nvd_add_notification_action_cocoa(NvdNotification* notification,
                                        const char* action,
                                        int  value_to_set,
                                        int* value_to_return);
+
 #endif /* __nvdialog_cocoa_h__ */
