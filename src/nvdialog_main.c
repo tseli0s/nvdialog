@@ -383,8 +383,7 @@ NvdFileDialog *nvd_open_folder_dialog_new(const char *title,
 #if defined(_WIN32)
         return nvd_open_folder_dialog_win32(t, default_filename);
 #elif defined(NVD_USE_COCOA)
-        // TODO: Enable this before 0.9 is released
-        //return nvd_open_folder_dialog_cocoa(t, default_filename);
+        return nvd_open_folder_dialog_cocoa(t, default_filename);
 #elif defined(NVD_USE_GTK4)
         return nvd_open_folder_dialog_adw(t, default_filename);
 #else
