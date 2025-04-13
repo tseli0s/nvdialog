@@ -9,6 +9,7 @@
 - Fixed a bug where an uninitialized variable was used in the Windows dialog box backend.
 - Removed certain backend-specific warnings for the Windows backend
 - Added `nvd_open_folder_dialog_new` function: Now you can request to open directories instead of files using an `NvdFileDialog`
+- Switch the default backend on Arch Linux from libadwaita to gtk
 
 # Changelog -- 0.8.1
 - MacOS about dialog support returned
