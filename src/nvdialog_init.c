@@ -77,7 +77,7 @@ int nvd_init_win32(NvdBackendMask *mask) {
     mask->about_dialog_set_license = NULL;
     mask->open_file_dialog = nvd_open_file_dialog_win32;
     mask->save_file_dialog = nvd_save_file_dialog_win32;
-    mask->open_folder_dialog = NULL;
+    mask->open_folder_dialog = nvd_open_folder_dialog_win32;
     mask->get_file_location = (void (*)(NvdFileDialog*, char**)) nvd_get_file_location_win32;
     mask->notification = nvd_notification_win32;
     mask->send_notification = nvd_send_notification_win32;
