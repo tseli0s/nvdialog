@@ -27,9 +27,9 @@
 #ifndef __nvdialog_init_h__
 #define __nvdialog_init_h__ 1
 
-#define NVD_TRY_CALL(f) \
+#define NVD_TRY_CALL(f, ...) \
     if ((f) != NULL) {   \
-        (f)();           \
+        (f)(__VA_ARGS__);           \
     } else {             \
         fprintf(stderr, "Error: Function pointer " #f " is NULL\n"); \
         return;           \
@@ -38,6 +38,10 @@
 #include "nvdialog_macros.h"
 
 
+/**
+ * @brief A structure to represent functions pointing to the internal implementations of each backend
+ * for each API, initialized during @ref nvd_init.
+ */
 typedef struct _NvdBackendMask {
     NvdDialogBox *(*dialog_box)(const char *, const char *, NvdDialogType);
     void (*show_dialog)(NvdDialogBox *);

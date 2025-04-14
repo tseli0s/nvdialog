@@ -48,11 +48,9 @@
 #endif /* NVD_SANDBOX_SUPPORT */
 #endif /* linux */
 
-#include "impl/nvdialog_typeimpl.h"
 #include "nvdialog_types.h"
 #include "nvdialog_util.h"
 #include "nvdialog_init.h"
-#include <stdint.h>
 
 NVD_THREAD_LOCAL(char* nvd_app_name               ) = "NvDialog Application";
 NVD_THREAD_LOCAL(bool nvd_initialized             ) = false;
@@ -149,12 +147,12 @@ void nvd_free_object(void *object) {
 NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message, NvdDialogType type) {
     NVD_ASSERT(title != NULL);
     NVD_ASSERT(message != NULL);
-    mask.dialog_box(title, message, type);
+    return mask.dialog_box(title, message, type);
 }
 
 void nvd_show_dialog(NvdDialogBox *dialog) {
     NVD_ASSERT(dialog != NULL);
-    mask.show_dialog(dialog);
+    NVD_TRY_CALL(mask.show_dialog, dialog);
 }
 
 NvdQuestionBox *nvd_dialog_question_new(const char *title, const char *message, NvdQuestionButton buttons) {
@@ -177,17 +175,17 @@ NvdAboutDialog *nvd_about_dialog_new(const char *title, const char *message, con
 
 void nvd_show_about_dialog(NvdAboutDialog *dialog) {
     NVD_ASSERT(dialog != NULL);
-    mask.show_about_dialog(dialog);
+    NVD_TRY_CALL(mask.show_about_dialog, dialog);
 }
 
 void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version) {
     NVD_ASSERT(dialog != NULL);
-    mask.about_dialog_set_version(dialog, version);
+    NVD_TRY_CALL(mask.about_dialog_set_version, dialog, version);
 }
 
 void nvd_about_dialog_set_license(NvdAboutDialog *dialog, const char *license, const char *url) {
     NVD_ASSERT(dialog != NULL);
-    mask.about_dialog_set_license(dialog, license, url);
+    NVD_TRY_CALL(mask.about_dialog_set_license, dialog, license, url);
 }
 
 NvdFileDialog *nvd_open_file_dialog_new(const char *title, const char *file_extensions) {
@@ -208,7 +206,7 @@ NvdFileDialog *nvd_open_folder_dialog_new(const char *title, const char *default
 void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
     NVD_ASSERT(dialog != NULL);
     NVD_ASSERT(savebuf != NULL);
-    mask.get_file_location(dialog, (char **) savebuf);
+    NVD_TRY_CALL(mask.get_file_location, dialog, (char **) savebuf);
 }
 
 NvdNotification *nvd_notification_new(const char *title, const char *msg, NvdNotifyType type) {
@@ -219,7 +217,7 @@ NvdNotification *nvd_notification_new(const char *title, const char *msg, NvdNot
 
 void nvd_send_notification(NvdNotification *notification) {
     NVD_ASSERT(notification != NULL);
-    mask.send_notification(notification);
+    NVD_TRY_CALL(mask.send_notification, notification);
 }
 
 void nvd_delete_notification(NvdNotification *notification) {
@@ -233,5 +231,5 @@ void nvd_add_notification_action(NvdNotification *notification, const char *acti
     NVD_ASSERT(notification != NULL);
     NVD_ASSERT(action != NULL);
     NVD_ASSERT(value_to_return != NULL);
-    mask.add_notification_action(notification, action, value_to_set, value_to_return);
+    NVD_TRY_CALL(mask.add_notification_action, notification, action, value_to_set, value_to_return);
 }
