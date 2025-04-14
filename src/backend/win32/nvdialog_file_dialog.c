@@ -109,9 +109,12 @@ NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
         NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
 
+        dialog->is_dir_dialog   = false;
         dialog->is_save_dialog  = false;
+        dialog->raw             = NULL;
         dialog->file_extensions = file_extensions;
         dialog->title           = title;
+        dialog->location_was_chosen = false;
 
         return dialog;
 }
@@ -123,8 +126,11 @@ NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->is_save_dialog  = true;
+        dialog->raw             = NULL;
+        dialog->is_dir_dialog   = false;
         dialog->file_extensions = NULL; /* Technically, we could add filters here, but how? */
         dialog->title           = title;
+        dialog->location_was_chosen = false;
         return dialog;
 }
 
@@ -133,10 +139,12 @@ NvdFileDialog *nvd_open_folder_dialog_win32(const char *title, const char *defau
         NVD_RETURN_IF_NULL(dlg);
 
         dlg->is_save_dialog = false;
+        dlg->is_dir_dialog = true;
         dlg->filename = default_path;
         dlg->title = title;
         dlg->file_extensions = NULL;
-
+        dlg->location_was_chosen = false;
+        
         return dlg;
 }
 
