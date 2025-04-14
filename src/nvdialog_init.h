@@ -34,6 +34,9 @@
         fprintf(stderr, "Error: Function pointer " #f " is NULL\n"); \
         return;           \
     }
+
+#define NVD_CHECK_FUNCTION(f, ...) ((f) != NULL ? (f)(__VA_ARGS__) : NULL)
+
 #include "nvdialog.h"
 #include "nvdialog_macros.h"
 

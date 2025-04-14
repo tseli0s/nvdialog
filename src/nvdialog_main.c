@@ -147,7 +147,7 @@ void nvd_free_object(void *object) {
 NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message, NvdDialogType type) {
     NVD_ASSERT(title != NULL);
     NVD_ASSERT(message != NULL);
-    return mask.dialog_box(title, message, type);
+    return NVD_CHECK_FUNCTION(mask.dialog_box, title, message, type);
 }
 
 void nvd_show_dialog(NvdDialogBox *dialog) {
@@ -158,19 +158,20 @@ void nvd_show_dialog(NvdDialogBox *dialog) {
 NvdQuestionBox *nvd_dialog_question_new(const char *title, const char *message, NvdQuestionButton buttons) {
     NVD_ASSERT(title != NULL);
     NVD_ASSERT(message != NULL);
-    return mask.question(title, message, buttons);
+    return NVD_CHECK_FUNCTION(mask.question, title, message, buttons);
 }
 
 NvdReply nvd_get_reply(NvdQuestionBox *question) {
     NVD_ASSERT(question != NULL);
-    return mask.get_reply(question);
+    if (mask.get_reply != NULL) return mask.get_reply(question);
+    else return NVD_REPLY_CANCEL;
 }
 
 NvdAboutDialog *nvd_about_dialog_new(const char *title, const char *message, const char *version) {
     NVD_ASSERT(title != NULL);
     NVD_ASSERT(message != NULL);
     NVD_ASSERT(version != NULL);
-    return mask.about_dialog(title, message, version);
+    return NVD_CHECK_FUNCTION(mask.about_dialog, title, message, version);
 }
 
 void nvd_show_about_dialog(NvdAboutDialog *dialog) {
@@ -190,17 +191,17 @@ void nvd_about_dialog_set_license(NvdAboutDialog *dialog, const char *license, c
 
 NvdFileDialog *nvd_open_file_dialog_new(const char *title, const char *file_extensions) {
     NVD_ASSERT(title != NULL);
-    return mask.open_file_dialog(title, file_extensions);
+    return NVD_CHECK_FUNCTION(mask.open_file_dialog, title, file_extensions);
 }
 
 NvdFileDialog *nvd_save_file_dialog_new(const char *title, const char *default_filename) {
     NVD_ASSERT(title != NULL);
-    return mask.save_file_dialog(title, default_filename);
+    return NVD_CHECK_FUNCTION(mask.save_file_dialog, title, default_filename);
 }
 
 NvdFileDialog *nvd_open_folder_dialog_new(const char *title, const char *default_filename) {
     NVD_ASSERT(title != NULL);
-    return mask.open_folder_dialog(title, default_filename);
+    return NVD_CHECK_FUNCTION(mask.open_folder_dialog, title, default_filename);
 }
 
 void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
@@ -212,7 +213,7 @@ void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
 NvdNotification *nvd_notification_new(const char *title, const char *msg, NvdNotifyType type) {
     NVD_ASSERT(title != NULL);
     NVD_ASSERT(msg != NULL);
-    return mask.notification(title, msg, type);
+    return NVD_CHECK_FUNCTION(mask.notification, title, msg, type);
 }
 
 void nvd_send_notification(NvdNotification *notification) {
