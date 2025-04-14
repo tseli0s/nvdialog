@@ -7,7 +7,7 @@ project(libnvdialog VERSION 0.8.1 LANGUAGES C DESCRIPTION "A simple and minimal 
 option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux." OFF)
 option(NVD_USE_GTK4 "Use Gtk4 and libadwaita instead of Gtk3 (experimental)." OFF)
 option(NVD_BUILD_STATIC "Build NvDialog as a static library (experimental)." OFF)
-option(NVD_SANDBOX_SUPPORT "Enable Flatpak sandbox support on Linux." ON)
+option(NVD_SANDBOX_SUPPORT "Enable sandbox support on GNU/Linux." ON)
 option(NVD_GENERATE_DOCS "Generate documentation for NvDialog. Requires doxygen to be installed" OFF) # Off by default because doxygen may not be available
 
 set(CMAKE_C_STANDARD 11)
@@ -124,7 +124,7 @@ if(APPLE)
     "-framework Foundation"
     "-framework UserNotifications")
 elseif(CROSS_COMPILE_FOR_WIN32 OR WIN32)
-    target_link_libraries(nvdialog comdlg32 shell32 user32 gdi32)
+    target_link_libraries(nvdialog comdlg32 shell32 user32 gdi32 ole32)
 elseif(LINUX)
     target_link_libraries(nvdialog ${GTK_LIBRARIES})
 endif()
