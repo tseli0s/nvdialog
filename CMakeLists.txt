@@ -8,6 +8,7 @@ option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux
 option(NVD_USE_GTK4 "Use Gtk4 and libadwaita instead of Gtk3 (experimental)." OFF)
 option(NVD_BUILD_STATIC "Build NvDialog as a static library (experimental)." OFF)
 option(NVD_SANDBOX_SUPPORT "Enable Flatpak sandbox support on Linux." ON)
+option(NVD_GENERATE_DOCS "Generate documentation for NvDialog. Requires doxygen to be installed" OFF) # Off by default because doxygen may not be available
 
 set(CMAKE_C_STANDARD 11)
 add_compile_definitions(NVDIALOG_MAXBUF=4096 NVD_EXPORT_SYMBOLS)
@@ -129,6 +130,21 @@ endif()
 
 set_target_properties(nvdialog PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 2)
 target_include_directories(nvdialog PRIVATE include/)
+
+if (NVD_GENERATE_DOCS)
+    set(NVD_DOXYFILE ${CMAKE_SOURCE_DIR}/Doxyfile)
+    set(NVD_DOC_OUTPUT ${CMAKE_SOURCE_DIR}/docs/html/index.html)
+    find_package(Doxygen REQUIRED)
+    
+    add_custom_command(
+        OUTPUT ${NVD_DOC_OUTPUT}
+        COMMAND ${DOXYGEN_EXECUTABLE} ${NVD_DOXYFILE}
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Generating Doxygen documentation"
+        VERBATIM
+    )
+    add_custom_target(nvd_docs ALL DEPENDS ${NVD_DOC_OUTPUT})
+endif()
 
 include(GNUInstallDirs)
 install(TARGETS nvdialog LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
