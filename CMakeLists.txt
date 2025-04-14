@@ -57,6 +57,7 @@ set(NVD_COMMON_SOURCES
     src/nvdialog_util.c
     src/nvdialog_capab.c
     src/nvdialog_version.c
+    src/nvdialog_init.c
     src/nvdialog_main.c)
 
 if(WIN32 OR CROSS_COMPILE_FOR_WIN32)
