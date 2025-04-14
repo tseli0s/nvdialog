@@ -30,7 +30,7 @@
 
 /**
  * @page building BuildingNvDialog
- * @version v0.6.1
+ * @version v0.9.0
  * @author Aggelos Tselios
  * 
  * # Building NvDialog
@@ -38,16 +38,14 @@
  * NvDialog on your machine. These steps have been verified to work on all supported platforms,
  * thanks to usage of cross-platform tools.
  * 
- * You can also download prebuilt binaries of NvDialog at the [releases page](https://github.com/AndroGR/nvdialog/releases/).
+ * You can also download prebuilt binaries of NvDialog at the [releases page](https://github.com/tseli0s/nvdialog/releases/).
  * This can be useful if you are looking to package NvDialog with your application.
- * 
- * @note NvDialog doesn't officially have support for a sandboxed environment due to filesystem restrictions. For more details see [the tracking issue](https://github.com/AndroGR/nvdialog/issues/36)
  * 
  * ## Dependencies
  * Before proceeding, download and install the following:
  * - [CMake](https://cmake.org)
  * - [ninja](https://ninja-build.org/)
- * - A C Compiler from these three: Clang, GCC or MSVC (Preferably GCC).
+ * - A C compiler (e.g. gcc or clang)
  * - If you want to generate the documentation locally: [doxygen](https://doxygen.nl)
  * 
  * ## 1. Downloading the source code.
@@ -62,20 +60,20 @@
  * ### Git
  * Open a terminal, and `cd` to the directory you want to store the source code. Then type the following two commands:
  * ```sh
- * $ git clone --recursive --depth=1 https://github.com/AndroGR/nvdialog.git
+ * $ git clone --recursive --depth=1 https://github.com/tseli0s/nvdialog.git
  * $ cd nvdialog/
  * ```
  * 
- * > You can also have NvDialog as a submodule. Just use `git submodule add https://github.com/AndroGR/nvdialog.git` in your source code tree.
+ * > You can also have NvDialog as a submodule. Just use `git submodule add https://github.com/tseli0s/nvdialog.git` in your source code tree.
  * 
  * ## Releases
- * Go to https://github.com/AndroGR/nvdialog/releases/tag/v0.6.0 and download the source code as a zip file. Extract the
+ * Go to https://github.com/tseli0s/nvdialog/releases/latest and download the source code as a zip file. Extract the
  * archive where you want to store the source code.
  * 
  * ## Specific git branch
  * Same as the git one, but you must change the second command to this:
  * ```sh
- * git clone --branch <branchname> --recursive https://github.com/AndroGR/nvdialog.git
+ * git clone --branch <branchname> --recursive https://github.com/tseli0s/nvdialog.git
  * ```
  * 
  * ## 2. Building
@@ -100,12 +98,13 @@
  * as well:
  * 
  * ```sh
- * $ sudo ninja install # sudo may be omitted on Windows
+ * $ sudo ninja install # sudo may be omitted on Windows and macOS
  * ```
  * 
  * ## Older distros
  * For older Linux distros that don't have a recent enough version of CMake, there's a `Makefile` provided.
- * You can just run `make && sudo make install` and it should do the exact same thing.
+ * You can just run `make && sudo make install` and it should do the exact same thing. The downside is that the Makefile
+ * doesn't support any options - You will have to modify it manually to tweak any build time functionality.
  * 
  * ## Compile-time features:
  * This is a table of features that NvDialog supports enabling at compile time.
@@ -113,8 +112,7 @@
  * | Feature | Default | Description |
  * | --- | --- | --- |
  * | NVD_USE_GTK4 | OFF | Sets the Linux backend to use `libadwaita` |
- * | WIN32_TARGET | OFF | Builds a Windows library on Unix |
- * | NVDIALOG_MAXBUF | 4096 | Amount of bytes NvDialog will allocate by default (Strings for example) |
+ * | CROSS_COMPILE_FOR_WIN32 | OFF | Cross compile from a Unix system for a Windows host |
+ * | NVDIALOG_MAXBUF | 4096 | Amount of bytes NvDialog will allocate by default on static buffers |
  * | NVD_BUILD_STATIC | OFF | Build NvDialog as a static library instead, that will be packaged with your executable |
- * | COCOA_TARGET | ON | Enable Cocoa (macOS) support (Does nothing on non-macOS platforms) |
  */

@@ -32,14 +32,14 @@
 
 /**
  * @page NvDialog Tutorial
- * @version v0.6.1
+ * @version v0.9.0
  * @author Aggelos Tselios
 
  * # NvDialog Tutorial
  * This page provides a simple tutorial of the NvDialog library. For more information about the
- * library itself, see <b>https://androgr.github.io/nv.dialog</b>.
+ * library itself, see <b>https://tseli0s.github.io/nv.dialog</b>.
  * Proper documentation of the API used in this tutorial is also available in the documentation.
- * This tutorial assumes you have already installed NvDialog in your system. If not, visit the [GitHub Repo](https://github.com/AndroGR/nvdialog/#installation).
+ * This tutorial assumes you have already installed NvDialog in your system. If not, visit the [GitHub Repo](https://github.com/tseli0s/nvdialog/#installation).
  * NvDialog is compiler and platform independent, so this tutorial should work as expected on all platforms.
  * # 1. Creating our environment.
  * <b>Skip this step if you aren't interested in the setup.</b>
@@ -47,7 +47,7 @@
  * @code
  * #include <nvdialog/nvdialog.h>
  *
- * int main(int argc, char **argv) {
+ * int main() {
  * 
  * }
  * @endcode
@@ -99,8 +99,8 @@
  * @code
    #include <nvdialog/nvdialog.h>
 
-   int main(int argc, char **argv) {
-        if (nvd_init(argv[0]) != 0) return -1;
+   int main() {
+        if (nvd_init() != 0) return -1;
 
         const char *title = "Hello NvDialog!";
         const char *message = "This dialog box was created with NvDialog.";
