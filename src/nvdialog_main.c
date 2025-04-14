@@ -189,6 +189,14 @@ void nvd_about_dialog_set_license(NvdAboutDialog *dialog, const char *license, c
     NVD_TRY_CALL(mask.about_dialog_set_license, dialog, license, url);
 }
 
+void nvd_dialog_set_icon(NvdAboutDialog *dialog, NvdImage *image) {
+    NVD_ASSERT(dialog != NULL);
+    NVD_ASSERT(image != NULL);
+    dialog->image = image;
+    dialog->image_from_icon = false;
+    dialog->image_name = NULL;
+}
+
 NvdFileDialog *nvd_open_file_dialog_new(const char *title, const char *file_extensions) {
     NVD_ASSERT(title != NULL);
     return NVD_CHECK_FUNCTION(mask.open_file_dialog, title, file_extensions);
