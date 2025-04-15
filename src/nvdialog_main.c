@@ -167,11 +167,10 @@ NvdReply nvd_get_reply(NvdQuestionBox *question) {
     else return NVD_REPLY_CANCEL;
 }
 
-NvdAboutDialog *nvd_about_dialog_new(const char *title, const char *message, const char *version) {
+NvdAboutDialog *nvd_about_dialog_new(const char *title, const char *message, const char *icon) {
     NVD_ASSERT(title != NULL);
     NVD_ASSERT(message != NULL);
-    NVD_ASSERT(version != NULL);
-    return NVD_CHECK_FUNCTION(mask.about_dialog, title, message, version);
+    return NVD_CHECK_FUNCTION(mask.about_dialog, title, message, icon);
 }
 
 void nvd_show_about_dialog(NvdAboutDialog *dialog) {
