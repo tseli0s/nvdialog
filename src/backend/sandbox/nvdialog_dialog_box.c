@@ -23,6 +23,7 @@
  */
 
 #include "dialogs/nvdialog_dialog_box.h"
+
 #include "../../nvdialog_assert.h"
 #include "../../nvdialog_macros.h"
 #include "nvdialog_sbx.h"
@@ -39,34 +40,34 @@ static inline void nvd_destroy_and_quit(GtkWidget *widget) {
         gtk_main_quit();
 }
 
-NvdDialogBox *
-nvd_dialog_box_sbx(const char *title, const char *message, NvdDialogType type) {
+NvdDialogBox *nvd_dialog_box_sbx(const char *title, const char *message,
+                                 NvdDialogType type) {
         NvdDialogBox *dialog = malloc(sizeof(struct _NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
-        dialog->accept_label  = "Okay";
-        dialog->content       = (char*) message;
-        dialog->msg           = (char*) title;
-        dialog->type          = type;
+        dialog->accept_label = "Okay";
+        dialog->content = (char *)message;
+        dialog->msg = (char *)title;
+        dialog->type = type;
         dialog->window_handle = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
         gtk_widget_set_hexpand(dialog->window_handle, true);
         GtkWidget *img;
         switch (type) {
-        case NVD_DIALOG_WARNING:
-                img = gtk_image_new_from_icon_name("dialog-warning",
-                                                   GTK_ICON_SIZE_DIALOG);
-                break;
-        case NVD_DIALOG_ERROR:
-                img = gtk_image_new_from_icon_name("dialog-error",
-                                                   GTK_ICON_SIZE_DIALOG);
-                break;
+                case NVD_DIALOG_WARNING:
+                        img = gtk_image_new_from_icon_name(
+                                "dialog-warning", GTK_ICON_SIZE_DIALOG);
+                        break;
+                case NVD_DIALOG_ERROR:
+                        img = gtk_image_new_from_icon_name(
+                                "dialog-error", GTK_ICON_SIZE_DIALOG);
+                        break;
 
-        default:
-        case NVD_DIALOG_SIMPLE:
-                img = gtk_image_new_from_icon_name("dialog-information",
-                                                   GTK_ICON_SIZE_DIALOG);
-                break;
+                default:
+                case NVD_DIALOG_SIMPLE:
+                        img = gtk_image_new_from_icon_name(
+                                "dialog-information", GTK_ICON_SIZE_DIALOG);
+                        break;
         }
 
         GtkGrid *grid = GTK_GRID(gtk_grid_new());
@@ -89,9 +90,12 @@ nvd_dialog_box_sbx(const char *title, const char *message, NvdDialogType type) {
         gtk_container_add(GTK_CONTAINER(dialog->window_handle),
                           GTK_WIDGET(grid));
 
-        g_signal_connect_swapped(dialog->window_handle, "destroy", G_CALLBACK(nvd_destroy_and_quit), dialog->window_handle);
-        g_signal_connect_swapped(
-            button, "clicked", G_CALLBACK(nvd_destroy_and_quit), dialog->window_handle);
+        g_signal_connect_swapped(dialog->window_handle, "destroy",
+                                 G_CALLBACK(nvd_destroy_and_quit),
+                                 dialog->window_handle);
+        g_signal_connect_swapped(button, "clicked",
+                                 G_CALLBACK(nvd_destroy_and_quit),
+                                 dialog->window_handle);
 
         return dialog;
 }

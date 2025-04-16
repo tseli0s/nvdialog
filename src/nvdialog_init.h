@@ -27,44 +27,49 @@
 #ifndef __nvdialog_init_h__
 #define __nvdialog_init_h__ 1
 
-#define NVD_TRY_CALL(f, ...) \
-    if ((f) != NULL) {   \
-        (f)(__VA_ARGS__);           \
-    } else {             \
-        fprintf(stderr, "Error: Function pointer " #f " is NULL\n"); \
-        return;           \
-    }
+#define NVD_TRY_CALL(f, ...)                                                 \
+        if ((f) != NULL) {                                                   \
+                (f)(__VA_ARGS__);                                            \
+        } else {                                                             \
+                fprintf(stderr, "Error: Function pointer " #f " is NULL\n"); \
+                return;                                                      \
+        }
 
 #define NVD_CHECK_FUNCTION(f, ...) ((f) != NULL ? (f)(__VA_ARGS__) : NULL)
 
 #include "nvdialog.h"
 #include "nvdialog_macros.h"
 
-
 /**
- * @brief A structure to represent functions pointing to the internal implementations of each backend
- * for each API, initialized during @ref nvd_init.
+ * @brief A structure to represent functions pointing to the internal
+ * implementations of each backend for each API, initialized during @ref
+ * nvd_init.
  */
 typedef struct _NvdBackendMask {
-    NvdDialogBox *(*dialog_box)(const char *, const char *, NvdDialogType);
-    void (*show_dialog)(NvdDialogBox *);
+        NvdDialogBox *(*dialog_box)(const char *, const char *, NvdDialogType);
+        void (*show_dialog)(NvdDialogBox *);
 
-    NvdQuestionBox *(*question)(const char *, const char *, NvdQuestionButton);
-    NvdReply (*get_reply)(NvdQuestionBox *);
-    
-    NvdAboutDialog *(*about_dialog)(const char *, const char *, const char *);
-    void (*show_about_dialog)(NvdAboutDialog *);
-    void (*about_dialog_set_version)(NvdAboutDialog *, const char *);
-    void (*about_dialog_set_license)(NvdAboutDialog *, const char *, const char *);
-    
-    NvdFileDialog *(*open_file_dialog)(const char *, const char *);
-    NvdFileDialog *(*save_file_dialog)(const char *, const char *);
-    NvdFileDialog *(*open_folder_dialog)(const char *, const char *);
-    void (*get_file_location)(NvdFileDialog *, char **);
+        NvdQuestionBox *(*question)(const char *, const char *,
+                                    NvdQuestionButton);
+        NvdReply (*get_reply)(NvdQuestionBox *);
 
-    NvdNotification *(*notification)(const char *, const char *, NvdNotifyType);
-    void (*send_notification)(NvdNotification *);
-    void (*add_notification_action)(NvdNotification*, const char*, int, int*);
+        NvdAboutDialog *(*about_dialog)(const char *, const char *,
+                                        const char *);
+        void (*show_about_dialog)(NvdAboutDialog *);
+        void (*about_dialog_set_version)(NvdAboutDialog *, const char *);
+        void (*about_dialog_set_license)(NvdAboutDialog *, const char *,
+                                         const char *);
+
+        NvdFileDialog *(*open_file_dialog)(const char *, const char *);
+        NvdFileDialog *(*save_file_dialog)(const char *, const char *);
+        NvdFileDialog *(*open_folder_dialog)(const char *, const char *);
+        void (*get_file_location)(NvdFileDialog *, char **);
+
+        NvdNotification *(*notification)(const char *, const char *,
+                                         NvdNotifyType);
+        void (*send_notification)(NvdNotification *);
+        void (*add_notification_action)(NvdNotification *, const char *, int,
+                                        int *);
 } NvdBackendMask;
 
 NVD_INTERNAL_FUNCTION int nvd_init_gtk3(NvdBackendMask *mask);

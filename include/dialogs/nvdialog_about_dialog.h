@@ -22,8 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-#include "../nvdialog_platform.h"
 #include "../nvdialog_image.h"
+#include "../nvdialog_platform.h"
 
 /**
  * @brief An opaque handle to a dialog box created from
@@ -43,12 +43,12 @@ typedef struct _NvdAboutDialog NvdAboutDialog;
  * application logo.
  * @note This function does not use GtkAboutDialog on Unix.
  * @ingroup AboutDialog
- * @return NULL on failure, otherwise a handle to a heap allocated object containing
- * the actual dialog.
+ * @return NULL on failure, otherwise a handle to a heap allocated object
+ * containing the actual dialog.
  */
 NVD_API NvdAboutDialog *nvd_about_dialog_new(const char *name,
-                                     const char *description,
-                                     const char *logo);
+                                             const char *description,
+                                             const char *logo);
 
 /**
  * @brief Sets a hyperlink to the application's license (Preferably a link.)
@@ -59,8 +59,8 @@ NVD_API NvdAboutDialog *nvd_about_dialog_new(const char *name,
  * @ingroup AboutDialog
  */
 NVD_API void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
-                                       const char *license_link,
-                                       const char* txt);
+                                               const char *license_link,
+                                               const char *txt);
 
 /**
  * @brief Adds a version text to the dialog given.
@@ -68,7 +68,8 @@ NVD_API void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
  * @param version A string to represent the version of your application.
  * @ingroup AboutDialog
  */
-NVD_API void nvd_about_dialog_set_version(NvdAboutDialog *dialog, const char *version);
+NVD_API void nvd_about_dialog_set_version(NvdAboutDialog *dialog,
+                                          const char *version);
 
 /**
  * @brief Shows the About dialog given to the user.
@@ -85,11 +86,12 @@ NVD_API void nvd_show_about_dialog(NvdAboutDialog *dialog);
  */
 NVD_API void *nvd_about_dialog_get_raw(NvdAboutDialog *dialog);
 
-/** 
+/**
  * @brief Sets the dialog's icon to display.
  * @param dialog The dialog to set the icon to.
- * @param image The image to display as the dialog's icon, returned from @ref nvd_create_image
+ * @param image The image to display as the dialog's icon, returned from @ref
+ * nvd_create_image
  * @ingroup AboutDialog
  * @since v0.9.0
-*/
-NVD_API void nvd_dialog_set_icon(NvdAboutDialog* dialog, NvdImage *image);
+ */
+NVD_API void nvd_dialog_set_icon(NvdAboutDialog *dialog, NvdImage *image);

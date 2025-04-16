@@ -22,66 +22,72 @@
  * IN THE SOFTWARE.
  */
 
-#include "../../nvdialog_assert.h"
-#include "../../nvdialog_util.h"
-#include "nvdialog_typeimpl.h"
-#include "nvdialog_win32.h"
-#include "winnt.h"
+#include <shlobj.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
 #include <windows.h>
 #include <winuser.h>
-#include <shlobj.h>
 
-static const char* nvd_append_bytes(char* dest, const char* src) {
-    size_t dest_len = strlen(dest);
-    size_t src_len  = strlen(src);
-    
-    char* new_str = (char*)malloc(dest_len + src_len + 1);
-    if (!new_str) {
-        return NULL;
-    }
-    memcpy(new_str, dest, dest_len);
-    memcpy(new_str + dest_len, src, src_len + 1);
+#include "../../nvdialog_assert.h"
+#include "../../nvdialog_util.h"
+#include "nvdialog_typeimpl.h"
+#include "nvdialog_win32.h"
+#include "winnt.h"
 
-    return new_str;
+static const char *nvd_append_bytes(char *dest, const char *src) {
+        size_t dest_len = strlen(dest);
+        size_t src_len = strlen(src);
+
+        char *new_str = (char *)malloc(dest_len + src_len + 1);
+        if (!new_str) {
+                return NULL;
+        }
+        memcpy(new_str, dest, dest_len);
+        memcpy(new_str + dest_len, src, src_len + 1);
+
+        return new_str;
 }
 
-static void nvd_file_only_dialog_win32(NvdFileDialog *dialog, const char **savebuf) {
+static void nvd_file_only_dialog_win32(NvdFileDialog *dialog,
+                                       const char **savebuf) {
         OPENFILENAME ofn;
-        char         file[NVDIALOG_MAXBUF];
+        char file[NVDIALOG_MAXBUF];
         ZeroMemory(&ofn, sizeof(ofn));
-        ofn.lStructSize    = sizeof(ofn);
-        ofn.hwndOwner      = nvd_get_parent();
-        ofn.lpstrFile      = file;
-        ofn.lpstrFile[0]   = '\0';
-        ofn.nMaxFile       = sizeof(file) - 1; /* NULL byte manually set */
-        ofn.nFilterIndex   = 1;
-        ofn.lpstrFileTitle = (char*) dialog->title;
-        ofn.nMaxFileTitle  = 0;
+        ofn.lStructSize = sizeof(ofn);
+        ofn.hwndOwner = nvd_get_parent();
+        ofn.lpstrFile = file;
+        ofn.lpstrFile[0] = '\0';
+        ofn.nMaxFile = sizeof(file) - 1; /* NULL byte manually set */
+        ofn.nFilterIndex = 1;
+        ofn.lpstrFileTitle = (char *)dialog->title;
+        ofn.nMaxFileTitle = 0;
         ofn.lpstrInitialDir = NULL;
         ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
         if (dialog->file_extensions) {
-                char** words = nvd_seperate_args(dialog->file_extensions);
-                size_t i     = 0;
-                char buffer[NVDIALOG_MAXBUF] = { 0 };
+                char **words = nvd_seperate_args(dialog->file_extensions);
+                size_t i = 0;
+                char buffer[NVDIALOG_MAXBUF] = {0};
 
                 while (words[i] != NULL) {
-                        char tmp_buffer[128] = { 0 };
-                        snprintf(buffer, sizeof(buffer), ".%s files (*.%s)", words[i], words[i]);
+                        char tmp_buffer[128] = {0};
+                        snprintf(buffer, sizeof(buffer), ".%s files (*.%s)",
+                                 words[i], words[i]);
                         nvd_append_bytes(buffer, tmp_buffer);
                         i++;
                 }
 
                 ofn.lpstrFilter = buffer;
-        } else ofn.lpstrFilter = NULL;
+        } else
+                ofn.lpstrFilter = NULL;
 
         file[NVDIALOG_MAXBUF - 1] = '\0';
-        if (dialog->is_save_dialog) GetSaveFileName(&ofn);
-        else                        GetOpenFileName(&ofn);
+        if (dialog->is_save_dialog)
+                GetSaveFileName(&ofn);
+        else
+                GetOpenFileName(&ofn);
 
         dialog->filename = ofn.lpstrFile;
         dialog->location_was_chosen = true;
@@ -89,17 +95,16 @@ static void nvd_file_only_dialog_win32(NvdFileDialog *dialog, const char **saveb
 }
 
 static void nvd_dir_dialog_win32(NvdFileDialog *dialog, const char **savebuf) {
-        BROWSEINFO bi = { 0 };
+        BROWSEINFO bi = {0};
         char path[MAX_PATH];
-                                    
+
         bi.lpszTitle = dialog->title;
         bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
-        bi.lParam = (LPARAM) dialog->filename;
+        bi.lParam = (LPARAM)dialog->filename;
 
         LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
         if (pidl != NULL) {
-                if (SHGetPathFromIDList(pidl, path))
-                    *savebuf = strdup(path);
+                if (SHGetPathFromIDList(pidl, path)) *savebuf = strdup(path);
                 CoTaskMemFree(pidl);
         }
 }
@@ -109,11 +114,11 @@ NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
         NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
 
-        dialog->is_dir_dialog   = false;
-        dialog->is_save_dialog  = false;
-        dialog->raw             = NULL;
+        dialog->is_dir_dialog = false;
+        dialog->is_save_dialog = false;
+        dialog->raw = NULL;
         dialog->file_extensions = file_extensions;
-        dialog->title           = title;
+        dialog->title = title;
         dialog->location_was_chosen = false;
 
         return dialog;
@@ -125,16 +130,18 @@ NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
         NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
 
-        dialog->is_save_dialog  = true;
-        dialog->raw             = NULL;
-        dialog->is_dir_dialog   = false;
-        dialog->file_extensions = NULL; /* Technically, we could add filters here, but how? */
-        dialog->title           = title;
+        dialog->is_save_dialog = true;
+        dialog->raw = NULL;
+        dialog->is_dir_dialog = false;
+        dialog->file_extensions =
+                NULL; /* Technically, we could add filters here, but how? */
+        dialog->title = title;
         dialog->location_was_chosen = false;
         return dialog;
 }
 
-NvdFileDialog *nvd_open_folder_dialog_win32(const char *title, const char *default_path) {
+NvdFileDialog *nvd_open_folder_dialog_win32(const char *title,
+                                            const char *default_path) {
         NvdFileDialog *dlg = calloc(1, sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dlg);
 
@@ -144,12 +151,13 @@ NvdFileDialog *nvd_open_folder_dialog_win32(const char *title, const char *defau
         dlg->title = title;
         dlg->file_extensions = NULL;
         dlg->location_was_chosen = false;
-        
+
         return dlg;
 }
 
-void nvd_get_file_location_win32(NvdFileDialog *dialog,
-                                 const char   **savebuf) {
-        if (dialog->is_dir_dialog) nvd_dir_dialog_win32(dialog, savebuf);
-        else                       nvd_file_only_dialog_win32(dialog, savebuf);
+void nvd_get_file_location_win32(NvdFileDialog *dialog, const char **savebuf) {
+        if (dialog->is_dir_dialog)
+                nvd_dir_dialog_win32(dialog, savebuf);
+        else
+                nvd_file_only_dialog_win32(dialog, savebuf);
 }

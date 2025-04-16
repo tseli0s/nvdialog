@@ -22,29 +22,30 @@
  * IN THE SOFTWARE.
  */
 
-#include "../../nvdialog_assert.h"
-#include "nvdialog_win32.h"
 #include <stdint.h>
 #include <wchar.h>
 #include <windows.h>
 #include <winuser.h>
 
-NvdDialogBox *nvd_dialog_box_win32(const char   *title,
-                                   const char   *message,
+#include "../../nvdialog_assert.h"
+#include "nvdialog_win32.h"
+
+NvdDialogBox *nvd_dialog_box_win32(const char *title, const char *message,
                                    NvdDialogType type) {
-        NVD_ASSERT(title   != NULL);
+        NVD_ASSERT(title != NULL);
         NVD_ASSERT(message != NULL);
 
-        NvdDialogBox *dialog = (NvdDialogBox *)malloc(sizeof(struct _NvdDialogBox));
+        NvdDialogBox *dialog =
+                (NvdDialogBox *)malloc(sizeof(struct _NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->accept_label = "Ok";
         dialog->reject_label = "Deny";
         dialog->window_handle = NULL;
         dialog->accept_button = NULL;
-        dialog->msg     = (char *) title;
-        dialog->content = (char *) message;
-        dialog->type    = type;
+        dialog->msg = (char *)title;
+        dialog->content = (char *)message;
+        dialog->type = type;
 
         return dialog;
 }
@@ -52,16 +53,17 @@ NvdDialogBox *nvd_dialog_box_win32(const char   *title,
 void nvd_show_dialog_win32(NvdDialogBox *dialog) {
         uint32_t flag = 0;
         switch (dialog->type) {
-        case NVD_DIALOG_SIMPLE:
-                flag = MB_ICONINFORMATION;
-                break;
-        case NVD_DIALOG_WARNING:
-                flag = MB_ICONWARNING;
-                break;
-        case NVD_DIALOG_ERROR:
-                flag = MB_ICONHAND;
-                break;
+                case NVD_DIALOG_SIMPLE:
+                        flag = MB_ICONINFORMATION;
+                        break;
+                case NVD_DIALOG_WARNING:
+                        flag = MB_ICONWARNING;
+                        break;
+                case NVD_DIALOG_ERROR:
+                        flag = MB_ICONHAND;
+                        break;
         }
 
-        MessageBox(nvd_get_parent(), dialog->content, dialog->msg, MB_OK | flag);
+        MessageBox(nvd_get_parent(), dialog->content, dialog->msg,
+                   MB_OK | flag);
 }

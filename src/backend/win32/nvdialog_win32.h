@@ -28,15 +28,15 @@
 #define __nvdialog_win32_h__ 1
 
 #include <nvdialog.h>
+#include <windows.h>
+
 #include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
 #include "nvdialog_notification.h"
 #include "nvdialog_typeimpl.h"
-#include <windows.h>
 
-NvdDialogBox *nvd_dialog_box_win32(const char   *title,
-                                   const char   *message,
+NvdDialogBox *nvd_dialog_box_win32(const char *title, const char *message,
                                    NvdDialogType type);
 
 NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
@@ -47,36 +47,33 @@ NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
 
 NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
                                           const char *default_path);
-NvdFileDialog *nvd_open_folder_dialog_win32(const char *title, const char *default_path);
+NvdFileDialog *nvd_open_folder_dialog_win32(const char *title,
+                                            const char *default_path);
 
-NvdQuestionBox *nvd_question_win32(const char       *title,
-                                   const char       *question,
+NvdQuestionBox *nvd_question_win32(const char *title, const char *question,
                                    NvdQuestionButton buttons);
 
 void nvd_show_dialog_win32(NvdDialogBox *dialog);
 
 NvdReply nvd_get_reply_win32(NvdQuestionBox *box);
 
-NvdAboutDialog *nvd_about_dialog_win32(const char *appname,
-                                       const char *brief,
+NvdAboutDialog *nvd_about_dialog_win32(const char *appname, const char *brief,
                                        const char *logo);
 
 void nvd_show_about_dialog_win32(NvdAboutDialog *dialog);
 
 void nvd_about_dialog_set_version_win32(NvdAboutDialog *dialog,
-                                        const char     *version);
+                                        const char *version);
 
-void nvd_get_file_location_win32(NvdFileDialog *dialog, const char** savebuf);
+void nvd_get_file_location_win32(NvdFileDialog *dialog, const char **savebuf);
 
-NvdNotification *nvd_notification_win32(const char   *title,
-                                        const char   *msg,
+NvdNotification *nvd_notification_win32(const char *title, const char *msg,
                                         NvdNotifyType type);
 
 void nvd_send_notification_win32(NvdNotification *notification);
 
-void nvd_add_notification_action_win32(NvdNotification* notification,
-                                     const char* action,
-                                     int  value_to_set,
-                                     int* value_to_return);
+void nvd_add_notification_action_win32(NvdNotification *notification,
+                                       const char *action, int value_to_set,
+                                       int *value_to_return);
 
 #endif /* __nvdialog_win32_h__ */

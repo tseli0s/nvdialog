@@ -25,11 +25,12 @@
 #ifndef __nvd_error_h__
 #define __nvd_error_h__
 
-#include "nvdialog.h"
-#include "nvdialog_macros.h"
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "nvdialog.h"
+#include "nvdialog_macros.h"
 
 #if !defined(_WIN32) || defined(linux) || defined(__gnu_linux__)
 #define TERMINAL_PREFIX "\x1B[92m\x1b[1mlibnvdialog:\x1b[0m"
@@ -49,8 +50,8 @@ NVD_INTERNAL_FUNCTION void nvd_set_error(NvdError error);
 
 /* Prints the error message given to stdout */
 NVD_DEPRECATED(
-    "This function has been deprecated in favor of nvd_error_message. "
-    "Please use that instead of this function.")
+        "This function has been deprecated in favor of nvd_error_message. "
+        "Please use that instead of this function.")
 void nvd_print(const char *msg);
 
 /*

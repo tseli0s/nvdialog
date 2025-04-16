@@ -25,27 +25,27 @@
 #ifndef __nvdialog_platform_h__
 #define __nvdialog_platform_h__ (1)
 
-#if defined (_WIN32)    || defined (WIN32)
-#if defined (__clang__) || defined(__GNUC__)
+#if defined(_WIN32) || defined(WIN32)
+#if defined(__clang__) || defined(__GNUC__)
 #define NVD_API_EXPORT __attribute__((dllexport))
 #else /* __clang__ */
 #define NVD_API_EXPORT __declspec(dllexport)
 #endif /* NVD_API */
-#else /* _WIN32 */
+#else  /* _WIN32 */
 #define NVD_API_EXPORT
 #endif /* _WIN32 */
 
-#if defined (_WIN32)    || defined (WIN32)
-#if defined (__clang__) || defined(__GNUC__)
+#if defined(_WIN32) || defined(WIN32)
+#if defined(__clang__) || defined(__GNUC__)
 #define NVD_API_IMPORT __attribute__((dllimport))
 #else /* __clang__ */
 #define NVD_API_IMPORT __declspec(dllimport)
 #endif /* NVD_API */
-#else /* _WIN32 */
+#else  /* _WIN32 */
 #define NVD_API_IMPORT
 #endif /* _WIN32 */
 
-#if defined (NVD_EXPORT_SYMBOLS)
+#if defined(NVD_EXPORT_SYMBOLS)
 #define NVD_API NVD_API_EXPORT
 #else
 #define NVD_API NVD_API_IMPORT

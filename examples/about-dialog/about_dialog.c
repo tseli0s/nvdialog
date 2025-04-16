@@ -1,6 +1,6 @@
-#include <stdio.h>
 #include <errno.h>
 #include <nvdialog/nvdialog.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 int main(int argc, char** argv) {
@@ -17,11 +17,12 @@ int main(int argc, char** argv) {
         }
 
         /* Constructing the dialog. This is the most important part. */
-        NvdAboutDialog* dialog = nvd_about_dialog_new("NvDialog Example",
-                                                      "A relatively small description "
-                                                      "about your application, where it may mention "
-                                                      "social links or other information.",
-                                                      NULL);
+        NvdAboutDialog* dialog = nvd_about_dialog_new(
+                "NvDialog Example",
+                "A relatively small description "
+                "about your application, where it may mention "
+                "social links or other information.",
+                NULL);
         if (!dialog) {
                 puts("Error: Could not construct the dialog.");
                 return -ENOMEM;

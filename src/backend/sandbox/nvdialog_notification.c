@@ -22,48 +22,54 @@
  * IN THE SOFTWARE.
  */
 
+#include "nvdialog_notification.h"
+
 #include "../../nvdialog_assert.h"
 #include "nvdialog_sbx.h"
-#include "nvdialog_notification.h"
 /* So we reduce compile-time dependencies. */
-#if defined (NVD_PREINCLUDE_HEADERS)
+#if defined(NVD_PREINCLUDE_HEADERS)
 #include <libnotify/notification.h>
 #endif /* NVD_PREINCLUDE_HEADERS */
 #include <dlfcn.h>
 #include <stdlib.h>
 
-#if !defined (NVD_PREINCLUDE_HEADERS)
-typedef void*              nvd_notification_t;
+#if !defined(NVD_PREINCLUDE_HEADERS)
+typedef void *nvd_notification_t;
 #else
 typedef NotifyNotification nvd_notification_t;
 #endif /* NVD_PREINCLUDE_HEADERS */
 
-typedef nvd_notification_t (*nvd_notify_new_t)(const char*,
-                                                const char*,
-                                                const char*);
+typedef nvd_notification_t (*nvd_notify_new_t)(const char *, const char *,
+                                               const char *);
 
 struct NvdActionsArgs {
-        int* ptr;
+        int *ptr;
         int value;
 };
 
-static void nvd_set_action_ptr(void* notif, char* action, struct NvdActionsArgs *args) {
-        (void) notif;
-        (void) action;
+static void nvd_set_action_ptr(void *notif, char *action,
+                               struct NvdActionsArgs *args) {
+        (void)notif;
+        (void)action;
 
-        *(int*) args->ptr = (int) args->value;
+        *(int *)args->ptr = (int)args->value;
 }
 
 static bool __nvd_check_libnotify(NvdNotification *notification) {
-        bool (*nvd_notify_init)(char*) = dlsym(notification->lib, "notify_init");
+        bool (*nvd_notify_init)(char *) =
+                dlsym(notification->lib, "notify_init");
         if (nvd_notify_init == NULL) {
-                nvd_error_message("Can't load libnotify properly (Perhaps incompatible version?): %s", dlerror());
+                nvd_error_message(
+                        "Can't load libnotify properly (Perhaps incompatible "
+                        "version?): %s",
+                        dlerror());
                 dlclose(notification->lib);
                 return false;
         }
 
-        if (!nvd_notify_init((char*) nvd_get_application_name())) {
-                nvd_error_message("Couldn't initialize libnotify, stopping here.");
+        if (!nvd_notify_init((char *)nvd_get_application_name())) {
+                nvd_error_message(
+                        "Couldn't initialize libnotify, stopping here.");
                 dlclose(notification->lib);
                 return false;
         }
@@ -72,25 +78,25 @@ static bool __nvd_check_libnotify(NvdNotification *notification) {
 
 static inline char *__nvd_match_notif_type(NvdNotifyType type) {
         static char *icon_name;
-        
+
         switch (type) {
-        case NVD_NOTIFICATION_SIMPLE:
-                icon_name = "dialog-information";
-                break;
-        case NVD_NOTIFICATION_WARNING:
-                icon_name = "dialog-warning";
-                break;
-        case NVD_NOTIFICATION_ERROR:
-                icon_name = "dialog-error";
-                break;
-        default: return NULL;
+                case NVD_NOTIFICATION_SIMPLE:
+                        icon_name = "dialog-information";
+                        break;
+                case NVD_NOTIFICATION_WARNING:
+                        icon_name = "dialog-warning";
+                        break;
+                case NVD_NOTIFICATION_ERROR:
+                        icon_name = "dialog-error";
+                        break;
+                default:
+                        return NULL;
         }
 
         return icon_name;
 }
 
-NvdNotification *nvd_notification_sbx(const char   *title,
-                                      const char   *msg,
+NvdNotification *nvd_notification_sbx(const char *title, const char *msg,
                                       NvdNotifyType type) {
         NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
         NVD_RETURN_IF_NULL(notification);
@@ -101,51 +107,55 @@ NvdNotification *nvd_notification_sbx(const char   *title,
                 return NULL;
         }
 
-        nvd_notify_new_t notify_new  = dlsym(notification->lib, "notify_notification_new");
-        
+        nvd_notify_new_t notify_new =
+                dlsym(notification->lib, "notify_notification_new");
+
         if (!notify_new) {
                 nvd_error_message("libnotify is missing required symbols.");
                 dlclose(notification->lib);
-                free   (notification);
+                free(notification);
 
                 return NULL;
         }
 
-        const char *icon_name  = __nvd_match_notif_type(type);
+        const char *icon_name = __nvd_match_notif_type(type);
 
-        notification->title    = (char*) title;
-        notification->body     = (char*) msg;
-        notification->raw      = (void*) notify_new(notification->title,
-                                                    notification->body,
-                                                    icon_name);
-        notification->type     = type;
-        notification->shown    = false;
-        
+        notification->title = (char *)title;
+        notification->body = (char *)msg;
+        notification->raw = (void *)notify_new(notification->title,
+                                               notification->body, icon_name);
+        notification->type = type;
+        notification->shown = false;
+
         if (notification->type == NVD_NOTIFICATION_ERROR) {
                 const char *fn_name = "notify_notification_set_urgency";
-                void (*nvd_notify_set_urgency)(nvd_notification_t, gint) = dlsym(notification->lib,
-                                                                                   fn_name);
+                void (*nvd_notify_set_urgency)(nvd_notification_t, gint) =
+                        dlsym(notification->lib, fn_name);
                 nvd_notify_set_urgency(notification->raw, 2);
         }
         return notification;
 }
 
 void nvd_send_notification_sbx(NvdNotification *notification) {
-        NVD_ASSERT(notification        != NULL );
-        NVD_ASSERT(notification->shown == false); /* Just to avoid halting the thread. */
+        NVD_ASSERT(notification != NULL);
+        NVD_ASSERT(notification->shown ==
+                   false); /* Just to avoid halting the thread. */
 
-        bool (*show_fn)(nvd_notification_t, GError**) = dlsym(notification->lib,
-                                                              "notify_notification_show");
+        bool (*show_fn)(nvd_notification_t, GError **) =
+                dlsym(notification->lib, "notify_notification_show");
         if (!show_fn) {
-                nvd_error_message("libnotify is missing required symbols, see assertion message below.");
+                nvd_error_message(
+                        "libnotify is missing required symbols, see assertion "
+                        "message below.");
                 NVD_ASSERT(show_fn != NULL);
         }
-        
+
         show_fn(notification->raw, NULL);
 }
 
 void nvd_delete_notification_sbx(NvdNotification *notification) {
-        NVD_ASSERT_FATAL(notification != NULL); /* Fatal to avoid some pretty scary bugs. */
+        NVD_ASSERT_FATAL(notification !=
+                         NULL); /* Fatal to avoid some pretty scary bugs. */
         if (dlclose(notification->lib) < 0) {
                 nvd_set_error(NVD_INTERNAL_ERROR);
                 abort();
@@ -153,23 +163,17 @@ void nvd_delete_notification_sbx(NvdNotification *notification) {
         free(notification);
 }
 
-void nvd_add_notification_action_sbx(NvdNotification* notification,
-                                     const char* action,
-                                     int  value_to_set,
-                                     int* value_to_return) {
+void nvd_add_notification_action_sbx(NvdNotification *notification,
+                                     const char *action, int value_to_set,
+                                     int *value_to_return) {
         NVD_ASSERT_FATAL(notification != NULL);
-        void (*fn) (void *notification,
-                    const char *action,
-                    const char *label,
-                    void (*fn_callback)(void*, char*, gpointer),
-                    gpointer user_data,
-                    GFreeFunc free_func) = dlsym(notification->lib,
-                                                 "notify_notification_add_action");
-                
-        struct NvdActionsArgs data = {
-                value_to_return,
-                value_to_set
-        };
-        
-        fn(notification->raw, action, action, (void*) &nvd_set_action_ptr, (gpointer) &data, NULL);
+        void (*fn)(void *notification, const char *action, const char *label,
+                   void (*fn_callback)(void *, char *, gpointer),
+                   gpointer user_data, GFreeFunc free_func) =
+                dlsym(notification->lib, "notify_notification_add_action");
+
+        struct NvdActionsArgs data = {value_to_return, value_to_set};
+
+        fn(notification->raw, action, action, (void *)&nvd_set_action_ptr,
+           (gpointer)&data, NULL);
 }

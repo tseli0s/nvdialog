@@ -43,14 +43,15 @@ typedef void *NvdParentWindow;
 
 /**
  * @brief Initializes NvDialog.
- * 
- * This function initializes NvDialog. It's the first function that should be called
- * when you create your program as without it, you cannot create any dialogs or use the
- * library at all.
  *
- * @note You should call this function to the same thread you're creating your dialogs from.
- * If you also happen to use a library used by NvDialog as the backend, make sure that the two libraries
- * stay in the same thread to avoid race conditions.
+ * This function initializes NvDialog. It's the first function that should be
+ * called when you create your program as without it, you cannot create any
+ * dialogs or use the library at all.
+ *
+ * @note You should call this function to the same thread you're creating your
+ * dialogs from. If you also happen to use a library used by NvDialog as the
+ * backend, make sure that the two libraries stay in the same thread to avoid
+ * race conditions.
  * @since v0.1.0
  * @ingroup Core
  * @return 0 on success, else a negative error code indicating failure.
@@ -59,13 +60,14 @@ NVD_API int nvd_init();
 
 /**
  * @brief Sets the application name to use inside NvDialog.
- * @details This function sets the application name that NvDialog will use if an application name
- * is needed. By default, the application name is set to "NvDialog Application". The application name
- * is used in notifications, so it is important to set the actual application name.
+ * @details This function sets the application name that NvDialog will use if an
+ * application name is needed. By default, the application name is set to
+ * "NvDialog Application". The application name is used in notifications, so it
+ * is important to set the actual application name.
  * @ingroup Core
  * @param application_name The application name to use.
  */
-NVD_API void nvd_set_application_name(const char* application_name);
+NVD_API void nvd_set_application_name(const char *application_name);
 
 /**
  * @brief Returns the application name set inside NvDialog.
@@ -79,7 +81,8 @@ NVD_API const char *nvd_get_application_name();
  * @brief Returns the argv[0] given to nvdialog.
  * @details This function returns the parameter passed to nvdialog during
  * nvd_init. It is mainly intended to be used internally.
- * @deprecated This function is deprecated as of v0.8.1 and will only return NULL
+ * @deprecated This function is deprecated as of v0.8.1 and will only return
+ * NULL
  * @ingroup Core
  * @return The argv[0] given to nvdialog on success, otherwise NULL.
  */
@@ -119,7 +122,8 @@ NVD_API void nvd_delete_parent(void);
  * @brief Deletes an object creates by NvDialog.
  * @details Call this function when you are no longer interested in using the
  * parameter passed anymore, to free up any resources occupied by the object.
- * Note that calling this in the middle of an operation will cause use after free.
+ * Note that calling this in the middle of an operation will cause use after
+ * free.
  * @ingroup Core
  * @param object The object to be deleted.
  */

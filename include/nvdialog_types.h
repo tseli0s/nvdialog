@@ -41,17 +41,18 @@
  */
 typedef enum {
         NVD_DIALOG_SIMPLE = 0xff, /**< A simple dialog box, no decorations. */
-        NVD_DIALOG_WARNING,       /**< A warning message to be used for warnings, with warning color styling. */
-        NVD_DIALOG_ERROR,         /**< An error message box, with error styling. */
+        NVD_DIALOG_WARNING, /**< A warning message to be used for warnings, with
+                               warning color styling. */
+        NVD_DIALOG_ERROR,   /**< An error message box, with error styling. */
 } NvdDialogType;
 
-/** 
+/**
  * @brief The enumerator containing most
  * errors the library can handle.
  * @sa @ref nvd_stringify_error
  */
 typedef enum {
-        NVD_NO_ERROR   = 0,
+        NVD_NO_ERROR = 0,
         NVD_NO_DISPLAY = 0xff,
         NVD_BACKEND_FAILURE,
         NVD_INVALID_PARAM,
@@ -83,7 +84,8 @@ typedef enum {
  */
 typedef enum {
         NVD_REPLY_OK = 0x04, /**< User accepted the question. */
-        NVD_REPLY_CANCEL,    /**< User cancelled the question. Also used as a fallback. */
+        NVD_REPLY_CANCEL,    /**< User cancelled the question. Also used as a
+                                fallback. */
         NVD_REPLY_NO         /**< User rejected the question. */
 } NvdReply;
 
@@ -98,7 +100,8 @@ typedef struct {
         short major;  /**< Major version of NvDialog. */
         short minor;  /**< Minor version of NvDialog. */
         short patch;  /**< Patch version of NvDialog. */
-        char *string; /**< String representation of the version for eg. printf() calls. */
+        char *string; /**< String representation of the version for eg. printf()
+                         calls. */
 } NvdVersion;
 
 #endif /* __nvdialog_types_h__ */

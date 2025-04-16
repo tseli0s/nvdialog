@@ -22,25 +22,21 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog_win32.h"
-#include "../../nvdialog_assert.h"
 #include <windef.h>
 
-static HICON nvd_load_hicon_win32(const char* path) {
-    const HICON icon = (HICON) LoadImage(
-        NULL,
-        path,
-        IMAGE_ICON,
-        0,
-        0,
-        LR_LOADFROMFILE
-    );
+#include "../../nvdialog_assert.h"
+#include "nvdialog_win32.h"
 
-    NVD_RETURN_IF_NULL(icon);
-    return icon;
+static HICON nvd_load_hicon_win32(const char *path) {
+        const HICON icon =
+                (HICON)LoadImage(NULL, path, IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+
+        NVD_RETURN_IF_NULL(icon);
+        return icon;
 }
 
-NVD_INTERNAL_FUNCTION static HICON nvd_hicon_from_bytes(const uint8_t *data, int width, int height) {
+NVD_INTERNAL_FUNCTION static HICON nvd_hicon_from_bytes(const uint8_t *data,
+                                                        int width, int height) {
         HBITMAP bitmap, mask;
         HDC hdc = GetDC(NULL);
         HDC memDC = CreateCompatibleDC(hdc);
@@ -53,7 +49,8 @@ NVD_INTERNAL_FUNCTION static HICON nvd_hicon_from_bytes(const uint8_t *data, int
         bmi.bmiHeader.biBitCount = 32;
         bmi.bmiHeader.biCompression = BI_RGB;
 
-        bitmap = CreateDIBitmap(hdc, &bmi.bmiHeader, CBM_INIT, data, &bmi, DIB_RGB_COLORS);
+        bitmap = CreateDIBitmap(hdc, &bmi.bmiHeader, CBM_INIT, data, &bmi,
+                                DIB_RGB_COLORS);
         mask = CreateBitmap(width, height, 1, 1, NULL);
 
         ICONINFO ii = {0};
@@ -71,31 +68,31 @@ NVD_INTERNAL_FUNCTION static HICON nvd_hicon_from_bytes(const uint8_t *data, int
         return hIcon;
 }
 
-NvdAboutDialog *nvd_about_dialog_win32(const char *appname,
-                                       const char *brief,
+NvdAboutDialog *nvd_about_dialog_win32(const char *appname, const char *brief,
                                        const char *logo) {
-        (void) logo;
-        NvdAboutDialog *dialog = (NvdAboutDialog *)malloc(sizeof(struct _NvdAboutDialog));
+        (void)logo;
+        NvdAboutDialog *dialog =
+                (NvdAboutDialog *)malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
 
-        dialog->title    = (char *)appname;
+        dialog->title = (char *)appname;
         dialog->contents = (char *)brief;
-        dialog->raw      = NULL;
+        dialog->raw = NULL;
 
         return dialog;
 }
 
 void nvd_about_dialog_set_version_win32(NvdAboutDialog *dialog,
-                                        const char     *version) {
+                                        const char *version) {
         dialog->version = (char *)version;
 }
 
 void nvd_about_dialog_set_license_link_win32(NvdAboutDialog *dialog,
-                                            const char      *license_link, 
-                                            const char      *txt) {
-        (void) dialog;
-        (void) license_link;
-        (void) txt;
+                                             const char *license_link,
+                                             const char *txt) {
+        (void)dialog;
+        (void)license_link;
+        (void)txt;
 
         return; /* Unfortunately can't be implemented with the WinAPI. */
 }
@@ -107,12 +104,14 @@ void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
                 NVD_ASSERT(app_icon != NULL);
         }
 
-        int result = ShellAbout(nvd_get_parent(),
-                                dialog->title,
-                                dialog->contents,
-                                (dialog->image != NULL) ? nvd_hicon_from_bytes(dialog->image->data, dialog->image->width, dialog->image->height) : app_icon
-                        );
+        int result =
+                ShellAbout(nvd_get_parent(), dialog->title, dialog->contents,
+                           (dialog->image != NULL)
+                                   ? nvd_hicon_from_bytes(dialog->image->data,
+                                                          dialog->image->width,
+                                                          dialog->image->height)
+                                   : app_icon);
 
-        (app_icon != NULL) ? DestroyIcon(app_icon): (void) app_icon;
+        (app_icon != NULL) ? DestroyIcon(app_icon) : (void)app_icon;
         if (!result) nvd_set_error(NVD_INTERNAL_ERROR);
 }

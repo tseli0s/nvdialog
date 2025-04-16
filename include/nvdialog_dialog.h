@@ -35,10 +35,9 @@
 #error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
 #endif /* __nvdialog_h__ */
 
-#include "nvdialog_platform.h"
-
 #include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
+#include "nvdialog_platform.h"
 
 #endif /* __nvdialog_dialog_h__ */

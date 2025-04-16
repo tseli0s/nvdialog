@@ -44,7 +44,8 @@
  * the error manually.
  *
  * @ingroup Error
- * @returns The error code (Will be automatically 0 if no errors were encountered).
+ * @returns The error code (Will be automatically 0 if no errors were
+ * encountered).
  */
 NVD_API NvdError nvd_get_error(void);
 
@@ -53,8 +54,8 @@ NVD_API NvdError nvd_get_error(void);
  * used to print errors to the console.
  * @returns The string representation of the error, or NULL on failure.
  * @ingroup Error
- * @note The string returned is saved inside the function as static, and each call
- * simply overwrites it.
+ * @note The string returned is saved inside the function as static, and each
+ * call simply overwrites it.
  */
 NVD_API const char *nvd_stringify_error(NvdError err);
 

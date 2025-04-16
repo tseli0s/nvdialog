@@ -29,21 +29,22 @@
 
 #define NVD_MAX_USER_DATA (6)
 
-#include "nvdialog.h"
 #include <stdbool.h>
 
+#include "nvdialog.h"
+
 struct _NvdDialogBox {
-        void *window_handle;
-        char *msg;
-        char *content;
+        void* window_handle;
+        char* msg;
+        char* content;
         char *accept_label, *reject_label;
-	void* accept_button;
+        void* accept_button;
         NvdDialogType type;
 };
 
 struct _NvdAboutDialog {
         void* raw;
-        char* title, *contents;
+        char *title, *contents;
         const char* version;
         const char* hyperlinks[NVD_MAX_USER_DATA];
         short amount_of_hyperlinks;
@@ -52,46 +53,45 @@ struct _NvdAboutDialog {
         void* buttons[4];
         short amount_of_buttons;
         void* layout;
-        NvdImage *image;
+        NvdImage* image;
 };
 
 struct _NvdFileDialog {
         void* raw;
         const char* title;
-        const char* filename, *file_extensions;
+        const char *filename, *file_extensions;
         bool location_was_chosen, is_save_dialog, is_dir_dialog;
 };
 
 struct _NvdQuestionBox {
         void* window_handle;
-        char* title, *contents;
+        char *title, *contents;
         NvdReply reply;
         NvdQuestionButton buttons;
         char *accept_label, reject_label;
 };
 
 struct _NvdNotification {
-        char *title;
-        char *body;
+        char* title;
+        char* body;
         NvdNotifyType type;
         bool shown;
-        void *raw;
-        void *lib;
+        void* raw;
+        void* lib;
         void (*destructor)(NvdNotification* self);
 };
 
 struct _NvdCSSManager {
-        void *raw;
+        void* raw;
         bool used;
-        const char *filename;
-        void *extra_data;
+        const char* filename;
+        void* extra_data;
 };
 
 struct _NvdImage {
-    const uint8_t *data;
-    size_t len;
-    int width, height;
+        const uint8_t* data;
+        size_t len;
+        int width, height;
 };
-    
 
 #endif /* __nvdialog_typeimpl_h */

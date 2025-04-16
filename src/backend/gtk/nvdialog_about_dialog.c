@@ -22,12 +22,13 @@
  * IN THE SOFTWARE.
  */
 
+#include <stdio.h>
+#include <string.h>
+
 #include "../../nvdialog_assert.h"
 #include "gdk-pixbuf/gdk-pixbuf.h"
 #include "gtk/gtk.h"
 #include "nvdialog_gtk.h"
-#include <stdio.h>
-#include <string.h>
 
 static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
         gtk_widget_set_margin_start(widget, 16);
@@ -36,61 +37,59 @@ static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
         gtk_widget_set_margin_bottom(widget, 16);
 }
 
-NvdAboutDialog *nvd_about_dialog_gtk(const char *appname,
-                                     const char *brief,
+NvdAboutDialog *nvd_about_dialog_gtk(const char *appname, const char *brief,
                                      const char *icon_name) {
-        GdkPixbuf *img         = NULL;
+        GdkPixbuf *img = NULL;
         NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
-        
-        dialog->title          = (char *)appname;
-        dialog->contents       = (char *)brief;
-        
+
+        dialog->title = (char *)appname;
+        dialog->contents = (char *)brief;
+
         dialog->raw = gtk_about_dialog_new();
         gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog->raw),
                                           appname);
         gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog->raw), brief);
         if (icon_name) {
                 size_t len = 0;
-                const char *icons_path = "/usr/share/icons/hicolor/256x256/apps/";
+                const char *icons_path =
+                        "/usr/share/icons/hicolor/256x256/apps/";
                 GError *err = NULL;
                 len += strlen(icons_path);
                 len += strlen(icon_name);
-                len += 1; // NULL byte
+                len += 1;  // NULL byte
                 char *buffer = malloc(len * sizeof(char));
                 if (!buffer) {
                         NVD_ASSERT(buffer != NULL);
                         nvd_set_error(NVD_OUT_OF_MEMORY);
                         return NULL;
                 }
-                sprintf(buffer,
-                        "%s%s",
-                        icons_path,
-                        icon_name);
+                sprintf(buffer, "%s%s", icons_path, icon_name);
                 buffer[len] = '\0';
                 img = gdk_pixbuf_new_from_file(buffer, &err);
                 if (!img) {
                         NVD_ASSERT(img != NULL);
                         nvd_set_error(NVD_INTERNAL_ERROR);
-                        nvd_error_message("Failed to load '%s': %s.", buffer, err->message);
+                        nvd_error_message("Failed to load '%s': %s.", buffer,
+                                          err->message);
                         return NULL;
                 }
 
                 gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog->raw), img);
         }
-        
+
         return dialog;
 }
 
 void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog,
-                                      const char     *version) {
+                                      const char *version) {
         gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog->raw), version);
         return;
 }
 
 void nvd_about_dialog_set_license_link_gtk(NvdAboutDialog *dialog,
-                                           const char     *license_link, 
-                                           const char     *txt) {
+                                           const char *license_link,
+                                           const char *txt) {
         gtk_about_dialog_set_license(GTK_ABOUT_DIALOG(dialog->raw),
                                      license_link);
         return;
@@ -110,12 +109,8 @@ void nvd_dialog_set_icon_gtk(NvdAboutDialog *dialog, NvdImage *image) {
         NVD_ASSERT(dialog->raw != NULL);
         NVD_ASSERT(dialog->image_from_icon == true);
 
-        GdkPixbuf *pixels = gdk_pixbuf_new_from_data(image->data,
-                                         GDK_COLORSPACE_RGB,
-                                          true, 8,
-                                              image->width,
-                                              image->height,
-                                              image->width * 4,
-                                              NULL, NULL);
+        GdkPixbuf *pixels = gdk_pixbuf_new_from_data(
+                image->data, GDK_COLORSPACE_RGB, true, 8, image->width,
+                image->height, image->width * 4, NULL, NULL);
         gtk_about_dialog_set_logo(dialog->raw, pixels);
 }

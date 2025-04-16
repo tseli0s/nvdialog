@@ -70,8 +70,9 @@ NVD_API NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
 
 /**
  * @brief Shows a dialog to the system shell.
- * @details The dialog given is rendered to the screen when this function is called.
- * This function is not yet useful since some API changes may be required to work.
+ * @details The dialog given is rendered to the screen when this function is
+ * called. This function is not yet useful since some API changes may be
+ * required to work.
  * @param dialog The dialog to show.
  * @ingroup QuestionDialog
  * @note Obsolete function, currently unnecessary.
@@ -90,8 +91,9 @@ NVD_API void nvd_show_dialog(NvdDialogBox *dialog);
  * more.
  * @since  v0.1.1
  */
-NVD_API NvdQuestionBox* nvd_dialog_question_new(const char *title, const char *question,
-                                        NvdQuestionButton button);
+NVD_API NvdQuestionBox *nvd_dialog_question_new(const char *title,
+                                                const char *question,
+                                                NvdQuestionButton button);
 
 /**
  * @brief Shows the dialog box given to the system and returns the choice given
@@ -106,7 +108,7 @@ NVD_API NvdReply nvd_get_reply(NvdQuestionBox *box);
  * @param dialog The dialog to retrieve the object from.
  * @ingroup QuestionDialog
  * @return void* The raw toolkit-created object.
- */ 
+ */
 NVD_API void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog);
 
 /**
@@ -124,4 +126,5 @@ NVD_API void *nvd_dialog_box_get_raw(NvdDialogBox *dialog);
  * @param accept_text The new label of the dialog button. May not be NULL.
  * @since v0.8.0
  */
-NVD_API void nvd_dialog_box_set_accept_text(NvdDialogBox* dialog, const char* accept_text);
+NVD_API void nvd_dialog_box_set_accept_text(NvdDialogBox *dialog,
+                                            const char *accept_text);

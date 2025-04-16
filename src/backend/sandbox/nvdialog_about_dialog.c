@@ -22,9 +22,10 @@
  * IN THE SOFTWARE.
  */
 
+#include <stdio.h>
+
 #include "../../nvdialog_assert.h"
 #include "nvdialog_sbx.h"
-#include <stdio.h>
 
 static inline void nvd_set_margins_sbx3(GtkWidget *widget) {
         gtk_widget_set_margin_start(widget, 16);
@@ -33,20 +34,16 @@ static inline void nvd_set_margins_sbx3(GtkWidget *widget) {
         gtk_widget_set_margin_bottom(widget, 16);
 }
 
-NvdAboutDialog *nvd_about_dialog_sbx(const char *appname,
-                                     const char *brief,
+NvdAboutDialog *nvd_about_dialog_sbx(const char *appname, const char *brief,
                                      const char *icon_name) {
         NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
-        
-        dialog->title          = (char *)appname;
-        dialog->contents       = (char *)brief;
+
+        dialog->title = (char *)appname;
+        dialog->contents = (char *)brief;
 
         char buffer[NVDIALOG_MAXBUF];
-        sprintf(buffer,
-                "%s%s",
-                "/usr/share/icons/hicolor/",
-                icon_name);
+        sprintf(buffer, "%s%s", "/usr/share/icons/hicolor/", icon_name);
         GdkPixbuf *img = gdk_pixbuf_new_from_file(buffer, NULL);
 
         dialog->raw = gtk_about_dialog_new();
@@ -58,14 +55,14 @@ NvdAboutDialog *nvd_about_dialog_sbx(const char *appname,
 }
 
 void nvd_about_dialog_set_version_sbx(NvdAboutDialog *dialog,
-                                      const char     *version) {
+                                      const char *version) {
         gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog->raw), version);
         return;
 }
 
 void nvd_about_dialog_set_license_link_sbx(NvdAboutDialog *dialog,
-                                           const char     *license_link, 
-                                           const char     *txt) {
+                                           const char *license_link,
+                                           const char *txt) {
         gtk_about_dialog_set_license(GTK_ABOUT_DIALOG(dialog->raw),
                                      license_link);
         return;

@@ -27,30 +27,31 @@
 #ifndef __nvdialog_util_h__
 #define __nvdialog_util_h__ (1)
 
-#include <string.h>
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
-#if defined (unix) || defined(__APPLE__)
+#if defined(unix) || defined(__APPLE__)
 #include <sys/types.h>
 #include <unistd.h>
 #else
-#include <windows.h> // Has to be included apparently
 #include <processthreadsapi.h>
-#endif /* NVD_PLATFORM_UNIX */
+#include <windows.h>  // Has to be included apparently
+#endif                /* NVD_PLATFORM_UNIX */
 
 /**
  * @brief A data structure to hold information about a Linux
  * distribution. It should be returned by @ref nvd_get_distribution_info;
  */
 typedef struct _NvdDistroInfo {
-    char* name;
-    long version_m;
-    long version_s;
+        char* name;
+        long version_m;
+        long version_s;
 } NvdDistroInfo;
 
 /**
- * @brief An identifier to match a new process ID spawned by @ref nvd_create_process
+ * @brief An identifier to match a new process ID spawned by @ref
+ * nvd_create_process
  * @details Similar to the `pid_t` type (And similarly defined), this type
  * keeps the process ID for a forked process.
  * @sa @ref nvd_create_process
@@ -61,21 +62,24 @@ typedef signed long NvdProcessID;
 /**
  * @brief Creates a new process by forking.
  * @details This function is used to fork the current process.
- * On success, the @ref is returned to the parent, and 0 is returned to 
+ * On success, the @ref is returned to the parent, and 0 is returned to
  * the child.
- * @note On Windows, this function does nothing. You should use `CreateProcess` manually
- * instead, which is guaranteed to work as expected.
+ * @note On Windows, this function does nothing. You should use `CreateProcess`
+ * manually instead, which is guaranteed to work as expected.
  * @since v0.7.0
  * @sa @ref NvdProcessID
  */
 NvdProcessID nvd_create_process(void);
 
 /**
- * @brief Returns a boolean to indicate whether the host is running the application through
- * a container (eg. Flatpak). It's accuracy generally varies and the definition is actually
- * pretty hacky.
- * @note NvDialog does not consider Windows as a sandboxed environment regardless of what's the actual case.
- * @attention As a general rule, most macOS applications are sandboxed, and either way, it wouldn't change anything. This function won't return true on macOS **EVER**.
+ * @brief Returns a boolean to indicate whether the host is running the
+ * application through a container (eg. Flatpak). It's accuracy generally varies
+ * and the definition is actually pretty hacky.
+ * @note NvDialog does not consider Windows as a sandboxed environment
+ * regardless of what's the actual case.
+ * @attention As a general rule, most macOS applications are sandboxed, and
+ * either way, it wouldn't change anything. This function won't return true on
+ * macOS **EVER**.
  * @since v0.7.0
  */
 bool nvd_is_sandboxed(void);
@@ -97,17 +101,19 @@ char** nvd_seperate_args(const char* str);
 
 /**
  * @brief Returns the distribution information on Linux, lik
- * @note This function will return `NULL` if the OS is not GNU/Linux. It will also only return data related
- * to the base of the distribution, NOT the exact distribution you're running (eg. on Ubuntu you will get Debian).
+ * @note This function will return `NULL` if the OS is not GNU/Linux. It will
+ * also only return data related to the base of the distribution, NOT the exact
+ * distribution you're running (eg. on Ubuntu you will get Debian).
  * @return A @ref NvdDistroInfo filled out with all the necessary information,
- * or NULL if there is a failure (Will set the error accordingly unless not on GNU/Linux).
+ * or NULL if there is a failure (Will set the error accordingly unless not on
+ * GNU/Linux).
  */
 NvdDistroInfo nvd_get_distro_branch();
 
 /**
  * @brief Returns the path to `libnotify` on the system for `dlopen`.
- * @note Linux-only function, will not work on Windows/macOS. The pointer returned was dynamically allocated
- * and hence should be freed using `free()`.
+ * @note Linux-only function, will not work on Windows/macOS. The pointer
+ * returned was dynamically allocated and hence should be freed using `free()`.
  *
  * @return The path to libnotify on each platform if succesfull, otherwise NULL.
  */
@@ -116,9 +122,11 @@ char* nvd_get_libnotify_path();
 /**
  * @brief Returns the path the library is using to find `libnotify`.
  * @note This is unrelated to @ref nvd_get_libnotify_path
- * @return A static pointer to a NULL-terminated string to the `libnotify` 's SO file path.
+ * @return A static pointer to a NULL-terminated string to the `libnotify` 's SO
+ * file path.
  */
-// For convenience reasons this is the only function from this file implemented in nvdialog_main.c
+// For convenience reasons this is the only function from this file implemented
+// in nvdialog_main.c
 const char* nvd_path_to_libnotify();
 
 #endif /* __nvdialog_util_h__ */

@@ -22,22 +22,22 @@
  * IN THE SOFTWARE.
  */
 
-#include "../../nvdialog_assert.h"
-#include "nvdialog_win32.h"
 #include <stdint.h>
 #include <wchar.h>
 #include <windows.h>
 #include <winuser.h>
 
-NvdQuestionBox *nvd_question_win32(const char       *title,
-                                   const char       *question,
+#include "../../nvdialog_assert.h"
+#include "nvdialog_win32.h"
+
+NvdQuestionBox *nvd_question_win32(const char *title, const char *question,
                                    NvdQuestionButton buttons) {
         NvdQuestionBox *box = malloc(sizeof(struct _NvdQuestionBox));
         NVD_RETURN_IF_NULL(box);
 
-        box->title    = (char *)title;
+        box->title = (char *)title;
         box->contents = (char *)question;
-        box->buttons  = buttons;
+        box->buttons = buttons;
 
         return box;
 }
@@ -45,31 +45,29 @@ NvdQuestionBox *nvd_question_win32(const char       *title,
 NvdReply nvd_get_reply_win32(NvdQuestionBox *box) {
         uint32_t flag = 0;
         switch (box->buttons) {
-        case NVD_YES_NO:
-        case NVD_YES_CANCEL:
-                flag = MB_YESNO;
-                break;
-        case NVD_YES_NO_CANCEL:
-                flag = MB_YESNOCANCEL;
-                break;
-        default:
-                nvd_set_error(NVD_INVALID_PARAM);
-                return -1;
+                case NVD_YES_NO:
+                case NVD_YES_CANCEL:
+                        flag = MB_YESNO;
+                        break;
+                case NVD_YES_NO_CANCEL:
+                        flag = MB_YESNOCANCEL;
+                        break;
+                default:
+                        nvd_set_error(NVD_INVALID_PARAM);
+                        return -1;
         }
-        int32_t reply = MessageBox(nvd_get_parent(),
-                                   box->contents,
-                                   box->title,
-                                   (unsigned int) flag | MB_ICONQUESTION);
+        int32_t reply = MessageBox(nvd_get_parent(), box->contents, box->title,
+                                   (unsigned int)flag | MB_ICONQUESTION);
         switch (reply) {
-        case IDYES:
-                box->reply = NVD_REPLY_OK;
-                break;
-        case IDNO:
-                box->reply = NVD_REPLY_NO;
-                break;
-        case IDCANCEL:
-                box->reply = NVD_REPLY_CANCEL;
-                break;
+                case IDYES:
+                        box->reply = NVD_REPLY_OK;
+                        break;
+                case IDNO:
+                        box->reply = NVD_REPLY_NO;
+                        break;
+                case IDCANCEL:
+                        box->reply = NVD_REPLY_CANCEL;
+                        break;
         }
         return box->reply;
 }

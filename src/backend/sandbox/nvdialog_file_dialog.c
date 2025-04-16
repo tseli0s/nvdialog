@@ -23,10 +23,12 @@
  */
 
 #include "dialogs/nvdialog_file_dialog.h"
-#include "../../nvdialog_assert.h"
-#include "nvdialog_sbx.h"
+
 #include <stdlib.h>
 #include <string.h>
+
+#include "../../nvdialog_assert.h"
+#include "nvdialog_sbx.h"
 
 NvdFileDialog *nvd_open_file_dialog_sbx(const char *title,
                                         const char *file_extensions) {
@@ -34,11 +36,9 @@ NvdFileDialog *nvd_open_file_dialog_sbx(const char *title,
         NVD_RETURN_IF_NULL(dialog);
         dialog->file_extensions = (char *)file_extensions;
 
-        dialog->raw = gtk_file_chooser_native_new(title,
-                                                  nvd_get_parent(),
+        dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
                                                   GTK_FILE_CHOOSER_ACTION_OPEN,
-                                                  "_Open",
-                                                  "_Cancel");
+                                                  "_Open", "_Cancel");
         NVD_RETURN_IF_NULL(dialog);
 
         return dialog;
@@ -48,11 +48,9 @@ NvdFileDialog *nvd_save_file_dialog_sbx(const char *title,
                                         const char *default_filename) {
         NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
-        dialog->raw = gtk_file_chooser_native_new(title,
-                                                  nvd_get_parent(),
+        dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
                                                   GTK_FILE_CHOOSER_ACTION_SAVE,
-                                                  "_Open",
-                                                  "_Cancel");
+                                                  "_Open", "_Cancel");
         NVD_RETURN_IF_NULL(dialog);
         return dialog;
 }
@@ -63,11 +61,12 @@ void *nvd_open_file_dialog_get_raw_sbx(NvdFileDialog *dlg) {
 }
 
 void nvd_get_file_location_sbx(NvdFileDialog *dialog, const char **savebuf) {
-        GtkResponseType response = gtk_native_dialog_run(GTK_NATIVE_DIALOG(dialog->raw));
-        char           *filename;
+        GtkResponseType response =
+                gtk_native_dialog_run(GTK_NATIVE_DIALOG(dialog->raw));
+        char *filename;
         if (response == GTK_RESPONSE_OK || response == GTK_RESPONSE_ACCEPT) {
                 filename = gtk_file_chooser_get_filename(
-                    GTK_FILE_CHOOSER(dialog->raw));
+                        GTK_FILE_CHOOSER(dialog->raw));
                 dialog->location_was_chosen = true;
                 gtk_widget_destroy(dialog->raw);
                 if (filename) {
@@ -80,8 +79,7 @@ void nvd_get_file_location_sbx(NvdFileDialog *dialog, const char **savebuf) {
                 gtk_widget_destroy(dialog->raw);
         }
 
-        while (gtk_events_pending())
-                gtk_main_iteration();
+        while (gtk_events_pending()) gtk_main_iteration();
 
         *savebuf = dialog->filename;
 }

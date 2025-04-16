@@ -41,72 +41,65 @@ inline static void nvd_reply_write_no(NvdReply *reply) {
         *reply = NVD_REPLY_NO;
 }
 
-NvdQuestionBox *nvd_question_adw(const char       *title,
-                                 const char       *question,
+NvdQuestionBox *nvd_question_adw(const char *title, const char *question,
                                  NvdQuestionButton buttons) {
         NvdQuestionBox *dialog = malloc(sizeof(struct _NvdQuestionBox));
         NVD_RETURN_IF_NULL(dialog);
         dialog->title = (char *)title;
         dialog->contents = (char *)question;
-        dialog->reply
-            = NVD_REPLY_CANCEL; /* Default reply if no other was given */
+        dialog->reply =
+                NVD_REPLY_CANCEL; /* Default reply if no other was given */
 
         dialog->window_handle = (AdwMessageDialog *)adw_message_dialog_new(
-            nvd_get_parent(), dialog->title, dialog->contents);
+                nvd_get_parent(), dialog->title, dialog->contents);
 
         NVD_CHECK_INTERNAL(dialog->window_handle, dialog, NULL);
 
         switch (buttons) {
-        case NVD_YES_NO:
-                adw_message_dialog_add_response(
-                    ADW_MESSAGE_DIALOG(dialog->window_handle),
-                    "cancel",
-                    "Cancel");
-                break;
-        case NVD_YES_NO_CANCEL:
-                adw_message_dialog_add_response(
-                    ADW_MESSAGE_DIALOG((GtkWidget *)dialog->window_handle),
-                    "cancel",
-                    "Cancel");
-                adw_message_dialog_add_response(
-                    ADW_MESSAGE_DIALOG((GtkWidget *)dialog->window_handle),
-                    "reject",
-                    "No");
-                break;
-        case NVD_YES_CANCEL:
-                adw_message_dialog_add_response(
-                    ADW_MESSAGE_DIALOG((GtkWidget *)dialog->window_handle),
-                    "reject",
-                    "No");
-                break;
-        default:
-                return NULL;
+                case NVD_YES_NO:
+                        adw_message_dialog_add_response(
+                                ADW_MESSAGE_DIALOG(dialog->window_handle),
+                                "cancel", "Cancel");
+                        break;
+                case NVD_YES_NO_CANCEL:
+                        adw_message_dialog_add_response(
+                                ADW_MESSAGE_DIALOG(
+                                        (GtkWidget *)dialog->window_handle),
+                                "cancel", "Cancel");
+                        adw_message_dialog_add_response(
+                                ADW_MESSAGE_DIALOG(
+                                        (GtkWidget *)dialog->window_handle),
+                                "reject", "No");
+                        break;
+                case NVD_YES_CANCEL:
+                        adw_message_dialog_add_response(
+                                ADW_MESSAGE_DIALOG(
+                                        (GtkWidget *)dialog->window_handle),
+                                "reject", "No");
+                        break;
+                default:
+                        return NULL;
         }
         adw_message_dialog_add_response(
-            ADW_MESSAGE_DIALOG((GtkWidget *)dialog->window_handle),
-            "accept",
-            "Okay");
+                ADW_MESSAGE_DIALOG((GtkWidget *)dialog->window_handle),
+                "accept", "Okay");
         /* Just for better looks. */
         adw_message_dialog_set_response_appearance(
-            ADW_MESSAGE_DIALOG((GtkWidget *)dialog->window_handle),
-            "accept",
-            ADW_RESPONSE_SUGGESTED);
+                ADW_MESSAGE_DIALOG((GtkWidget *)dialog->window_handle),
+                "accept", ADW_RESPONSE_SUGGESTED);
         return dialog;
 }
 
 NvdReply nvd_get_reply_adw(NvdQuestionBox *box) {
         g_signal_connect_swapped((GtkWidget *)box->window_handle,
                                  "response::accept",
-                                 G_CALLBACK(nvd_reply_write_ok),
-                                 &box->reply);
+                                 G_CALLBACK(nvd_reply_write_ok), &box->reply);
         g_signal_connect_swapped((GtkWidget *)box->window_handle,
                                  "response::reject",
-                                 G_CALLBACK(nvd_reply_write_no),
-                                 &box->reply);
-        g_signal_connect_swapped((GtkWidget *)box->window_handle,
-                                 "response::cancel",
-                                 G_CALLBACK(nvd_reply_write_cancel),
-                                 &box->reply);
+                                 G_CALLBACK(nvd_reply_write_no), &box->reply);
+        g_signal_connect_swapped(
+                (GtkWidget *)box->window_handle, "response::cancel",
+                G_CALLBACK(nvd_reply_write_cancel), &box->reply);
 
         gtk_window_present(GTK_WINDOW(box->window_handle));
         g_main_context_iteration(NULL, true);

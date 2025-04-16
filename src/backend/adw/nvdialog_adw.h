@@ -28,18 +28,18 @@
 #define GDK_DISABLE_DEPRECATED
 #define GTK_DISABLE_DEPRECATED
 
-#include "nvdialog.h"
-#include "nvdialog_typeimpl.h"
+#include <adwaita.h>
+
+#include "../nvdialog_util.h"
 #include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
+#include "nvdialog.h"
 #include "nvdialog_notification.h"
-#include "../nvdialog_util.h"
-#include <adwaita.h>
+#include "nvdialog_typeimpl.h"
 
 /* Shows a simple dialog box using libadwaita. */
-NvdDialogBox *nvd_dialog_box_adw(const char *title,
-                                 const char *message,
+NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
                                  NvdDialogType type);
 
 /* Opens a file dialog using libadwaita. */
@@ -50,7 +50,7 @@ NvdFileDialog *nvd_open_file_dialog_adw(const char *title,
 NvdFileDialog *nvd_save_file_dialog_adw(const char *title,
                                         const char *default_filename);
 
-/* 
+/*
  * Returns the filename chosen from the file dialog given to
  * the parameter 'savebuf'. This function is also used to show the
  * actual dialog.
@@ -58,8 +58,7 @@ NvdFileDialog *nvd_save_file_dialog_adw(const char *title,
 void nvd_get_file_location_adw(NvdFileDialog *dialog, char **savebuf);
 
 /* Creates a dialog box with the usual yes, no and cancel buttons. */
-NvdQuestionBox *nvd_question_adw(const char       *title,
-                                 const char       *question,
+NvdQuestionBox *nvd_question_adw(const char *title, const char *question,
                                  NvdQuestionButton buttons);
 
 /* Shows the dialog box given to the system. */
@@ -71,8 +70,8 @@ NvdReply nvd_get_reply_adw(NvdQuestionBox *box);
 /*
  * About dialog box using libadwaita.
  */
-NvdAboutDialog *
-nvd_about_dialog_adw(const char *appname, const char *brief, const char *logo);
+NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
+                                     const char *logo);
 
 /*
  * Shows the dialog given to the system.
@@ -87,33 +86,32 @@ void nvd_about_dialog_set_license_link_adw(NvdAboutDialog *dialog,
  * Sets the version of the application in the About dialog box
  * passed as the parameter.
  */
-void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog, const char *version);
+void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog,
+                                      const char *version);
 
 /*
  * A notification object using the Adwaita backend.
-*/
-NvdNotification *nvd_notification_adw(const char   *title,
-                                      const char   *msg,
+ */
+NvdNotification *nvd_notification_adw(const char *title, const char *msg,
                                       NvdNotifyType type);
-                                
+
 /*
  * Sends the notification to the system.
-*/
+ */
 void nvd_send_notification_adw(NvdNotification *notification);
 
 /* Pretty self-explanatory; See the headers otherwise. */
-void *nvd_about_dialog_get_raw_adw    (NvdAboutDialog *dialog);
-void *nvd_dialog_box_get_raw_adw      (NvdDialogBox   *dialog);
-void *nvd_dialog_question_get_raw_adw (NvdQuestionBox *dialog);
-void *nvd_open_file_dialog_get_raw_adw(NvdFileDialog  *dialog);
+void *nvd_about_dialog_get_raw_adw(NvdAboutDialog *dialog);
+void *nvd_dialog_box_get_raw_adw(NvdDialogBox *dialog);
+void *nvd_dialog_question_get_raw_adw(NvdQuestionBox *dialog);
+void *nvd_open_file_dialog_get_raw_adw(NvdFileDialog *dialog);
 
 /*
  * Sets the specified action for the notification.
  * (Adwaita implementation)
-*/
-void nvd_add_notification_action_adw(NvdNotification* notification,
-                                     const char* action,
-                                     int  value_to_set,
-                                     int* value_to_return);
+ */
+void nvd_add_notification_action_adw(NvdNotification *notification,
+                                     const char *action, int value_to_set,
+                                     int *value_to_return);
 
 #endif /* __nvdialog_adw_h__ */

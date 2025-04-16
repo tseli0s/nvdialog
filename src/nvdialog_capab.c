@@ -27,31 +27,31 @@
 
 static const bool nvd_has_adw_gtk =
 #if defined(NVD_USE_GTK4)
-    true;
+        true;
 #else
-    false;
+        false;
 #endif
 
 static const bool nvd_built_static =
 #if !defined(NVD_STATIC_LINKAGE)
-    true;
+        true;
 #else
-    false;
+        false;
 #endif
 
 static const bool nvd_compat_mode = false;
 
 bool nvd_get_capabilities(int query) {
         switch (query) {
-        case NVD_ADW_BACKEND:
-                return nvd_has_adw_gtk;
-        case NVD_STATIC_LIB:
-                return nvd_built_static;
-        case NVD_COMPAT_MODE:
-                return nvd_compat_mode;
-        default: 
-            nvd_set_error(NVD_INVALID_PARAM);
-            return false;
+                case NVD_ADW_BACKEND:
+                        return nvd_has_adw_gtk;
+                case NVD_STATIC_LIB:
+                        return nvd_built_static;
+                case NVD_COMPAT_MODE:
+                        return nvd_compat_mode;
+                default:
+                        nvd_set_error(NVD_INVALID_PARAM);
+                        return false;
         }
         return false; /* Just to silence compiler warnings */
 }
