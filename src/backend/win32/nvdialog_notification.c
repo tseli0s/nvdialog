@@ -40,13 +40,15 @@ NvdNotification *nvd_notification_win32(const char   *title,
         notification->destructor = NULL;
         notification->type       = type;
         notification->shown      = false;
+        notification->raw        = NULL;
+        notification->lib        = NULL;
         
         /* Heap allocating to save it inside notification->raw */
         NOTIFYICONDATA *nid = malloc(sizeof(NOTIFYICONDATA));;
         if (!nid) nvd_set_error(NVD_OUT_OF_MEMORY);
         NVD_CHECK_INTERNAL(nid, notification, NULL);
 
-        uint32_t icon = 0x0;
+        uint32_t icon = 0;
         switch (notification->type) {
         case NVD_NOTIFICATION_SIMPLE:
                 icon = NIIF_INFO;

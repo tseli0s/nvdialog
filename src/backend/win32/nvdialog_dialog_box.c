@@ -40,9 +40,10 @@ NvdDialogBox *nvd_dialog_box_win32(const char   *title,
 
         dialog->accept_label = "Ok";
         dialog->reject_label = "Deny";
-
-        dialog->msg     = title;
-        dialog->content = message;
+        dialog->window_handle = NULL;
+        dialog->accept_button = NULL;
+        dialog->msg     = (char *) title;
+        dialog->content = (char *) message;
         dialog->type    = type;
 
         return dialog;
