@@ -45,8 +45,6 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname,
         
         dialog->title          = (char *)appname;
         dialog->contents       = (char *)brief;
-
-        
         
         dialog->raw = gtk_about_dialog_new();
         gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog->raw),

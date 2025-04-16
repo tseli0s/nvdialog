@@ -225,6 +225,7 @@ NvdNotification *nvd_notification_new(const char *title, const char *msg, NvdNot
 
 void nvd_send_notification(NvdNotification *notification) {
     NVD_ASSERT(notification != NULL);
+    NVD_ASSERT(notification->raw != NULL);
     NVD_TRY_CALL(mask.send_notification, notification);
 }
 

@@ -12,6 +12,7 @@
 - Switch the default backend on Arch Linux from libadwaita to gtk
 - Cleaned up and restructured `CMakeLists.txt` (This should not break anything, functionality remains the exact same)
 - Provide an option in `CMakeLists.txt` to build the documentation along with the library (Requires `doxygen`)
+- Fixed a problem where types/objects were partially initialized leading to memory issues.
 
 # Changelog -- 0.8.1
 - MacOS about dialog support returned
