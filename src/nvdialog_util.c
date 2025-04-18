@@ -31,7 +31,6 @@
 #include <string.h>
 
 #include "nvdialog_assert.h"
-#include "nvdialog_error.h"
 #include "nvdialog_macros.h"
 
 #ifdef _WIN32
