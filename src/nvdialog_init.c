@@ -64,6 +64,8 @@ int nvd_init_gtk3(NvdBackendMask *mask) {
         mask->notification = nvd_notification_gtk;
         mask->send_notification = nvd_send_notification_gtk;
         mask->add_notification_action = nvd_add_notification_action_gtk;
+
+        return 0;
 }
 #endif
 

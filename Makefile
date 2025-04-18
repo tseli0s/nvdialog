@@ -6,7 +6,7 @@
 CC=gcc
 SRC=src/*.c src/backend/gtk/*.c src/backend/sandbox/*.c
 PUBHEADER=include/*/*
-CFLAGS=-Wall -Wextra -O3 -s -Wno-unused-parameter -fstack-protector-all -fPIC -shared -Iinclude/ -Isrc/impl/ -DNVD_SANDBOX_SUPPORT=1
+CFLAGS=-Wall -Wextra -O3 -s -Wno-unused-parameter -fstack-protector-all -fPIC -shared -Iinclude/ -Ivendor/ -Isrc/impl/ -DNVD_SANDBOX_SUPPORT=1
 OUTFILE=libnvdialog.so
 EXFLAGS=`pkg-config --libs --cflags gtk+-3.0`
 NVDIALOG_MAXBUF=4096

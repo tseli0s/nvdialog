@@ -35,7 +35,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 #else
-#include <processthreadsapi.h>
 #include <windows.h>  // Has to be included apparently
 #endif                /* NVD_PLATFORM_UNIX */
 
