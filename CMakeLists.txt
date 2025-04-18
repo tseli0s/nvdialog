@@ -29,9 +29,10 @@ if(APPLE)
 elseif(CROSS_COMPILE_FOR_WIN32)
     set(CMAKE_C_COMPILER /usr/bin/i686-w64-mingw32-gcc-win32)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-stack-protector -Wno-unused-parameter -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
-elseif(MSVC OR WIN32)
+elseif(MSVC)
+    message(WARNING "MSVC is experimental; prefer GCC/Clang.")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
-    add_compile_definitions(_CRT_SECURE_NO_WARNINGS WIN32_LEAN_AND_MEAN)
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 endif()
 
 set(NVD_HEADERS
