@@ -23,7 +23,6 @@
  */
 
 #include "../../nvdialog_assert.h"
-#include "../../nvdialog_macros.h"
 #include "nvdialog_gtk.h"
 
 struct NvdQuestionData {
