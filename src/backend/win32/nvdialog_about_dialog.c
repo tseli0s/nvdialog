@@ -22,7 +22,7 @@
  * IN THE SOFTWARE.
  */
 
-#include <windef.h>
+#include <windows.h>
 
 #include "../../nvdialog_assert.h"
 #include "nvdialog_win32.h"
