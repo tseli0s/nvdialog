@@ -7,4 +7,3 @@ You can read the [contribution guide](./CONTRIBUTING.md) to implement any of the
 - [ ] Rewrite the [CMakeLists.txt](./CMakeLists.txt) file since it's very messy and cluttered.
 - [ ] Optimizations for GNOME.
 - [ ] Improved `libadwaita` support on GNU/Linux.
-- [ ] Add support for selecting directories only in `NvdFileDialog`
