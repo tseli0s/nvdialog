@@ -25,10 +25,10 @@
 #include "dialogs/nvdialog_file_dialog.h"
 
 #include <stdlib.h>
-#include <string.h>
 
 #include "../../nvdialog_assert.h"
 #include "nvdialog_sbx.h"
+#include "nvdialog_string.h"
 
 NvdFileDialog *nvd_open_file_dialog_sbx(const char *title,
                                         const char *file_extensions) {
@@ -60,7 +60,7 @@ void *nvd_open_file_dialog_get_raw_sbx(NvdFileDialog *dlg) {
         return dlg->raw;
 }
 
-void nvd_get_file_location_sbx(NvdFileDialog *dialog, const char **savebuf) {
+NvdDynamicString *nvd_get_file_location_sbx(NvdFileDialog *dialog) {
         GtkResponseType response =
                 gtk_native_dialog_run(GTK_NATIVE_DIALOG(dialog->raw));
         char *filename;
@@ -70,7 +70,8 @@ void nvd_get_file_location_sbx(NvdFileDialog *dialog, const char **savebuf) {
                 dialog->location_was_chosen = true;
                 gtk_widget_destroy(dialog->raw);
                 if (filename) {
-                        dialog->filename = strdup(filename);
+                        nvd_delete_string(dialog->filename);
+                        dialog->filename = nvd_string_new(filename);
                         g_free(filename);
                 }
         } else {
@@ -81,5 +82,5 @@ void nvd_get_file_location_sbx(NvdFileDialog *dialog, const char **savebuf) {
 
         while (gtk_events_pending()) gtk_main_iteration();
 
-        *savebuf = dialog->filename;
+        return dialog->filename;
 }

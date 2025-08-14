@@ -113,7 +113,8 @@ static NvdDynamicString *nvd_get_file_gtk(NvdFileDialog *dialog) {
                 dialog->location_was_chosen = true;
                 gtk_widget_destroy(dialog->raw);
                 if (filename) {
-                        dialog->filename = strdup(filename);
+                        nvd_delete_string(dialog->filename);
+                        dialog->filename = nvd_string_new(filename);
                         g_free(filename);
                 }
         } else {
