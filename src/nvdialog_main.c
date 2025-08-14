@@ -22,7 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-#define _CRT_SECURE_NO_WARNINGS 1
+ #define _CRT_SECURE_NO_WARNINGS 1
+ #include "nvdialog_string.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
 #include "nvdialog.h"
@@ -36,7 +37,6 @@
 #elif NVD_USE_COCOA
 #include "backend/cocoa/nvdialog_cocoa.h"
 #else
-#include "backend/gtk/nvdialog_gtk.h"
 #endif /* NVD_USE_GTK4 */
 #else
 #include "backend/win32/nvdialog_win32.h"
@@ -230,10 +230,9 @@ NvdFileDialog *nvd_open_folder_dialog_new(const char *title,
                                   default_filename);
 }
 
-void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf) {
+NvdDynamicString *nvd_get_file_location(NvdFileDialog *dialog) {
         NVD_ASSERT(dialog != NULL);
-        NVD_ASSERT(savebuf != NULL);
-        NVD_TRY_CALL(mask.get_file_location, dialog, (char **)savebuf);
+        return NVD_CHECK_FUNCTION(mask.get_file_location, dialog);
 }
 
 NvdNotification *nvd_notification_new(const char *title, const char *msg,
