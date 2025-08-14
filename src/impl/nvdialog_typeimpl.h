@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "nvdialog_string.h"
 #ifndef __nvdialog_typeimpl_h
 #define __nvdialog_typeimpl_h (1)
 
@@ -58,8 +59,9 @@ struct _NvdAboutDialog {
 
 struct _NvdFileDialog {
         void* raw;
-        const char* title;
-        const char *filename, *file_extensions;
+        const char *title;
+        const char *file_extensions;
+        NvdDynamicString *filename;
         bool location_was_chosen, is_save_dialog, is_dir_dialog;
 };
 
