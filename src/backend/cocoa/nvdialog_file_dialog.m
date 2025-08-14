@@ -93,8 +93,9 @@ NvdDynamicString *nvd_get_file_location_cocoa(NvdFileDialog *dlg)
 
         dlg->location_was_chosen = resp == NSModalResponseContinue || resp == NSModalResponseOK;
         if (dlg->location_was_chosen) {
+                NSURL *url = [raw URL];
                 nvd_delete_string(dlg->filename);
-                dlg->filename = nvd_string_new(raw.url.absoluteString.UTF8String);
+                dlg->filename = nvd_string_new(url.absoluteString.UTF8String);
         }
 
         [raw release];
