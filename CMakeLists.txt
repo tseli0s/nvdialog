@@ -2,7 +2,7 @@
 # This file is part of libnvdialog and is released under the MIT license.
 
 cmake_minimum_required(VERSION 3.18)
-project(libnvdialog VERSION 0.9.0 LANGUAGES C DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+project(libnvdialog VERSION 0.10.0 LANGUAGES C DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
 option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux." OFF)
 option(NVD_USE_GTK4 "Use Gtk4 and libadwaita instead of Gtk3 (experimental)." OFF)
@@ -44,6 +44,7 @@ set(NVD_HEADERS
     include/nvdialog_error.h
     include/nvdialog_platform.h
     include/nvdialog_image.h
+    include/nvdialog_string.h
     include/nvdialog.h)
 
 set(NVD_EXTRA_HEADERS
@@ -58,6 +59,7 @@ set(NVD_COMMON_SOURCES
     src/nvdialog_capab.c
     src/nvdialog_version.c
     src/nvdialog_init.c
+    src/nvdialog_string.c
     src/nvdialog_main.c)
 
 if(WIN32 OR CROSS_COMPILE_FOR_WIN32)
