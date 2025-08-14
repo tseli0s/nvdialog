@@ -22,10 +22,12 @@
  * IN THE SOFTWARE.
  */
 
+
 #ifndef __nvdialog_cocoa_h__
 #define __nvdialog_cocoa_h__ 1
 
 #include "nvdialog.h"
+#include "nvdialog_string.h"
 #include "nvdialog_typeimpl.h"
 
 /* Shows a dialog box using Cocoa */
@@ -59,7 +61,7 @@ void nvd_about_dialog_set_licence_link_cocoa(NvdAboutDialog *dialog,
 
 void nvd_show_dialog_cocoa(NvdDialogBox *dialog);
 void nvd_show_about_dialog_cocoa(NvdAboutDialog *dialog);
-void nvd_get_file_location_cocoa(NvdFileDialog *dlg, const char **out);
+NvdDynamicString *nvd_get_file_location_cocoa(NvdFileDialog *dlg);
 NvdReply nvd_get_reply_cocoa(NvdQuestionBox *box);
 void nvd_send_notification_cocoa(NvdNotification *notification);
 
