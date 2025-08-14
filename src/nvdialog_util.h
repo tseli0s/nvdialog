@@ -49,6 +49,14 @@ typedef struct _NvdDistroInfo {
 } NvdDistroInfo;
 
 /**
+ * @brief Writes @ref size bytes to @ref ptr to ensure proper initialization.
+ * @param ptr A pointer to the data structure where the NULL bytes will be
+ * written.
+ * @param size The amount of NULL bytes to write before stopping.
+ */
+void nvd_zero_memory(void* ptr, size_t size);
+
+/**
  * @brief An identifier to match a new process ID spawned by @ref
  * nvd_create_process
  * @details Similar to the `pid_t` type (And similarly defined), this type

@@ -44,13 +44,7 @@ static inline bool nvd_file_exists(const char* path) {
         return (access(path, 0) == 0);
 }
 
-/**
- * @brief Writes @ref size bytes to @ref ptr to ensure proper initialization.
- * @param ptr A pointer to the data structure where the NULL bytes will be
- * written.
- * @param size The amount of NULL bytes to write before stopping.
- */
-static void nvd_zero_memory(void* ptr, size_t size) { memset(ptr, 0, size); }
+void nvd_zero_memory(void* ptr, size_t size) { memset(ptr, 0, size); }
 
 #if defined(__linux__) || defined(__linux) || defined(__gnu_linux__)
 static void nvd_read_os_release(NvdDistroInfo* info) {
