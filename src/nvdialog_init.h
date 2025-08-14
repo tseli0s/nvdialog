@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "nvdialog_string.h"
 #ifndef __nvdialog_init_h__
 #define __nvdialog_init_h__ 1
 
@@ -63,7 +64,7 @@ typedef struct _NvdBackendMask {
         NvdFileDialog *(*open_file_dialog)(const char *, const char *);
         NvdFileDialog *(*save_file_dialog)(const char *, const char *);
         NvdFileDialog *(*open_folder_dialog)(const char *, const char *);
-        void (*get_file_location)(NvdFileDialog *, char **);
+        NvdDynamicString *(*get_file_location)(NvdFileDialog *);
 
         NvdNotification *(*notification)(const char *, const char *,
                                          NvdNotifyType);
