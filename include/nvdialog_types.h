@@ -24,10 +24,6 @@
 
 #pragma once
 
-#ifdef __nvdialog_types_h__
-#error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
-#endif /* __nvdialog_types_h__ */
-
 #ifndef __nvdialog_types_h__
 #define __nvdialog_types_h__ 1
 
@@ -45,25 +41,6 @@ typedef enum {
                                warning color styling. */
         NVD_DIALOG_ERROR,   /**< An error message box, with error styling. */
 } NvdDialogType;
-
-/**
- * @brief The enumerator containing most
- * errors the library can handle.
- * @sa @ref nvd_stringify_error
- */
-typedef enum {
-        NVD_NO_ERROR = 0,
-        NVD_NO_DISPLAY = 0xff,
-        NVD_BACKEND_FAILURE,
-        NVD_INVALID_PARAM,
-        NVD_NOT_INITIALIZED,
-        NVD_BACKEND_INVALID,
-        NVD_FILE_INACCESSIBLE,
-        NVD_STRING_EMPTY,
-        NVD_OUT_OF_MEMORY,
-        NVD_INTERNAL_ERROR,
-        NVD_ALREADY_INITIALIZED,
-} NvdError;
 
 /**
  * @brief Enumerator containing the possible arguments for

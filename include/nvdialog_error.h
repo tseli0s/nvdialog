@@ -24,17 +24,29 @@
 
 #pragma once
 
-#include "nvdialog.h"
-#ifdef __nvdialog_error_h__
-#error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
-#endif /* __nvdialog_error_h__ */
-
 #ifndef __nvdialog_error_h__
 #define __nvdialog_error_h__ 1
 
-#ifndef __nvdialog_h__
-#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif /* __nvdialog_h__ */
+#include "nvdialog_platform.h"
+
+/**
+ * @brief The enumerator containing most
+ * errors the library can handle.
+ * @sa @ref nvd_stringify_error
+ */
+typedef enum {
+        NVD_NO_ERROR = 0,
+        NVD_NO_DISPLAY = 0xff,
+        NVD_BACKEND_FAILURE,
+        NVD_INVALID_PARAM,
+        NVD_NOT_INITIALIZED,
+        NVD_BACKEND_INVALID,
+        NVD_FILE_INACCESSIBLE,
+        NVD_STRING_EMPTY,
+        NVD_OUT_OF_MEMORY,
+        NVD_INTERNAL_ERROR,
+        NVD_ALREADY_INITIALIZED,
+} NvdError;
 
 /**
  * @brief Returns the current error code of the library.

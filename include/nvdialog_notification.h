@@ -24,13 +24,10 @@
 
 #pragma once
 
-#include "nvdialog.h"
 #ifndef __nvdialog_notification_h__
 #define __nvdialog_notification_h__ 1
 
-#ifndef __nvdialog_h__
-#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif /* __nvdialog_h__ */
+#include "nvdialog_platform.h"
 
 /**
  * @brief Possible types of NvDialog notifications. Each field will create a

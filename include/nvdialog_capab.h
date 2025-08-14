@@ -22,20 +22,13 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog.h"
-#ifdef __nvdialog_capab_h__
-#error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
-#endif /* __nvdialog_capab_h__ */
 
 #pragma once
 #ifndef __nvdialog_capab_h__
 #define __nvdialog_capab_h__ 1
 
 #include <stdbool.h>
-
-#ifndef __nvdialog_h__
-#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif /* __nvdialog_h__ */
+#include "nvdialog_platform.h"
 
 enum {
         /* Adwaita backend support */

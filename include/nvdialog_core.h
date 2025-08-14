@@ -24,19 +24,11 @@
 
 #pragma once
 
-#include "nvdialog.h"
-#ifdef __nvdialog_core_h__
-#error[ NVDIALOG ] Header file included twice, only #include <nvdialog/nvdialog.h>
-#endif /* __nvdialog_core_h__ */
-
 #ifndef __nvdialog_core_h__
 #define __nvdialog_core_h__ 1
 
-#ifndef __nvdialog_h__
-#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif /* __nvdialog_h__ */
-
 #include "nvdialog_types.h"
+#include "nvdialog_platform.h"
 
 /** @brief An opaque representation of a window object. */
 typedef void *NvdParentWindow;
