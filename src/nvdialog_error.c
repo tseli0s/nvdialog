@@ -92,12 +92,6 @@ void nvd_error_message(const char *fmt, ...) {
         fflush(stderr);
 }
 
-void NVD_DEPRECATED(
-        "This function has been deprecated in favor of nvd_error_message. "
-        "Please "
-        "use that instead of this function.") nvd_print(const char *msg) {
-        fprintf(stderr, "%s", msg);
-}
 
 void nvd_out_of_memory() {
         nvd_error_message("%s%d%s%s", "Host machine out of memory: (errno ",

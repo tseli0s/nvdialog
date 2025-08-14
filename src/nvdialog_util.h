@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "nvdialog_string.h"
 #ifndef __nvdialog_util_h__
 #define __nvdialog_util_h__ (1)
 
@@ -124,7 +125,7 @@ NvdDistroInfo nvd_get_distro_branch();
  *
  * @return The path to libnotify on each platform if succesfull, otherwise NULL.
  */
-char* nvd_get_libnotify_path();
+const NvdDynamicString *nvd_get_libnotify_path();
 
 /**
  * @brief Returns the path the library is using to find `libnotify`.

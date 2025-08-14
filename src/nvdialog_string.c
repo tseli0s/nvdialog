@@ -23,6 +23,7 @@
  */
 
 #include "nvdialog_string.h"
+#include "nvdialog_typeimpl.h"
 #include "nvdialog_assert.h"
 #include "nvdialog_util.h"
 #include <stddef.h>
@@ -31,12 +32,6 @@
 
 /* The default capacity of a string. This doesn't affect anything other than how often we will have to reallocate. */
 #define NVD_DEFAULT_STRING_CAPACITY (32)
-
-struct _NvdDynamicString {
-    size_t len;
-    size_t capacity;
-    char *buffer;
-};
 
 NvdDynamicString *nvd_string_new(const char *data) {
     NvdDynamicString *obj = malloc(sizeof(NvdDynamicString));
@@ -62,12 +57,14 @@ void nvd_string_set_data(NvdDynamicString *string, const char *data) {
     NVD_ASSERT_FATAL(data != NULL);
 
     size_t len = strlen(data);
+    string->len = len;
+    /* Data may persist beyond len otherwise. */
+    nvd_zero_memory(string->buffer, string->capacity);
 
     if ((len + 1) > string->capacity) {
         size_t new_capacity = string->capacity + len + NVD_DEFAULT_STRING_CAPACITY;
         string->buffer = realloc(string->buffer, new_capacity);
-        string->capacity = new_capacity;
-        string->len = len;
+        string->capacity = new_capacity;    
     }
     memcpy(string->buffer, data, len);
     string->buffer[len] = '\0';

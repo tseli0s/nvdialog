@@ -96,4 +96,10 @@ struct _NvdImage {
         int width, height;
 };
 
+struct _NvdDynamicString {
+    size_t len;
+    size_t capacity;
+    char *buffer;
+};
+
 #endif /* __nvdialog_typeimpl_h */
