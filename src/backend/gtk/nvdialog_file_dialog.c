@@ -31,6 +31,7 @@
 #include "../../nvdialog_util.h"
 #include "gtk/gtk.h"
 #include "nvdialog_gtk.h"
+#include "nvdialog_string.h"
 
 NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
                                         const char *file_extensions) {
@@ -103,7 +104,7 @@ NvdFileDialog *nvd_open_folder_dialog_gtk(const char *title,
         return dialog;
 }
 
-static void nvd_get_file_gtk(NvdFileDialog *dialog, const char **savebuf) {
+static NvdDynamicString *nvd_get_file_gtk(NvdFileDialog *dialog) {
         GtkResponseType response = gtk_dialog_run(GTK_DIALOG(dialog->raw));
         char *filename;
         if (response == GTK_RESPONSE_OK || response == GTK_RESPONSE_ACCEPT) {
@@ -123,10 +124,10 @@ static void nvd_get_file_gtk(NvdFileDialog *dialog, const char **savebuf) {
 
         while (gtk_events_pending()) gtk_main_iteration();
 
-        *savebuf = dialog->filename;
+        return dialog->filename;
 }
 
-static void nvd_get_dir_gtk(NvdFileDialog *dialog, const char **savebuf) {
+static NvdDynamicString *nvd_get_dir_gtk(NvdFileDialog *dialog) {
         GtkResponseType response = gtk_dialog_run(GTK_DIALOG(dialog->raw));
         char *filename;
         if (response == GTK_RESPONSE_OK || response == GTK_RESPONSE_ACCEPT) {
@@ -135,7 +136,7 @@ static void nvd_get_dir_gtk(NvdFileDialog *dialog, const char **savebuf) {
                 dialog->location_was_chosen = true;
                 gtk_widget_destroy(dialog->raw);
                 if (filename) {
-                        dialog->filename = strdup(filename);
+                        dialog->filename = nvd_string_new(filename);
                         g_free(filename);
                 }
         } else {
@@ -146,7 +147,7 @@ static void nvd_get_dir_gtk(NvdFileDialog *dialog, const char **savebuf) {
 
         while (gtk_events_pending()) gtk_main_iteration();
 
-        *savebuf = dialog->filename;
+        return dialog->filename;
 }
 
 void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog *dlg) {
@@ -154,11 +155,8 @@ void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog *dlg) {
         return dlg->raw;
 }
 
-void nvd_get_file_location_gtk(NvdFileDialog *dialog, const char **savebuf) {
+NvdDynamicString *nvd_get_file_location_gtk(NvdFileDialog *dialog) {
         if (dialog->is_dir_dialog) {
-                nvd_get_dir_gtk(dialog, savebuf);
-                return;
-        }
-
-        nvd_get_file_gtk(dialog, savebuf);
+                return nvd_get_dir_gtk(dialog);
+        } else  return nvd_get_file_gtk(dialog);
 }
