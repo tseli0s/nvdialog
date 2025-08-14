@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "nvdialog_string.h"
 #ifndef __nvdialog_util_h__
 #define __nvdialog_util_h__ (1)
 
@@ -47,6 +48,14 @@ typedef struct _NvdDistroInfo {
         long version_m;
         long version_s;
 } NvdDistroInfo;
+
+/**
+ * @brief Writes @ref size bytes to @ref ptr to ensure proper initialization.
+ * @param ptr A pointer to the data structure where the NULL bytes will be
+ * written.
+ * @param size The amount of NULL bytes to write before stopping.
+ */
+void nvd_zero_memory(void* ptr, size_t size);
 
 /**
  * @brief An identifier to match a new process ID spawned by @ref
@@ -116,7 +125,7 @@ NvdDistroInfo nvd_get_distro_branch();
  *
  * @return The path to libnotify on each platform if succesfull, otherwise NULL.
  */
-char* nvd_get_libnotify_path();
+const NvdDynamicString *nvd_get_libnotify_path();
 
 /**
  * @brief Returns the path the library is using to find `libnotify`.

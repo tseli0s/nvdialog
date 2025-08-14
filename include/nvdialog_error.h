@@ -24,17 +24,30 @@
 
 #pragma once
 
-#include "nvdialog.h"
-#ifdef __nvdialog_error_h__
-#error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
-#endif /* __nvdialog_error_h__ */
-
+#include "nvdialog_string.h"
 #ifndef __nvdialog_error_h__
 #define __nvdialog_error_h__ 1
 
-#ifndef __nvdialog_h__
-#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif /* __nvdialog_h__ */
+#include "nvdialog_platform.h"
+
+/**
+ * @brief The enumerator containing most
+ * errors the library can handle.
+ * @sa @ref nvd_stringify_error
+ */
+typedef enum {
+        NVD_NO_ERROR = 0,
+        NVD_NO_DISPLAY,
+        NVD_BACKEND_FAILURE,
+        NVD_INVALID_PARAM,
+        NVD_NOT_INITIALIZED,
+        NVD_BACKEND_INVALID,
+        NVD_FILE_INACCESSIBLE,
+        NVD_STRING_EMPTY,
+        NVD_OUT_OF_MEMORY,
+        NVD_INTERNAL_ERROR,
+        NVD_ALREADY_INITIALIZED,
+} NvdError;
 
 /**
  * @brief Returns the current error code of the library.
@@ -52,11 +65,10 @@ NVD_API NvdError nvd_get_error(void);
 /**
  * @brief Transforms an error code into a string representation, that can be
  * used to print errors to the console.
- * @returns The string representation of the error, or NULL on failure.
+ * @returns A @ref NvdDynamicString containing the error as a string, or NULL in case of failure or invalid parameter.
  * @ingroup Error
- * @note The string returned is saved inside the function as static, and each
- * call simply overwrites it.
+ * @note Pre v0.10 code may not work with this function due to different return types.
  */
-NVD_API const char *nvd_stringify_error(NvdError err);
+NVD_API NvdDynamicString *nvd_stringify_error(NvdError err);
 
 #endif /* __nvdialog_error_h__ */

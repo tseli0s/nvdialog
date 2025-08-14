@@ -22,6 +22,7 @@
  * IN THE SOFTWARE.
  */
 
+#include "../nvdialog_string.h"
 #include "../nvdialog_platform.h"
 
 /**
@@ -82,7 +83,7 @@ NVD_API NvdFileDialog *nvd_open_folder_dialog_new(const char *title,
  * @brief Returns the filesystem path chosen through the @ref NvdFileDialog
  * passed.
  *
- * This function will return the path on the filesystem from the dialog chosen,
+ * @details This function will return the path on the filesystem from the dialog chosen,
  * that you can then use to either open or save the file given. It works with
  * both save and open file dialog types.
  *
@@ -90,9 +91,10 @@ NVD_API NvdFileDialog *nvd_open_folder_dialog_new(const char *title,
  * @param dialog The file dialog to take the filename from.
  * @param savebuf A pointer to a buffer where the path will be written, must not
  * be NULL.
+ * @returns A @ref NvdDynamicString if a file/folder was selected, or NULL if no path was selected by the user.
  * @ingroup FileDialog
  */
-NVD_API void nvd_get_file_location(NvdFileDialog *dialog, const char **savebuf);
+NVD_API NvdDynamicString* nvd_get_file_location(NvdFileDialog *dialog);
 
 /**
  * @brief Returns the raw object behind the dialog.

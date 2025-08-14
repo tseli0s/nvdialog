@@ -24,20 +24,11 @@
 
 #pragma once
 
-#ifdef __nvdialog_dialog_h__
-#error[ NVDIALOG ] Header file included twice, only include <nvdialog/nvdialog.h>
-#endif /* __nvdialog_dialog_h__ */
-
 #ifndef __nvdialog_dialog_h__
 #define __nvdialog_dialog_h__ 1
-
-#ifndef __nvdialog_h__
-#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif /* __nvdialog_h__ */
 
 #include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
-#include "nvdialog_platform.h"
 
 #endif /* __nvdialog_dialog_h__ */

@@ -31,6 +31,7 @@
 #include <string.h>
 
 #include "nvdialog_macros.h"
+#include "nvdialog_string.h"
 
 NVD_THREAD_LOCAL(NvdError ___error) = NVD_NO_ERROR;
 
@@ -54,51 +55,28 @@ NVD_INTERNAL_FUNCTION NVD_FORCE_INLINE void nvd_set_error(NvdError error) {
 #endif /* __cplusplus */
 NVD_FORCE_INLINE NvdError nvd_get_error(void) { return ___error; }
 
-const char *nvd_stringify_error(NvdError err) {
-        static char *error = NULL;
-        switch (err) {
-                case NVD_NO_ERROR:
-                        error = "No error";
-                        break;
-                case NVD_NO_DISPLAY:
-                        error = "No display found (Is X.org or a Wayland "
-                                "compositor "
-                                "running?)";
-                        break;
-                case NVD_BACKEND_FAILURE:
-                        error = "Backend initialization was unsuccesful "
-                                "(Invalid parameters?).";
-                        break;
-                case NVD_INVALID_PARAM:
-                        error = "Invalid parameter passed.";
-                        break;
-                case NVD_NOT_INITIALIZED:
-                        error = "The library wasn't initialized.";
-                        break;
-                case NVD_ALREADY_INITIALIZED:
-                        error = "The library has been already initialized.";
-                        break;
-                case NVD_STRING_EMPTY:
-                        error = "Passed empty string as a parameter.";
-                        break;
-                case NVD_FILE_INACCESSIBLE:
-                        error = "Attempted to read an inaccessible file.";
-                        break;
-                case NVD_BACKEND_INVALID:
-                        error = "Backend library is not matching NvDialog.";
-                        break;
-                case NVD_OUT_OF_MEMORY:
-                        error = "No memory left on the host machine.";
-                        break;
-                case NVD_INTERNAL_ERROR:
-                        error = "Internal library error - Open an issue on "
-                                "GitHub.";
-                        break;
-                default:
-                        nvd_set_error(NVD_INVALID_PARAM);
-                        return NULL;
+NvdDynamicString *nvd_stringify_error(NvdError err) {
+        static const char *messages[] = {
+                [NVD_NO_ERROR] = "No error",
+                [NVD_NO_DISPLAY] = "No display/desktop detected, make sure X11/Wayland is up and running.",
+                [NVD_BACKEND_FAILURE] = "Failed to initialize one of the backends.",
+                [NVD_INVALID_PARAM] = "Invalid parameter passed to a function.",
+                [NVD_NOT_INITIALIZED] = "The library wasn't initialized.",
+                [NVD_ALREADY_INITIALIZED] = "The library has already been initialized.",
+                [NVD_STRING_EMPTY] = "Passed an empty string as a parameter.",
+                [NVD_FILE_INACCESSIBLE] = "Attempted to read an inaccessible file.",
+                [NVD_BACKEND_INVALID] = "Invalid or corrupt backend, make sure your system is up to date.",
+                [NVD_OUT_OF_MEMORY] = "No memory left on the host machine.",
+                [NVD_INTERNAL_ERROR] = "Internal or unexpected library error - Open an issue on GitHub."
+        };
+
+        if (err >= sizeof(messages)/sizeof(*messages) || !messages[err]) {
+                nvd_set_error(NVD_INVALID_PARAM);
+                return NULL;
         }
-        return error;
+
+        NvdDynamicString *str = nvd_string_new(messages[err]);
+        return str;
 }
 
 void nvd_error_message(const char *fmt, ...) {
@@ -114,12 +92,6 @@ void nvd_error_message(const char *fmt, ...) {
         fflush(stderr);
 }
 
-void NVD_DEPRECATED(
-        "This function has been deprecated in favor of nvd_error_message. "
-        "Please "
-        "use that instead of this function.") nvd_print(const char *msg) {
-        fprintf(stderr, "%s", msg);
-}
 
 void nvd_out_of_memory() {
         nvd_error_message("%s%d%s%s", "Host machine out of memory: (errno ",

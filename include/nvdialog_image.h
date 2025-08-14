@@ -24,22 +24,15 @@
 
 #pragma once
 
-#ifdef __nvdialog_image_h__
-#error[ NVDIALOG ] Header file included twice, only #include <nvdialog/nvdialog.h>
-#endif /* __nvdialog_image_h__ */
 
 #ifndef __nvdialog_image_h__
 #define __nvdialog_image_h__ 1
 
 #include <stddef.h>
 #include <stdint.h>
-
-#include "nvdialog.h"
+#include "nvdialog_platform.h"
 #include "nvdialog_types.h"
 
-#ifndef __nvdialog_h__
-#error[ NVDIALOG ] Please only include <nvdialog.h> and no other headers.
-#endif /* __nvdialog_h__ */
 
 /**
  * @brief Data that can be interpeted as an image.

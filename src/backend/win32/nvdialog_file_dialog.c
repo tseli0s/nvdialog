@@ -32,6 +32,7 @@
 
 #include "../../nvdialog_assert.h"
 #include "../../nvdialog_util.h"
+#include "nvdialog_string.h"
 #include "nvdialog_typeimpl.h"
 #include "nvdialog_win32.h"
 #include "winnt.h"
@@ -50,8 +51,7 @@ static const char *nvd_append_bytes(char *dest, const char *src) {
         return new_str;
 }
 
-static void nvd_file_only_dialog_win32(NvdFileDialog *dialog,
-                                       const char **savebuf) {
+static NvdDynamicString *nvd_file_only_dialog_win32(NvdFileDialog *dialog) {
         OPENFILENAME ofn;
         char file[NVDIALOG_MAXBUF];
         ZeroMemory(&ofn, sizeof(ofn));
@@ -89,12 +89,12 @@ static void nvd_file_only_dialog_win32(NvdFileDialog *dialog,
         else
                 GetOpenFileName(&ofn);
 
-        dialog->filename = ofn.lpstrFile;
+        dialog->filename = nvd_string_new(ofn.lpstrFile);
         dialog->location_was_chosen = true;
-        *savebuf = dialog->filename;
+        return dialog->filename;
 }
 
-static void nvd_dir_dialog_win32(NvdFileDialog *dialog, const char **savebuf) {
+static NvdDynamicString *nvd_dir_dialog_win32(NvdFileDialog *dialog) {
         BROWSEINFO bi = {0};
         char path[MAX_PATH];
 
@@ -104,7 +104,8 @@ static void nvd_dir_dialog_win32(NvdFileDialog *dialog, const char **savebuf) {
 
         LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
         if (pidl != NULL) {
-                if (SHGetPathFromIDList(pidl, path)) *savebuf = strdup(path);
+                if (SHGetPathFromIDList(pidl, path))
+                        dialog->filename = nvd_string_new(path);
                 CoTaskMemFree(pidl);
         }
 }
@@ -155,9 +156,7 @@ NvdFileDialog *nvd_open_folder_dialog_win32(const char *title,
         return dlg;
 }
 
-void nvd_get_file_location_win32(NvdFileDialog *dialog, const char **savebuf) {
-        if (dialog->is_dir_dialog)
-                nvd_dir_dialog_win32(dialog, savebuf);
-        else
-                nvd_file_only_dialog_win32(dialog, savebuf);
+NvdDynamicString *nvd_get_file_location_win32(NvdFileDialog *dialog) {
+        if (dialog->is_dir_dialog) return nvd_dir_dialog_win32(dialog);
+        else return nvd_file_only_dialog_win32(dialog);
 }

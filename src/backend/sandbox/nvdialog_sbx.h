@@ -28,6 +28,7 @@
 #include <gtk/gtk.h>
 
 #include "nvdialog.h"
+#include "nvdialog_string.h"
 #include "nvdialog_typeimpl.h"
 
 /* Shows a simple dialog box using Gtk3 (Sandbox version). */
@@ -80,7 +81,7 @@ void nvd_about_dialog_set_license_link_sbx(NvdAboutDialog *dialog,
  * Gets the full path of a file, and returns the path
  * inside the 'save' nested pointer passed.
  */
-void nvd_get_file_location_sbx(NvdFileDialog *dialog, const char **savebuf);
+NvdDynamicString *nvd_get_file_location_sbx(NvdFileDialog *dialog);
 
 /*
  * Notification using Gtk3 backend.

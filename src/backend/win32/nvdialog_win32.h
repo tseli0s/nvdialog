@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "nvdialog_string.h"
 #ifndef __nvdialog_win32_h__
 #define __nvdialog_win32_h__ 1
 
@@ -65,7 +66,7 @@ void nvd_show_about_dialog_win32(NvdAboutDialog *dialog);
 void nvd_about_dialog_set_version_win32(NvdAboutDialog *dialog,
                                         const char *version);
 
-void nvd_get_file_location_win32(NvdFileDialog *dialog, const char **savebuf);
+NvdDynamicString *nvd_get_file_location_win32(NvdFileDialog *dialog);
 
 NvdNotification *nvd_notification_win32(const char *title, const char *msg,
                                         NvdNotifyType type);

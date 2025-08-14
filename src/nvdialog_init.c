@@ -58,9 +58,7 @@ int nvd_init_gtk3(NvdBackendMask *mask) {
         mask->open_file_dialog = nvd_open_file_dialog_gtk;
         mask->save_file_dialog = nvd_save_file_dialog_gtk;
         mask->open_folder_dialog = nvd_open_folder_dialog_gtk;
-        mask->get_file_location = (void (*)(NvdFileDialog *, char **))
-                nvd_get_file_location_gtk;  // Cast necessary because I am an
-                                            // idiot
+        mask->get_file_location = nvd_get_file_location_gtk;
         mask->notification = nvd_notification_gtk;
         mask->send_notification = nvd_send_notification_gtk;
         mask->add_notification_action = nvd_add_notification_action_gtk;
@@ -82,8 +80,7 @@ int nvd_init_win32(NvdBackendMask *mask) {
         mask->open_file_dialog = nvd_open_file_dialog_win32;
         mask->save_file_dialog = nvd_save_file_dialog_win32;
         mask->open_folder_dialog = nvd_open_folder_dialog_win32;
-        mask->get_file_location =
-                (void (*)(NvdFileDialog *, char **))nvd_get_file_location_win32;
+        mask->get_file_location = nvd_get_file_location_win32;
         mask->notification = nvd_notification_win32;
         mask->send_notification = nvd_send_notification_win32;
         mask->add_notification_action = nvd_add_notification_action_win32;
@@ -105,8 +102,7 @@ int nvd_init_cocoa(NvdBackendMask *mask) {
         mask->open_file_dialog = nvd_open_file_dialog_cocoa;
         mask->save_file_dialog = nvd_save_file_dialog_cocoa;
         mask->open_folder_dialog = nvd_open_folder_dialog_cocoa;
-        mask->get_file_location =
-                (void (*)(NvdFileDialog *, char **))nvd_get_file_location_cocoa;
+        mask->get_file_location = nvd_get_file_location_cocoa;
         mask->notification = nvd_notification_cocoa;
         mask->send_notification = nvd_send_notification_cocoa;
         mask->add_notification_action = nvd_add_notification_action_cocoa;

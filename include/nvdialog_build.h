@@ -25,8 +25,8 @@
 /************************************************************************************
  * This file is NOT source code. It will just be used by Doxygen when
  * generating documentation for the "Building NvDialog" page. It won't be
- *installed, it won't be used within the library or by a user, and probably
- *isn't of interest to anyone.
+ * installed, it won't be used within the library or by a user, and probably
+ * isn't of interest to anyone.
  ************************************************************************************/
 
 /**

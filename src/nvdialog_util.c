@@ -32,6 +32,7 @@
 
 #include "nvdialog_assert.h"
 #include "nvdialog_macros.h"
+#include "nvdialog_string.h"
 
 #ifdef _WIN32
 #include <io.h>
@@ -44,13 +45,7 @@ static inline bool nvd_file_exists(const char* path) {
         return (access(path, 0) == 0);
 }
 
-/**
- * @brief Writes @ref size bytes to @ref ptr to ensure proper initialization.
- * @param ptr A pointer to the data structure where the NULL bytes will be
- * written.
- * @param size The amount of NULL bytes to write before stopping.
- */
-static void nvd_zero_memory(void* ptr, size_t size) { memset(ptr, 0, size); }
+void nvd_zero_memory(void* ptr, size_t size) { memset(ptr, 0, size); }
 
 #if defined(__linux__) || defined(__linux) || defined(__gnu_linux__)
 static void nvd_read_os_release(NvdDistroInfo* info) {
@@ -168,20 +163,19 @@ NVD_INTERNAL_FUNCTION NvdDistroInfo nvd_get_distro_branch() {
         return info;
 }
 
-NVD_INTERNAL_FUNCTION char* nvd_get_libnotify_path() {
-        size_t max_pathlen = strlen("/usr/lib/x86_64-linux-gnu/libnotify.so");
-        char* buffer = malloc(max_pathlen + 16);  // 16 byte padding
+NVD_INTERNAL_FUNCTION const NvdDynamicString *nvd_get_libnotify_path() {
+        NvdDynamicString *str = nvd_string_new(NULL);
 
         NvdDistroInfo info = nvd_get_distro_branch();
 
         /* TODO: Please add more distribution checks here.*/
         if (strcmp(info.name, "Debian") == 0)
-                strcpy(buffer, "/usr/lib/x86_64-linux-gnu/libnotify.so");
+                nvd_string_set_data(str, "/usr/lib/x86_64-linux-gnu/libnotify.so");
         else if (strcmp(info.name, "Arch") == 0)
-                strcpy(buffer, "/usr/lib/libnotify.so");
+                nvd_string_set_data(str, "/usr/lib/libnotify.so");
         else
-                strcpy(buffer, "/usr/lib/libnotify.so");
+                nvd_string_set_data(str, "/usr/lib/libnotify.so");
 
-        return buffer;
+        return str;
 }
 #endif /* __linux__ */

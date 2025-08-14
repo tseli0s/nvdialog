@@ -29,6 +29,7 @@
 #include <stdbool.h>
 
 #include "../../nvdialog_assert.h"
+#include "nvdialog_string.h"
 
 /* Contributor's note: NSOpenPanel inherits from NSSavePanel. Unrelated in this context but you may find it useful */
 
@@ -68,7 +69,7 @@ NvdFileDialog *nvd_save_file_dialog_cocoa(const char *title, const char *default
 }
 
 
-void nvd_get_file_location_cocoa(NvdFileDialog *dlg, const char **out)
+NvdDynamicString *nvd_get_file_location_cocoa(NvdFileDialog *dlg)
 {
 	if (dlg->is_dir_dialog) {
         NSOpenPanel *raw = dlg->raw;
@@ -80,7 +81,8 @@ void nvd_get_file_location_cocoa(NvdFileDialog *dlg, const char **out)
         
         if (dlg->location_was_chosen) {
             NSURL *url = [raw URL];
-            *out = strdup(url.absoluteString.UTF8String);
+            nvd_delete_string(dlg->filename);
+            dlg->filename = nvd_string_new(url.absoluteString.UTF8String);
         }
 
         [raw release];
@@ -90,11 +92,15 @@ void nvd_get_file_location_cocoa(NvdFileDialog *dlg, const char **out)
         NSModalResponse resp = [raw runModal];
 
         dlg->location_was_chosen = resp == NSModalResponseContinue || resp == NSModalResponseOK;
-        if (dlg->location_was_chosen)
-            *out = strdup(raw.URL.absoluteString.UTF8String);
+        if (dlg->location_was_chosen) {
+                NSURL *url = [raw URL];
+                nvd_delete_string(dlg->filename);
+                dlg->filename = nvd_string_new(url.absoluteString.UTF8String);
+        }
 
         [raw release];
     }
+    return dlg->filename;
 }
 
 void *nvd_open_file_dialog_get_raw_cocoa(NvdFileDialog *dlg)
