@@ -83,13 +83,6 @@ struct _NvdNotification {
         void (*destructor)(NvdNotification* self);
 };
 
-struct _NvdCSSManager {
-        void* raw;
-        bool used;
-        const char* filename;
-        void* extra_data;
-};
-
 struct _NvdImage {
         const uint8_t* data;
         size_t len;
