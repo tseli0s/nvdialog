@@ -43,6 +43,12 @@ struct _NvdDialogBox {
         NvdDialogType type;
 };
 
+struct _NvdInputBox {
+        NvdDynamicString *title, *content;
+        NvdDynamicString *user_input;
+        void *window_handle;
+};
+
 struct _NvdAboutDialog {
         void* raw;
         char *title, *contents;
