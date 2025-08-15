@@ -51,6 +51,9 @@ int nvd_init_gtk3(NvdBackendMask *mask) {
         mask->show_dialog = nvd_show_dialog_gtk;
         mask->question = nvd_question_gtk;
         mask->get_reply = nvd_get_reply_gtk;
+        mask->input_box = nvd_input_box_gtk;
+        mask->show_input_box = nvd_show_input_box_gtk;
+        mask->input_box_get_string = nvd_input_box_get_string_gtk;
         mask->about_dialog = nvd_about_dialog_gtk;
         mask->show_about_dialog = nvd_show_about_dialog_gtk;
         mask->about_dialog_set_version = nvd_about_dialog_set_version_gtk;
@@ -73,6 +76,9 @@ int nvd_init_win32(NvdBackendMask *mask) {
         mask->show_dialog = nvd_show_dialog_win32;
         mask->question = nvd_question_win32;
         mask->get_reply = nvd_get_reply_win32;
+        mask->input_box = nvd_input_box_win32;
+        mask->show_input_box = nvd_show_input_box_win32;
+        mask->input_box_get_string = nvd_input_box_get_string_win32;
         mask->about_dialog = nvd_about_dialog_win32;
         mask->show_about_dialog = nvd_show_about_dialog_win32;
         mask->about_dialog_set_version = nvd_about_dialog_set_version_win32;
@@ -95,6 +101,9 @@ int nvd_init_cocoa(NvdBackendMask *mask) {
         mask->show_dialog = nvd_show_dialog_cocoa;
         mask->question = nvd_question_cocoa;
         mask->get_reply = nvd_get_reply_cocoa;
+        mask->input_box = nvd_input_box_cocoa;
+        mask->show_input_box = nvd_show_input_box_cocoa;
+        mask->input_box_get_string = nvd_input_box_get_string_cocoa;
         mask->about_dialog = nvd_about_dialog_cocoa;
         mask->show_about_dialog = nvd_show_about_dialog_cocoa;
         mask->about_dialog_set_version = NULL;

@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "dialogs/nvdialog_input_box.h"
 #include "nvdialog_string.h"
 #ifndef __nvdialog_init_h__
 #define __nvdialog_init_h__ 1
@@ -49,6 +50,10 @@
 typedef struct _NvdBackendMask {
         NvdDialogBox *(*dialog_box)(const char *, const char *, NvdDialogType);
         void (*show_dialog)(NvdDialogBox *);
+
+        NvdInputBox *(*input_box)(const char*, const char*);
+        void (*show_input_box)(NvdInputBox*);
+        NvdDynamicString *(*input_box_get_string)(NvdInputBox*);
 
         NvdQuestionBox *(*question)(const char *, const char *,
                                     NvdQuestionButton);
