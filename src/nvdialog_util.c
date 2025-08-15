@@ -165,6 +165,7 @@ NVD_INTERNAL_FUNCTION NvdDistroInfo nvd_get_distro_branch() {
 
 NVD_INTERNAL_FUNCTION const NvdDynamicString *nvd_get_libnotify_path() {
         NvdDynamicString *str = nvd_string_new(NULL);
+        NVD_RETURN_IF_NULL(str);
 
         NvdDistroInfo info = nvd_get_distro_branch();
 
