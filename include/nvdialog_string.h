@@ -31,6 +31,20 @@
 #include "nvdialog_platform.h"
 
 /**
+ * @brief A shortcut macro to create a new @ref NvdDynamicString out of a simple string.
+ * @since v0.10
+ * @ingroup String
+ */
+#define NVD_STRING(s) nvd_string_new(s)
+/**
+ * @brief A shortcut macro to get a C string out of the @ref NvdDynamicString given.
+ * @warning The returned string is only valid as long as @ref s is. See @ref nvd_string_to_cstr for details.
+ * @since v0.10
+ * @ingroup String
+ */
+#define NVD_CSTR(s) nvd_string_to_cstr(s)
+
+/**
  * @brief A string type that can be resized, manipulated, converted and read from.
  * 
  * `NvdDynamicString` is a recent addition to the library that allows various kinds of strings
@@ -91,7 +105,7 @@ NVD_API void nvd_append_to_string(NvdDynamicString *string, NvdDynamicString *ne
 /**
  * @brief Returns a `const char*` representation of the given `NvdDynamicString`.
  * @param string The `NvdDynamicString` to convert. Must not be `NULL`.
- * @returns A pointer to a null-terminated C string. The pointer is valid as long as the dynamic string exists and is not modified.
+ * @returns A pointer to a null-terminated C string. The pointer is valid as long as the dynamic string exists and is not modified. Do NOT modify the returned buffer.
  * @note Do not modify or free the returned pointer, as it may be used elsewhere. Use `nvd_duplicate_string()` if a mutable copy is needed.
  * @since v0.10.0
  * @ingroup String
