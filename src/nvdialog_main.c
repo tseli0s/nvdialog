@@ -22,8 +22,9 @@
  * IN THE SOFTWARE.
  */
 
- #define _CRT_SECURE_NO_WARNINGS 1
- #include "nvdialog_string.h"
+#include "dialogs/nvdialog_input_box.h"
+#define _CRT_SECURE_NO_WARNINGS 1
+#include "nvdialog_string.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
 #include "nvdialog.h"
@@ -117,7 +118,7 @@ int nvd_init(void) {
 #endif
 
 #if defined(__linux__)
-        nvd_libnotify_path = nvd_get_libnotify_path();
+        //nvd_libnotify_path = (char*) nvd_string_to_cstr((NvdDynamicString*)nvd_get_libnotify_path());
         if (!nvd_libnotify_path) {
                 nvd_error_message(
                         "nvd_libnotify_path is NULL, setting it to "
@@ -161,6 +162,21 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
 void nvd_show_dialog(NvdDialogBox *dialog) {
         NVD_ASSERT(dialog != NULL);
         NVD_TRY_CALL(mask.show_dialog, dialog);
+}
+
+NvdInputBox *nvd_input_box_new(const char *title, const char *message) {
+        NVD_ASSERT(title != NULL);
+        return NVD_CHECK_FUNCTION(mask.input_box, title, message);
+}
+
+void nvd_show_input_box(NvdInputBox *box) {
+        NVD_ASSERT(box != NULL);
+        NVD_TRY_CALL(mask.show_input_box, box);
+}
+
+NvdDynamicString *nvd_input_box_get_string(NvdInputBox *box) {
+        NVD_ASSERT(box != NULL);
+        return NVD_CHECK_FUNCTION(mask.input_box_get_string, box);
 }
 
 NvdQuestionBox *nvd_dialog_question_new(const char *title, const char *message,
