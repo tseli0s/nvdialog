@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "dialogs/nvdialog_input_box.h"
 #include "nvdialog_string.h"
 #ifndef __nvdialog_win32_h__
 #define __nvdialog_win32_h__ 1
@@ -39,6 +40,12 @@
 
 NvdDialogBox *nvd_dialog_box_win32(const char *title, const char *message,
                                    NvdDialogType type);
+
+NvdInputBox *nvd_input_box_win32(const char *title, const char *message);
+
+void nvd_show_input_box_win32(NvdInputBox *box);
+
+NvdDynamicString *nvd_input_box_get_string_win32(NvdInputBox *box);
 
 NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
                                           const char *file_extensions);

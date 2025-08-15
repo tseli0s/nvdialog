@@ -28,6 +28,7 @@
 #include <gtk/gtk.h>
 
 #include "../nvdialog_util.h"
+#include "dialogs/nvdialog_input_box.h"
 #include "nvdialog.h"
 #include "nvdialog_string.h"
 #include "nvdialog_typeimpl.h"
@@ -35,6 +36,13 @@
 /* Shows a simple dialog box using Gtk3. */
 NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
                                  NvdDialogType type);
+
+NvdInputBox *nvd_input_box_gtk(const char *title, const char *message);
+
+void nvd_show_input_box_gtk(NvdInputBox *box);
+
+NvdDynamicString *nvd_input_box_get_string_gtk(NvdInputBox *box);
+
 
 /* Opens a file dialog using Gtk3.*/
 NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,

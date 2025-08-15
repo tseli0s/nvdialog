@@ -159,5 +159,6 @@ void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog *dlg) {
 NvdDynamicString *nvd_get_file_location_gtk(NvdFileDialog *dialog) {
         if (dialog->is_dir_dialog) {
                 return nvd_get_dir_gtk(dialog);
-        } else  return nvd_get_file_gtk(dialog);
+        } else
+                return nvd_get_file_gtk(dialog);
 }
