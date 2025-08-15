@@ -96,8 +96,8 @@ nvd_print_assert(const char *msg, ...) {
                                 "%s\n  Line: %d\n  Filename: "      \
                                 "%s\n  Function: %s\n",             \
                                 #eq, __LINE__, __FILE__, __func__); \
+                                abort();                            \
                 }                                                   \
-                abort();                                            \
         } while (0);
 
 #endif /* __nvdialog_assert_h__ */
