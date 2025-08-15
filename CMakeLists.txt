@@ -50,7 +50,8 @@ set(NVD_HEADERS
 set(NVD_EXTRA_HEADERS
     include/dialogs/nvdialog_file_dialog.h
     include/dialogs/nvdialog_about_dialog.h
-    include/dialogs/nvdialog_dialog_box.h)
+    include/dialogs/nvdialog_dialog_box.h
+    include/dialogs/nvdialog_input_box.h)
 
 set(NVD_COMMON_SOURCES
     src/nvdialog_error.c
@@ -99,6 +100,7 @@ else()
             src/backend/gtk/nvdialog_dialog_box.c
             src/backend/gtk/nvdialog_question_dialog.c
             src/backend/gtk/nvdialog_notification.c
+            src/backend/gtk/nvdialog_input_dialog.c
             ${NVD_COMMON_SOURCES})
         if(NVD_SANDBOX_SUPPORT)
             list(APPEND NVD_SOURCES
@@ -131,7 +133,7 @@ elseif(LINUX)
     target_link_libraries(nvdialog ${GTK_LIBRARIES})
 endif()
 
-set_target_properties(nvdialog PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 2)
+set_target_properties(nvdialog PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 3)
 target_include_directories(nvdialog PRIVATE include/)
 
 if (NVD_GENERATE_DOCS)
