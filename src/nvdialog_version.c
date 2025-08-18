@@ -30,5 +30,5 @@ NVD_THREAD_LOCAL(const short verminor) = NVDIALOG_VERSION_MINOR;
 NVD_THREAD_LOCAL(const short verpatch) = NVDIALOG_VERSION_PATCH;
 
 NvdVersion nvd_get_version() {
-        return ((NvdVersion){vermajor, verminor, verpatch, "0.9.0"});
+        return ((NvdVersion){vermajor, verminor, verpatch, "0.10.0"});
 }
