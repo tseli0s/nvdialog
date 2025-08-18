@@ -70,6 +70,7 @@ if(WIN32 OR CROSS_COMPILE_FOR_WIN32)
         src/backend/win32/nvdialog_question_dialog.c
         src/backend/win32/nvdialog_file_dialog.c
         src/backend/win32/nvdialog_notification.c
+        src/backend/win32/nvdialog_input_box.c
         ${NVD_COMMON_SOURCES})
 elseif(APPLE)
     set(NVD_SOURCES
