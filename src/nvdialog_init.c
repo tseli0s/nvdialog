@@ -1,6 +1,7 @@
 #include "nvdialog_init.h"
 
 #include <string.h>
+#include "nvdialog_dialog.h"
 #if defined(NVD_USE_GTK4)
 #define NVD_GTK4_IMPL
 #include "backend/adw/nvdialog_adw.h"
@@ -22,6 +23,7 @@ int nvd_init_gtk4(NvdBackendMask *mask) {
 
         mask->dialog_box = nvd_dialog_box_adw;
         mask->show_dialog = nvd_show_dialog_adw;
+        mask->set_accept_text = NULL; /* Won't work on it I just want to make clear that it doesn't work until I get rid of this backend. */
         mask->question = nvd_question_adw;
         mask->get_reply = nvd_get_reply_adw;
         mask->about_dialog = nvd_about_dialog_adw;
@@ -49,6 +51,7 @@ int nvd_init_gtk3(NvdBackendMask *mask) {
 
         mask->dialog_box = nvd_dialog_box_gtk;
         mask->show_dialog = nvd_show_dialog_gtk;
+        mask->set_accept_text = nvd_dialog_box_set_accept_text_gtk;
         mask->question = nvd_question_gtk;
         mask->get_reply = nvd_get_reply_gtk;
         mask->input_box = nvd_input_box_gtk;
@@ -74,6 +77,7 @@ int nvd_init_gtk3(NvdBackendMask *mask) {
 int nvd_init_win32(NvdBackendMask *mask) {
         mask->dialog_box = nvd_dialog_box_win32;
         mask->show_dialog = nvd_show_dialog_win32;
+        mask->set_accept_text = nvd_dialog_box_set_accept_text_win32;
         mask->question = nvd_question_win32;
         mask->get_reply = nvd_get_reply_win32;
         mask->input_box = nvd_input_box_win32;
@@ -99,6 +103,7 @@ int nvd_init_win32(NvdBackendMask *mask) {
 int nvd_init_cocoa(NvdBackendMask *mask) {
         mask->dialog_box = nvd_dialog_box_cocoa;
         mask->show_dialog = nvd_show_dialog_cocoa;
+        mask->set_accept_text = NULL;
         mask->question = nvd_question_cocoa;
         mask->get_reply = nvd_get_reply_cocoa;
         mask->input_box = nvd_input_box_cocoa;
