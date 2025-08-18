@@ -50,6 +50,7 @@
 typedef struct _NvdBackendMask {
         NvdDialogBox *(*dialog_box)(const char *, const char *, NvdDialogType);
         void (*show_dialog)(NvdDialogBox *);
+        void (*set_accept_text)(NvdDialogBox *, const char*);
 
         NvdInputBox *(*input_box)(const char*, const char*);
         void (*show_input_box)(NvdInputBox*);

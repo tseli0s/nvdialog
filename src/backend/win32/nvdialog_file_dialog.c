@@ -108,6 +108,7 @@ static NvdDynamicString *nvd_dir_dialog_win32(NvdFileDialog *dialog) {
                         dialog->filename = nvd_string_new(path);
                 CoTaskMemFree(pidl);
         }
+        return dialog->filename;
 }
 
 NvdFileDialog *nvd_open_file_dialog_win32(const char *title,

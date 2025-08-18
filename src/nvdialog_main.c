@@ -159,6 +159,12 @@ NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
         return NVD_CHECK_FUNCTION(mask.dialog_box, title, message, type);
 }
 
+void nvd_dialog_box_set_accept_text(NvdDialogBox *dialog, const char *accept_text) {
+        NVD_ASSERT(dialog != NULL);
+        NVD_ASSERT(accept_text != NULL);
+        NVD_TRY_CALL(mask.set_accept_text, dialog, accept_text);
+}
+
 void nvd_show_dialog(NvdDialogBox *dialog) {
         NVD_ASSERT(dialog != NULL);
         NVD_TRY_CALL(mask.show_dialog, dialog);

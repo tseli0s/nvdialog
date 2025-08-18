@@ -44,5 +44,5 @@ void nvd_show_input_box_win32(NvdInputBox *box) {
 }
 
 NvdDynamicString *nvd_input_box_get_string_win32(NvdInputBox *box) {
-        return box->window_handle;
+        return box->user_input;
 }
