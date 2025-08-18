@@ -54,11 +54,10 @@ NvdFileDialog *nvd_save_file_dialog_adw(const char *title,
                                         const char *default_filename);
 
 /*
- * Returns the filename chosen from the file dialog given to
- * the parameter 'savebuf'. This function is also used to show the
- * actual dialog.
+ * Returns the filename chosen from the file dialog given, also showing the dialog
+ * before that.
  */
-void nvd_get_file_location_adw(NvdFileDialog *dialog, char **savebuf);
+NvdDynamicString *nvd_get_file_location_adw(NvdFileDialog *dialog);
 
 /* Creates a dialog box with the usual yes, no and cancel buttons. */
 NvdQuestionBox *nvd_question_adw(const char *title, const char *question,
