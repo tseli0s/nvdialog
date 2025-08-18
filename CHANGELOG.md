@@ -5,6 +5,7 @@
 - Improved `NvdDialogBox` on Gtk backends by switching to the native `GtkMessageDialog`.
 - Improved `NvdQuestionBox` on Gtk backends by switching to the native `GtkMessageDialog`.
 - Fixed Windows and macOS backends returning stack pointers from functions (See #53, #56, #58).
+- Added missing `nvd_dialog_box_set_accept_text` function.
 
 # Changelog -- 0.9.0
 - CMake will now only set `CMAKE_INSTALL_PREFIX` to `/usr` if the host is not Windows or macOS. This may fix some installation problems you might have had when previously installing the library.
