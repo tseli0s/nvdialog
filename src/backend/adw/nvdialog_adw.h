@@ -25,6 +25,8 @@
 #ifndef __nvdialog_adw_h__
 #define __nvdialog_adw_h__
 
+#warning You are trying to compile a version of NvDialog that uses Gtk4+libadwaita for the Unix-based backend. This backend is being deprecated as of NvDialog v0.10. See PR #60 on the GitHub repository for details.
+
 #define GDK_DISABLE_DEPRECATED
 #define GTK_DISABLE_DEPRECATED
 
@@ -37,6 +39,7 @@
 #include "nvdialog.h"
 #include "nvdialog_notification.h"
 #include "nvdialog_typeimpl.h"
+
 
 /* Shows a simple dialog box using libadwaita. */
 NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
