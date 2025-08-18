@@ -52,14 +52,12 @@ nvd_print_assert(const char *msg, ...) {
         fflush(stderr);
 }
 
-#define NVD_STRING(s) #s
-
 #define NVD_ASSERT(eq)                                                        \
         do {                                                                  \
                 if (!(eq)) {                                                  \
                         nvd_print_assert("%s:%d (%s): assertion %s failed\n", \
                                          __FILE__, __LINE__, NVD_FN_IDENT,    \
-                                         NVD_STRING(eq));                     \
+                                         #eq);                                \
                 }                                                             \
         } while (0)
 
