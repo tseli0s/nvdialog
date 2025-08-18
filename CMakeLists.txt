@@ -14,6 +14,11 @@ set(CMAKE_C_STANDARD 11)
 add_compile_definitions(NVDIALOG_MAXBUF=4096 NVD_EXPORT_SYMBOLS)
 include_directories(${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
 
+if (NVD_USE_GTK4)
+    message(WARNING "**IMPORTANT** The build system detected that you are trying to build this library with the Gtk4/libadwaita backend. This backend is being deprecated as of version v0.10. For future-proofness, resort to the default gtk backend instead. See PR #60 on the repository for further details.")
+    message("-- If you are building for Windows/macOS, you can ignore the warning above.")
+endif()
+
 if(NOT DEFINED ENV{FLATPAK_ID} AND CMAKE_HOST_UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_PREFIX /usr)
 endif()
@@ -70,6 +75,7 @@ if(WIN32 OR CROSS_COMPILE_FOR_WIN32)
         src/backend/win32/nvdialog_question_dialog.c
         src/backend/win32/nvdialog_file_dialog.c
         src/backend/win32/nvdialog_notification.c
+        src/backend/win32/nvdialog_input_box.c
         ${NVD_COMMON_SOURCES})
 elseif(APPLE)
     set(NVD_SOURCES
