@@ -28,6 +28,7 @@
 
 #include "../../nvdialog_assert.h"
 #include "nvdialog_adw.h"
+#include "nvdialog_string.h"
 
 static void nvd_file_dialog_response_adw(GtkDialog *dialog, int32_t response,
                                          NvdFileDialog *data) {
@@ -35,7 +36,7 @@ static void nvd_file_dialog_response_adw(GtkDialog *dialog, int32_t response,
             response == GTK_RESPONSE_YES) {
                 GtkFileChooser *chooser = GTK_FILE_CHOOSER(dialog);
                 g_autoptr(GFile) file = gtk_file_chooser_get_file(chooser);
-                data->filename = g_file_get_path(file);
+                data->filename = nvd_string_new(g_file_get_path(file));
         }
         gtk_window_destroy(GTK_WINDOW(dialog));
 }
@@ -81,11 +82,11 @@ inline void *nvd_open_file_dialog_get_raw_adw(NvdFileDialog *dlg) {
         return dlg->raw;
 }
 
-void nvd_get_file_location_adw(NvdFileDialog *dialog, char **savebuf) {
+NvdDynamicString *nvd_get_file_location_adw(NvdFileDialog *dialog) {
         g_signal_connect(dialog->raw, "response",
                          G_CALLBACK(nvd_file_dialog_response_adw), dialog);
         while (g_list_model_get_n_items(gtk_window_get_toplevels()) > 0)
                 g_main_context_iteration(NULL, false);
 
-        *savebuf = (char *)dialog->filename;
+        return dialog->filename;
 }
