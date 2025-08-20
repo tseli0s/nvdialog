@@ -63,6 +63,8 @@ NvdQuestionBox *nvd_question_win32(const char *title, const char *question,
 
 void nvd_show_dialog_win32(NvdDialogBox *dialog);
 
+void nvd_dialog_box_set_accept_text_win32(NvdDialogBox *dialog, const char *accept_text);
+
 NvdReply nvd_get_reply_win32(NvdQuestionBox *box);
 
 NvdAboutDialog *nvd_about_dialog_win32(const char *appname, const char *brief,
