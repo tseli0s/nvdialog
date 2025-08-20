@@ -80,3 +80,9 @@ void nvd_gtk_update_accept_label(NvdDialogBox *dialog) {
         NVD_ASSERT(dialog != NULL);
         gtk_button_set_label(dialog->accept_button, dialog->accept_label);
 }
+
+void nvd_dialog_box_set_accept_text_gtk(NvdDialogBox *box, const char *text) {
+        /* FIXME: Use NvdDynamicString here instead. */
+        box->accept_label = (char*) text; 
+        nvd_gtk_update_accept_label(box);
+}
