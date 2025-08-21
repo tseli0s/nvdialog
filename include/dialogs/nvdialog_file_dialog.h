@@ -27,7 +27,8 @@
 
 /**
  * @brief An opaque file dialog type, representing either a file
- * dialog that can be used to open a file or save a file.
+ * dialog that can be used to open a file or save a file, and since v0.9.0,
+ * opening a directory instead.
  * @since v0.1.0
  * @ingroup FileDialog
  */
@@ -75,6 +76,7 @@ NVD_API NvdFileDialog *nvd_save_file_dialog_new(const char *title,
  * nvd_get_error should be called for further information about the error
  * occurring.
  * @ingroup FileDialog
+ * @since v0.9.0
  */
 NVD_API NvdFileDialog *nvd_open_folder_dialog_new(const char *title,
                                                   const char *default_folder);

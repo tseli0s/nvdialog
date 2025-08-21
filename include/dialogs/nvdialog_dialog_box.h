@@ -72,7 +72,8 @@ NVD_API NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
 /**
  * @brief Shows a dialog to the system shell.
  * @details The dialog given is rendered to the screen when this function is
- * called.
+ * called. Note that this function works even on headless environments, although it
+ * will not produce any result.
  * @param dialog The dialog to show.
  * @ingroup QuestionDialog
  */
@@ -95,7 +96,7 @@ NVD_API NvdQuestionBox *nvd_dialog_question_new(const char *title,
                                                 NvdQuestionButton button);
 
 /**
- * @brief Shows the dialog box given to the system and returns the choice given
+ * @brief Shows the question dialog given to the system and returns the choice given
  * @param box The box to use to show the reply.
  * @ingroup QuestionDialog
  * @return The reply from the dialog box.

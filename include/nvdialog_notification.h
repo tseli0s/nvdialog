@@ -32,6 +32,7 @@
 /**
  * @brief Possible types of NvDialog notifications. Each field will create a
  * slightly different dialog matching the requested type.
+ * @note Some systems may not provide compatible icons "out-of-the-box", usually minimalist Linux distros.
  * @ingroup Notification
  * @since v0.5.0
  * @sa NvdNotification
@@ -48,8 +49,13 @@ typedef enum {
  * @brief The base notification type used by NvDialog.
  *
  * NvDialog offers since v0.5.0 support for basic notifications that
- * will be useful for many applications. The notification API is cross-platform
- * and should reduce the required setup to send a simple notification.
+ * add an extra cross-platform solution. The notification API is cross-platform
+ * and should reduce the required setup to send a simple notification. On GNU/Linux,
+ * `libnotify` is OPTIONALLY used at runtime to send notifications, meaning it's not a
+ * hard dependency. In addition, it can be disabled from being loaded entirely at initialization
+ * by setting the environment variable NVD_NO_NOTIFS to any value (except 0). Note that if you
+ * need to create a notification down the line it will load instances of the library separately,
+ * but only if you insist so.
  *
  * @ingroup Notification
  * @sa nvd_notification_new

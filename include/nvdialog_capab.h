@@ -46,6 +46,8 @@ enum {
  * since most of the library isn't modular.
  * @param query Which capabilities to query.
  * @return true if the requested @ref query is supported, else false.
+ * @since v0.2.0
+ * @ingroup Capabilities
  */
 NVD_API bool nvd_get_capabilities(int query);
 

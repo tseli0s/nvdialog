@@ -34,11 +34,15 @@ extern "C" {
  * <b>Documentation</b>
  *
  * This manual documents the NvDialog library, a dialog box library written in C
- * that uses the system theme. Instructions on how to build the library can be
- * found in @ref building "this page".
+ * that uses the system API to display its dialogs, making it minimal, dependency-free, portable and easy to use.
+ * Instructions on how to build the library can be found in @ref building "this page". There are also multiple examples
+ * to get you started - You can probably copy them in your source and continue with your project.
+ *
+ * NvDialog is verified to work on Windows (XP through 11), macOS (Catalina), Debian (10-13), Arch Linux and FreeBSD. Most other
+ * Unix-like OSes also work, as long as Gtk3 is installed on the system.
  *
  * To get started, you should read about @ref NvdDialogBox, which is a simple
- * dialog box with nothing special in it. NvDialog also provides the following
+ * dialog box with no special functionality in it apart from the very basics. NvDialog also provides the following (among many many others)
  * features as part of its API:
  * - @ref NvdAboutDialog
  * - @ref NvdQuestionBox
@@ -139,9 +143,9 @@ extern "C" {
  * @details For a compile time alternative implementation see the
  * NVDIALOG_VERSION_MAJOR, NVDIALOG_VERSION_MINOR and NVDIALOG_VERSION_PATCH
  * constants.
- * @note The versioning API was introduced in v0.2.0, and will cause problems
- * with earlier versions.
- * @returns The version of NvDialog linked with at runtime.
+ * @returns The version of NvDialog linked with at runtime, as a struct.
+ * @since v0.2.0
+ * @ingroup Version
  */
 NvdVersion nvd_get_version();
 
