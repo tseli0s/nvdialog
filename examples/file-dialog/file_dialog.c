@@ -31,25 +31,23 @@ int main(int argc, char** argv) {
                 return -ENOMEM;
         }
 
-        /* Showing the dialog to the user, then saving the filename to the
-         * second parameter. */
-        const char *filename, *directory;
         /*
-         * This function either returns the filename or NULL to where the second
+         * This function either returns the filename or NULL
          * parameter points. As you can see below, NULL means no file was
          * selected (Although it could be an error to, in which case NvDialog
          * handled it)
          */
-        nvd_get_file_location(dialog, &filename);
-        nvd_get_file_location(dir_dialog, &directory);
+        NvdDynamicString *filename = nvd_get_file_location(dialog);
+        NvdDynamicString *directory = nvd_get_file_location(dir_dialog);
 
         if (filename != NULL)
-                printf("Chosen file: %s\n", filename);
+                /* We have to convert the NvdDynamicString into a normal C string to print it. */
+                printf("Chosen file: %s\n", NVD_CSTR(filename));
         else
                 printf("No file selected.\n");
 
         if (directory != NULL)
-                printf("Chosen directory: %s\n", directory);
+                printf("Chosen directory: %s\n", NVD_CSTR(directory));
         else
                 printf("No directory selected.\n");
 
