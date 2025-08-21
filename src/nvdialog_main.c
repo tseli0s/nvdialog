@@ -118,7 +118,7 @@ int nvd_init(void) {
 #endif
 
 #if defined(__linux__)
-        //nvd_libnotify_path = (char*) nvd_string_to_cstr((NvdDynamicString*)nvd_get_libnotify_path());
+        nvd_libnotify_path = (char*) nvd_string_to_cstr((NvdDynamicString*)nvd_get_libnotify_path());
         if (!nvd_libnotify_path) {
                 nvd_error_message(
                         "nvd_libnotify_path is NULL, setting it to "
@@ -132,7 +132,7 @@ int nvd_init(void) {
 
         int result = nvd_init_backends(&mask);
         if (result < 0) {
-                nvd_set_error(-result);
+                nvd_set_error((NvdError)+result);
                 return result;
         }
 

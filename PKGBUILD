@@ -2,7 +2,7 @@
 
 pkgname=nvdialog
 _pkgname=nvdialog
-pkgver=0.9.0
+pkgver=0.10.0
 pkgrel=1
 epoch=
 pkgdesc="Cross-platform dialog box library written in C, using the host's standard backend."
@@ -11,10 +11,7 @@ url="https://tseli0s.github.io/nv.dialog/"
 _repo="https://github.com/tseli0s/nvdialog.git"
 license=('MIT')
 groups=()
-depends=(gtk3 glibc) # Arch Linux is modern enough to safely say that
-					 # libadwaita won't cause any problems as the default
-					 # backend.
-				
+depends=(gtk3 glibc)		
 makedepends=(git ninja gcc cmake)
 checkdepends=()
 optdepends=()
@@ -33,7 +30,7 @@ validpgpkeys=()
 build() {
 	cd .. # Arch wants to go to src/ for some reason :(
 	[[ -d build/ ]] && rm -rfv build/ # Needed step
-	cmake . -B build -DNVD_USE_GTK4=OFF -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -G "Ninja" -DWIN32_TARGET=OFF -DCMAKE_BUILD_TYPE=Release
+	cmake . -B build -DNVD_USE_GTK4=OFF -DNVD_BUILD_STATIC=ON -DNVDIALOG_MAXBUF=4096 -G "Ninja" -DCROSS_COMPILE_FOR_WIN32=OFF -DCMAKE_BUILD_TYPE=Release
 	cd build/ && ninja
 }
 
