@@ -129,3 +129,69 @@ uint32_t bunch_of_assignments(int *param) {
 
 ## - **Indentation**
 Lines should be at most 60 characters long. Exceptions are allowed if there is a good reason for it, but should always be avoided.
+
+# Adding new backends
+You may wish to expand the library's platform support for a specific project. Since v0.8, the way each backend is initialized is much more modular and independent, making the process much easier to understand and document.
+
+> [!NOTE] 
+> In the (long) future, a plugin system will be introduced that allows developers to add their own backends and load them at runtime, eg. based on the desktop environment used. This is intended to allow the library to be expanded to multiple platforms without bloating the core library.
+
+There are three major steps to adding a new backend:
+1. Add a new directory under `src/backend` with the name of the backend. Then write the code for it with a unique suffix in each function. For example, this is how an `NvdDialogBox` is created with the `gtk` backend:
+```c
+// Notice the _gtk suffix:
+NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
+                                 NvdDialogType type) {
+        NvdDialogBox *dialog = malloc(sizeof(NvdDialogBox));
+        NVD_RETURN_IF_NULL(dialog);
+
+        dialog->accept_label = "Okay";
+        dialog->content = (char *)message;
+        dialog->msg = (char *)title;
+        dialog->type = type;
+
+        GtkMessageType gtk_type;
+        switch (type) {
+                case NVD_DIALOG_WARNING:
+                        gtk_type = GTK_MESSAGE_WARNING;
+                        break;
+                case NVD_DIALOG_ERROR:
+                        gtk_type = GTK_MESSAGE_ERROR;
+                        break;
+                default:
+                case NVD_DIALOG_SIMPLE:
+                        gtk_type = GTK_MESSAGE_INFO;
+                        break;
+        }
+
+        dialog->window_handle =
+                gtk_message_dialog_new(nvd_get_parent(), GTK_DIALOG_MODAL | GTK_DIALOG_USE_HEADER_BAR,
+                                       gtk_type, GTK_BUTTONS_OK, "%s", message);
+        gtk_window_set_title(GTK_WINDOW(dialog->window_handle), title);
+        GtkWidget *ok_button = gtk_dialog_get_widget_for_response(
+                GTK_DIALOG(dialog->window_handle), GTK_RESPONSE_OK);
+        dialog->accept_button = ok_button;
+        g_signal_connect_swapped(dialog->window_handle, "response",
+                                 G_CALLBACK(gtk_widget_destroy),
+                                 GTK_WIDGET(dialog->window_handle));
+
+        return dialog;
+}
+
+```
+2. In `src/nvdialog_init.c`, register the functions of the backend for each functionality in a separate function that'll be called later.
+Examine the `NvdbackendMask` (defined in the header) and preexisting implementations to understand the pattern.
+3. In `CMakeLists.txt`, make sure you register the backend's source code and includes. For example, this is how the `win32` backend registers its own files:
+```cmake
+# You can also use a wildcard, although it is discouraged.
+if(WIN32 OR CROSS_COMPILE_FOR_WIN32)
+    set(NVD_SOURCES
+        src/backend/win32/nvdialog_about_dialog.c
+        src/backend/win32/nvdialog_dialog_box.c
+        src/backend/win32/nvdialog_question_dialog.c
+        src/backend/win32/nvdialog_file_dialog.c
+        src/backend/win32/nvdialog_notification.c
+        ${NVD_COMMON_SOURCES})
+```
+
+4. Test the backend to make sure it works as expected. [This subproject](./nvd-demo/) may be of interest to you.

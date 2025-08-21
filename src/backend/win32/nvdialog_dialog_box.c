@@ -28,6 +28,7 @@
 #include <winuser.h>
 
 #include "../../nvdialog_assert.h"
+#include "nvdialog_dialog.h"
 #include "nvdialog_win32.h"
 
 NvdDialogBox *nvd_dialog_box_win32(const char *title, const char *message,
@@ -66,4 +67,13 @@ void nvd_show_dialog_win32(NvdDialogBox *dialog) {
 
         MessageBox(nvd_get_parent(), dialog->content, dialog->msg,
                    MB_OK | flag);
+}
+
+void nvd_dialog_box_set_accept_text_win32(NvdDialogBox *dialog, const char *accept_text) {
+        /* 
+         * FIXME: Windows will not allow us to modify the button text. There are two solutions to this:
+         * - 1. Simply do nothing (maybe add a notice/warning for the developer).
+         * - 2. Make our dialogs from scratch, which may break compatibility and consistency.
+         */
+        return;
 }

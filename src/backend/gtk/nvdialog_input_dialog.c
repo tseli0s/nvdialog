@@ -41,7 +41,7 @@ static void nvd_fetch_user_input(GtkWidget *button, gpointer data) {
         else
                 box->user_input = nvd_string_new(text);
 
-        gtk_widget_destroy(box->window_handle);
+        gtk_widget_destroy(GTK_WIDGET(box->window_handle));
         gtk_main_quit();
 }
 

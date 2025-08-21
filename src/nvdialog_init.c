@@ -1,7 +1,7 @@
 #include "nvdialog_init.h"
 
 #include <string.h>
-#include "nvdialog_error.h"
+#include "nvdialog_dialog.h"
 #if defined(NVD_USE_GTK4)
 #define NVD_GTK4_IMPL
 #include "backend/adw/nvdialog_adw.h"

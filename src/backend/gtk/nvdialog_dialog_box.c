@@ -54,7 +54,7 @@ NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
         }
 
         dialog->window_handle =
-                gtk_message_dialog_new(nvd_get_parent(), GTK_DIALOG_MODAL,
+                gtk_message_dialog_new(nvd_get_parent(), GTK_DIALOG_MODAL | GTK_DIALOG_USE_HEADER_BAR,
                                        gtk_type, GTK_BUTTONS_OK, "%s", message);
         gtk_window_set_title(GTK_WINDOW(dialog->window_handle), title);
         GtkWidget *ok_button = gtk_dialog_get_widget_for_response(
@@ -62,7 +62,7 @@ NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
         dialog->accept_button = ok_button;
         g_signal_connect_swapped(dialog->window_handle, "response",
                                  G_CALLBACK(gtk_widget_destroy),
-                                 dialog->window_handle);
+                                 GTK_WIDGET(dialog->window_handle));
 
         return dialog;
 }
@@ -74,10 +74,15 @@ inline void *nvd_dialog_box_get_raw_gtk(NvdDialogBox *dlg) {
 
 void nvd_show_dialog_gtk(NvdDialogBox *dialog) {
         gtk_dialog_run(GTK_DIALOG(dialog->window_handle));
-        gtk_widget_destroy(dialog->window_handle);
 }
 
 void nvd_gtk_update_accept_label(NvdDialogBox *dialog) {
         NVD_ASSERT(dialog != NULL);
         gtk_button_set_label(dialog->accept_button, dialog->accept_label);
+}
+
+void nvd_dialog_box_set_accept_text_gtk(NvdDialogBox *box, const char *text) {
+        /* FIXME: Use NvdDynamicString here instead. */
+        box->accept_label = (char*) text; 
+        nvd_gtk_update_accept_label(box);
 }
