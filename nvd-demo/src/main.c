@@ -1,9 +1,7 @@
 #include <nvdialog/nvdialog.h>
-#include <nvdialog/nvdialog_string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
 static void die(const char *msg) {
         fprintf(stderr, "Error: %s", msg);
         abort();
@@ -21,10 +19,24 @@ int main(void) {
                 "This is a warning dialog box created with NvDialog.",
                 NVD_DIALOG_WARNING);
 
-        if (!dialog || !warning) die("Couldn't create dialog boxes");
+        NvdInputBox *input_box = nvd_input_box_new("Text Input", "Enter some text to display in another window. Empty text also works!");
+        
+        if (!dialog || !warning || !input_box) die("Couldn't create dialog boxes");
 
         nvd_show_dialog(dialog);
         nvd_show_dialog(warning);
+        nvd_show_input_box(input_box);
+
+        NvdDynamicString *input_str = nvd_input_box_get_string(input_box);
+        if (input_str) {
+                NvdDialogBox *dlg2 = nvd_dialog_box_new("You entered the message...", NVD_CSTR(input_str), NVD_DIALOG_ERROR);
+                nvd_show_dialog(dlg2);
+                nvd_free_object(dlg2);
+        } else {
+                NvdDialogBox *error = nvd_dialog_box_new("No Message!", "You did not enter anything to display!", NVD_DIALOG_ERROR);
+                nvd_show_dialog(error);
+                nvd_free_object(error);
+        }
 
         NvdQuestionBox *question =
                 nvd_dialog_question_new("Question",
