@@ -12,7 +12,7 @@ int main() {
                                      NVD_NOTIFICATION_SIMPLE);
         if (!notification) {
                 fprintf(stderr, "Couldn't create notification: %s\n",
-                        nvd_stringify_error(nvd_get_error()));
+                        NVD_CSTR(nvd_stringify_error(nvd_get_error())));
                 return -1;
         }
 
