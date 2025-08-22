@@ -25,13 +25,13 @@
 #include "dialogs/nvdialog_file_dialog.h"
 
 #include <stdlib.h>
-#include <string.h>
 
 #include "../../nvdialog_assert.h"
-#include "../../nvdialog_util.h"
 #include "gtk/gtk.h"
 #include "nvdialog_gtk.h"
 #include "nvdialog_string.h"
+
+/* TODO: Perhaps in the future we will use DBus directly to request files just like Firefox. For now, GtkNativeDialog works.*/
 
 NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
                                         const char *file_extensions) {
@@ -39,68 +39,33 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
         NVD_RETURN_IF_NULL(dialog);
         dialog->file_extensions = (char *)file_extensions;
 
-        GtkWidget *dialog_raw = gtk_file_chooser_dialog_new(
-                title, NULL, GTK_FILE_CHOOSER_ACTION_OPEN, "Cancel",
-                GTK_RESPONSE_CANCEL, "Open", GTK_RESPONSE_OK, NULL);
-        if (!dialog_raw) {
-                free(dialog);
-                return NULL;
-        }
-        dialog->raw = dialog_raw;
+        dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
+                                                  GTK_FILE_CHOOSER_ACTION_OPEN,
+                                                  "_Open", "_Cancel");
+        NVD_RETURN_IF_NULL(dialog);
 
-        if (file_extensions) {
-                GtkFileFilter *filter = gtk_file_filter_new();
-                gtk_file_filter_set_name(filter, "Filter by extension...");
-                char **words = nvd_seperate_args(file_extensions);
-
-                size_t i = 0;
-                while (words[i] != NULL) {
-                        // Normally, we would use NVDIALOG_MAXBUF for the size
-                        // of this array. In this case however, it seems like an
-                        // overkill to do so. So instead we will limit it to
-                        // just 32 characters.
-                        char buffer[32];
-                        snprintf(buffer, sizeof(buffer), "*.%s", words[i]);
-                        gtk_file_filter_add_pattern(filter, buffer);
-                        i++;
-                }
-                gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog->raw),
-                                            filter);
-                free(words);
-        }
         return dialog;
 }
 
 NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
                                         const char *default_filename) {
-        NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
+        NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
-
-        dialog->raw = gtk_file_chooser_dialog_new(
-                title, nvd_get_parent(), GTK_FILE_CHOOSER_ACTION_SAVE, "Cancel",
-                GTK_RESPONSE_CANCEL, "Save", GTK_RESPONSE_ACCEPT, NULL);
-        if (!dialog->raw) {
-                nvd_set_error(NVD_BACKEND_FAILURE);
-                free(dialog);
-        }
-
+        dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
+                                                  GTK_FILE_CHOOSER_ACTION_SAVE,
+                                                  "_Open", "_Cancel");
+        NVD_RETURN_IF_NULL(dialog);
         return dialog;
 }
 
 NvdFileDialog *nvd_open_folder_dialog_gtk(const char *title,
                                           const char *default_filename) {
-        NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
+        NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
-
-        dialog->raw = gtk_file_chooser_dialog_new(
-                title, nvd_get_parent(), GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-                "_Open", GTK_RESPONSE_OK, "_Close", GTK_RESPONSE_CANCEL, NULL);
-        if (!dialog->raw) {
-                nvd_set_error(NVD_BACKEND_FAILURE);
-                free(dialog);
-                return NULL;
-        }
-
+        dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
+                                                  GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                                  "_Open", "_Cancel");
+        NVD_RETURN_IF_NULL(dialog);
         return dialog;
 }
 
@@ -113,7 +78,7 @@ static NvdDynamicString *nvd_get_file_gtk(NvdFileDialog *dialog) {
                 dialog->location_was_chosen = true;
                 gtk_widget_destroy(dialog->raw);
                 if (filename) {
-                        nvd_delete_string(dialog->filename);
+                        if (dialog->filename != NULL) nvd_delete_string(dialog->filename);
                         dialog->filename = nvd_string_new(filename);
                         g_free(filename);
                 }
@@ -123,7 +88,9 @@ static NvdDynamicString *nvd_get_file_gtk(NvdFileDialog *dialog) {
                 gtk_widget_destroy(dialog->raw);
         }
 
+
         while (gtk_events_pending()) gtk_main_iteration();
+        g_object_unref(dialog->raw);
 
         return dialog->filename;
 }
@@ -157,8 +124,26 @@ void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog *dlg) {
 }
 
 NvdDynamicString *nvd_get_file_location_gtk(NvdFileDialog *dialog) {
-        if (dialog->is_dir_dialog) {
-                return nvd_get_dir_gtk(dialog);
-        } else
-                return nvd_get_file_gtk(dialog);
+        GtkResponseType response =
+                gtk_native_dialog_run(GTK_NATIVE_DIALOG(dialog->raw));
+        char *filename;
+        if (response == GTK_RESPONSE_OK || response == GTK_RESPONSE_ACCEPT) {
+                filename = gtk_file_chooser_get_filename(
+                        GTK_FILE_CHOOSER(dialog->raw));
+                dialog->location_was_chosen = true;
+                gtk_widget_destroy(dialog->raw);
+                if (filename) {
+                        nvd_delete_string(dialog->filename);
+                        dialog->filename = nvd_string_new(filename);
+                        g_free(filename);
+                }
+        } else {
+                dialog->location_was_chosen = false;
+                dialog->filename = NULL;
+                gtk_widget_destroy(dialog->raw);
+        }
+
+        while (gtk_events_pending()) gtk_main_iteration();
+
+        return dialog->filename;
 }
