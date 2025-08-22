@@ -90,7 +90,9 @@ NVD_API const char *nvd_get_application_name();
  * @ingroup Core
  * @return The argv[0] given to nvdialog on success, otherwise NULL.
  */
-__attribute__((deprecated("Since v0.8.1 this function always returns NULL since the library no longer asks for the command line.")))
+#if __GNUC__
+ __attribute__((deprecated("Since v0.8.1 this function always returns NULL since the library no longer asks for the command line.")))
+#endif
 NVD_API const char *nvd_get_argv(void);
 
 /**
