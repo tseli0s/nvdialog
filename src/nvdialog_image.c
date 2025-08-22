@@ -57,7 +57,7 @@ NvdImage *nvd_create_image(const uint8_t *data, int width, int height) {
         NVD_ASSERT(data != NULL);
 
         image->data = data;
-        image->len = 4 * (width * height);
+        image->len = 4 * (unsigned int) (width * height);
         image->width = width;
         image->height = height;
 

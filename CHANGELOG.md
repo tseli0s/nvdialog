@@ -1,11 +1,15 @@
 # Changelog -- 0.10.0
-- (**BREAKING**) Added new `NvdDynamicString` type and integrated it into various library APIs.
+- (**BREAKING**) Added new `NvdDynamicString` type and integrated it into various library APIs. This will break the FileDialog and Error groups in preexisting code.
 - Added new `NvdInputBox` API - An input box can be used to retrieve simple text input from the user.
 - Increased shared file version to 3 (Output files may contain libnvdialog.so.3 now).
 - Improved `NvdDialogBox` on Gtk backends by switching to the native `GtkMessageDialog`.
 - Improved `NvdQuestionBox` on Gtk backends by switching to the native `GtkMessageDialog`.
 - Fixed Windows and macOS backends returning stack pointers from functions (See #53, #56, #58).
 - Added missing `nvd_dialog_box_set_accept_text` function.
+- Fixed NVD_ASSERT_FATAL macro failing regardless of condition.
+- Added NvdInputBox on `nvd-demo`.
+- Fixed tests not working on Windows.
+- Fixed some compiler warnings when cross-compiling.
 - Merged the `sandbox` with the `gtk` backend. This will not change any functionality for any applications.
 
 # Changelog -- 0.9.0
@@ -23,6 +27,7 @@
 - Cleaned up and restructured `CMakeLists.txt` (This should not break anything, functionality remains the exact same)
 - Provide an option in `CMakeLists.txt` to build the documentation along with the library (Requires `doxygen`)
 - Fixed a problem where types/objects were partially initialized leading to memory issues.
+- Improved the documentation and fixed some documentation inaccuracies from the past versions.
 
 # Changelog -- 0.8.1
 - MacOS about dialog support returned

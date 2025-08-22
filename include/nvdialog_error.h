@@ -31,9 +31,11 @@
 #include "nvdialog_platform.h"
 
 /**
- * @brief The enumerator containing most
- * errors the library can handle.
- * @sa @ref nvd_stringify_error
+ * @brief An enumerator describing possible errors that may occur from the library.
+ * One of its fields is returned by `nvd_get_error` depending on whether a (and what)
+ * problem might've occured after an operation.
+ * @sa nvd_stringify_error
+ * @since v0.1.0
  */
 typedef enum {
         NVD_NO_ERROR = 0,

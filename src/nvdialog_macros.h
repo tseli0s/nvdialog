@@ -33,8 +33,13 @@
 #define NVD_BUFFER_SIZE NVDIALOG_MAXBUF
 #endif /* NVD_BUFFER_SIZE */
 
+#ifndef __MINGW32__
 #define NVD_LIBRARY_FUNCTION __attribute__((visibility("default")))
 #define NVD_INTERNAL_FUNCTION __attribute__((visibility("hidden")))
+#else
+#define NVD_LIBRARY_FUNCTION
+#define NVD_INTERNAL_FUNCTION
+#endif
 #define NVD_DONT_INITIALIZE __attribute__((noinit))
 #define NVD_DEPRECATED(x) __attribute__((deprecated(x)))
 #define NVD_FN_IDENT __PRETTY_FUNCTION__

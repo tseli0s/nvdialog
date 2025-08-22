@@ -46,6 +46,10 @@ typedef struct _NvdInputBox NvdInputBox;
  * @param title The title of the input box, cannot be NULL
  * @param msg The message of the input box. If NULL, then a preconfigured string will be displayed.
  * @since v0.10.0
+ * @warning By default on Windows the dialog will use a fallback theme, since NvDialog does not want to force a manifest to load
+ * the proper theme as required by WinAPI. This may make controls look a bit outdated. To fix it, you must either supply your own .rc file
+ * and change the theming manually, or embed, at your own risk of breaking other libraries, the .rc file directly into NvDialog. If you do the former,
+ * do it before initializing the library. This does not apply on macOS and Linux.
  * @ingroup InputDialog
  * @returns A new @ref NvdInputBox on success, NULL otherwise.
 */

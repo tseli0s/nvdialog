@@ -34,6 +34,9 @@
  * - NVD_DIALOG_SIMPLE  -> A simple message box, to say something.
  * - NVD_DIALOG_WARNING -> A warning message to be used for warnings.
  * - NVD_DIALOG_ERROR   -> An error message box.
+ * @since v0.1.0
+ * @ingroup Dialog
+ * @sa nvd_dialog_box_new
  */
 typedef enum {
         NVD_DIALOG_SIMPLE = 0xff, /**< A simple dialog box, no decorations. */
@@ -45,6 +48,11 @@ typedef enum {
 /**
  * @brief Enumerator containing the possible arguments for
  * nvd_dialog_question_new().
+ * @details Each field describes the possible answers that will be included in a new @ref NvdQuestionDialog.
+ * More specifically:
+ * - NVD_YES_NO will have the dialog include only two buttons, yes and no (May differ per locale and system, but always affirmative and negative).
+ * - NVD_YES_NO_CANCEL is the same but also includes a cancel button. Sometimes this is ignored depending on the system.
+ * - NVD_YES_CANCEL is useful when you want to change the affirmative button's text but want to use cancel for the negative.
  * @since v0.1.0
  * @sa nvd_dialog_question_new
  */
@@ -55,7 +63,7 @@ typedef enum {
 } NvdQuestionButton;
 
 /**
- * @brief Returned value by @ref nvd_get_reply .
+ * @brief An enumerator containing a possible returned value by @ref nvd_get_reply, when used with an @ref NvdQuestionDialog
  * @sa nvd_get_reply
  * @since v0.1.1
  */
@@ -69,9 +77,9 @@ typedef enum {
 /**
  * @brief A struct that identifies the version of NvDialog.
  * @details This struct contains a series of fields that hold information about
- * NvDialog's version. The struct can be used at both compile-time and runtime
- * using respectively @ref NVD_VERSION and @ref nvd_get_version .
+ * NvDialog's version (usually at runtime). It's usually filled by @ref nvd_get_version
  * @sa nvd_get_version
+ * @ingroup Version
  */
 typedef struct {
         short major;  /**< Major version of NvDialog. */

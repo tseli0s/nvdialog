@@ -30,7 +30,12 @@
 #include "nvdialog_types.h"
 #include "nvdialog_platform.h"
 
-/** @brief An opaque representation of a window object. */
+/**
+ * @brief An opaque representation of a window object.
+ * @warning This is not cross platform nor portable. It can be set to almost
+ * anything and nvdialog will accept it. Only use this if you're sure that what
+ * you're giving the library is valid.
+ */
 typedef void *NvdParentWindow;
 
 /**
@@ -39,6 +44,12 @@ typedef void *NvdParentWindow;
  * This function initializes NvDialog. It's the first function that should be
  * called when you create your program as without it, you cannot create any
  * dialogs or use the library at all.
+ *
+ * @details Depending on the platform, this function does a series of things (in random order):
+ * - If any optional libraries are to be loaded, they're detected and loaded at this stage.
+ * - All function pointers for each platform are initialized now.
+ * - It initializes some internal state for future use.
+ * - Any backends that need special setup are also initialized now.
  *
  * @note You should call this function to the same thread you're creating your
  * dialogs from. If you also happen to use a library used by NvDialog as the
@@ -55,9 +66,11 @@ NVD_API int nvd_init();
  * @details This function sets the application name that NvDialog will use if an
  * application name is needed. By default, the application name is set to
  * "NvDialog Application". The application name is used in notifications, so it
- * is important to set the actual application name.
+ * is important to set the actual application name if you wish to use them.
+ * @note Make sure the given string will not be mutated during the lifetime of the program.
  * @ingroup Core
  * @param application_name The application name to use.
+ * @since v0.5.0
  */
 NVD_API void nvd_set_application_name(const char *application_name);
 
@@ -73,11 +86,13 @@ NVD_API const char *nvd_get_application_name();
  * @brief Returns the argv[0] given to nvdialog.
  * @details This function returns the parameter passed to nvdialog during
  * nvd_init. It is mainly intended to be used internally.
- * @deprecated This function is deprecated as of v0.8.1 and will only return
- * NULL
+ * @deprecated This function is deprecated as of v0.8.1 and will only return NULL
  * @ingroup Core
  * @return The argv[0] given to nvdialog on success, otherwise NULL.
  */
+#if __GNUC__
+ __attribute__((deprecated("Since v0.8.1 this function always returns NULL since the library no longer asks for the command line.")))
+#endif
 NVD_API const char *nvd_get_argv(void);
 
 /**
@@ -85,7 +100,11 @@ NVD_API const char *nvd_get_argv(void);
  * @details Using the parameter given, a window will be set as the parent of all
  * dialogs that are created from within the library. The window has to match the
  * window type used by the backend.
- * @note This is a very dangerous function, and may not work as expected.
+ * @warning This is a very dangerous operation, and may not work as expected. There are a series of guarantees
+ * you must have to make sure things don't go bad:
+ * - You handle the pointer given so that it matches the backend's expectation. For example, you'll use an HWND pointer on Windows, GtkWindow on Linux, and so on.
+ * - The window lives as long as any dialog will be displayed.
+ * - The window is allowed to be used by the backend at any arbitrary time during the dialog's lifetime, since no guarantees can be made.
  * @ingroup Core
  * @param parent The window to set as the parent.
  * @return 0 on success, otherwise -1, call nvd_get_error() for more.
@@ -106,7 +125,6 @@ NVD_API NvdParentWindow nvd_get_parent(void);
  *
  * This will reset the changes made by @ref nvd_set_parent, by
  * unmarking the window that is given as the parent from NvDialog.
- *
  */
 NVD_API void nvd_delete_parent(void);
 
@@ -118,6 +136,7 @@ NVD_API void nvd_delete_parent(void);
  * free.
  * @ingroup Core
  * @param object The object to be deleted.
+ * @note @ref object may be NULL, although this will print a small warning on the command line.
  */
 NVD_API void nvd_free_object(void *object);
 

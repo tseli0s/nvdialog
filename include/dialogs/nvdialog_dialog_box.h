@@ -64,6 +64,7 @@ typedef struct _NvdQuestionBox NvdQuestionBox;
  *
  * @ingroup QuestionDialog
  * @return The dialog handle on success, else NULL.
+ * @since v0.1.0
  */
 NVD_API NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
                                          NvdDialogType type);
@@ -71,11 +72,10 @@ NVD_API NvdDialogBox *nvd_dialog_box_new(const char *title, const char *message,
 /**
  * @brief Shows a dialog to the system shell.
  * @details The dialog given is rendered to the screen when this function is
- * called. This function is not yet useful since some API changes may be
- * required to work.
+ * called. Note that this function works even on headless environments, although it
+ * will not produce any result.
  * @param dialog The dialog to show.
  * @ingroup QuestionDialog
- * @note Obsolete function, currently unnecessary.
  */
 NVD_API void nvd_show_dialog(NvdDialogBox *dialog);
 
@@ -96,7 +96,7 @@ NVD_API NvdQuestionBox *nvd_dialog_question_new(const char *title,
                                                 NvdQuestionButton button);
 
 /**
- * @brief Shows the dialog box given to the system and returns the choice given
+ * @brief Shows the question dialog given to the system and returns the choice given
  * @param box The box to use to show the reply.
  * @ingroup QuestionDialog
  * @return The reply from the dialog box.
@@ -108,6 +108,7 @@ NVD_API NvdReply nvd_get_reply(NvdQuestionBox *box);
  * @param dialog The dialog to retrieve the object from.
  * @ingroup QuestionDialog
  * @return void* The raw toolkit-created object.
+ * @warning On Windows this will always return NULL, as the dialog is created on the spot upon showing it (See MessageBox for details.)
  */
 NVD_API void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog);
 
@@ -116,6 +117,7 @@ NVD_API void *nvd_dialog_question_get_raw(NvdQuestionBox *dialog);
  * @param dialog The dialog to retrieve the object from.
  * @ingroup QuestionDialog
  * @return void* The raw toolkit-created object.
+ * @warning On Windows this will always return NULL, as the dialog is created on the spot upon showing it (See MessageBox for details.)
  */
 NVD_API void *nvd_dialog_box_get_raw(NvdDialogBox *dialog);
 
@@ -124,6 +126,7 @@ NVD_API void *nvd_dialog_box_get_raw(NvdDialogBox *dialog);
  * @param dialog The dialog to change the button label.
  * @ingroup QuestionDialog
  * @param accept_text The new label of the dialog button. May not be NULL.
+ * @warning This function has no effect on Windows - The system will decide the button's text based on language and user preferences.
  * @since v0.8.0
  */
 NVD_API void nvd_dialog_box_set_accept_text(NvdDialogBox *dialog,

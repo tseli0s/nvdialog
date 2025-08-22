@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
 static void die(const char *msg) {
         fprintf(stderr, "Error: %s", msg);
         abort();
@@ -20,10 +19,24 @@ int main(void) {
                 "This is a warning dialog box created with NvDialog.",
                 NVD_DIALOG_WARNING);
 
-        if (!dialog || !warning) die("Couldn't create dialog boxes");
+        NvdInputBox *input_box = nvd_input_box_new("Text Input", "Enter some text to display in another window. Empty text also works!");
+        
+        if (!dialog || !warning || !input_box) die("Couldn't create dialog boxes");
 
         nvd_show_dialog(dialog);
         nvd_show_dialog(warning);
+        nvd_show_input_box(input_box);
+
+        NvdDynamicString *input_str = nvd_input_box_get_string(input_box);
+        if (input_str) {
+                NvdDialogBox *dlg2 = nvd_dialog_box_new("You entered the message...", NVD_CSTR(input_str), NVD_DIALOG_ERROR);
+                nvd_show_dialog(dlg2);
+                nvd_free_object(dlg2);
+        } else {
+                NvdDialogBox *error = nvd_dialog_box_new("No Message!", "You did not enter anything to display!", NVD_DIALOG_ERROR);
+                nvd_show_dialog(error);
+                nvd_free_object(error);
+        }
 
         NvdQuestionBox *question =
                 nvd_dialog_question_new("Question",
@@ -61,14 +74,12 @@ int main(void) {
         NvdFileDialog *choose_dir = nvd_open_folder_dialog_new(
                 "Pick the new directory of the process", NULL);
         if (!choose_dir) die("Couldn't create folder dialog");
-        const char *dir_buffer;
-        nvd_get_file_location(choose_dir, &dir_buffer);
-        if (dir_buffer) chdir(dir_buffer);
+        NvdDynamicString *dir_buffer = nvd_get_file_location(choose_dir);
+        if (dir_buffer) chdir(NVD_CSTR(dir_buffer));
 
         NvdFileDialog *choose_icon = nvd_open_file_dialog_new(
                 "Pick the icon for the next dialog", NULL);
-        const char *file_buffer;
-        nvd_get_file_location(choose_icon, &file_buffer);
+        NvdDynamicString *file_buffer = nvd_get_file_location(choose_icon);
         NvdAboutDialog *about_dialog = nvd_about_dialog_new(
                 "NvDialog Demo",
                 "This is a demo application to show how NvDialog works. It is "
@@ -77,7 +88,7 @@ int main(void) {
                 NULL);
         if (!about_dialog) die("Couldn't create NvdAboutDialog");
         int w, h;
-        const uint8_t *buffer = nvd_image_from_filename(file_buffer, &w, &h);
+        const uint8_t *buffer = nvd_image_from_filename(NVD_CSTR(file_buffer), &w, &h);
         NvdImage *image = nvd_create_image(buffer, w, h);
         nvd_dialog_set_icon(about_dialog, image);
         nvd_show_about_dialog(about_dialog);

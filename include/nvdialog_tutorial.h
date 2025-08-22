@@ -33,7 +33,7 @@
 
 /**
  * @page NvDialog Tutorial
- * @version v0.9.0
+ * @version v0.10.0
  * @author Aggelos Tselios
 
  * # NvDialog Tutorial

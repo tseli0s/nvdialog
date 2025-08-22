@@ -7,7 +7,7 @@
         <a href="https://github.com/AndroGR/nvdialog/releases">Releases</a>
         <h5><b>A simple, cross-platform dialog box library.</b></h5>
 <code>libnvdialog</code> is a simple, efficient, batteries-included dialog box library written in C
-for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else where. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3</a> on Linux and other Unix like OSes, <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html">the Cocoa API</a> on macOS or the <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">WinAPI</a> for Windows) to achieve a look and feel that follows the system theme and design guidelines without depending on extra libraries or themes.
+for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3</a> on Linux and other Unix like OSes, <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html">the Cocoa API</a> on macOS or the <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">WinAPI</a> for Windows) to achieve a look and feel that follows the system theme and design guidelines without depending on extra libraries or themes. In addition, NvDialog provides official <a href="https://github.com/tseli0s/nvdialog-rs">Rust bindings</a> and can be used, thanks to its simple C ABI, with almost every language on the planet.
 <br>
 <br>
 <img src="https://img.shields.io/github/license/tseli0s/nvdialog?color=blue&label=License">
@@ -79,13 +79,20 @@ int main(int argc, char **argv)
 ```
 
 # Screenshots
-<div>
-        <h4><b>"About application" dialog.</b></h4>
-        <img src="assets/about-dialog-scr.png"></img>
-        <h4><b>Dialog box with a warning.</b></h4>
-        <img src="assets/dialog-scr.png"></img>
-        <h4><b>Question dialog box</b></h4>
-        <img src="assets/question-scr.png"></img>
+### The same dialog running on three different platforms: Windows, macOS, Linux.
+<div style="display: flex; justify-content: space-around; text-align: center;">
+        <div id="first-screenshot">
+                <h6><i>Windows</i></h6>
+                <img src="./assets/screenshots/win32.png">
+        </div>
+        <div id="third-screenshot">
+                <h6><i>macOS</i></h6>
+                <img src="./assets/screenshots/cocoa.png" width="300px">
+        </div>
+        <div id="third-screenshot">
+                <h6><i>Linux</i></h6>
+                <img src="./assets/screenshots/gtk.png">
+        </div>
 </div>
 
 # Installation
@@ -171,6 +178,12 @@ Other OSes are assumed to be supported. To make sure they do indeed work, you ne
 As of August 2025, the main focus of development is to stabilize and standardize all interfaces, and switch the library to maintenance mode only, as I believe there isn't much left to add. The long term plan is to release v1.0 and stop there, only making sure the library runs well from that point forward. In addition, to make sure that the library is truly seamless across platforms and systems, extra attention will be given to the `cocoa` and `win32` backends and more extensive testing will take place.
 
 To achieve the latter, I now test various projects using `libnvdialog` both on my main OS (Arch Linux) and a Windows 10 machine, and I've been able to run executables linked with nvdialog all the way back to Windows XP and Ubuntu 14.04 comfortably. That being said, enormous work has been done to ensure that `libnvdialog` works as expected on all platforms. The final aim is to make sure that two projects using two different versions of `libnvdialog` from v0.10 forward can both work with different versions unless they explicitly forbid so.
+
+# Why should I use this?
+In general, NvDialog tries to wrap for you about 2000 lines of code you'd have written anyways and make sure that this code will work on a variety of systems while still matching the system's theme and looks. In addition, it abstracts all of the platform specific details into easy to read, simple APIs, which you'd have to do yourself otherwise depending on the compiler and OS. However, NvDialog may not be for you *if*:
+- You are already writing a GUI applications with a framework like Qt, and you want your dialogs to match that framework's look instead of the system. NvDialog *always* uses whatever the system provides, it does not care what your applications is.
+- You want something with far more customization, since the library avoids creating its own widgets and using as many "premade" ones as possible (Like `MessageBox` on Windows), meaning that no customization is allowed apart from any theming/adjustments the user will do.
+- You want something that works with Android - As mentioned [here](#android), using `AlertDialog` directly yourself will work better.
 
 # License
 `nvdialog` is licensed under the MIT license. See [COPYING](./COPYING) for more.

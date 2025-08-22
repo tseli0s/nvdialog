@@ -72,5 +72,8 @@ void *nvd_open_file_dialog_get_raw_cocoa(NvdFileDialog *dlg);
 void nvd_add_notification_action_cocoa(NvdNotification *notification,
                                        const char *action, int value_to_set,
                                        int *value_to_return);
+NvdInputBox *nvd_input_box_cocoa(const char *title, const char *message);
+void nvd_show_input_box_cocoa(NvdInputBox *box);
+NvdDynamicString *nvd_input_box_get_string_cocoa(NvdInputBox *box);
 
 #endif /* __nvdialog_cocoa_h__ */

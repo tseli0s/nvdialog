@@ -12,7 +12,7 @@ static void* create_dialog() {
                                                NVD_DIALOG_SIMPLE);
         if (!dlg) {
                 printf("Failed to create dialog: %s\n",
-                       nvd_stringify_error(nvd_get_error()));
+                       NVD_CSTR(nvd_stringify_error(nvd_get_error())));
                 return_code = -1;
         }
 

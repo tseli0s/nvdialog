@@ -31,7 +31,7 @@
 
 /**
  * @page building BuildingNvDialog
- * @version v0.9.0
+ * @version v0.10.0
  * @author Aggelos Tselios
  *
  * # Building NvDialog
@@ -42,7 +42,7 @@
  *
  * You can also download prebuilt binaries of NvDialog at the [releases
  * page](https://github.com/tseli0s/nvdialog/releases/). This can be useful if
- * you are looking to package NvDialog with your application.
+ * you are looking to package NvDialog with your application without extra compilation.
  *
  * ## Dependencies
  * Before proceeding, download and install the following:
@@ -56,9 +56,11 @@
  * Before continuing, you must acquire the source code somehow. How you will do
  * that depends on what version you want to use:
  * - The git development version is the one where all the development goes. You
- * should avoid it unless you want early access to new features.
+ * should avoid it unless you want early access to new features, since many things may stay broken there for
+ * some time
  * - The releases provide you with the source code of each release. They're
- * recommended for stability.
+ * recommended for stability and future-proofness, as the final releases usually work
+ * with older versions.
  * - Optionally, you can also download a specific branch if you're looking for
  * an unfinished feature.
  *

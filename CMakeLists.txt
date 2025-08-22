@@ -6,7 +6,7 @@ project(libnvdialog VERSION 0.10.0 LANGUAGES C DESCRIPTION "A simple and minimal
 
 option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux." OFF)
 option(NVD_USE_GTK4 "Use Gtk4 and libadwaita instead of Gtk3 (experimental)." OFF)
-option(NVD_BUILD_STATIC "Build NvDialog as a static library (experimental)." OFF)
+option(NVD_BUILD_STATIC "Build NvDialog as a static library." ON)
 option(NVD_GENERATE_DOCS "Generate documentation for NvDialog. Requires doxygen to be installed" OFF) # Off by default because doxygen may not be available
 
 set(CMAKE_C_STANDARD 11)
@@ -22,7 +22,7 @@ if(APPLE)
     enable_language(OBJC)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-objc-arc")
 elseif(CROSS_COMPILE_FOR_WIN32)
-    set(CMAKE_C_COMPILER /usr/bin/i686-w64-mingw32-gcc-win32)
+    set(CMAKE_C_COMPILER /usr/bin/i686-w64-mingw32-gcc)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-stack-protector -Wno-unused-parameter -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
 elseif(MSVC)
     message(WARNING "MSVC is experimental; prefer GCC/Clang.")
@@ -71,6 +71,7 @@ elseif(APPLE)
     set(NVD_SOURCES
         src/backend/cocoa/nvdialog_dialog_box.m
         src/backend/cocoa/nvdialog_file_dialog.m
+        src/backend/cocoa/nvdialog_input_box.m
         src/backend/cocoa/nvdialog_question_dialog.m
         src/backend/cocoa/nvdialog_notification.m
         src/backend/cocoa/nvdialog_about_dialog.m

@@ -149,7 +149,7 @@ NvdFileDialog *nvd_open_folder_dialog_win32(const char *title,
 
         dlg->is_save_dialog = false;
         dlg->is_dir_dialog = true;
-        dlg->filename = default_path;
+        dlg->filename = nvd_string_new(default_path);
         dlg->title = title;
         dlg->file_extensions = NULL;
         dlg->location_was_chosen = false;
