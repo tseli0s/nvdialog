@@ -76,6 +76,7 @@ elseif(APPLE)
     set(NVD_SOURCES
         src/backend/cocoa/nvdialog_dialog_box.m
         src/backend/cocoa/nvdialog_file_dialog.m
+        src/backend/cocoa/nvdialog_input_box.m
         src/backend/cocoa/nvdialog_question_dialog.m
         src/backend/cocoa/nvdialog_notification.m
         src/backend/cocoa/nvdialog_about_dialog.m
