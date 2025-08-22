@@ -23,6 +23,7 @@
  */
 
 #include "dialogs/nvdialog_input_box.h"
+#include "nvdialog_typeimpl.h"
 #define _CRT_SECURE_NO_WARNINGS 1
 #include "nvdialog_string.h"
 #include "dialogs/nvdialog_dialog_box.h"
@@ -42,12 +43,6 @@
 #else
 #include "backend/win32/nvdialog_win32.h"
 #endif /* _WIN32 */
-
-#if defined(linux) || defined(__linux__) || defined(__linux)
-#if defined(NVD_SANDBOX_SUPPORT)
-#include "backend/sandbox/nvdialog_sbx.h"
-#endif /* NVD_SANDBOX_SUPPORT */
-#endif /* linux */
 
 #include "nvdialog_init.h"
 #include "nvdialog_types.h"
