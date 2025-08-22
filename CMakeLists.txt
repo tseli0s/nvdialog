@@ -7,7 +7,6 @@ project(libnvdialog VERSION 0.10.0 LANGUAGES C DESCRIPTION "A simple and minimal
 option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux." OFF)
 option(NVD_USE_GTK4 "Use Gtk4 and libadwaita instead of Gtk3 (experimental)." OFF)
 option(NVD_BUILD_STATIC "Build NvDialog as a static library (experimental)." OFF)
-option(NVD_SANDBOX_SUPPORT "Enable sandbox support on GNU/Linux." ON)
 option(NVD_GENERATE_DOCS "Generate documentation for NvDialog. Requires doxygen to be installed" OFF) # Off by default because doxygen may not be available
 
 set(CMAKE_C_STANDARD 11)
@@ -16,10 +15,6 @@ include_directories(${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
 
 if(NOT DEFINED ENV{FLATPAK_ID} AND CMAKE_HOST_UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_PREFIX /usr)
-endif()
-
-if(NVD_SANDBOX_SUPPORT)
-    add_compile_definitions(NVD_SANDBOX_SUPPORT=1)
 endif()
 
 if(APPLE)
@@ -103,14 +98,6 @@ else()
             src/backend/gtk/nvdialog_notification.c
             src/backend/gtk/nvdialog_input_dialog.c
             ${NVD_COMMON_SOURCES})
-        if(NVD_SANDBOX_SUPPORT)
-            list(APPEND NVD_SOURCES
-                src/backend/sandbox/nvdialog_about_dialog.c
-                src/backend/sandbox/nvdialog_file_dialog.c
-                src/backend/sandbox/nvdialog_dialog_box.c
-                src/backend/sandbox/nvdialog_question_dialog.c
-                src/backend/sandbox/nvdialog_notification.c)
-        endif()
     endif()
     add_definitions(${GTK_CFLAGS} ${GTK_CFLAGS_OTHER})
 endif()
