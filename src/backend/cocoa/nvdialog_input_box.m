@@ -28,7 +28,7 @@
 
 NvdInputBox *nvd_input_box_cocoa(const char *title, const char *message) {
     NvdInputBox *box = malloc(sizeof(NvdInputBox));
-    NVD_RETURN_IF_NULL(box);
+    if (!box) return NULL;
 
     box->title = nvd_string_new(title);
     box->content = message ? nvd_string_new(message) : NULL;
