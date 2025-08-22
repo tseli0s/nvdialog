@@ -86,12 +86,16 @@ int main(int argc, char **argv)
 ### The same dialog running on three different platforms: Windows, macOS, Linux.
 <div style="display: flex; justify-content: space-around; text-align: center;">
         <div id="first-screenshot">
-                <img src="./assets/screenshots/win32.png">
                 <h6><i>Windows</i></h6>
+                <img src="./assets/screenshots/win32.png">
         </div>
         <div id="third-screenshot">
-                <img src="./assets/screenshots/gtk.png">
+                <h6><i>macOS</i></h6>
+                <img src="./assets/screenshots/cocoa.png" width="300px">
+        </div>
+        <div id="third-screenshot">
                 <h6><i>Linux</i></h6>
+                <img src="./assets/screenshots/gtk.png">
         </div>
 </div>
 
