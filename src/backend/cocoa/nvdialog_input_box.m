@@ -24,6 +24,7 @@
 
 #include "nvdialog_cocoa.h"
 #include <stdlib.h>
+#include <AppKit/AppKit.h>
 
 NvdInputBox *nvd_input_box_cocoa(const char *title, const char *message) {
     NvdInputBox *box = malloc(sizeof(NvdInputBox));
