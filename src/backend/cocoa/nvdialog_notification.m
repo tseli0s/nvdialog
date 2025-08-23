@@ -23,7 +23,6 @@
  */
  
 #include "nvdialog_cocoa.h"
-#include "src/nvdialog_error.h"
 #include <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
 
@@ -53,9 +52,6 @@ void nvd_send_notification_cocoa(NvdNotification *notification)
     task.standardOutput = pipe;
 
     [task launch];
-    #else
-    nvd_error_message("GNUstep currently does not support sending notifications in a common way with macOS.");
-    return;
     #endif
 }
 
