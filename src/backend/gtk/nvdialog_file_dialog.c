@@ -76,7 +76,7 @@ static NvdDynamicString *nvd_get_file_gtk(NvdFileDialog *dialog) {
                 filename = gtk_file_chooser_get_filename(
                         GTK_FILE_CHOOSER(dialog->raw));
                 dialog->location_was_chosen = true;
-                gtk_widget_destroy(dialog->raw);
+                gtk_native_dialog_destroy(dialog->raw);
                 if (filename) {
                         if (dialog->filename != NULL) nvd_delete_string(dialog->filename);
                         dialog->filename = nvd_string_new(filename);
@@ -85,7 +85,7 @@ static NvdDynamicString *nvd_get_file_gtk(NvdFileDialog *dialog) {
         } else {
                 dialog->location_was_chosen = false;
                 dialog->filename = NULL;
-                gtk_widget_destroy(dialog->raw);
+                gtk_native_dialog_destroy(dialog->raw);
         }
 
 
@@ -102,7 +102,7 @@ static NvdDynamicString *nvd_get_dir_gtk(NvdFileDialog *dialog) {
                 filename = gtk_file_chooser_get_filename(
                         GTK_FILE_CHOOSER(dialog->raw));
                 dialog->location_was_chosen = true;
-                gtk_widget_destroy(dialog->raw);
+                gtk_native_dialog_destroy(dialog->raw);
                 if (filename) {
                         dialog->filename = nvd_string_new(filename);
                         g_free(filename);
@@ -110,7 +110,7 @@ static NvdDynamicString *nvd_get_dir_gtk(NvdFileDialog *dialog) {
         } else {
                 dialog->location_was_chosen = false;
                 dialog->filename = NULL;
-                gtk_widget_destroy(dialog->raw);
+                gtk_native_dialog_destroy(dialog->raw);
         }
 
         while (gtk_events_pending()) gtk_main_iteration();
@@ -131,7 +131,7 @@ NvdDynamicString *nvd_get_file_location_gtk(NvdFileDialog *dialog) {
                 filename = gtk_file_chooser_get_filename(
                         GTK_FILE_CHOOSER(dialog->raw));
                 dialog->location_was_chosen = true;
-                gtk_widget_destroy(dialog->raw);
+                gtk_native_dialog_destroy(dialog->raw);
                 if (filename) {
                         nvd_delete_string(dialog->filename);
                         dialog->filename = nvd_string_new(filename);
@@ -140,7 +140,7 @@ NvdDynamicString *nvd_get_file_location_gtk(NvdFileDialog *dialog) {
         } else {
                 dialog->location_was_chosen = false;
                 dialog->filename = NULL;
-                gtk_widget_destroy(dialog->raw);
+                gtk_native_dialog_destroy(dialog->raw);
         }
 
         while (gtk_events_pending()) gtk_main_iteration();
