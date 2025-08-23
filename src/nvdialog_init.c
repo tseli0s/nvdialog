@@ -126,7 +126,9 @@ int nvd_init_win32(NvdBackendMask *mask) {
 #if defined(NVD_COCOA_IMPL)
 
 int nvd_init_cocoa(NvdBackendMask *mask) {
+        #ifdef _NVD_USE_GNUSTEP /* Only required on GNUstep */
         nvd_create_cocoa_app();
+        #endif
 
         mask->dialog_box = nvd_dialog_box_cocoa;
         mask->show_dialog = nvd_show_dialog_cocoa;
