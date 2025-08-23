@@ -2,12 +2,13 @@
 # This file is part of libnvdialog and is released under the MIT license.
 
 cmake_minimum_required(VERSION 3.18)
-project(libnvdialog VERSION 0.10.0 LANGUAGES C DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+project(libnvdialog VERSION 0.10.0 LANGUAGES C OBJC DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
 option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux." OFF)
 option(NVD_USE_GTK4 "Use Gtk4 and libadwaita instead of Gtk3 (experimental)." OFF)
 option(NVD_BUILD_STATIC "Build NvDialog as a static library." ON)
 option(NVD_GENERATE_DOCS "Generate documentation for NvDialog. Requires doxygen to be installed" OFF) # Off by default because doxygen may not be available
+option(NVD_USE_GNUSTEP "Use the GNUstep+Cocoa backend on generation. Only intended for testing." OFF)
 
 set(CMAKE_C_STANDARD 11)
 add_compile_definitions(NVDIALOG_MAXBUF=4096 NVD_EXPORT_SYMBOLS)
@@ -17,7 +18,7 @@ if(NOT DEFINED ENV{FLATPAK_ID} AND CMAKE_HOST_UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_PREFIX /usr)
 endif()
 
-if(APPLE)
+if(APPLE OR NVD_USE_GNUSTEP)
     set(CMAKE_C_COMPILER clang)
     enable_language(OBJC)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-objc-arc")
@@ -67,7 +68,7 @@ if(WIN32 OR CROSS_COMPILE_FOR_WIN32)
         src/backend/win32/nvdialog_notification.c
         src/backend/win32/nvdialog_input_box.c
         ${NVD_COMMON_SOURCES})
-elseif(APPLE)
+elseif(APPLE OR NVD_USE_GNUSTEP)
     set(NVD_SOURCES
         src/backend/cocoa/nvdialog_dialog_box.m
         src/backend/cocoa/nvdialog_file_dialog.m
@@ -75,6 +76,7 @@ elseif(APPLE)
         src/backend/cocoa/nvdialog_question_dialog.m
         src/backend/cocoa/nvdialog_notification.m
         src/backend/cocoa/nvdialog_about_dialog.m
+        src/backend/cocoa/nvdialog_cocoa_init.m
         ${NVD_COMMON_SOURCES})
     add_compile_definitions(NVD_USE_COCOA=1)
 else()
@@ -112,10 +114,22 @@ endif()
 
 if(APPLE)
     target_link_libraries(nvdialog
-    "-framework AppKit"
-    "-framework Cocoa"
-    "-framework Foundation"
-    "-framework UserNotifications")
+        "-framework AppKit"
+        "-framework Cocoa"
+        "-framework Foundation"
+        "-framework UserNotifications"
+    )
+elseif(NVD_USE_GNUSTEP)
+    message(WARNING "You are building with GNUstep. This is intended for development only -- Stability may suffer.")
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GNUSTEP REQUIRED gnustep-base gnustep-gui)
+    message(STATUS "GNUSTEP_LIBRARIES = ${GNUSTEP_LIBRARIES}")
+
+    include_directories(${GNUSTEP_INCLUDE_DIRS})
+    link_directories(${GNUSTEP_LIBRARY_DIRS})
+
+    add_compile_definitions(_NVD_USE_GNUSTEP=1)
+    target_link_libraries(nvdialog gnustep-base gnustep-gui objc m)
 elseif(CROSS_COMPILE_FOR_WIN32 OR WIN32)
     target_link_libraries(nvdialog comdlg32 shell32 user32 gdi32 ole32)
 elseif(LINUX)
