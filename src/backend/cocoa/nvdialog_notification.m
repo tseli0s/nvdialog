@@ -40,6 +40,7 @@ NvdNotification *nvd_notification_cocoa(const char *title,
 
 void nvd_send_notification_cocoa(NvdNotification *notification)
 {
+    #ifndef _NVD_USE_GNUSTEP
     int pid = [NSProcessInfo processInfo].processIdentifier;
     NSPipe *pipe = [NSPipe pipe];
     NSFileHandle *file = pipe.fileHandleForReading;
@@ -51,6 +52,7 @@ void nvd_send_notification_cocoa(NvdNotification *notification)
     task.standardOutput = pipe;
 
     [task launch];
+    #endif
 }
 
 void nvd_add_notification_action_cocoa(NvdNotification* notification,

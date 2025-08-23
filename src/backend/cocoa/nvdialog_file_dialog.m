@@ -40,14 +40,16 @@ NvdFileDialog *nvd_open_file_dialog_cocoa(const char *title, const char *file_ex
 
 	dialog->file_extensions = (char *) file_extensions;
 	NSOpenPanel *dialog_raw = [NSOpenPanel openPanel];
-	dialog_raw.title = @(title);
-	dialog_raw.canChooseFiles = true;
+	dialog_raw.title = [NSString stringWithUTF8String:title];
+	dialog_raw.canChooseFiles = (id) true;
 	dialog_raw.canChooseDirectories = false;
 	dialog_raw.allowsMultipleSelection = false;
 
 	//ex: .c;.m;.cpp;
+    /*
     if (file_extensions != NULL)
-		dialog_raw.allowedFileTypes = [@(file_extensions) componentsSeparatedByString: @";"];
+		dialog_raw.allowedFileTypes = [[NSString stringWithUTF8String:file_extensions] componentsSeparatedByString: @";"];
+    */
 
 	dialog->raw = dialog_raw;
 
@@ -62,7 +64,7 @@ NvdFileDialog *nvd_save_file_dialog_cocoa(const char *title, const char *default
 	NVD_RETURN_IF_NULL(dialog);
 	
 	NSSavePanel* raw = [NSSavePanel savePanel];
-	raw.title = @(title);
+	raw.title = [NSString stringWithUTF8String:title];
 
 	dialog->raw = raw;
 	return dialog;
@@ -113,13 +115,13 @@ NvdFileDialog *nvd_open_folder_dialog_cocoa(const char *title, const char *defau
     NVD_RETURN_IF_NULL(dialog);
 
     NSOpenPanel* dialog_raw = [NSOpenPanel openPanel];
-    dialog_raw.title = @(title);
+    dialog_raw.title = [NSString stringWithUTF8String:title];;
     dialog_raw.canChooseFiles = false;
-    dialog_raw.canChooseDirectories = true;
+    dialog_raw.canChooseDirectories = (id) true;
     dialog_raw.allowsMultipleSelection = false;
 
     if (default_filename != NULL) {
-        dialog_raw.directoryURL = [NSURL fileURLWithPath: @(default_filename)];
+        dialog_raw.directoryURL = [NSURL fileURLWithPath: [NSString stringWithUTF8String:default_filename]];
     }
 
     dialog->raw = dialog_raw;

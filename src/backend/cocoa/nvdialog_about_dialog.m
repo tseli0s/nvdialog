@@ -45,6 +45,8 @@ NvdAboutDialog *nvd_about_dialog_cocoa(const char *name,
                                        const char *desc,
                                        const char *imgpath)
 {
+    /* GNUstep doesn't like this implementation, so let's ignore it. */
+    #ifndef _NVD_USE_GNUSTEP
     NvdAboutDialog* dlg = malloc(sizeof(struct _NvdAboutDialog));
     NSMutableDictionary<NSAboutPanelOptionKey, id>* options;
     NVD_ASSERT(dlg != nil);
@@ -58,14 +60,17 @@ NvdAboutDialog *nvd_about_dialog_cocoa(const char *name,
     
     dlg->raw = options;
     return dlg;
+    #endif
 }
 
 void nvd_about_dialog_set_licence_link_cocoa(NvdAboutDialog *dialog, const char *license_link, const char *txt)
 {
+    #ifndef _NVD_USE_GNUSTEP
     (void)txt;
     NSMutableDictionary<NSAboutPanelOptionKey, id> *raw = dialog->raw;
     raw[NSAboutPanelOptionCredits] = @(license_link);
     dialog->raw = raw;
+    #endif
 }
 
 void *nvd_about_dialog_get_raw_cocoa(NvdAboutDialog *dlg)

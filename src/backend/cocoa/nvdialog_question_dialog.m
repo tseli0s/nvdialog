@@ -39,22 +39,22 @@ NvdQuestionBox *nvd_question_cocoa(const char *title, const char *question, NvdQ
 	box->reply = 0;
 
 	NSAlert *dlg = box->window_handle = [[NSAlert alloc] init];
-	dlg.messageText = @(title);
-	dlg.informativeText = @(question);
+	dlg.messageText = [NSString stringWithUTF8String:title];
+	dlg.informativeText = [NSString stringWithUTF8String:question];
 
 
 	//added buttons are in reverse
 	switch (buttons) {
         	case NVD_YES_NO_CANCEL:
-			[dlg addButtonWithTitle: @"Cancel"];
+			[dlg addButtonWithTitle: [NSString stringWithUTF8String:"Cancel"]];
         	case NVD_YES_NO:
-			[dlg addButtonWithTitle: @"No"];
-			[dlg addButtonWithTitle: @"Yes"];
+			[dlg addButtonWithTitle: [NSString stringWithUTF8String:"No"]];
+			[dlg addButtonWithTitle: [NSString stringWithUTF8String:"Yes"]];
 			break;
 		
         	case NVD_YES_CANCEL:
-			[dlg addButtonWithTitle: @"Cancel"];
-			[dlg addButtonWithTitle: @"Yes"];
+			[dlg addButtonWithTitle: [NSString stringWithUTF8String:"Cancel"]];
+			[dlg addButtonWithTitle: [NSString stringWithUTF8String:"Yes"]];
           		break;
         }
 
