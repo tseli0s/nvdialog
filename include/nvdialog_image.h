@@ -56,8 +56,6 @@ typedef struct _NvdImage NvdImage;
  *
  * @param filename The path to the file to be loaded. For best compatibility,
  * provide a full path or use @ref NvdFileDialog
- * @param len A pointer to a variable to hold the length of the data in bytes.
- * (Can be NULL although not recommended)
  * @param width A pointer to a variable to hold the width of the image
  * @param height A pointer to a variable to hold the height of the image
  * @ingroup Image
