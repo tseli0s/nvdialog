@@ -123,7 +123,6 @@ elseif(NVD_USE_GNUSTEP)
     message(WARNING "You are building with GNUstep. This is intended for development only -- Stability may suffer.")
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(GNUSTEP REQUIRED gnustep-base gnustep-gui)
-    message(STATUS "GNUSTEP_LIBRARIES = ${GNUSTEP_LIBRARIES}")
 
     include_directories(${GNUSTEP_INCLUDE_DIRS})
     link_directories(${GNUSTEP_LIBRARY_DIRS})
