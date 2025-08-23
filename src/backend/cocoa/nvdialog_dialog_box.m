@@ -15,9 +15,11 @@ NvdDialogBox *nvd_dialog_box_cocoa(const char *title, const char *message, NvdDi
 	dialog->type = type;
 	NSAlert *nativedlg = dialog->window_handle = [[NSAlert alloc] init];
 
-	nativedlg.messageText = @(dialog->msg);
-	nativedlg.informativeText = @(dialog->content);
+	nativedlg.messageText = [NSString stringWithUTF8String:dialog->msg];;
+	nativedlg.informativeText = [NSString stringWithUTF8String:dialog->content];
 
+	/* GNUstep uses slightly different naming. It should be easy to patch it but I just want it to run for now. */
+	#ifndef _NVD_USE_GNUSTEP
 	switch (type) {
     default:
 	case NVD_DIALOG_SIMPLE:
@@ -30,6 +32,7 @@ NvdDialogBox *nvd_dialog_box_cocoa(const char *title, const char *message, NvdDi
 		nativedlg.alertStyle = NSAlertStyleCritical;
 		break;
 	}
+	#endif
 
 	return dialog;
 }
@@ -37,7 +40,9 @@ NvdDialogBox *nvd_dialog_box_cocoa(const char *title, const char *message, NvdDi
 void nvd_show_dialog_cocoa(NvdDialogBox *dialog)
 {
 	[dialog->window_handle runModal];
+	#ifndef _NVD_USE_GNUSTEP
 	[dialog->window_handle orderOut];
+	#endif
 }
 
 void *nvd_dialog_box_get_raw_cocoa(NvdDialogBox *dlg)

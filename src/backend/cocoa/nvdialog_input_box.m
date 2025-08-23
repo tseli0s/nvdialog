@@ -35,16 +35,22 @@ NvdInputBox *nvd_input_box_cocoa(const char *title, const char *message) {
     box->user_input = NULL;
 
     NSAlert *alert = [[NSAlert alloc] init];
-    alert.messageText = @(title);
-    alert.informativeText = @(message ? message : "");
+    alert.messageText = [NSString stringWithUTF8String:title];
+    alert.informativeText = [NSString stringWithUTF8String:message ? message : ""];
+    /* Like mentioned in NvdDialogBox, GNUstep has slightly different naming for this field. */
+    #ifndef _NVD_USE_GNUSTEP
     alert.alertStyle = NSAlertStyleInformational;
+    #endif
 
     NSTextField *inputField = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,200,24)];
-    [inputField setStringValue:@""];
+    [inputField setStringValue:[NSString stringWithUTF8String:""]];
+    #ifndef _NVD_USE_GNUSTEP
+    /* GNUstep doesn't have setAccessoryView, let's just skip it. */
     [alert setAccessoryView:inputField];
+    #endif
 
-    [alert addButtonWithTitle:@"OK"];
-    [alert addButtonWithTitle:@"Cancel"];
+    [alert addButtonWithTitle:[NSString stringWithUTF8String:"Ok"]];
+    [alert addButtonWithTitle:[NSString stringWithUTF8String:"Cancel"]];
 
     box->window_handle = alert;
     box->title   = nvd_string_new(title);
@@ -57,6 +63,7 @@ void nvd_show_input_box_cocoa(NvdInputBox *box) {
     NSAlert *alert = box->window_handle;
     NSModalResponse resp = [alert runModal];
 
+    #ifndef _NVD_USE_GNUSTEP
     if (resp == NSAlertFirstButtonReturn) {
         NSTextField *field = (NSTextField *)[alert accessoryView];
         box->user_input = nvd_string_new([[field stringValue] UTF8String]);
@@ -64,6 +71,7 @@ void nvd_show_input_box_cocoa(NvdInputBox *box) {
     else box->user_input = NULL;
 
     [alert orderOut:nil];
+    #endif
 }
 
 NvdDynamicString *nvd_input_box_get_string_cocoa(NvdInputBox *box) {

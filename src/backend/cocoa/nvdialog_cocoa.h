@@ -76,4 +76,13 @@ NvdInputBox *nvd_input_box_cocoa(const char *title, const char *message);
 void nvd_show_input_box_cocoa(NvdInputBox *box);
 NvdDynamicString *nvd_input_box_get_string_cocoa(NvdInputBox *box);
 
+/* 
+ * This should ONLY be called when using GNUstep for compatibility reasons. macOS works fine without it.
+ * Calling it on macOS will probably not do much harm, but also make the library less compatible with other
+ * software.
+ */
+#ifdef _NVD_USE_GNUSTEP
+extern void nvd_create_cocoa_app();
+#endif
+
 #endif /* __nvdialog_cocoa_h__ */
