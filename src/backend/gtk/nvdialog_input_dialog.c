@@ -58,10 +58,14 @@ NvdInputBox *nvd_input_box_gtk(const char *title, const char *message) {
         gtk_window_set_decorated(GTK_WINDOW(obj->window_handle), true);
         gtk_window_set_modal(GTK_WINDOW(obj->window_handle), TRUE);
 
-        GtkWidget *container = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+        GtkWidget *container = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
         GtkWidget *entry = gtk_entry_new();
 
         gtk_entry_set_activates_default(GTK_ENTRY(entry), true);
+        gtk_widget_set_margin_start(container, 6);
+        gtk_widget_set_margin_end(container, 6);
+        gtk_widget_set_margin_top(container, 6);
+        gtk_widget_set_margin_bottom(container, 6);
 
         if (message) {
                 GtkWidget *label = gtk_label_new(message);

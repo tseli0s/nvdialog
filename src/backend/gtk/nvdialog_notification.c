@@ -25,6 +25,7 @@
 #include "nvdialog_notification.h"
 
 #include "../../nvdialog_assert.h"
+#include "nvdialog_error.h"
 #include "nvdialog_gtk.h"
 /* So we reduce compile-time dependencies. */
 #if defined(NVD_PREINCLUDE_HEADERS)
@@ -70,6 +71,7 @@ static bool __nvd_check_libnotify(NvdNotification *notification) {
         if (!nvd_notify_init((char *)nvd_get_application_name())) {
                 nvd_error_message(
                         "Couldn't initialize libnotify, stopping here.");
+                nvd_set_error(NVD_BACKEND_FAILURE);
                 dlclose(notification->lib);
                 return false;
         }
@@ -90,6 +92,7 @@ static inline char *__nvd_match_notif_type(NvdNotifyType type) {
                         icon_name = "dialog-error";
                         break;
                 default:
+                        nvd_set_error(NVD_INVALID_PARAM);
                         return NULL;
         }
 
@@ -164,6 +167,7 @@ void nvd_send_notification_gtk(NvdNotification *notification) {
                 nvd_error_message(
                         "libnotify is missing required symbols, see assertion "
                         "message below.");
+                nvd_set_error(NVD_BACKEND_INVALID);
                 NVD_ASSERT(show_fn != NULL);
         }
 

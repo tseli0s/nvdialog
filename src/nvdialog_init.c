@@ -26,6 +26,7 @@
 
 #include <string.h>
 #include "nvdialog_dialog.h"
+#include "nvdialog_error.h"
 #if defined(NVD_USE_GTK4)
 #define NVD_GTK4_IMPL
 #include "backend/adw/nvdialog_adw.h"
@@ -69,6 +70,7 @@ int nvd_init_gtk4(NvdBackendMask *mask) {
 #if defined(NVD_GTK3_IMPL)
 int nvd_init_gtk3(NvdBackendMask *mask) {
         if (!gtk_init_check(NULL, NULL)) {
+                nvd_set_error(NVD_BACKEND_FAILURE);
                 if (!getenv("DISPLAY")) return -NVD_NO_DISPLAY;
                 return -NVD_BACKEND_FAILURE;
         }
