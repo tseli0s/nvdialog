@@ -28,7 +28,7 @@
 #if defined(__GNUC__) || defined(__clang__)
 #define __FILENAME__ __FILE_NAME__
 #elif defined(_MSC_VER)
-#define __FILENAME__ __BASE_FILE__
+#define __FILENAME__ "libnvdialog"
 #endif
 
 #include <stdarg.h>
