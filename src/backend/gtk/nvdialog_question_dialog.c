@@ -89,6 +89,6 @@ NvdReply nvd_get_reply_gtk(NvdQuestionBox *box) {
                         break;
         }
         gtk_widget_destroy(box->window_handle);
-        while (g_main_context_iteration(NULL, FALSE));
+        while (g_main_context_iteration(NULL, true));
         return box->reply;
 }
