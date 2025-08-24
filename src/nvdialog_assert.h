@@ -27,7 +27,7 @@
 
 #if defined(__GNUC__) || defined(__clang__)
 #define __FILENAME__ __FILE_NAME__
-#elif defined(MSVC)
+#elif defined(_MSC_VER)
 #define __FILENAME__ __BASE_FILE__
 #endif
 
