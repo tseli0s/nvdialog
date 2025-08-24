@@ -25,6 +25,12 @@
 #ifndef __nvdialog_assert_h__
 #define __nvdialog_assert_h__
 
+#if defined(__GNUC__) || defined(__clang__)
+#define __FILENAME__ __FILE_NAME__
+#elif defined(MSVC)
+#define __FILENAME__ __BASE_FILE__
+#endif
+
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,7 +62,7 @@ nvd_print_assert(const char *msg, ...) {
         do {                                                                  \
                 if (!(eq)) {                                                  \
                         nvd_print_assert("%s:%d (%s): assertion %s failed\n", \
-                                         __FILE__, __LINE__, NVD_FN_IDENT,    \
+                                         __FILENAME__, __LINE__, NVD_FN_IDENT,    \
                                          #eq);                                \
                 }                                                             \
         } while (0)
@@ -93,7 +99,7 @@ nvd_print_assert(const char *msg, ...) {
                                 "**CRITICAL ASSERTION FAILURE**: "  \
                                 "%s\n  Line: %d\n  Filename: "      \
                                 "%s\n  Function: %s\n",             \
-                                #eq, __LINE__, __FILE__, __func__); \
+                                #eq, __LINE__, __FILENAME__, __func__); \
                                 abort();                            \
                 }                                                   \
         } while (0);
