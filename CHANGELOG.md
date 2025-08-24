@@ -11,6 +11,9 @@
 - Fixed tests not working on Windows.
 - Fixed some compiler warnings when cross-compiling.
 - Merged the `sandbox` with the `gtk` backend. This will not change any functionality for any applications.
+- NvDialog will not set the error codes in case something went wrong more often.
+- Improved assertion macro.
+- Added support for GNUstep.
 
 # Changelog -- 0.9.0
 - CMake will now only set `CMAKE_INSTALL_PREFIX` to `/usr` if the host is not Windows or macOS. This may fix some installation problems you might have had when previously installing the library.
