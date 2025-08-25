@@ -30,12 +30,7 @@
 #define GDK_DISABLE_DEPRECATED
 #define GTK_DISABLE_DEPRECATED
 
-#include <adwaita.h>
-
 #include "../nvdialog_util.h"
-#include "dialogs/nvdialog_about_dialog.h"
-#include "dialogs/nvdialog_dialog_box.h"
-#include "dialogs/nvdialog_file_dialog.h"
 #include "nvdialog.h"
 #include "nvdialog_notification.h"
 #include "nvdialog_typeimpl.h"
