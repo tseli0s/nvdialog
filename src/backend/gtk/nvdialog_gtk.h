@@ -30,6 +30,7 @@
 #include "../nvdialog_util.h"
 #include "dialogs/nvdialog_input_box.h"
 #include "nvdialog.h"
+#include "nvdialog_dialog.h"
 #include "nvdialog_string.h"
 #include "nvdialog_typeimpl.h"
 
@@ -128,6 +129,8 @@ void nvd_gtk_update_accept_label(NvdDialogBox *dialog);
  * but at least now we won't get a warning for no reason.
  */
 void nvd_show_dialog_gtk(NvdDialogBox *dialog);
+
+void nvd_dialog_box_set_accept_text_gtk(NvdDialogBox *box, const char *text);
 
 /*
  * Sets the icon for the GtkAboutDialog provided.
