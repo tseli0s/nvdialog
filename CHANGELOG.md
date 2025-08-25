@@ -5,6 +5,7 @@
 - Improved `NvdDialogBox` on Gtk backends by switching to the native `GtkMessageDialog`.
 - Improved `NvdQuestionBox` on Gtk backends by switching to the native `GtkMessageDialog`.
 - Fixed Windows and macOS backends returning stack pointers from functions (See #53, #56, #58).
+- Deprecate libadwaita (Read MR #60 for details and documentation for moving forward)
 - Added missing `nvd_dialog_box_set_accept_text` function.
 - Fixed NVD_ASSERT_FATAL macro failing regardless of condition.
 - Added NvdInputBox on `nvd-demo`.

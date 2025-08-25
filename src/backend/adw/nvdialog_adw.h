@@ -25,18 +25,16 @@
 #ifndef __nvdialog_adw_h__
 #define __nvdialog_adw_h__
 
+#warning You are trying to compile a version of NvDialog that uses Gtk4+libadwaita for the Unix-based backend. This backend is being deprecated as of NvDialog v0.10. See PR #59 on the GitHub repository for details.
+
 #define GDK_DISABLE_DEPRECATED
 #define GTK_DISABLE_DEPRECATED
 
-#include <adwaita.h>
-
 #include "../nvdialog_util.h"
-#include "dialogs/nvdialog_about_dialog.h"
-#include "dialogs/nvdialog_dialog_box.h"
-#include "dialogs/nvdialog_file_dialog.h"
 #include "nvdialog.h"
 #include "nvdialog_notification.h"
 #include "nvdialog_typeimpl.h"
+
 
 /* Shows a simple dialog box using libadwaita. */
 NvdDialogBox *nvd_dialog_box_adw(const char *title, const char *message,
@@ -51,11 +49,10 @@ NvdFileDialog *nvd_save_file_dialog_adw(const char *title,
                                         const char *default_filename);
 
 /*
- * Returns the filename chosen from the file dialog given to
- * the parameter 'savebuf'. This function is also used to show the
- * actual dialog.
+ * Returns the filename chosen from the file dialog given, also showing the dialog
+ * before that.
  */
-void nvd_get_file_location_adw(NvdFileDialog *dialog, char **savebuf);
+NvdDynamicString *nvd_get_file_location_adw(NvdFileDialog *dialog);
 
 /* Creates a dialog box with the usual yes, no and cancel buttons. */
 NvdQuestionBox *nvd_question_adw(const char *title, const char *question,

@@ -14,6 +14,11 @@ set(CMAKE_C_STANDARD 11)
 add_compile_definitions(NVDIALOG_MAXBUF=4096 NVD_EXPORT_SYMBOLS)
 include_directories(${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
 
+if (NVD_USE_GTK4)
+    message(WARNING "**IMPORTANT** The build system detected that you are trying to build this library with the Gtk4/libadwaita backend. This backend is being deprecated as of version v0.10. For future-proofness, resort to the default gtk backend instead. See PR #59 on the repository for further details.")
+    message("-- If you are building for Windows/macOS, you can ignore the warning above.")
+endif()
+
 if(NOT DEFINED ENV{FLATPAK_ID} AND CMAKE_HOST_UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_PREFIX /usr)
 endif()
@@ -82,7 +87,7 @@ elseif(APPLE OR NVD_USE_GNUSTEP)
 else()
     find_package(PkgConfig REQUIRED)
     if(NVD_USE_GTK4)
-        pkg_check_modules(GTK REQUIRED libadwaita-1)
+        pkg_check_modules(GTK REQUIRED gtk+-3.0)
         add_compile_definitions(NVD_USE_GTK4)
         set(NVD_SOURCES
             src/backend/adw/nvdialog_about_dialog.c
@@ -90,6 +95,18 @@ else()
             src/backend/adw/nvdialog_dialog_box.c
             src/backend/adw/nvdialog_question_dialog.c
             src/backend/adw/nvdialog_notification.c
+
+            # Since v0.10, the entire adw backend will simply call the equivalent gtk backend
+            # functions. This is to keep preexisting code working but no longer depend on libadwaita
+            # and having to keep up with all the changes.
+
+            src/backend/gtk/nvdialog_about_dialog.c
+            src/backend/gtk/nvdialog_file_dialog.c
+            src/backend/gtk/nvdialog_dialog_box.c
+            src/backend/gtk/nvdialog_question_dialog.c
+            src/backend/gtk/nvdialog_notification.c
+            src/backend/gtk/nvdialog_input_dialog.c
+
             ${NVD_COMMON_SOURCES})
     else()
         pkg_check_modules(GTK REQUIRED gtk+-3.0)

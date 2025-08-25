@@ -30,6 +30,7 @@
 #if defined(NVD_USE_GTK4)
 #define NVD_GTK4_IMPL
 #include "backend/adw/nvdialog_adw.h"
+#include <gtk/gtk.h>
 #elif defined(_WIN32)
 #define NVD_WIN32_IMPL 1
 #include "backend/win32/nvdialog_win32.h"
@@ -43,8 +44,10 @@
 
 #if defined(NVD_GTK4_IMPL)
 int nvd_init_gtk4(NvdBackendMask *mask) {
-        if (!gtk_init_check()) return -NVD_NO_DISPLAY;
-        adw_init();
+        if (!gtk_init_check(NULL, NULL)) return -NVD_NO_DISPLAY;
+
+        nvd_error_message("You seem to be running libadwaita as the backend. If you're a developer, please use the gtk backend on Linux instead. Ignore this message otherwise.");
+        nvd_error_message("** NOTE ** The gtk backend will be used by NvDialog to ensure stability.");
 
         mask->dialog_box = nvd_dialog_box_adw;
         mask->show_dialog = nvd_show_dialog_adw;
