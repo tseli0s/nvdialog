@@ -26,40 +26,32 @@
 
 #include "../../nvdialog_assert.h"
 #include "nvdialog_adw.h"
+#include "../gtk/nvdialog_gtk.h"
+
+/*
+ * There's no more libadwaita code here, it's all replaced by calling on the gtk backend to do the job.
+ * The code here exists purely for compatibility and will be removed in the future.
+ * Enjoy the remnants here as if you're watching a long dead city inside a mountain. Or something like that.
+ */
 
 NvdAboutDialog *nvd_about_dialog_adw(const char *appname, const char *brief,
                                      const char *logo) {
-        NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
-        NVD_RETURN_IF_NULL(dialog);
-        /* In order to have a better title. */
-        dialog->title = (char *)appname;
-        dialog->contents = (char *)brief;
-        dialog->layout = NULL;
-        dialog->raw = adw_about_window_new();
-
-        if (logo) adw_about_window_set_application_icon(dialog->raw, logo);
-
-        /* This is a horrible workaround to make text appear on the main window.
-         * We'll take it though. */
-        adw_about_window_set_developer_name(dialog->raw, brief);
-        adw_about_window_set_application_name(dialog->raw, dialog->title);
-        return dialog;
+        return nvd_about_dialog_gtk(appname, brief, logo);
 }
 
 void nvd_about_dialog_set_version_adw(NvdAboutDialog *dialog,
                                       const char *version) {
-        adw_about_window_set_version(dialog->raw, version);
+        nvd_about_dialog_set_version_gtk(dialog, version);
 }
 
 void nvd_about_dialog_set_license_link_adw(NvdAboutDialog *dialog,
                                            const char *license_link,
                                            const char *txt) {
-        adw_about_window_add_link(dialog->raw, txt, license_link);
+        nvd_about_dialog_set_license_link_gtk(dialog, license_link, txt);
 }
 
 void nvd_show_about_dialog_adw(NvdAboutDialog *dialog) {
-        gtk_window_present(GTK_WINDOW(dialog->raw));
-        g_main_context_iteration(NULL, true);
+        nvd_show_about_dialog_gtk(dialog);
 }
 
 void *nvd_about_dialog_get_raw_adw(NvdAboutDialog *dialog) {
