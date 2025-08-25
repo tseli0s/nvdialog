@@ -12,11 +12,11 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 <br>
 <img src="https://img.shields.io/github/license/tseli0s/nvdialog?color=blue&label=License">
 <img src="https://img.shields.io/github/issues/tseli0s/nvdialog">
-<img src="https://img.shields.io/github/commits-since/tseli0s/nvdialog/v0.8.0?label=Commits%20since%200.8.0&logo=git">
+<img src="https://img.shields.io/github/commits-since/tseli0s/nvdialog/v0.9.0?label=Commits%20since%200.9.0&logo=git">
 <br>
-<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/x86_64-pc-linux-gnu.yml?label=Ubuntu">
-<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/x86_64-apple-darwin.yml?branch=master&label=macOS%20X&logo=github">
-<img src="https://img.shields.io/github/actions/workflow/status/AndroGR/nvdialog/i686-pc-windows-msvc.yml?branch=master&label=Windows%2010&logo=github">
+<img src="https://img.shields.io/github/actions/workflow/status/tseli0s/nvdialog/x86_64-pc-linux-gnu.yml?label=Ubuntu">
+<img src="https://img.shields.io/github/actions/workflow/status/tseli0s/nvdialog/x86_64-apple-darwin.yml?branch=master&label=macOS%20X&logo=github">
+<img src="https://img.shields.io/github/actions/workflow/status/tseli0s/nvdialog/i686-pc-windows-msvc.yml?branch=master&label=Windows%2010&logo=github">
 <br> <br>
 <h6><i>This project is in immediate need of macOS-based contributors for the Cocoa backend. If you use this library consider contributing to support it.</i></h6>
 </div>
