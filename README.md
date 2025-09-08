@@ -28,7 +28,8 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 - Cross-compiler (Actively tested with `gcc`, `clang` and MSVC).
 - Supports most desktop platforms through 3 different implementations (Backends).
 - Safe, bug-free, and does not get in your way.
-- Wor
+- Works with the vast majority of desktop platforms: Windows, macOS, Linux, BSDs and other Unix-like OSes are supported.
+- Small, dependency-free*, doesn't get in your way.
 - Legacy version support (See [OS Versions Supported](#os-versions-supported))
 
 # Backends
@@ -43,9 +44,9 @@ The default backend on Windows systems, relying on WinAPI. It is also actively t
 
 - **Adwaita Backend**
 > [!WARNING]
-> This backend is being deprecated as of v0.10, see PR 60 for details. If you use `libnvdialog` with this backend it's strongly advised that you switch away.
+> This backend is being deprecated as of v0.10, see PR 59 for details. If you use `libnvdialog` with this backend it's strongly advised that you switch away.
 
-This backend was added as an alternative to the `gtk` backend on GNU/Linux to provide better integration with GNOME environments, however it is being deprecated and you should not enable it.
+This backend was added as an alternative to the `gtk` backend on GNU/Linux to provide better integration with GNOME environments, however it is being deprecated and you should not enable it. From v0.10.0 forward it directly calls into the `gtk` backend's implementations and no longer requires `libadwaita` or `gtk4` to be present on the system.
 
 # Example
 This is a simple cross-platform example of a simple message box greeting the user:
