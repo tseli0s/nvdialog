@@ -36,6 +36,8 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 - **Gtk3 Backend**\
 The most battle-hardened backend, using pure Gtk3 to create the dialogs. On GNU/Linux this does mean you will need to have Gtk3 installed but almost all modern distributions include it which was the primary motivator for making it the default backend on GNU/Linux. It is actively tested and works on almost all distributions regardless of desktop, windowing system or hardening features. In addition, it uses the system's portal for file dialogs, and falls back to the Gtk one if a portal isn't present.
 
+Starting with version v0.10, this is also explicitly the default backend for Unix-like platforms. This is subject to change in the future; An X11/Xaw backend is being considered to reduce dependencies and maintenance.
+
 - **Cocoa Backend**\
 The Cocoa backend was recently added to NvDialog for macOS X support. It is written in Objective-C for better integration with the OS, and is still in the experimental stage although it should work fine by now. Please report any bugs or features that need to be fixed / implemented, or make a pull request to add them yourself. You can also test this backend on GNU/Linux and Windows using [GNUstep](https://gnustep.org) from v0.10 onwards, though experience may be suboptimal.
 
@@ -80,19 +82,23 @@ int main(int argc, char **argv)
 ```
 
 # Screenshots
-### The same dialog running on three different platforms: Windows, macOS, Linux.
+### The same dialog running on four different platforms: Windows, macOS, Linux, and FreeBSD.
 <div style="display: flex; justify-content: space-around; text-align: center;">
         <div id="first-screenshot">
                 <h6><i>Windows</i></h6>
                 <img src="./assets/screenshots/win32.png">
         </div>
-        <div id="third-screenshot">
+        <div id="second-screenshot">
                 <h6><i>macOS</i></h6>
                 <img src="./assets/screenshots/cocoa.png" width="300px">
         </div>
         <div id="third-screenshot">
                 <h6><i>Linux</i></h6>
                 <img src="./assets/screenshots/gtk.png">
+        </div>
+        <div id="fourth-screenshot">
+                <h6><i>FreeBSD using Gtk3+XFCE</i></h6>
+                <img src="./assets/screenshots/freebsd-gtk.png" width="325px">
         </div>
 </div>
 
@@ -165,6 +171,13 @@ Common distros officially supported:
 | Ubuntu and derivatives | >14.04 |
 | Debian and derivatives | >Debian 6.0 |
 | Slackware Linux | Latest |
+
+## BSD systems
+Through the `gtk` backend almost all (recent enough) BSD systems with a graphical environment are supported. You must install the Gtk+ libraries appropriate for your system. It's also recommended (but not required) to use a desktop that supports Gtk well. XFCE and KDE are both verified to work nicely with FreeBSD.
+
+To ensure stability, support is still considered experimental. Although the implementation should work identically between platforms thanks to Gtk+ support, platform-specific configurations may change the expected output. Report any issues to the [Issues](https://github.com/tseli0s/nvdialog/issues/) page.
+
+A known issue is that CMake may struggle to find Gtk+ libraries when building the library. You should use `make` instead if you run into issues, written exactly for this purpose. You may not be able to configure the library as much with this build method though.
 
 ## Android
 Android support will not be implemented anytime soon (Nor iOS support). You are advised instead to use Android's `AlertDialog` class or your UI library, which would achieve the same effect, since you'd have to use Java in your application anyways.

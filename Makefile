@@ -1,6 +1,6 @@
 # Makefile for libnvdialog
-# Unless you're building on older GNU/Linux distributions, you probably don't
-# want to use this Makefile. Instead, you're advised to use the CMake script which
+# Unless you're building on older GNU/Linux distributions or another platform that doesn't work well with CMake,
+# you probably don't want to use this Makefile. Instead, you're advised to use the CMake script which
 # is much more reliable and maintainable.
 
 CC=gcc
@@ -17,7 +17,7 @@ all: $(SRC) $(PUBHEADER)
 
 install: $(OUTFILE) $(PUBHEADER)
 	@[ -d /usr/include/nvdialog ] || mkdir /usr/include/nvdialog
-	@cp $(PUBHEADER) /usr/include/nvdialog/
+	@cp -r $(PUBHEADER) /usr/include/nvdialog/
 	@cp $(OUTFILE)   /usr/lib
 	@cp $(OUTFILE)   /usr/lib/$(OUTFILE).2 # Just to avoid compatibility issues.
 	@echo "Successful."
