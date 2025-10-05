@@ -37,6 +37,7 @@
  * Keep C++ specific code in C++ translation units (.cc files)*/
 
 #include "nvdialog.h"
+#include "nvdialog_typeimpl.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_input_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
