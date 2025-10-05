@@ -42,6 +42,10 @@
 #include "dialogs/nvdialog_file_dialog.h"
 #include "dialogs/nvdialog_about_dialog.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 NvdDialogBox *nvd_dialog_box_hku(const char *title, const char *message,
                                    NvdDialogType type);
 
@@ -89,5 +93,9 @@ void nvd_send_notification_hku(NvdNotification *notification);
 void nvd_add_notification_action_hku(NvdNotification *notification,
                                        const char *action, int value_to_set,
                                        int *value_to_return);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __nvdialog_hku_h__ */
