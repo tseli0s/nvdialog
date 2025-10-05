@@ -24,6 +24,8 @@
 
 #include "nvdialog_hku.h"
 
+NVD_C_LINKAGE {
+
 NvdAboutDialog *nvd_about_dialog_hku(const char *appname, const char *brief,
                                        const char *logo) {
         
@@ -42,4 +44,6 @@ void nvd_about_dialog_set_license_link_hku(NvdAboutDialog *dialog,
 
 void nvd_show_about_dialog_hku(NvdAboutDialog *dialog) {
         
+}
+
 }

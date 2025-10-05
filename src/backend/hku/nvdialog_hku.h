@@ -27,6 +27,12 @@
 #ifndef __nvdialog_hku_h__
 #define __nvdialog_hku_h__ 1
 
+#ifdef __cplusplus
+#define NVD_C_LINKAGE extern "C"
+#else
+#define NVD_C_LINKAGE 
+#endif
+
 /* NOTE: Don't include C++ headers here (From Haiku's API for example).
  * Keep C++ specific code in C++ translation units (.cc files)*/
 

@@ -24,6 +24,8 @@
 
 #include "nvdialog_hku.h"
 
+NVD_C_LINKAGE {
+
 NvdDialogBox *nvd_dialog_box_hku(const char *title, const char *message,
                                    NvdDialogType type) {
         
@@ -35,4 +37,6 @@ void nvd_show_dialog_hku(NvdDialogBox *dialog) {
 
 void nvd_dialog_box_set_accept_text_hku(NvdDialogBox *dialog, const char *accept_text) {
         
+}
+
 }

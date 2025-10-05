@@ -24,6 +24,8 @@
 
 #include "nvdialog_hku.h"
 
+NVD_C_LINKAGE {
+
 NvdInputBox *nvd_input_box_hku(const char *title, const char *message) {
 }
 
@@ -33,4 +35,6 @@ void nvd_show_input_box_hku(NvdInputBox *box) {
 
 NvdDynamicString *nvd_input_box_get_string_hku(NvdInputBox *box) {
 	
+}
+
 }

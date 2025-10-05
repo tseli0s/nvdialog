@@ -24,6 +24,8 @@
 
 #include "nvdialog_hku.h"
 
+NVD_C_LINKAGE {
+
 NvdNotification *nvd_notification_hku(const char *title, const char *msg,
                                         NvdNotifyType type) {
         
@@ -43,4 +45,6 @@ void nvd_add_notification_action_hku(NvdNotification *unused,
         (void)_unused;
         (void)__unused;
         (void)___unused;
+}
+
 }

@@ -24,6 +24,8 @@
 
 #include "nvdialog_hku.h"
 
+NVD_C_LINKAGE {
+
 static NvdDynamicString *nvd_file_only_dialog_hku(NvdFileDialog *dialog) {
         
 }
@@ -49,4 +51,6 @@ NvdFileDialog *nvd_open_folder_dialog_hku(const char *title,
 
 NvdDynamicString *nvd_get_file_location_hku(NvdFileDialog *dialog) {
         
+}
+
 }
