@@ -17,6 +17,8 @@
 - Added support for GNUstep.
 - The `adw` backend's functions will now simply call directly on the `gtk` implementations.
 - Added some notes for other (non-GNU/Linux) operating systems and patched the build system to work with them.
+- Improved support for some Unix-like (NOT LINUX) operating systems
+- Started initial work towards porting nvdialog to [HaikuOS](https://www.haiku-os.org/)
 
 # Changelog -- 0.9.0
 - CMake will now only set `CMAKE_INSTALL_PREFIX` to `/usr` if the host is not Windows or macOS. This may fix some installation problems you might have had when previously installing the library.
