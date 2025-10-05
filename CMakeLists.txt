@@ -2,7 +2,7 @@
 # This file is part of libnvdialog and is released under the MIT license.
 
 cmake_minimum_required(VERSION 3.18)
-project(libnvdialog VERSION 0.10.0 LANGUAGES C DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+project(libnvdialog VERSION 0.10.0 LANGUAGES C CXX DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
 option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux." OFF)
 option(NVD_BUILD_STATIC "Build NvDialog as a static library." ON)
@@ -15,7 +15,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
 
 if (NVD_USE_GTK4)
     message(WARNING "**IMPORTANT** The build system detected that you are trying to build this library with the Gtk4/libadwaita backend. This backend is being deprecated as of version v0.10. For future-proofness, resort to the default gtk backend instead. See PR #59 on the repository for further details.")
-    message("-- If you are building for Windows/macOS, you can ignore the warning above.")
+    message("-- If you are building for Windows/macOS/Haiku, you can ignore the warning above.")
 endif()
 
 if(NOT DEFINED ENV{FLATPAK_ID} AND CMAKE_HOST_UNIX AND NOT APPLE)
@@ -29,6 +29,10 @@ if(APPLE OR NVD_USE_GNUSTEP)
 elseif(CROSS_COMPILE_FOR_WIN32)
     set(CMAKE_C_COMPILER /usr/bin/i686-w64-mingw32-gcc)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-stack-protector -Wno-unused-parameter -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
+    message(WARNING "NvDialog has detected that you are building the library with Haiku as the target. Please note that Haiku support
+is not yet finished and stability may suffer or features may be missing. You can try compiling with the Gtk backend instead")
+    set(NVD_HAIKU_TARGET TRUE)
 elseif(MSVC)
     message(WARNING "MSVC is experimental; prefer GCC/Clang.")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
@@ -83,6 +87,17 @@ elseif(APPLE OR NVD_USE_GNUSTEP)
         src/backend/cocoa/nvdialog_cocoa_init.m
         ${NVD_COMMON_SOURCES})
     add_compile_definitions(NVD_USE_COCOA=1)
+elseif(NVD_HAIKU_TARGET)
+    set(NVD_SOURCES
+        src/backend/hku/nvdialog_dialog_box.cc
+        src/backend/hku/nvdialog_file_dialog.cc
+        src/backend/hku/nvdialog_input_box.cc
+        src/backend/hku/nvdialog_question_dialog.cc
+        src/backend/hku/nvdialog_notification.cc
+        src/backend/hku/nvdialog_about_dialog.cc
+        src/backend/hku/nvdialog_hku_init.cc
+        ${NVD_COMMON_SOURCES})
+    add_compile_definitions(NVD_HAIKU_TARGET=1)
 else()
     find_package(PkgConfig REQUIRED)
     if(NVD_USE_GTK4)
@@ -147,7 +162,7 @@ elseif(NVD_USE_GNUSTEP)
     target_link_libraries(nvdialog gnustep-base gnustep-gui objc m)
 elseif(CROSS_COMPILE_FOR_WIN32 OR WIN32)
     target_link_libraries(nvdialog comdlg32 shell32 user32 gdi32 ole32)
-elseif(LINUX OR UNIX)
+elseif(LINUX OR UNIX AND NOT NVD_HAIKU_TARGET)
     target_link_libraries(nvdialog ${GTK_LIBRARIES})
     if (UNIX AND NOT LINUX)
         message(WARNING "Building on a Unix-like OS that is not GNU/Linux has not been verified to work as reliably, results may vary!")
