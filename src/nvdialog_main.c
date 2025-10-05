@@ -36,8 +36,10 @@
 #include <dlfcn.h>
 #ifdef NVD_USE_GTK4
 #include "backend/adw/nvdialog_adw.h"
-#elif NVD_USE_COCOA
+#elif defined(NVD_USE_COCOA)
 #include "backend/cocoa/nvdialog_cocoa.h"
+#elif defined(NVD_HAIKU_TARGET)
+#include "backend/hku/nvdialog_hku.h"
 #else
 #endif /* NVD_USE_GTK4 */
 #else
