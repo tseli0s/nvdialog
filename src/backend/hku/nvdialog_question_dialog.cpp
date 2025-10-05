@@ -25,7 +25,7 @@
 #include "nvdialog_hku.h"
 
 NvdQuestionBox *nvd_question_hku(const char *title, const char *question,
-                                   NvdQuestionButton buttons) {
+                                NvdQuestionButton buttons) {
 }
 
 NvdReply nvd_get_reply_hku(NvdQuestionBox *box) {
