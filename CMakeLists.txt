@@ -89,12 +89,12 @@ elseif(APPLE OR NVD_USE_GNUSTEP)
     add_compile_definitions(NVD_USE_COCOA=1)
 elseif(NVD_HAIKU_TARGET)
     set(NVD_SOURCES
-        src/backend/hku/nvdialog_dialog_box.cc
-        src/backend/hku/nvdialog_file_dialog.cc
-        src/backend/hku/nvdialog_input_box.cc
-        src/backend/hku/nvdialog_question_dialog.cc
-        src/backend/hku/nvdialog_notification.cc
-        src/backend/hku/nvdialog_about_dialog.cc
+        src/backend/hku/nvdialog_dialog_box.cpp
+        src/backend/hku/nvdialog_file_dialog.cpp
+        src/backend/hku/nvdialog_input_box.cpp
+        src/backend/hku/nvdialog_question_dialog.cpp
+        src/backend/hku/nvdialog_notification.cpp
+        src/backend/hku/nvdialog_about_dialog.cpp
         ${NVD_COMMON_SOURCES})
     add_compile_definitions(NVD_HAIKU_TARGET=1)
 else()
