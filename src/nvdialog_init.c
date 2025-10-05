@@ -37,6 +37,8 @@
 #elif defined(NVD_USE_COCOA)
 #define NVD_COCOA_IMPL
 #include "backend/cocoa/nvdialog_cocoa.h"
+#elif defined(NVD_HAIKU_TARGET)
+#include "backend/hku/nvdialog_hku.h"
 #else
 #define NVD_GTK3_IMPL
 #include "backend/gtk/nvdialog_gtk.h"
@@ -129,7 +131,6 @@ int nvd_init_win32(NvdBackendMask *mask) {
 #endif
 
 #if defined(NVD_COCOA_IMPL)
-
 int nvd_init_cocoa(NvdBackendMask *mask) {
         #ifdef _NVD_USE_GNUSTEP /* Only required on GNUstep */
         nvd_create_cocoa_app();
@@ -159,6 +160,32 @@ int nvd_init_cocoa(NvdBackendMask *mask) {
 }
 #endif
 
+#if defined(NVD_HAIKU_TARGET)
+int nvd_init_hku(NvdBackendMask *mask) {
+        mask->dialog_box = nvd_dialog_box_hku;
+        mask->show_dialog = nvd_show_dialog_hku;
+        mask->set_accept_text = nvd_dialog_box_set_accept_text_hku;
+        mask->question = nvd_question_hku;
+        mask->get_reply = nvd_get_reply_hku;
+        mask->input_box = nvd_input_box_hku;
+        mask->show_input_box = nvd_show_input_box_hku;
+        mask->input_box_get_string = nvd_input_box_get_string_hku;
+        mask->about_dialog = nvd_about_dialog_hku;
+        mask->show_about_dialog = nvd_show_about_dialog_hku;
+        mask->about_dialog_set_version = nvd_about_dialog_set_version_hku;
+        mask->about_dialog_set_license = NULL;
+        mask->open_file_dialog = nvd_open_file_dialog_hku;
+        mask->save_file_dialog = nvd_save_file_dialog_hku;
+        mask->open_folder_dialog = nvd_open_folder_dialog_hku;
+        mask->get_file_location = nvd_get_file_location_hku;
+        mask->notification = nvd_notification_hku;
+        mask->send_notification = nvd_send_notification_hku;
+        mask->add_notification_action = nvd_add_notification_action_hku;
+
+        return 0;
+}
+#endif
+
 int nvd_init_backends(NvdBackendMask *mask) {
 #if defined(NVD_GTK4_IMPL)
         return nvd_init_gtk4(mask);
@@ -166,6 +193,8 @@ int nvd_init_backends(NvdBackendMask *mask) {
         return nvd_init_gtk3(mask);
 #elif defined(NVD_WIN32_IMPL)
         return nvd_init_win32(mask);
+#elif defined(NVD_HAIKU_TARGET)
+        return nvd_init_hku(mask);
 #elif defined(NVD_COCOA_IMPL)
         return nvd_init_cocoa(mask);
 #endif

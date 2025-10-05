@@ -42,7 +42,10 @@ Starting with version v0.10, this is also explicitly the default backend for Uni
 The Cocoa backend was recently added to NvDialog for macOS X support. It is written in Objective-C for better integration with the OS, and is still in the experimental stage although it should work fine by now. Please report any bugs or features that need to be fixed / implemented, or make a pull request to add them yourself. You can also test this backend on GNU/Linux and Windows using [GNUstep](https://gnustep.org) from v0.10 onwards, though experience may be suboptimal.
 
 - **Win32 Backend**\
-The default backend on Windows systems, relying on WinAPI. It is also actively tested and works well, even in super outdated systems like Windows XP. However, some minor customization options may not work due to the limited features of the API - Make sure your program works well using that license!
+The default backend on Windows systems, relying on WinAPI. It is also actively tested and works well, even in super outdated systems like Windows XP. However, some minor customization options may not work due to the limited features of the API - Make sure your program works well without them or file an issue otherwise.
+
+- **Haiku (hku) Backend**\
+The native backend for the [Haiku](https://www.haiku-os.org/) operating system. Since Haiku only exposes a C++ API, this backend is also written in C++. This means that compiling the Haiku backend requires a C++ compiler (along with a C one). This backend is still a work in progress, you might notice features missing or not working properly. Feel free to contribute to speed up development.
 
 - **Adwaita Backend**
 > [!WARNING]

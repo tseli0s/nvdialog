@@ -35,8 +35,8 @@
 #if defined(unix) || defined(__APPLE__)
 #include <sys/types.h>
 #include <unistd.h>
-#else
-#include <windows.h>  // Has to be included apparently
+#elif defined(_WIN32)
+#include <windows.h>  /* Has to be included apparently */
 #endif                /* NVD_PLATFORM_UNIX */
 
 /**
