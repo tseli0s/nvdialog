@@ -95,7 +95,6 @@ elseif(NVD_HAIKU_TARGET)
         src/backend/hku/nvdialog_question_dialog.cc
         src/backend/hku/nvdialog_notification.cc
         src/backend/hku/nvdialog_about_dialog.cc
-        src/backend/hku/nvdialog_hku_init.cc
         ${NVD_COMMON_SOURCES})
     add_compile_definitions(NVD_HAIKU_TARGET=1)
 else()
