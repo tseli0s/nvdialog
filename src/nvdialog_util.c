@@ -37,7 +37,7 @@
 #ifdef _WIN32
 #include <io.h>
 #define access _access
-#else
+#elif defined(unix)
 #include <unistd.h>  // access()
 #endif
 
@@ -68,8 +68,10 @@ static void nvd_read_os_release(NvdDistroInfo* info) {
 NvdProcessID nvd_create_process(void) {
 #if defined(unix) || defined(__APPLE__)
         return (NvdProcessID)fork();
-#else
+#elif defined(_WIN32)
         return (NvdProcessID)GetCurrentProcessId();
+#else
+        return -1; /* FIXME: Support Haiku here */
 #endif
 }
 
