@@ -130,26 +130,6 @@ $ sudo cmake --install .
 > [!NOTE]
 > Following version v0.10, some GNU/Linux distributions may fail to find nvdialog at runtime because they don't include `/usr/local` in their library search path. If your project can't link with nvdialog for some reason, make sure to report it in the [issues page](https://github.com/tseli0s/nvdialog/issues).
 
-# Installing on Arch Linux
-###### *TODO: Upload the library to the AUR.*
-For Arch Linux and derivatives, a `PKGBUILD` is provided to build the library as a package. It is recommended to use it this way to allow uninstalling and managing the library easily.\
-To install the library as an Arch Linux package, enter the following commands:
-
-**Download `git`** (Required to download the source code)
-```bash
-$ sudo pacman -S git
-```
-**Clone the repository (To download the source code)**
-```bash
-$ git clone --depth=1 https://github.com/tseli0s/nvdialog.git
-$ cd nvdialog/
-```
-**Build the package:**
-```bash
-$ makepkg --clean --install
-```
-
-
 # OS Versions Supported
 ## Windows
 The oldest OS NvDialog has ran on is Windows XP, although some calls did not produce any change / output (But did not fail either). The recommended minumum is Windows 7, and any later version should work as expected.
