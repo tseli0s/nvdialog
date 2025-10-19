@@ -66,7 +66,7 @@ static void nvd_read_os_release(NvdDistroInfo* info) {
 #endif /* __linux__ */
 
 NvdProcessID nvd_create_process(void) {
-#if defined(unix) || defined(__APPLE__)
+#if defined(__unix__) || defined(__APPLE__)
         return (NvdProcessID)fork();
 #else
         return (NvdProcessID)GetCurrentProcessId();

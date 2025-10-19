@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if defined(unix) || defined(__APPLE__)
+#if defined(__unix__) || defined(__APPLE__)
 #include <sys/types.h>
 #include <unistd.h>
 #else
