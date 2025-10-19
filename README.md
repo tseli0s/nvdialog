@@ -152,27 +152,20 @@ $ makepkg --clean --install
 
 # OS Versions Supported
 ## Windows
-The oldest OS NvDialog has ran on is Windows XP, although some calls did not produce any change / output (But did not fail either). The recommended minumum is Windows 8 / 8.1, and any later version should work as expected.
+The oldest OS NvDialog has ran on is Windows XP, although some calls did not produce any change / output (But did not fail either). The recommended minumum is Windows 7, and any later version should work as expected.
 
 ## macOS
-Only the very latest versions of macOS are supported. Older releases will at best throw a compiler error if compiling from source or a linking error otherwise.
+The Cocoa APIs used by nvdialog in the respective backend are available through most OS X versions and even NeXTSTEP (Where they originate from). However, only recent versions of macOS are known to work well, so only macOS 10.13 and later are considered "supported".
 
-Some deprecated functions are used here and there when building for macOS. This shouldn't worry you since Apple does give enough time for developers to switch away without enforcing it.
+You might see some deprecation warnings when building nvdialog from source. This is expected.
 
 ## GNU/Linux
-Since there are well over 1000 distributions, there is no specific distribution requirement. However, your system must have these installed:
-- Gtk 3 (3.18 or later).
-- Linux kernel 2.6 or newer (All modern distros include at least 4.x kernels so nothing to worry here).
-- X11 or Wayland as the display server. Mir is supported but advised against.
-- Preferably a Vulkan driver for hardware acceleration.
-
-Common distros officially supported:
-| Distro | Version |
-|   ---  |   ---   |
-| Arch Linux | (Rolling) |
-| Ubuntu and derivatives | >14.04 |
-| Debian and derivatives | >Debian 6.0 |
-| Slackware Linux | Latest |
+GNU/Linux is not one operating system but a family of thousands of different distributions. As such, there's no specific distro requirement. The system must provide those however:
+- Gtk3 or some ABI-compatible equivalent. Most distributions ship with Gtk3 out of the box and Gtk is quite widespread in the GNU/Linux world, so it is probably installed already.
+- A display server. Wayland and X11 are both supported (Through Gtk), and an implementation is required to display the windows on the screen.
+- Recommended (but not required): A driver that supports hardware acceleration for graphics, like Vulkan, can increase performance massively.
+> [!WARNING]
+> The GNOME desktop environment may ignore the icons you use in the dialog's window on Wayland sessions, showing a generic icon instead. You can try setting an application name matching your desktop launcher as a temporary workaround. 
 
 ## BSD systems
 Through the `gtk` backend almost all (recent enough) BSD systems with a graphical environment are supported. You must install the Gtk+ libraries appropriate for your system. It's also recommended (but not required) to use a desktop that supports Gtk well. XFCE and KDE are both verified to work nicely with FreeBSD.
@@ -181,14 +174,10 @@ To ensure stability, support is still considered experimental. Although the impl
 
 A known issue is that CMake may struggle to find Gtk+ libraries when building the library. You should use `make` instead if you run into issues, written exactly for this purpose. You may not be able to configure the library as much with this build method though.
 
-## Android
-Android support will not be implemented anytime soon (Nor iOS support). You are advised instead to use Android's `AlertDialog` class or your UI library, which would achieve the same effect, since you'd have to use Java in your application anyways.
+A future X11 backend based on Xt/Xaw is being considered, as it can remove the `gtk` dependency while still providing graphical dialogs that work with the X server, with minimal memory and CPU footprint.
 
-## Other OSes
-Other OSes are assumed to be supported. To make sure they do indeed work, you need to make sure the given OS supports **all** of the following features:
-- Unix-like, or alternatively, **very closely** resembling Windows (If the latter, ignore the following).
-- X11 or Wayland as the windowing system
-- Gtk3, or Gtk4 and Libadwaita
+## Android
+Android support will not be implemented anytime soon. You are advised instead to use Android's `AlertDialog` class (through Java), which would achieve the same effect but cut out the C-side middleman, since you'd have to use Java in your application anyways.
 
 # Current Status
 As of August 2025, the main focus of development is to stabilize and standardize all interfaces, and switch the library to maintenance mode only, as I believe there isn't much left to add. The long term plan is to release v1.0 and stop there, only making sure the library runs well from that point forward. In addition, to make sure that the library is truly seamless across platforms and systems, extra attention will be given to the `cocoa` and `win32` backends and more extensive testing will take place.
