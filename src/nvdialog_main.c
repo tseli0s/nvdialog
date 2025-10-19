@@ -22,9 +22,11 @@
  * IN THE SOFTWARE.
  */
 
+#define _POSIX_C_SOURCE 200809L
+
+#define _CRT_SECURE_NO_WARNINGS 1
 #include "dialogs/nvdialog_input_box.h"
 #include "nvdialog_typeimpl.h"
-#define _CRT_SECURE_NO_WARNINGS 1
 #include "nvdialog_string.h"
 #include "dialogs/nvdialog_dialog_box.h"
 #include "dialogs/nvdialog_file_dialog.h"
@@ -122,9 +124,6 @@ int nvd_init(void) {
                         "/usr/lib/libnotify.so as a fallback.");
                 nvd_libnotify_path = "/usr/lib/libnotify.so";
         }
-
-        setlinebuf(stdout);
-        setlinebuf(stderr);
 #endif
 
         int result = nvd_init_backends(&mask);

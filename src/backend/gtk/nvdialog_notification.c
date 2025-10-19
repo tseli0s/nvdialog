@@ -83,13 +83,13 @@ static inline char *__nvd_match_notif_type(NvdNotifyType type) {
 
         switch (type) {
                 case NVD_NOTIFICATION_SIMPLE:
-                        icon_name = "dialog-information";
+                        icon_name = (char*) "dialog-information";
                         break;
                 case NVD_NOTIFICATION_WARNING:
-                        icon_name = "dialog-warning";
+                        icon_name = (char*) "dialog-warning";
                         break;
                 case NVD_NOTIFICATION_ERROR:
-                        icon_name = "dialog-error";
+                        icon_name = (char*) "dialog-error";
                         break;
                 default:
                         nvd_set_error(NVD_INVALID_PARAM);

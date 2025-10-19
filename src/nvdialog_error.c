@@ -22,6 +22,8 @@
  * IN THE SOFTWARE.
  */
 
+#define _POSIX_C_SOURCE 200809L
+
 #include "nvdialog_error.h"
 
 #include <errno.h>
