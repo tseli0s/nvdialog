@@ -127,6 +127,8 @@ $ cmake --build .
 ```sh
 $ sudo cmake --install .
 ```
+> [!NOTE]
+> Following version v0.10, some GNU/Linux distributions may fail to find nvdialog at runtime because they don't include `/usr/local` in their library search path. If your project can't link with nvdialog for some reason, make sure to report it in the [issues page](https://github.com/tseli0s/nvdialog/issues).
 
 # Installing on Arch Linux
 ###### *TODO: Upload the library to the AUR.*
