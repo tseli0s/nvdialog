@@ -1,26 +1,64 @@
-# Makefile for libnvdialog
-# Unless you're building on older GNU/Linux distributions or another platform that doesn't work well with CMake,
-# you probably don't want to use this Makefile. Instead, you're advised to use the CMake script which
-# is much more reliable and maintainable.
+# Compiler to use. gcc is recommended but any compiler implementing the C11 standard should work.
+# clang is a good alternative on some platforms.
+CC       ?= gcc
+PKGCONF  := pkg-config
+CFLAGS   := -std=c11 -Wall -Wextra -Wconversion -Winline -Werror=format -Werror=format-security -Werror=write-strings
+CFLAGS   += -DNVDIALOG_MAXBUF=4096 -DNVD_EXPORT_SYMBOLS
+CFLAGS   += $(shell $(PKGCONF) --cflags gtk+-3.0)
+LDFLAGS  := $(shell $(PKGCONF) --libs gtk+-3.0)
+INCLUDES := -Iinclude -Isrc/impl -Ivendor
 
-CC=gcc
-SRC=src/*.c src/backend/gtk/*.c
-PUBHEADER=include/*/*
-CFLAGS=-Wall -Wextra -O3 -s -Wno-unused-parameter -fstack-protector-all -fPIC -shared -Iinclude/ -Ivendor/ -Isrc/impl/ -DNVD_SANDBOX_SUPPORT=1
-OUTFILE=libnvdialog.so
-EXFLAGS=`pkg-config --libs --cflags gtk+-3.0`
-NVDIALOG_MAXBUF=4096
+# Set this to 0 to build nvdialog as a dynamic library instead.
+# (If it's one, nvdialog will be built as a static library)
+BUILD_STATIC ?= 1
 
-all: $(SRC) $(PUBHEADER)
-	$(CC) $(SRC) -o $(OUTFILE) $(CFLAGS) $(EXFLAGS) -DNVDIALOG_MAXBUF=$(NVDIALOG_MAXBUF)
-	@echo "Finished, run 'make install' as root to install the library."
+ifeq ($(BUILD_STATIC),1)
+    TARGET := libnvdialog.a
+    CFLAGS += -DNVD_STATIC_LINKAGE
+else
+    TARGET := libnvdialog.so
+    CFLAGS += -fPIC
+endif
 
-install: $(OUTFILE) $(PUBHEADER)
-	@[ -d /usr/include/nvdialog ] || mkdir /usr/include/nvdialog
-	@cp -r $(PUBHEADER) /usr/include/nvdialog/
-	@cp $(OUTFILE)   /usr/lib
-	@cp $(OUTFILE)   /usr/lib/$(OUTFILE).2 # Just to avoid compatibility issues.
-	@echo "Successful."
+# Installation directory. /usr/local works for most people but you can also use /usr
+# if you want or install it under ~/.local.
+INSTALLPREFIX ?= /usr/local
+LIBDIR   := $(INSTALLPREFIX)/lib
+INCDIR   := $(INSTALLPREFIX)/include/nvdialog
+DIALOGDIR:= $(INCDIR)/dialogs
 
-clean: $(OUTFILE) build/
-	@rm -rv $(OUTFILE) build/ && echo "Done."
+COMMON_SRC := $(wildcard src/*.c)
+GTK_SRC    := $(wildcard src/backend/gtk/*.c)
+SRC        := $(COMMON_SRC) $(GTK_SRC)
+OBJDIR     := build
+OBJ        := $(patsubst %.c,$(OBJDIR)/%.o,$(SRC))
+
+.PHONY: all clean install uninstall
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+ifeq ($(BUILD_STATIC),1)
+	ar rcs $@ $(OBJ)
+else
+	$(CC) -shared -o $@ $(OBJ) $(LDFLAGS)
+endif
+
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+install:
+	mkdir -p $(LIBDIR)
+	mkdir -p $(INCDIR)
+	mkdir -p $(DIALOGDIR)
+	cp $(TARGET) $(LIBDIR)/
+	cp include/nvdialog_*.h $(INCDIR)/
+	cp include/dialogs/nvdialog_*.h $(DIALOGDIR)/
+
+uninstall:
+	rm -f $(LIBDIR)/$(TARGET)
+	rm -rf $(INCDIR)
+
+clean:
+	rm -rfv $(OBJDIR) $(TARGET)
