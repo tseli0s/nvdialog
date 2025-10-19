@@ -18,10 +18,6 @@ if (NVD_USE_GTK4)
     message("-- If you are building for Windows/macOS/Haiku, you can ignore the warning above.")
 endif()
 
-if(NOT DEFINED ENV{FLATPAK_ID} AND CMAKE_HOST_UNIX AND NOT APPLE)
-    set(CMAKE_INSTALL_PREFIX /usr)
-endif()
-
 if(APPLE OR NVD_USE_GNUSTEP)
     set(CMAKE_C_COMPILER clang)
     enable_language(OBJC)
