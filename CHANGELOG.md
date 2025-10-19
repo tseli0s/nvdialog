@@ -17,6 +17,8 @@
 - Added support for GNUstep.
 - The `adw` backend's functions will now simply call directly on the `gtk` implementations.
 - Added some notes for other (non-GNU/Linux) operating systems and patched the build system to work with them.
+- CMake will no longer be configured to use `/usr` as the install prefix on Unix-like systems. `ld.so.conf` may need to be modified on some GNU/Linux distros.
+- Removed `PKGBUILD` file from the tree (Arch Linux users will soon be able to get nvdialog as a package from the AUR instead)
 
 # Changelog -- 0.9.0
 - CMake will now only set `CMAKE_INSTALL_PREFIX` to `/usr` if the host is not Windows or macOS. This may fix some installation problems you might have had when previously installing the library.
