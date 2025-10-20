@@ -25,8 +25,8 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 - Simple, high level C API with low overhead (See [examples/](./examples/)).
 - 100% guaranteed native looking dialogs.
 - MIT Licensed.
-- Cross-compiler (Actively tested with `gcc`, `clang` and MSVC).
-- Supports most desktop platforms through 3 different implementations (Backends).
+- Cross-compiler support (Actively tested with `gcc`, `clang` and MSVC).
+- Supports most PC platforms through 3 different implementations (Backends).
 - Safe, bug-free, and does not get in your way.
 - Works with the vast majority of desktop platforms: Windows, macOS, Linux, BSDs and other Unix-like OSes are supported.
 - Small, dependency-free*, doesn't get in your way.
@@ -51,7 +51,7 @@ The native backend for the [Haiku](https://www.haiku-os.org/) operating system. 
 > [!WARNING]
 > This backend is being deprecated as of v0.10, see PR 59 for details. If you use `libnvdialog` with this backend it's strongly advised that you switch away.
 
-This backend was added as an alternative to the `gtk` backend on GNU/Linux to provide better integration with GNOME environments, however it is being deprecated and you should not enable it. From v0.10.0 forward it directly calls into the `gtk` backend's implementations and no longer requires `libadwaita` or `gtk4` to be present on the system.
+This backend was added as an alternative to the `gtk` backend on GNU/Linux to provide better integration with GNOME environments, however it is being deprecated and you should not enable it. From v0.10.0 forward it directly calls into the `gtk` backend's implementations and no longer requires `libadwaita` or `gtk4` to be present on the system. Previous versions of nvdialog built with this backend may be broken on some Wayland implementations when used along with Vulkan-based applications.
 
 # Example
 This is a simple cross-platform example of a simple message box greeting the user:
@@ -131,7 +131,7 @@ $ cmake --build .
 $ sudo cmake --install .
 ```
 > [!NOTE]
-> Following version v0.10, some GNU/Linux distributions may fail to find nvdialog at runtime because they don't include `/usr/local` in their library search path. If your project can't link with nvdialog for some reason, make sure to report it in the [issues page](https://github.com/tseli0s/nvdialog/issues).
+> Following version v0.10, some GNU/Linux distributions may fail to find nvdialog at runtime because they don't include `/usr/local` in their library search path. If your project can't link with nvdialog for some reason, make sure to report it in the [issues page](https://github.com/tseli0s/nvdialog/issues). As a temporary fix, set the `CMAKE_INSTALL_PREFIX` variable to `/usr` (or something equivalent) to use more toplevel system directories.
 
 # OS Versions Supported
 ## Windows
