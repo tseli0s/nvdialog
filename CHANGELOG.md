@@ -7,7 +7,7 @@
 - Fixed Windows and macOS backends returning stack pointers from functions (See #53, #56, #58).
 - Deprecate libadwaita (Read MR #59 for details and documentation for moving forward)
 - Added missing `nvd_dialog_box_set_accept_text` function.
-- Fixed NVD_ASSERT_FATAL macro failing regardless of condition.
+- Fixed `NVD_ASSERT_FATAL` macro failing regardless of condition.
 - Added NvdInputBox on `nvd-demo`.
 - Fixed tests not working on Windows.
 - Fixed some compiler warnings when cross-compiling.
@@ -19,6 +19,10 @@
 - Added some notes for other (non-GNU/Linux) operating systems and patched the build system to work with them.
 - CMake will no longer be configured to use `/usr` as the install prefix on Unix-like systems. `ld.so.conf` may need to be modified on some GNU/Linux distros.
 - Removed `PKGBUILD` file from the tree (Arch Linux users will soon be able to get nvdialog as a package from the AUR instead)
+- Small codebase cleanup for easier maintenance (Mostly removing unnecessary assertions, functions and so on)
+- Fixed a bug where the `win32` backend ignored filters on file dialogs.
+- Fixed `NvdFileDialog` having inaccurate button labels with the `gtk` backend.
+
 
 # Changelog -- 0.9.0
 - CMake will now only set `CMAKE_INSTALL_PREFIX` to `/usr` if the host is not Windows or macOS. This may fix some installation problems you might have had when previously installing the library.
