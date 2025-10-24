@@ -24,7 +24,7 @@
 - Small codebase cleanup for easier maintenance (Mostly removing unnecessary assertions, functions and so on)
 - Fixed a bug where the `win32` backend ignored filters on file dialogs.
 - Fixed `NvdFileDialog` having inaccurate button labels with the `gtk` backend.
-
+- Fixed a double free bug in the `gtk` implementation of `NvdFileDialog`.
 
 # Changelog -- 0.9.0
 - CMake will now only set `CMAKE_INSTALL_PREFIX` to `/usr` if the host is not Windows or macOS. This may fix some installation problems you might have had when previously installing the library.
