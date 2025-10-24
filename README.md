@@ -150,6 +150,9 @@ GNU/Linux is not one operating system but a family of thousands of different dis
 > [!WARNING]
 > The GNOME desktop environment may ignore the icons you use in the dialog's window on Wayland sessions, showing a generic icon instead. You can try setting an application name matching your desktop launcher as a temporary workaround. 
 
+> [!WARNING]
+> Older distributions that avoid systemd may not work with NvDialog. libnotify's support (The backend library used by nvdialog to send notifications) varies between versions. Open an issue if you notice missing/broken functionality.
+
 ## BSD systems
 Through the `gtk` backend almost all (recent enough) BSD systems with a graphical environment are supported. You must install the Gtk+ libraries appropriate for your system. It's also recommended (but not required) to use a desktop that supports Gtk well. XFCE and KDE are both verified to work nicely with FreeBSD.
 
