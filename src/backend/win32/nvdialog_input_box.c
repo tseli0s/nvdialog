@@ -129,6 +129,12 @@ void nvd_show_input_box_win32(NvdInputBox *box) {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+
+	/* Delete the title string after showing the input box.
+	 * We already call reusing the same dialog twice undefined behaviour, so we are technically
+	 * within our limits to do so. Without this, nvd_free_object() actually creates a memory leak.
+	 */
+	nvd_delete_string(box->title);
 }
 
 NvdDynamicString *nvd_input_box_get_string_win32(NvdInputBox *box) {
