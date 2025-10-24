@@ -68,6 +68,9 @@ NvdReply nvd_get_reply_win32(NvdQuestionBox *box) {
                 case IDCANCEL:
                         box->reply = NVD_REPLY_CANCEL;
                         break;
+                default:
+                        nvd_set_error(NVD_INVALID_PARAM);
+                        return -1;
         }
         return box->reply;
 }
