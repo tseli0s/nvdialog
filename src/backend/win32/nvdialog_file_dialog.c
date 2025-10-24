@@ -36,21 +36,6 @@
 #include "nvdialog_typeimpl.h"
 #include "nvdialog_win32.h"
 #include "winnt.h"
-
-static const char *nvd_append_bytes(char *dest, const char *src) {
-        size_t dest_len = strlen(dest);
-        size_t src_len = strlen(src);
-
-        char *new_str = (char *)malloc(dest_len + src_len + 1);
-        if (!new_str) {
-                return NULL;
-        }
-        memcpy(new_str, dest, dest_len);
-        memcpy(new_str + dest_len, src, src_len + 1);
-
-        return new_str;
-}
-
 static NvdDynamicString *nvd_file_only_dialog_win32(NvdFileDialog *dialog) {
         OPENFILENAME ofn;
         char file[NVDIALOG_MAXBUF];
@@ -59,7 +44,7 @@ static NvdDynamicString *nvd_file_only_dialog_win32(NvdFileDialog *dialog) {
         ofn.hwndOwner = nvd_get_parent();
         ofn.lpstrFile = file;
         ofn.lpstrFile[0] = '\0';
-        ofn.nMaxFile = sizeof(file) - 1; /* NULL byte manually set */
+        ofn.nMaxFile = sizeof(file) - 1;
         ofn.nFilterIndex = 1;
         ofn.lpstrFileTitle = (char *)dialog->title;
         ofn.nMaxFileTitle = 0;
@@ -72,22 +57,18 @@ static NvdDynamicString *nvd_file_only_dialog_win32(NvdFileDialog *dialog) {
                 char buffer[NVDIALOG_MAXBUF] = {0};
 
                 while (words[i] != NULL) {
-                        char tmp_buffer[128] = {0};
-                        snprintf(buffer, sizeof(buffer), ".%s files (*.%s)",
-                                 words[i], words[i]);
-                        nvd_append_bytes(buffer, tmp_buffer);
+                        char tmp_buffer[128];
+                        snprintf(tmp_buffer, sizeof(tmp_buffer), ".%s files (*.%s)", words[i], words[i]);
+                        strncat(buffer, tmp_buffer, sizeof(buffer) - strlen(buffer) - 1);
+                        strncat(buffer, "\0", sizeof(buffer) - strlen(buffer) - 1);
                         i++;
                 }
-
                 ofn.lpstrFilter = buffer;
-        } else
-                ofn.lpstrFilter = NULL;
+        } else  ofn.lpstrFilter = NULL;
 
         file[NVDIALOG_MAXBUF - 1] = '\0';
-        if (dialog->is_save_dialog)
-                GetSaveFileName(&ofn);
-        else
-                GetOpenFileName(&ofn);
+        if (dialog->is_save_dialog) GetSaveFileName(&ofn);
+        else GetOpenFileName(&ofn);
 
         dialog->filename = nvd_string_new(ofn.lpstrFile);
         dialog->location_was_chosen = true;
