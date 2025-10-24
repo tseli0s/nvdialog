@@ -53,7 +53,7 @@ NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
         NVD_RETURN_IF_NULL(dialog);
         dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
                                                   GTK_FILE_CHOOSER_ACTION_SAVE,
-                                                  "_Open", "_Cancel");
+                                                  "_Save", "_Cancel");
         NVD_RETURN_IF_NULL(dialog);
         return dialog;
 }
@@ -64,7 +64,7 @@ NvdFileDialog *nvd_open_folder_dialog_gtk(const char *title,
         NVD_RETURN_IF_NULL(dialog);
         dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
                                                   GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-                                                  "_Open", "_Cancel");
+                                                  "_Open Folder", "_Cancel");
         NVD_RETURN_IF_NULL(dialog);
         return dialog;
 }
@@ -147,3 +147,4 @@ NvdDynamicString *nvd_get_file_location_gtk(NvdFileDialog *dialog) {
 
         return dialog->filename;
 }
+
