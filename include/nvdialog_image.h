@@ -70,6 +70,7 @@ NVD_API const uint8_t *nvd_image_from_filename(const char *filename, int *width,
  * @brief Creates an `NvdImage` from the given buffer (data).
  * Although recommended, it is not necessary to use @ref nvd_image_from_filename
  * since other libraries can also provide RGBA data.
+ * @warning As described in the @ref NvdImage documentation, the pointer provided in @ref data MUST be in RGBA format. Not using @ref nvd_image_from_filename carries the additional burden of ensuring this manually.
  * @param data The data to use as the image
  * @param width The width of the image
  * @param height The height of the image
