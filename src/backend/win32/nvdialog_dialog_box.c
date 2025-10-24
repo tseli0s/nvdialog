@@ -33,15 +33,12 @@
 
 NvdDialogBox *nvd_dialog_box_win32(const char *title, const char *message,
                                    NvdDialogType type) {
-        NVD_ASSERT(title != NULL);
-        NVD_ASSERT(message != NULL);
-
         NvdDialogBox *dialog =
                 (NvdDialogBox *)malloc(sizeof(struct _NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->accept_label = "Ok";
-        dialog->reject_label = "Deny";
+        dialog->reject_label = "Cancel";
         dialog->window_handle = NULL;
         dialog->accept_button = NULL;
         dialog->msg = (char *)title;
