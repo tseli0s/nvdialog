@@ -25,60 +25,23 @@
 #include "nvdialog_notification.h"
 
 #include "../../nvdialog_assert.h"
+#include "dbus/dbus-protocol.h"
+#include "dbus/dbus-shared.h"
+#include "nvdialog_core.h"
 #include "nvdialog_error.h"
 #include "nvdialog_gtk.h"
-/* So we reduce compile-time dependencies. */
-#if defined(NVD_PREINCLUDE_HEADERS)
-#include <libnotify/notification.h>
-#endif /* NVD_PREINCLUDE_HEADERS */
 #include <dlfcn.h>
+#include <dbus/dbus.h>
 #include <stdlib.h>
+#include <sys/types.h>
 
-#if !defined(NVD_PREINCLUDE_HEADERS)
-typedef void *nvd_notification_t;
-#else
-typedef NotifyNotification nvd_notification_t;
-#endif /* NVD_PREINCLUDE_HEADERS */
+typedef struct _NvdDBusNotifyData {
+        DBusConnection *conn;
+        DBusMessage *msg, *reply;
 
-typedef nvd_notification_t (*nvd_notify_new_t)(const char *, const char *,
-                                               const char *);
+} NvdDBusNotifyData;
 
-struct NvdActionsArgs {
-        int *ptr;
-        int value;
-};
-
-static void nvd_set_action_ptr(void *notif, char *action,
-                               struct NvdActionsArgs *args) {
-        (void)notif;
-        (void)action;
-
-        *(int *)args->ptr = (int)args->value;
-}
-
-static bool __nvd_check_libnotify(NvdNotification *notification) {
-        bool (*nvd_notify_init)(char *) =
-                dlsym(notification->lib, "notify_init");
-        if (nvd_notify_init == NULL) {
-                nvd_error_message(
-                        "Can't load libnotify properly (Perhaps incompatible "
-                        "version?): %s",
-                        dlerror());
-                dlclose(notification->lib);
-                return false;
-        }
-
-        if (!nvd_notify_init((char *)nvd_get_application_name())) {
-                nvd_error_message(
-                        "Couldn't initialize libnotify, stopping here.");
-                nvd_set_error(NVD_BACKEND_FAILURE);
-                dlclose(notification->lib);
-                return false;
-        }
-        return true;
-}
-
-static inline char *__nvd_match_notif_type(NvdNotifyType type) {
+static char *nvd_match_notif_type(NvdNotifyType type) {
         static char *icon_name;
 
         switch (type) {
@@ -100,90 +63,82 @@ static inline char *__nvd_match_notif_type(NvdNotifyType type) {
 }
 
 static void nvd_delete_notification_gtk(NvdNotification *notification) {
-        NVD_ASSERT(notification != NULL);
-        if (dlclose(notification->lib) < 0) {
-                nvd_set_error(NVD_INTERNAL_ERROR);
-                abort();
-        }
+        NvdDBusNotifyData *data = notification->raw;
+        if (data->reply) dbus_message_unref(data->reply);
+        dbus_message_unref(data->msg);
 }
 
 NvdNotification *nvd_notification_gtk(const char *title, const char *msg,
                                       NvdNotifyType type) {
+        const uint32_t timeout  = 5000; /* Timeout for the notification. */
+        const uint32_t notif_id = 0;    /* Don't touch this */
+
         NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
         NVD_RETURN_IF_NULL(notification);
 
-        notification->lib = dlopen(nvd_path_to_libnotify(), RTLD_LAZY);
-        if (!notification->lib) {
-                nvd_set_error(NVD_FILE_INACCESSIBLE);
-                nvd_error_message("Unable to open /usr/lib/libnotify.so: %s",
-                                  dlerror());
-                free(notification);
-                return NULL;
-        }
-        if (!__nvd_check_libnotify(notification)) {
-                nvd_set_error(NVD_BACKEND_INVALID);
-                free(notification);
-                return NULL;
-        }
-
-        nvd_notify_new_t notify_new =
-                dlsym(notification->lib, "notify_notification_new");
-
-        if (!notify_new) {
-                nvd_error_message("libnotify is missing required symbols.");
-                dlclose(notification->lib);
-                free(notification);
-
-                return NULL;
-        }
-
-        const char *icon_name = __nvd_match_notif_type(type);
-
-        notification->title = (char *)title;
-        notification->body = (char *)msg;
-        notification->destructor = nvd_delete_notification_gtk;
-        notification->raw = (void *)notify_new(notification->title,
-                                               notification->body, icon_name);
-        notification->type = type;
+        notification->lib = NULL;
         notification->shown = false;
+        notification->title = (char*) title;
+        notification->body = (char*) msg;
+        notification->type = type;
 
-        if (notification->type == NVD_NOTIFICATION_ERROR) {
-                const char *fn_name = "notify_notification_set_urgency";
-                void (*nvd_notify_set_urgency)(nvd_notification_t, gint) =
-                        dlsym(notification->lib, fn_name);
-                nvd_notify_set_urgency(notification->raw, 2);
+        notification->destructor = nvd_delete_notification_gtk;
+        notification->raw = malloc(sizeof(NvdDBusNotifyData));
+        if (!notification->raw) {
+                free(notification);
+                return NULL;
         }
-        return notification;
+
+        NvdDBusNotifyData *priv = notification->raw;
+
+        priv->conn = dbus_bus_get_private(DBUS_BUS_SESSION, NULL);
+        priv->msg = dbus_message_new_method_call(
+                "org.freedesktop.Notifications",
+                "/org/freedesktop/Notifications",
+                "org.freedesktop.Notifications",
+                "Notify"
+        );
+        if (!priv->msg) {
+                free(priv);
+                free(notification);
+                return NULL;
+        }
+
+        const char *appname  = (nvd_get_application_name() != NULL) ? nvd_get_application_name() : "NvDialog";
+        const char *icon     = nvd_match_notif_type(type);
+
+        DBusMessageIter params, actions_iter, hints_iter;
+        dbus_message_iter_init_append(priv->msg, &params);
+
+        dbus_message_iter_append_basic(&params, DBUS_TYPE_STRING, &appname);
+        dbus_message_iter_append_basic(&params, DBUS_TYPE_UINT32, &notif_id);
+        dbus_message_iter_append_basic(&params, DBUS_TYPE_STRING, &icon);
+        dbus_message_iter_append_basic(&params, DBUS_TYPE_STRING, &title);
+        dbus_message_iter_append_basic(&params, DBUS_TYPE_STRING, &msg);
+
+        dbus_message_iter_open_container(&params, DBUS_TYPE_ARRAY, "s", &actions_iter);
+        dbus_message_iter_close_container(&params, &actions_iter);
+
+        dbus_message_iter_open_container(&params, DBUS_TYPE_ARRAY, "{sv}", &hints_iter);
+        dbus_message_iter_close_container(&params, &hints_iter);
+
+        dbus_message_iter_append_basic(&params, DBUS_TYPE_INT32, &timeout);
+
+    return notification;
 }
 
 void nvd_send_notification_gtk(NvdNotification *notification) {
-        NVD_ASSERT(notification != NULL);
-        NVD_ASSERT(notification->shown ==
-                   false); /* Just to avoid halting the thread. */
-
-        bool (*show_fn)(nvd_notification_t, GError **) =
-                dlsym(notification->lib, "notify_notification_show");
-        if (!show_fn) {
-                nvd_error_message(
-                        "libnotify is missing required symbols, see assertion "
-                        "message below.");
-                nvd_set_error(NVD_BACKEND_INVALID);
-                NVD_ASSERT(show_fn != NULL);
-        }
-
-        show_fn(notification->raw, NULL);
+        NvdDBusNotifyData *data = notification->raw;
+        data->reply = dbus_connection_send_with_reply_and_block(
+                data->conn,
+                data->msg,
+                -1,
+                NULL
+        );
 }
 
 void nvd_add_notification_action_gtk(NvdNotification *notification,
                                      const char *action, int value_to_set,
                                      int *value_to_return) {
-        void (*fn)(void *notification, const char *action, const char *label,
-                   void (*fn_callback)(void *, char *, gpointer),
-                   gpointer user_data, GFreeFunc free_func) =
-                dlsym(notification->lib, "notify_notification_add_action");
-
-        struct NvdActionsArgs data = {value_to_return, value_to_set};
-
-        fn(notification->raw, action, action, (void *)&nvd_set_action_ptr,
-           (gpointer)&data, NULL);
+        nvd_error_message("nvd_add_notification_action_gtk: Deprecated, do not use.");
 }
