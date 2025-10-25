@@ -111,8 +111,7 @@ NVD_API void nvd_delete_notification(NvdNotification* notification);
 
 /**
  * @brief Adds another button with a specified action to do when it is clicked.
- * @note Please make sure you don't register the same action twice on the same
- * notification.
+ * @deprecated This function no longer works since v0.10.0. It was only limited to some platforms before so it has become a no-op.
  * @param notification The notification to add the said action to.
  * @param action A string defining the action as well as the label of the button
  * for the action.
