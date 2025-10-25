@@ -91,8 +91,6 @@ NVD_API NvdFileDialog *nvd_open_folder_dialog_new(const char *title,
  *
  * @sa nvd_open_file_dialog_new
  * @param dialog The file dialog to take the filename from.
- * @param savebuf A pointer to a buffer where the path will be written, must not
- * be NULL.
  * @returns A @ref NvdDynamicString if a file/folder was selected, or NULL if no path was selected by the user.
  * @ingroup FileDialog
  */

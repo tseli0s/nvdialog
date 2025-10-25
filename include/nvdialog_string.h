@@ -60,7 +60,7 @@
 typedef struct _NvdDynamicString NvdDynamicString;
 
 /**
- * @brief Creates a new @ref `NvdDynamicString` and returns it, optionally with the data given in `contents`.
+ * @brief Creates a new @ref NvdDynamicString and returns it, optionally with the data given in `contents`.
  * @param data A C-style string to convert into a dynamic string, optional. Pass NULL to create an empty `NvdDynamicString`.
  * @returns A new `NvdDynamicString` on success, otherwise `NULL` and the internal error code is set.
  * @since v0.10.0
@@ -69,8 +69,8 @@ typedef struct _NvdDynamicString NvdDynamicString;
 NVD_API NvdDynamicString *nvd_string_new(const char *data);
 
 /**
- * @brief Sets the actual string inside the given @ref `NvdDynamicString`.
- * @param string The @ref `NvdDynamicString` to modify.
+ * @brief Sets the actual string inside the given @ref NvdDynamicString.
+ * @param string The @ref NvdDynamicString to modify.
  * @param data The string to set as the contents of the `NvdDynamicString`.
  * @note This will discard any existing data in the string. If you wish to simply append @ref data to the string, see @ref nvd_append_to_string
  * @since v0.10.0
@@ -80,7 +80,7 @@ NVD_API NvdDynamicString *nvd_string_new(const char *data);
 NVD_API void nvd_string_set_data(NvdDynamicString *string, const char *data);
 
 /**
- * @brief Duplicates the given @ref `NvdDynamicString` without modifying it.
+ * @brief Duplicates the given @ref NvdDynamicString without modifying it.
  *
  * You might find this useful when you wish to give the duplicated string in a function that needs to temporarily modify it,
  * or simply modify the string yourself without losing the original contents.
@@ -142,7 +142,7 @@ NVD_API void nvd_string_clear(NvdDynamicString *string);
 /**
  * @brief Deletes the string from memory and casts it invalid to use.
  * @note For security and safety reasons, all the data of the pointer will be zeroed-out first.
- * @param string The string to delete. This function does nothing if @ref `string` is `NULL`
+ * @param string The string to delete. This function does nothing if @ref string is `NULL`
  * @since v0.10.0
  * @ingroup String
 */
