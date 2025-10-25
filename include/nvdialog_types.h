@@ -63,7 +63,7 @@ typedef enum {
 } NvdQuestionButton;
 
 /**
- * @brief An enumerator containing a possible returned value by @ref nvd_get_reply, when used with an @ref NvdQuestionDialog
+ * @brief An enumerator containing a possible returned value by @ref nvd_get_reply, when used with an @ref NvdQuestionBox
  * @sa nvd_get_reply
  * @since v0.1.1
  */
