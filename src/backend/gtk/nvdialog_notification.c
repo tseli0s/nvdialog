@@ -38,7 +38,6 @@
 typedef struct _NvdDBusNotifyData {
         DBusConnection *conn;
         DBusMessage *msg, *reply;
-
 } NvdDBusNotifyData;
 
 static char *nvd_match_notif_type(NvdNotifyType type) {
@@ -66,6 +65,7 @@ static void nvd_delete_notification_gtk(NvdNotification *notification) {
         NvdDBusNotifyData *data = notification->raw;
         if (data->reply) dbus_message_unref(data->reply);
         dbus_message_unref(data->msg);
+        free(data);
 }
 
 NvdNotification *nvd_notification_gtk(const char *title, const char *msg,
