@@ -54,13 +54,8 @@ NVD_THREAD_LOCAL(char *nvd_app_name) = "NvDialog Application";
 NVD_THREAD_LOCAL(bool nvd_initialized) = false;
 NVD_THREAD_LOCAL(bool nvd_is_process_container) = false;
 NVD_THREAD_LOCAL(NvdParentWindow nvd_parent_window) = NULL;
-NVD_THREAD_LOCAL(char *nvd_libnotify_path) = NULL;  // Initialized in nvd_init
 
 static NvdBackendMask mask = {0};
-
-NVD_INTERNAL_FUNCTION const char *nvd_path_to_libnotify() {
-        return nvd_libnotify_path;
-}
 
 void nvd_set_application_name(const char *application_name) {
         nvd_app_name = (char *)application_name;
@@ -72,38 +67,6 @@ int nvd_set_parent(NvdParentWindow parent) {
 }
 NvdParentWindow nvd_get_parent() { return nvd_parent_window; }
 
-static int nvd_check_libnotify(void) {
-#if defined(NVD_USE_GTK4) || defined(NVD_PLATFORM_LINUX)
-        void *lib = dlopen(nvd_libnotify_path, RTLD_LAZY);
-        if (!lib) {
-                nvd_error_message("Couldn't load libnotify.so: %s", dlerror());
-                return -1;
-        } else {
-                /*
-                 * This is just to check if we can use libnotify, and stop here
-                 * if not instead of causing it later in the program.
-                 */
-                gboolean (*nvd_notify_init)(char *) = dlsym(lib, "notify_init");
-                if (!nvd_notify_init) {
-                        dlclose(lib);
-                        nvd_error_message(
-                                "libnotify is missing 'notify_init' symbol "
-                                "(Perhaps incompatible version?): %s",
-                                dlerror());
-                        return -1;
-                }
-
-                if (!nvd_notify_init(nvd_app_name)) {
-                        dlclose(lib);
-                        nvd_error_message("Checking libnotify failed.");
-                        return -1;
-                }
-        }
-        dlclose(lib); /* We are going to load it seperately once needed. */
-#endif                /* NVD_USE_GTK4 || NVD_PLATFORM_LINUX */
-        return 0;
-}
-
 int nvd_init(void) {
         if (nvd_initialized) {
                 nvd_set_error(NVD_ALREADY_INITIALIZED);
@@ -113,28 +76,10 @@ int nvd_init(void) {
 #if defined(NVD_SANDBOX_SUPPORT)
         nvd_is_process_container = nvd_is_sandboxed();
 #endif
-
-#if defined(__linux__)
-        nvd_libnotify_path = (char*) nvd_string_to_cstr((NvdDynamicString*)nvd_get_libnotify_path());
-        if (!nvd_libnotify_path) {
-                nvd_error_message(
-                        "nvd_libnotify_path is NULL, setting it to "
-                        "/usr/lib/libnotify.so as a fallback.");
-                nvd_libnotify_path = "/usr/lib/libnotify.so";
-        }
-#endif
-
         int result = nvd_init_backends(&mask);
         if (result < 0) {
                 nvd_set_error((NvdError)+result);
                 return result;
-        }
-
-        if (getenv("NVD_NO_NOTIFS") == NULL || atoi(getenv("NVD_NO_NOTIFS"))) {
-                int notif_result = nvd_check_libnotify();
-                if (notif_result < 0) {
-                        return notif_result;
-                }
         }
 
         nvd_initialized = true;
