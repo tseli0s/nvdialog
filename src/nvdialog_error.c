@@ -37,14 +37,6 @@
 
 NVD_THREAD_LOCAL(NvdError ___error) = NVD_NO_ERROR;
 
-NVD_INTERNAL_FUNCTION const char *nvd_fmt_error_message(const char *fmt) {
-        assert(fmt != NULL);
-        char buffer[NVDIALOG_MAXBUF];
-        snprintf(buffer, sizeof(buffer), "%s %s", TERMINAL_PREFIX, fmt);
-        char *ptr = buffer;
-        return strdup(ptr);  // Remember to free it!
-}
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
