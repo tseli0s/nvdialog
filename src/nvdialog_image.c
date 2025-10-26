@@ -22,7 +22,9 @@
  * IN THE SOFTWARE.
  */
 
+#include "nvdialog_assert.h"
 #define STB_IMAGE_IMPLEMENTATION
+#define STBI_ASSERT(x) NVD_ASSERT_FATAL(x)
 #include <nvdialog.h>
 #include <nvdialog_image.h>
 #include <stb_image.h>
@@ -31,7 +33,6 @@
 #include <stdlib.h>
 
 #include "impl/nvdialog_typeimpl.h"
-#include "nvdialog_assert.h"
 
 const uint8_t *nvd_image_from_filename(const char *filename, int *width,
                                        int *height) {
