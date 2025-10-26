@@ -1,3 +1,9 @@
+# Changelog -- 0.10.1
+- Fixed memory leak when freeing a notification in the `gtk` backend
+- Removed checking for libnotify at runtime when on GNU/Linux
+- Removed an unused internal function
+- Changed assertion macro for stb_image.h to use the NvDialog implementation instead
+
 # Changelog -- 0.10.0
 - (**BREAKING**) Added new `NvdDynamicString` type and integrated it into various library APIs. This will break the FileDialog and Error groups in preexisting code.
 - Added new `NvdInputBox` API - An input box can be used to retrieve simple text input from the user.
