@@ -42,9 +42,6 @@
 
 #define NVD_PRINT_CURRENT_ERROR nvd_print(nvd_stringify_error(nvd_get_error()))
 
-/* Formats an error message to print to stderr / stdout */
-NVD_INTERNAL_FUNCTION const char *nvd_fmt_error_message(const char *fmt);
-
 /* Sets the error code of the library */
 NVD_INTERNAL_FUNCTION void nvd_set_error(NvdError error);
 
