@@ -3,6 +3,8 @@
 - Removed checking for libnotify at runtime when on GNU/Linux
 - Removed an unused internal function
 - Changed assertion macro for stb_image.h to use the NvDialog implementation instead
+- Disabled some redundant warnings when building with the Makefile
+- Fixed a bug where `nvd_get_capabilities()` returned incorrect values for `NVD_STATIC_LINKAGE` argument
 
 # Changelog -- 0.10.0
 - (**BREAKING**) Added new `NvdDynamicString` type and integrated it into various library APIs. This will break the FileDialog and Error groups in preexisting code.
