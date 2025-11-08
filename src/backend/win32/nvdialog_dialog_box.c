@@ -34,7 +34,7 @@
 NvdDialogBox *nvd_dialog_box_win32(const char *title, const char *message,
                                    NvdDialogType type) {
         NvdDialogBox *dialog =
-                (NvdDialogBox *)malloc(sizeof(struct _NvdDialogBox));
+                (NvdDialogBox *)nvd_malloc(sizeof(struct _NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->accept_label = "Ok";

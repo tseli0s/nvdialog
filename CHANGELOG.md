@@ -5,6 +5,7 @@
 - Changed assertion macro for stb_image.h to use the NvDialog implementation instead
 - Disabled some redundant warnings when building with the Makefile
 - Fixed a bug where `nvd_get_capabilities()` returned incorrect values for `NVD_STATIC_LINKAGE` argument
+- Added two new internal functions: `nvd_malloc` and `nvd_calloc`. These wrap around libc's implementation of `malloc`/`calloc` with some extra error handling that was necessary. The entire tree has been updated.
 
 # Changelog -- 0.10.0
 - (**BREAKING**) Added new `NvdDynamicString` type and integrated it into various library APIs. This will break the FileDialog and Error groups in preexisting code.

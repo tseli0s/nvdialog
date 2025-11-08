@@ -32,7 +32,7 @@
 
 NvdNotification *nvd_notification_win32(const char *title, const char *msg,
                                         NvdNotifyType type) {
-        NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
+        NvdNotification *notification = nvd_malloc(sizeof(struct _NvdNotification));
         NVD_RETURN_IF_NULL(notification);
 
         notification->title = (char *)title;
@@ -44,7 +44,7 @@ NvdNotification *nvd_notification_win32(const char *title, const char *msg,
         notification->lib = NULL;
 
         /* Heap allocating to save it inside notification->raw */
-        NOTIFYICONDATA *nid = malloc(sizeof(NOTIFYICONDATA));
+        NOTIFYICONDATA *nid = nvd_malloc(sizeof(NOTIFYICONDATA));
         
 	if (!nid) nvd_set_error(NVD_OUT_OF_MEMORY);
         NVD_CHECK_INTERNAL(nid, notification, NULL);

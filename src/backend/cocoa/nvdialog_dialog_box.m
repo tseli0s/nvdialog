@@ -7,7 +7,7 @@
 
 NvdDialogBox *nvd_dialog_box_cocoa(const char *title, const char *message, NvdDialogType type)
 {
-	NvdDialogBox *dialog = malloc(sizeof(struct _NvdDialogBox));
+	NvdDialogBox *dialog = nvd_malloc(sizeof(struct _NvdDialogBox));
 	NVD_RETURN_IF_NULL(dialog);
 
 	dialog->content = message;

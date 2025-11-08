@@ -27,7 +27,7 @@
 #include <AppKit/AppKit.h>
 
 NvdInputBox *nvd_input_box_cocoa(const char *title, const char *message) {
-    NvdInputBox *box = malloc(sizeof(NvdInputBox));
+    NvdInputBox *box = nvd_malloc(sizeof(NvdInputBox));
     if (!box) return NULL;
 
     box->title = nvd_string_new(title);

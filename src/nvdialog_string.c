@@ -34,17 +34,17 @@
 #define NVD_DEFAULT_STRING_CAPACITY (32)
 
 NvdDynamicString *nvd_string_new(const char *data) {
-    NvdDynamicString *obj = malloc(sizeof(NvdDynamicString));
+    NvdDynamicString *obj = nvd_malloc(sizeof(NvdDynamicString));
     NVD_RETURN_IF_NULL(obj);
     if (data) {
         size_t datalen = strlen(data);
-        obj->buffer = malloc(datalen + 1);
+        obj->buffer = nvd_malloc(datalen + 1);
         obj->len = datalen;
         obj->capacity = (datalen + 1);
         memcpy(obj->buffer, data, datalen);
         obj->buffer[datalen] = '\0';
     } else {
-        obj->buffer = calloc(1, NVD_DEFAULT_STRING_CAPACITY);
+        obj->buffer = nvd_calloc(1, NVD_DEFAULT_STRING_CAPACITY);
         obj->capacity = NVD_DEFAULT_STRING_CAPACITY;
         obj->len = 0;
     }
@@ -73,8 +73,8 @@ void nvd_string_set_data(NvdDynamicString *string, const char *data) {
 NvdDynamicString *nvd_duplicate_string(NvdDynamicString *other) {
     NVD_ASSERT_FATAL(other != NULL);
 
-    NvdDynamicString *string = malloc(sizeof(NvdDynamicString));
-    string->buffer = malloc(other->capacity);
+    NvdDynamicString *string = nvd_malloc(sizeof(NvdDynamicString));
+    string->buffer = nvd_malloc(other->capacity);
     string->capacity = other->capacity;
     string->len = other->len;
 
