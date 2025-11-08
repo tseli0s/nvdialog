@@ -34,6 +34,7 @@
 
 #include "dialogs/nvdialog_about_dialog.h"
 #include "dialogs/nvdialog_dialog_box.h"
+#include "nvdialog_util.h"
 #include "dialogs/nvdialog_file_dialog.h"
 #include "nvdialog_notification.h"
 #include "nvdialog_typeimpl.h"
