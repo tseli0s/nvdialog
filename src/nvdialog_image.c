@@ -23,6 +23,7 @@
  */
 
 #include "nvdialog_assert.h"
+#include "nvdialog_util.h"
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_ASSERT(x) NVD_ASSERT_FATAL(x)
 #include <nvdialog.h>
