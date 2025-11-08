@@ -40,7 +40,7 @@ static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
 NvdAboutDialog *nvd_about_dialog_gtk(const char *appname, const char *brief,
                                      const char *icon_name) {
         GdkPixbuf *img = NULL;
-        NvdAboutDialog *dialog = malloc(sizeof(struct _NvdAboutDialog));
+        NvdAboutDialog *dialog = nvd_malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->title = (char *)appname;
@@ -58,7 +58,7 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname, const char *brief,
                 len += strlen(icons_path);
                 len += strlen(icon_name);
                 len += 1;  // NULL byte
-                char *buffer = malloc(len * sizeof(char));
+                char *buffer = nvd_malloc(len * sizeof(char));
                 if (!buffer) {
                         NVD_ASSERT(buffer != NULL);
                         nvd_set_error(NVD_OUT_OF_MEMORY);

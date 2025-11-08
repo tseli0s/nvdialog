@@ -53,7 +53,7 @@ const uint8_t *nvd_image_from_filename(const char *filename, int *width,
 }
 
 NvdImage *nvd_create_image(const uint8_t *data, int width, int height) {
-        NvdImage *image = calloc(1, sizeof(struct _NvdImage));
+        NvdImage *image = nvd_calloc(1, sizeof(struct _NvdImage));
         NVD_ASSERT(image != NULL);
         NVD_ASSERT(data != NULL);
 

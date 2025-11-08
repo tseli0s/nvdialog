@@ -93,7 +93,7 @@ static LRESULT CALLBACK nvd_input_proc(HWND hwnd, UINT msg, WPARAM wParam,
 }
 
 NvdInputBox *nvd_input_box_win32(const char *title, const char *message) {
-	NvdInputBox *obj = malloc(sizeof(NvdInputBox));
+	NvdInputBox *obj = nvd_malloc(sizeof(NvdInputBox));
 	const char *default_msg = "Enter your text below...";
 	obj->title = nvd_string_new(title);
 	if (!message)

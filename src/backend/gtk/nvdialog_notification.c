@@ -73,7 +73,7 @@ NvdNotification *nvd_notification_gtk(const char *title, const char *msg,
         const uint32_t timeout  = 5000; /* Timeout for the notification. */
         const uint32_t notif_id = 0;    /* Don't touch this */
 
-        NvdNotification *notification = malloc(sizeof(struct _NvdNotification));
+        NvdNotification *notification = nvd_malloc(sizeof(struct _NvdNotification));
         NVD_RETURN_IF_NULL(notification);
 
         notification->lib = NULL;
@@ -83,7 +83,7 @@ NvdNotification *nvd_notification_gtk(const char *title, const char *msg,
         notification->type = type;
 
         notification->destructor = nvd_delete_notification_gtk;
-        notification->raw = malloc(sizeof(NvdDBusNotifyData));
+        notification->raw = nvd_malloc(sizeof(NvdDBusNotifyData));
         if (!notification->raw) {
                 free(notification);
                 return NULL;

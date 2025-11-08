@@ -47,7 +47,7 @@ static void nvd_fetch_user_input(GtkWidget *button, gpointer data) {
 
 NvdInputBox *nvd_input_box_gtk(const char *title, const char *message) {
         const char *default_msg = "Enter your text below...";
-        NvdInputBox *obj = malloc(sizeof(NvdInputBox));
+        NvdInputBox *obj = nvd_malloc(sizeof(NvdInputBox));
         obj->title = nvd_string_new(title);
 
         obj->user_input = NULL;

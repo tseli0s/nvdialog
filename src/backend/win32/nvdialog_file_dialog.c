@@ -94,7 +94,7 @@ static NvdDynamicString *nvd_dir_dialog_win32(NvdFileDialog *dialog) {
 
 NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
                                           const char *file_extensions) {
-        NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
+        NvdFileDialog *dialog = nvd_malloc(sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->is_dir_dialog = false;
@@ -110,7 +110,7 @@ NvdFileDialog *nvd_open_file_dialog_win32(const char *title,
 /* TODO: Add default filename support. */
 NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
                                           const char *default_filename) {
-        NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
+        NvdFileDialog *dialog = nvd_calloc(1, sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->is_save_dialog = true;
@@ -125,7 +125,7 @@ NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
 
 NvdFileDialog *nvd_open_folder_dialog_win32(const char *title,
                                             const char *default_path) {
-        NvdFileDialog *dlg = calloc(1, sizeof(struct _NvdFileDialog));
+        NvdFileDialog *dlg = nvd_calloc(1, sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dlg);
 
         dlg->is_save_dialog = false;

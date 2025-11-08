@@ -32,7 +32,7 @@
 
 NvdQuestionBox *nvd_question_cocoa(const char *title, const char *question, NvdQuestionButton buttons)
 {
-	NvdQuestionBox *box = malloc(sizeof(struct _NvdQuestionBox));
+	NvdQuestionBox *box = nvd_malloc(sizeof(struct _NvdQuestionBox));
 	box->title = title;
 	box->contents = question;
 	box->buttons = buttons;

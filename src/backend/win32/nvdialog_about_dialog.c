@@ -72,7 +72,7 @@ NvdAboutDialog *nvd_about_dialog_win32(const char *appname, const char *brief,
                                        const char *logo) {
         (void)logo;
         NvdAboutDialog *dialog =
-                (NvdAboutDialog *)malloc(sizeof(struct _NvdAboutDialog));
+                (NvdAboutDialog *)nvd_malloc(sizeof(struct _NvdAboutDialog));
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->title = (char *)appname;

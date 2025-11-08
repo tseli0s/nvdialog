@@ -30,7 +30,7 @@ NvdNotification *nvd_notification_cocoa(const char *title,
                                         const char *msg,
                                         NvdNotifyType type)
 {
-    NvdNotification *notif = malloc(sizeof(struct _NvdNotification));
+    NvdNotification *notif = nvd_malloc(sizeof(struct _NvdNotification));
     notif->type = type;
     notif->title = title;
     notif->body = msg;

@@ -107,8 +107,8 @@ char** nvd_seperate_args(const char* str) {
                 ptr++;
         }
 
-        char* words_buffer = (char*)malloc(strlen(str) + 1);
-        char** words = (char**)malloc((count + 1) * sizeof(char*));
+        char* words_buffer = (char*)nvd_malloc(strlen(str) + 1);
+        char** words = (char**)nvd_malloc((count + 1) * sizeof(char*));
         if (words_buffer == NULL || words == NULL) {
                 free(words_buffer);
                 free(words);

@@ -32,7 +32,7 @@
 
 NvdQuestionBox *nvd_question_win32(const char *title, const char *question,
                                    NvdQuestionButton buttons) {
-        NvdQuestionBox *box = malloc(sizeof(struct _NvdQuestionBox));
+        NvdQuestionBox *box = nvd_malloc(sizeof(struct _NvdQuestionBox));
         NVD_RETURN_IF_NULL(box);
 
         box->title = (char *)title;

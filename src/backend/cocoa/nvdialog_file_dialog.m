@@ -35,7 +35,7 @@
 
 NvdFileDialog *nvd_open_file_dialog_cocoa(const char *title, const char *file_extensions)
 {
-	NvdFileDialog *dialog = malloc(sizeof(struct _NvdFileDialog));
+	NvdFileDialog *dialog = nvd_malloc(sizeof(struct _NvdFileDialog));
 	NVD_RETURN_IF_NULL(dialog);
 
 	dialog->file_extensions = (char *) file_extensions;
@@ -60,7 +60,7 @@ NvdFileDialog *nvd_save_file_dialog_cocoa(const char *title, const char *default
 {
 	(void) default_filename;
 
-	NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
+	NvdFileDialog *dialog = nvd_calloc(1, sizeof(struct _NvdFileDialog));
 	NVD_RETURN_IF_NULL(dialog);
 	
 	NSSavePanel* raw = [NSSavePanel savePanel];
@@ -111,7 +111,7 @@ void *nvd_open_file_dialog_get_raw_cocoa(NvdFileDialog *dlg)
 }
 
 NvdFileDialog *nvd_open_folder_dialog_cocoa(const char *title, const char *default_filename) {
-	NvdFileDialog *dialog = calloc(1, sizeof(struct _NvdFileDialog));
+	NvdFileDialog *dialog = nvd_calloc(1, sizeof(struct _NvdFileDialog));
     NVD_RETURN_IF_NULL(dialog);
 
     NSOpenPanel* dialog_raw = [NSOpenPanel openPanel];

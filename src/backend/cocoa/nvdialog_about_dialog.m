@@ -47,7 +47,7 @@ NvdAboutDialog *nvd_about_dialog_cocoa(const char *name,
 {
     /* GNUstep doesn't like this implementation, so let's ignore it. */
     #ifndef _NVD_USE_GNUSTEP
-    NvdAboutDialog* dlg = malloc(sizeof(struct _NvdAboutDialog));
+    NvdAboutDialog* dlg = nvd_malloc(sizeof(struct _NvdAboutDialog));
     NSMutableDictionary<NSAboutPanelOptionKey, id>* options;
     NVD_ASSERT(dlg != nil);
 

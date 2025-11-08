@@ -27,7 +27,7 @@
 
 NvdQuestionBox *nvd_question_gtk(const char *title, const char *question,
                                  NvdQuestionButton buttons) {
-        NvdQuestionBox *dialog = malloc(sizeof(NvdQuestionBox));
+        NvdQuestionBox *dialog = nvd_malloc(sizeof(NvdQuestionBox));
         NVD_RETURN_IF_NULL(dialog);
 
         GtkButtonsType btn_type;
