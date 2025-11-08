@@ -24,10 +24,10 @@
 
 #pragma once
 
-#include "nvdialog_string.h"
 #ifndef __nvdialog_util_h__
 #define __nvdialog_util_h__ (1)
-
+#include <stddef.h>
+#include "nvdialog_string.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -136,5 +136,25 @@ const NvdDynamicString *nvd_get_libnotify_path();
 // For convenience reasons this is the only function from this file implemented
 // in nvdialog_main.c
 const char* nvd_path_to_libnotify();
+
+/**
+ * @brief A wrapper around `malloc` that checks if the allocation succeeded and properly fails otherwise.
+ *
+ * This wrapper essentially factorizes the usual routine for checking an allocation success: If the pointer returned
+ * is NULL, then set NVD_OUT_OF_MEMORY as the error, print a message and die. Instead of repeating the same check
+ * everywhere, this function wraps it nicely for us.
+ *
+ * @sa nvd_calloc
+ * @since v0.10.1
+ */
+void *nvd_malloc(size_t size);
+
+/**
+ * @brief A wrapper around `calloc` that checks if the allocation succeeded and properly fails otherwise.
+ * For more details, see @ref nvd_malloc
+ * @since v0.10.1
+ * @sa nvd_malloc
+ */
+void *nvd_calloc(size_t n_items, size_t size_each);
 
 #endif /* __nvdialog_util_h__ */
