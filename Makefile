@@ -1,6 +1,6 @@
 # Compiler to use. gcc is recommended but any compiler implementing the C11 standard should work.
 # clang is a good alternative on some platforms.
-CC       ?= gcc
+CC       := gcc
 PKGCONF  := pkg-config
 CFLAGS   := -std=c11 -Wall -Wextra -Wconversion -Winline -Werror=format -Werror=format-security -Werror=write-strings -Wno-sign-conversion
 CFLAGS   += -DNVDIALOG_MAXBUF=4096 -DNVD_EXPORT_SYMBOLS
@@ -9,14 +9,15 @@ LDFLAGS  := $(shell $(PKGCONF) --libs gtk+-3.0)
 INCLUDES := -Iinclude -Isrc/impl -Ivendor
 
 # Set this to 0 to build nvdialog as a dynamic library instead.
-# (If it's one, nvdialog will be built as a static library)
+# (If it's 1, nvdialog will be built as a static library)
 BUILD_STATIC ?= 1
+OBJDIR     := build
 
 ifeq ($(BUILD_STATIC),1)
-    TARGET := libnvdialog.a
+    TARGET := $(OBJDIR)/libnvdialog.a
     CFLAGS += -DNVD_STATIC_LINKAGE
 else
-    TARGET := libnvdialog.so
+    TARGET := $(OBJDIR)/libnvdialog.so
     CFLAGS += -fPIC
 endif
 
@@ -30,7 +31,6 @@ DIALOGDIR:= $(INCDIR)/dialogs
 COMMON_SRC := $(wildcard src/*.c)
 GTK_SRC    := $(wildcard src/backend/gtk/*.c)
 SRC        := $(COMMON_SRC) $(GTK_SRC)
-OBJDIR     := build
 OBJ        := $(patsubst %.c,$(OBJDIR)/%.o,$(SRC))
 
 .PHONY: all clean install uninstall
