@@ -25,15 +25,15 @@
 /************************************************************************************
  * This file is NOT source code. It will just be used by Doxygen when
  * generating documentation for a tutorial page. It won't be installed, it won't
- *be used within the library or by a user, and probably isn't of interest to
- *anyone.
+ * be used within the library or by a user, and probably isn't of interest to
+ * anyone outside this.
  ************************************************************************************/
 
 #define __nvd_tutorial
 
 /**
  * @page NvDialog Tutorial
- * @version v0.10.0
+ * @version v0.10.1
  * @author Aggelos Tselios
 
  * # NvDialog Tutorial
