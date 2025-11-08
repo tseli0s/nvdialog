@@ -1,5 +1,6 @@
 #include "nvdialog.h"
 #include "nvdialog_cocoa.h"
+#include "../../nvdialog_util.h"
 
 #include <AppKit/AppKit.h>
 
