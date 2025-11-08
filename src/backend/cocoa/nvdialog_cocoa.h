@@ -28,7 +28,7 @@
 
 #include "nvdialog.h"
 #include "nvdialog_string.h"
-#include "nvdialog_util.h"
+#include "../../nvdialog_util.h"
 #include "nvdialog_typeimpl.h"
 
 /* Shows a dialog box using Cocoa */
