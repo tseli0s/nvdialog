@@ -33,7 +33,7 @@ static const bool nvd_has_adw_gtk =
 #endif
 
 static const bool nvd_built_static =
-#if !defined(NVD_STATIC_LINKAGE)
+#if defined(NVD_STATIC_LINKAGE)
         true;
 #else
         false;
