@@ -31,6 +31,7 @@
 #include <string.h>
 
 #include "nvdialog_assert.h"
+#include "nvdialog_error.h"
 #include "nvdialog_macros.h"
 #include "nvdialog_string.h"
 
@@ -180,3 +181,28 @@ NVD_INTERNAL_FUNCTION const NvdDynamicString *nvd_get_libnotify_path() {
         return str;
 }
 #endif /* __linux__ */
+
+NVD_INTERNAL_FUNCTION void *nvd_malloc(size_t size) {
+	void *ptr = malloc(size);
+	if (!ptr) {
+		nvd_error_message("nvd_malloc: Allocation failed for size %zu, possibly out of memory!", size);
+		nvd_set_error(NVD_OUT_OF_MEMORY);
+		return NULL;
+	}
+
+	return ptr;
+}
+
+NVD_INTERNAL_FUNCTION void *nvd_calloc(size_t n_items, size_t size_each) {
+	void *ptr = calloc(n_items, size_each);
+	if (!ptr) {
+		nvd_error_message(
+				"nvd_calloc: Allocation of %zu items of %zu size each (Total: %zu bytes) failed, possibly out of memory!",
+				n_items, size_each, (size_t)(n_items * size_each)
+		);
+		nvd_set_error(NVD_OUT_OF_MEMORY);
+		return NULL;
+	}
+	return ptr;
+}
+
