@@ -2,7 +2,7 @@
 # clang is a good alternative on some platforms.
 CC       ?= gcc
 PKGCONF  := pkg-config
-CFLAGS   := -std=c11 -Wall -Wextra -Wconversion -Winline -Werror=format -Werror=format-security -Werror=write-strings
+CFLAGS   := -std=c11 -Wall -Wextra -Wconversion -Winline -Werror=format -Werror=format-security -Werror=write-strings -Wno-sign-conversion
 CFLAGS   += -DNVDIALOG_MAXBUF=4096 -DNVD_EXPORT_SYMBOLS
 CFLAGS   += $(shell $(PKGCONF) --cflags gtk+-3.0)
 LDFLAGS  := $(shell $(PKGCONF) --libs gtk+-3.0)
