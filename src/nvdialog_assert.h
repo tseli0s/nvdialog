@@ -25,11 +25,15 @@
 #ifndef __nvdialog_assert_h__
 #define __nvdialog_assert_h__
 
+#ifndef __FILENAME__
 #if defined(__GNUC__) || defined(__clang__)
 #define __FILENAME__ __FILE_NAME__
 #elif defined(_MSC_VER)
 #define __FILENAME__ "libnvdialog"
-#endif
+#else
+#define __FILENAME__ "nvdialog"
+#endif /* __GNUC__ */
+#endif /* __FILENAME__ */
 
 #include <stdarg.h>
 #include <stdio.h>
