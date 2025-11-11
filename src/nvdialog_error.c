@@ -37,17 +37,13 @@
 
 NVD_THREAD_LOCAL(NvdError ___error) = NVD_NO_ERROR;
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-NVD_INTERNAL_FUNCTION NVD_FORCE_INLINE void nvd_set_error(NvdError error) {
-        NvdError *ptr = &___error;
-        *ptr = error;
+NVD_INTERNAL_FUNCTION void nvd_set_error(NvdError error) {
+        ___error = error;
 }
-#ifdef __cplusplus
+
+NvdError nvd_get_error(void) {
+        return ___error;
 }
-#endif /* __cplusplus */
-NVD_FORCE_INLINE NvdError nvd_get_error(void) { return ___error; }
 
 NvdDynamicString *nvd_stringify_error(NvdError err) {
         static const char *messages[] = {
