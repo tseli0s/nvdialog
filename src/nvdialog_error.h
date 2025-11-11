@@ -45,12 +45,6 @@
 /* Sets the error code of the library */
 NVD_INTERNAL_FUNCTION void nvd_set_error(NvdError error);
 
-/* Prints the error message given to stdout */
-NVD_DEPRECATED(
-        "This function has been deprecated in favor of nvd_error_message. "
-        "Please use that instead of this function.")
-void nvd_print(const char *msg);
-
 /*
  * A function that allows printing an error message to stderr, with support for
  * variadic arguments, proper formatting and easier integration with the
