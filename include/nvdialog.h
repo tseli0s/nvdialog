@@ -119,6 +119,8 @@ extern "C" {
           !defined(NVD_API) */
 
 #if !defined(_WIN32) || !defined(WIN32)
+
+#if __STDC_VERSION__ >= 201112L
 /**
  * @brief A macro to create thread-local static variables, primarily intended
  * for usage within NvDialog.
@@ -127,7 +129,12 @@ extern "C" {
  */
 #define NVD_THREAD_LOCAL(var) static _Thread_local var
 #else
-#define NVD_THREAD_LOCAL(var) var
+#warning Compiler does not implement the C11 standard as required, thread local variables will be disabled.
+#define NVD_THREAD_LOCAL(var) static var
+#endif
+
+#else
+#define NVD_THREAD_LOCAL(var) static var
 #endif /* _WIN32 */
 
 #include "nvdialog_capab.h"
