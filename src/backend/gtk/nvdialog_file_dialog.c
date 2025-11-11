@@ -69,53 +69,6 @@ NvdFileDialog *nvd_open_folder_dialog_gtk(const char *title,
         return dialog;
 }
 
-static NvdDynamicString *nvd_get_file_gtk(NvdFileDialog *dialog) {
-        GtkResponseType response = gtk_dialog_run(GTK_DIALOG(dialog->raw));
-        char *filename;
-        if (response == GTK_RESPONSE_OK || response == GTK_RESPONSE_ACCEPT) {
-                filename = gtk_file_chooser_get_filename(
-                        GTK_FILE_CHOOSER(dialog->raw));
-                dialog->location_was_chosen = true;
-                if (filename) {
-                        if (dialog->filename != NULL) nvd_delete_string(dialog->filename);
-                        dialog->filename = nvd_string_new(filename);
-                        g_free(filename);
-                }
-        } else {
-                dialog->location_was_chosen = false;
-                dialog->filename = NULL;
-        }
-
-        gtk_native_dialog_destroy(GTK_NATIVE_DIALOG(dialog->raw));
-        dialog->raw = NULL;
-
-        while (gtk_events_pending()) gtk_main_iteration();
-        return dialog->filename;
-}
-
-static NvdDynamicString *nvd_get_dir_gtk(NvdFileDialog *dialog) {
-        GtkResponseType response = gtk_dialog_run(GTK_DIALOG(dialog->raw));
-        char *filename;
-        if (response == GTK_RESPONSE_OK || response == GTK_RESPONSE_ACCEPT) {
-                filename = gtk_file_chooser_get_filename(
-                        GTK_FILE_CHOOSER(dialog->raw));
-                dialog->location_was_chosen = true;
-                if (filename) {
-                        dialog->filename = nvd_string_new(filename);
-                        g_free(filename);
-                }
-        } else {
-                dialog->location_was_chosen = false;
-                dialog->filename = NULL;
-        }
-
-        gtk_native_dialog_destroy(dialog->raw);
-        dialog->raw = NULL;
-
-        while (gtk_events_pending()) gtk_main_iteration();
-        return dialog->filename;
-}
-
 void *nvd_open_file_dialog_get_raw_gtk(NvdFileDialog *dlg) {
         NVD_ASSERT(dlg != NULL);
         return dlg->raw;
