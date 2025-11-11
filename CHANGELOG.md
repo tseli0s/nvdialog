@@ -9,6 +9,7 @@
 - Minimum required CMake version is [3.19](https://cmake.org/cmake/help/latest/release/3.19.html) from this release forward (See `bbed24e`).
 - Minor changes to make nvdialog work with more limited and rare compilers
 - \[internal] `nvd_set/get_error` is no longer force-inlined, fixing some linking errors on FreeBSD+clang
+- Codebase cleanup from legacy functions and variables
 
 # Changelog -- 0.10.0
 - (**BREAKING**) Added new `NvdDynamicString` type and integrated it into various library APIs. This will break the FileDialog and Error groups in preexisting code.
