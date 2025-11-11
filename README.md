@@ -47,23 +47,16 @@ The default backend on Windows systems, relying on WinAPI. It is also actively t
 - **Haiku (hku) Backend**\
 The native backend for the [Haiku](https://www.haiku-os.org/) operating system. Since Haiku only exposes a C++ API, this backend is also written in C++. This means that compiling the Haiku backend requires a C++ compiler (along with a C one). This backend is still a work in progress, you might notice features missing or not working properly. Feel free to contribute to speed up development.
 
-- **Adwaita Backend**
-> [!WARNING]
-> This backend is being deprecated as of v0.10, see PR 59 for details. If you use `libnvdialog` with this backend it's strongly advised that you switch away.
-
-This backend was added as an alternative to the `gtk` backend on GNU/Linux to provide better integration with GNOME environments, however it is being deprecated and you should not enable it. From v0.10.0 forward it directly calls into the `gtk` backend's implementations and no longer requires `libadwaita` or `gtk4` to be present on the system. Previous versions of nvdialog built with this backend may be broken on some Wayland implementations when used along with Vulkan-based applications.
-
 # Example
 This is a simple cross-platform example of a simple message box greeting the user:
 ```c
 #include <stdlib.h>
 #include <nvdialog/nvdialog.h>
 
-int main(int argc, char **argv)
-{
+int main(void) {
         /* Initializing the library is important to find which functions to use in each platform, initialize the system and
          * ensure that any runtime dependencies are present */
-        if (nvd_init(argv[0]) != 0) {
+        if (nvd_init() != 0) {
                 puts("Failed to initialize NvDialog.\n");
                 exit(EXIT_FAILURE);
         }
@@ -150,11 +143,8 @@ GNU/Linux is not one operating system but a family of thousands of different dis
 > [!WARNING]
 > The GNOME desktop environment may ignore the icons you use in the dialog's window on Wayland sessions, showing a generic icon instead. You can try setting an application name matching your desktop launcher as a temporary workaround. 
 
-> [!WARNING]
-> Older distributions that avoid systemd may not work with NvDialog. libnotify's support (The backend library used by nvdialog to send notifications) varies between versions. Open an issue if you notice missing/broken functionality.
-
 ## BSD systems
-Through the `gtk` backend almost all (recent enough) BSD systems with a graphical environment are supported. You must install the Gtk+ libraries appropriate for your system. It's also recommended (but not required) to use a desktop that supports Gtk well. XFCE and KDE are both verified to work nicely with FreeBSD.
+Through the `gtk` backend almost all (recent enough) BSD systems with a graphical environment are supported. You must install the Gtk+ libraries appropriate for your system. It's also recommended (but not required) to use a desktop that supports Gtk well. XFCE and KDE are both verified to work nicely with FreeBSD. The X11 backend is being worked on to drop the gtk dependency and use X11's libraries directly.
 
 To ensure stability, support is still considered experimental. Although the implementation should work identically between platforms thanks to Gtk+ support, platform-specific configurations may change the expected output. Report any issues to the [Issues](https://github.com/tseli0s/nvdialog/issues/) page.
 
