@@ -1,7 +1,7 @@
 # CMake Build Script for libnvdialog.
 # This file is part of libnvdialog and is released under the MIT license.
 
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.19)
 project(libnvdialog VERSION 0.10.1 LANGUAGES C DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
 option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux." OFF)
