@@ -128,16 +128,6 @@ NvdDistroInfo nvd_get_distro_branch();
 const NvdDynamicString *nvd_get_libnotify_path();
 
 /**
- * @brief Returns the path the library is using to find `libnotify`.
- * @note This is unrelated to @ref nvd_get_libnotify_path
- * @return A static pointer to a NULL-terminated string to the `libnotify` 's SO
- * file path.
- */
-// For convenience reasons this is the only function from this file implemented
-// in nvdialog_main.c
-const char* nvd_path_to_libnotify();
-
-/**
  * @brief A wrapper around `malloc` that checks if the allocation succeeded and properly fails otherwise.
  *
  * This wrapper essentially factorizes the usual routine for checking an allocation success: If the pointer returned
