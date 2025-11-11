@@ -13,7 +13,7 @@ assignees: ''
 **Enter your operating system. For GNU/Linux distributions, enter your specific distro and version.**\
 *Operating System*
 
-**Which language are you using, C, C++ or Rust?**\
+**Which language are you using, C or C++?**\
 *Language name*
 
 **Describe the exact problem or bug you have with the library. If possible, attach debugger or sanitizer output.**\
