@@ -194,6 +194,20 @@ NVD_INTERNAL_FUNCTION void *nvd_malloc(size_t size) {
 }
 
 NVD_INTERNAL_FUNCTION void *nvd_calloc(size_t n_items, size_t size_each) {
+        if (size_each > SIZE_MAX / n_items) {
+		nvd_error_message(
+			"nvd_calloc: Warning: calculating the total allocation size (%zu * %zu) would exceed the maximum capacity of a size_t!",
+			n_items, size_each
+		);
+                /* 
+                 * Why are we not returning? Well, see here:
+                 * https://drj11.wordpress.com/2008/06/04/calloc-when-multiply-overflows/
+                 * The standard also doesn't say much: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1548.pdf
+                 * (go to section 7.22.3.2, the calloc function), nothing there.
+                 * So just go ahead and call calloc, and see what it has to say.
+                 */
+	}
+
 	void *ptr = calloc(n_items, size_each);
 	if (!ptr) {
 		nvd_error_message(
