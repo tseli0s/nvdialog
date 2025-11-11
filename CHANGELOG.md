@@ -6,6 +6,9 @@
 - Disabled some redundant warnings when building with the Makefile
 - Fixed a bug where `nvd_get_capabilities()` returned incorrect values for `NVD_STATIC_LINKAGE` argument
 - Added two new internal functions: `nvd_malloc` and `nvd_calloc`. These wrap around libc's implementation of `malloc`/`calloc` with some extra error handling that was necessary. The entire tree has been updated.
+- Minimum required CMake version is [3.19](https://cmake.org/cmake/help/latest/release/3.19.html) from this release forward (See `bbed24e`).
+- Minor changes to make nvdialog work with more limited and rare compilers
+- \[internal] `nvd_set/get_error` is no longer force-inlined, fixing some linking errors on FreeBSD+clang
 
 # Changelog -- 0.10.0
 - (**BREAKING**) Added new `NvdDynamicString` type and integrated it into various library APIs. This will break the FileDialog and Error groups in preexisting code.
