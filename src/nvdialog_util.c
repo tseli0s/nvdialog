@@ -135,53 +135,6 @@ char** nvd_seperate_args(const char* str) {
         return words;
 }
 
-#if defined(__linux) || defined(__linux__) || defined(__gnu_linux__)
-NVD_INTERNAL_FUNCTION NvdDistroInfo nvd_get_distro_branch() {
-        NvdDistroInfo info;
-        nvd_zero_memory(&info, sizeof(NvdDistroInfo));
-
-#if !defined(__linux__) && !defined(__linux) && !defined(__gnu_linux__)
-        /* Yes we don't have a pointer here so we can't return NULL, so let's
-         * just return a zeroed-out struct instead. */
-        return info;
-#endif
-
-        /* We call nvd_read_os_release in each block separately since we also
-         * support rolling release distros. */
-        if (nvd_file_exists("/etc/debian_version")) {
-                info.name = "Debian";
-                nvd_read_os_release(&info);
-        } else if (nvd_file_exists("/etc/pacman.conf")) {
-                info.name = "Arch";
-                info.version_m = -1;  // Rolling release
-                info.version_s = -1;
-        } else if (nvd_file_exists("/etc/dnf/dnf.conf")) {
-                info.name = "Fedora";
-                nvd_read_os_release(&info);
-        } else
-                info.name = "Unknown";
-
-        return info;
-}
-
-NVD_INTERNAL_FUNCTION const NvdDynamicString *nvd_get_libnotify_path() {
-        NvdDynamicString *str = nvd_string_new(NULL);
-        NVD_RETURN_IF_NULL(str);
-
-        NvdDistroInfo info = nvd_get_distro_branch();
-
-        /* TODO: Please add more distribution checks here.*/
-        if (strcmp(info.name, "Debian") == 0)
-                nvd_string_set_data(str, "/usr/lib/x86_64-linux-gnu/libnotify.so");
-        else if (strcmp(info.name, "Arch") == 0)
-                nvd_string_set_data(str, "/usr/lib/libnotify.so");
-        else
-                nvd_string_set_data(str, "/usr/lib/libnotify.so");
-
-        return str;
-}
-#endif /* __linux__ */
-
 NVD_INTERNAL_FUNCTION void *nvd_malloc(size_t size) {
 	void *ptr = malloc(size);
 	if (!ptr) {
