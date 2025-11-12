@@ -10,6 +10,10 @@
 - Minor changes to make nvdialog work with more limited and rare compilers
 - \[internal] `nvd_set/get_error` is no longer force-inlined, fixing some linking errors on FreeBSD+clang
 - Codebase cleanup from legacy functions and variables
+- Fixed FileDialog not using file filters and default filename parameters on the `gtk` backend.
+- New function `nvd_image_to_bytes()`. This function returns the raw bytes that represent an image inside `NvdImage`
+  and can be reused for other purposes.
+- Fixed missing definition of `nvd_open_file_dialog_get_raw`
 
 # Changelog -- 0.10.0
 - (**BREAKING**) Added new `NvdDynamicString` type and integrated it into various library APIs. This will break the FileDialog and Error groups in preexisting code.
