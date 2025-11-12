@@ -196,6 +196,10 @@ NvdDynamicString *nvd_get_file_location(NvdFileDialog *dialog) {
         return NVD_CHECK_FUNCTION(mask.get_file_location, dialog);
 }
 
+void *nvd_open_file_dialog_get_raw(NvdFileDialog *dialog) {
+        return dialog->raw;
+}
+
 NvdNotification *nvd_notification_new(const char *title, const char *msg,
                                       NvdNotifyType type) {
         NVD_ASSERT(title != NULL);
