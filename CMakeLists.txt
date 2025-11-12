@@ -95,10 +95,9 @@ elseif(NVD_HAIKU_TARGET)
     add_compile_definitions(NVD_HAIKU_TARGET=1)
 else()
     find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GTK REQUIRED gtk+-3.0)
+    pkg_check_modules(DBUS REQUIRED dbus-1)
     if(NVD_USE_GTK4)
-        pkg_check_modules(GTK REQUIRED gtk+-3.0)
-        pkg_check_modules(DBUS REQUIRED dbus-1)
-        add_compile_definitions(NVD_USE_GTK4)
         set(NVD_SOURCES
             src/backend/adw/nvdialog_about_dialog.c
             src/backend/adw/nvdialog_file_dialog.c
@@ -119,8 +118,6 @@ else()
 
             ${NVD_COMMON_SOURCES})
     else()
-        pkg_check_modules(GTK REQUIRED gtk+-3.0)
-        pkg_check_modules(DBUS REQUIRED dbus-1)
         set(NVD_SOURCES
             src/backend/gtk/nvdialog_about_dialog.c
             src/backend/gtk/nvdialog_file_dialog.c
