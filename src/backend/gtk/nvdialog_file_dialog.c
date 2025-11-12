@@ -25,6 +25,7 @@
 #include "dialogs/nvdialog_file_dialog.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../../nvdialog_assert.h"
 #include "gtk/gtk.h"
@@ -42,7 +43,36 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
         dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
                                                   GTK_FILE_CHOOSER_ACTION_OPEN,
                                                   "_Open", "_Cancel");
-        NVD_RETURN_IF_NULL(dialog);
+        if (!dialog->raw) {
+                free(dialog);
+                return NULL;
+        }
+
+        
+        if (file_extensions) {
+                /* Note: This array is null-terminated, so we keep parsing until we hit NULL. */
+                char **filters = nvd_seperate_args(file_extensions);
+                for (int i = 0; filters[i] != NULL; i++) {
+                        GtkFileFilter *current_filter = gtk_file_filter_new();
+                        size_t filter_size = strlen(filters[i]);
+
+                        /* We have to add the wildcard manually here, otherwise gtk will think we're looking for the exact filename. */
+                        char *filter = nvd_malloc(filter_size + 2); /* Plus the '*' and the null terminator*/
+                        memcpy(filter + 1, filters[i], filter_size + 1); /* Including the null terminator */
+                        filter[0] = '*';
+                        filter[filter_size + 1] = '\0';
+
+                        gtk_file_filter_add_pattern(current_filter, filter);
+                        gtk_file_filter_set_name(current_filter, filter); /* Couldn't come up with something better lol */
+                        gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog->raw), current_filter);        
+                }
+
+                GtkFileFilter *default_filter = gtk_file_filter_new();
+                gtk_file_filter_set_name(default_filter, "All files");
+                gtk_file_filter_add_pattern(default_filter, "*");
+                gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog->raw), default_filter);
+        }
+        
 
         return dialog;
 }
@@ -54,7 +84,14 @@ NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
         dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
                                                   GTK_FILE_CHOOSER_ACTION_SAVE,
                                                   "_Save", "_Cancel");
-        NVD_RETURN_IF_NULL(dialog);
+        if (!dialog->raw) {
+                free(dialog);
+                return NULL;
+        }
+
+        if (default_filename)
+                gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog->raw), default_filename);
+
         return dialog;
 }
 
@@ -65,7 +102,16 @@ NvdFileDialog *nvd_open_folder_dialog_gtk(const char *title,
         dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
                                                   GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                                   "_Open Folder", "_Cancel");
-        NVD_RETURN_IF_NULL(dialog);
+        if (!dialog->raw) {
+                free(dialog);
+                return NULL;
+        }
+
+        /*
+         * We can't set a default filename when we use GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
+         * To make the compiler shut up, just do this instead. */
+        (void) default_filename;
+
         return dialog;
 }
 
