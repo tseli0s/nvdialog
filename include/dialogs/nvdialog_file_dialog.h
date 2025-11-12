@@ -39,15 +39,25 @@ typedef struct _NvdFileDialog NvdFileDialog;
  * retrieving a file and returns it.
  *
  * This creates a new file dialog and returns it. In order to use it, you must
- * call
- * @ref nvd_get_file_location and pass a pointer to write the file location to.
- * @note This function creates problems with the Adwaita backend. Those problems
- * should be fixed by the time v0.6.0 is officially released.
- *
+ * call @ref nvd_get_file_location and pass a pointer to write the file location to.
+ * @warning The `file_extensions` parameter has no effect with the `gtk` backend due to the `gtk` library's limitations.
  * @param title A string to put as the dialog title.
- * @param file_extensions Unused legacy parameter, just pass NULL in here.
+ * @param file_extensions A string of file extensions/endings allowed, see the example below for details.
  * @returns An empty @ref NvdFileDialog object if successful, otherwise NULL and
  * an error retrievable through @ref nvd_get_error is set.
+ * @example
+ * @code
+ * int main(void) {
+ *      const char* filters = ".img;.png;.jpeg;.ico;.svg";
+ *      NvdFileDialog* dialog = nvd_open_file_dialog_new("Open File", filters);
+ *
+ *      NvdDynamicString *filename = nvd_get_file_location(dialog);
+ *      if (filename != NULL) printf("Chosen file: %s\n", NVD_CSTR(filename));
+ *
+ *      nvd_free_object(dialog);
+ *      return 0;
+ * }
+ * @endcode
  * @ingroup FileDialog
  */
 NVD_API NvdFileDialog *nvd_open_file_dialog_new(const char *title,
