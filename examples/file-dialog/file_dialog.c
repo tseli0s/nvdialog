@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
         }
 
         /* The file extensions we can use with the dialog. */
-        const char* filters = "img;png;jpeg;ico;svg";
+        const char* filters = ".img;.png;.jpeg;.ico;.svg";
 
         /* Constructing the dialog. This is the most important part. */
         NvdFileDialog* dialog = nvd_open_file_dialog_new("Open File", filters);
