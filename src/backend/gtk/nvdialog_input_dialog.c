@@ -56,7 +56,7 @@ NvdInputBox *nvd_input_box_gtk(const char *title, const char *message) {
         gtk_window_set_title(GTK_WINDOW(obj->window_handle), title);
         gtk_window_set_resizable(GTK_WINDOW(obj->window_handle), false);
         gtk_window_set_decorated(GTK_WINDOW(obj->window_handle), true);
-        gtk_window_set_modal(GTK_WINDOW(obj->window_handle), TRUE);
+        gtk_window_set_modal(GTK_WINDOW(obj->window_handle), true);
 
         GtkWidget *container = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
         GtkWidget *entry = gtk_entry_new();
