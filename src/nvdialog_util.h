@@ -108,17 +108,6 @@ bool nvd_is_sandboxed(void);
 char** nvd_seperate_args(const char* str);
 
 /**
- * @brief Returns the distribution information on Linux, lik
- * @note This function will return `NULL` if the OS is not GNU/Linux. It will
- * also only return data related to the base of the distribution, NOT the exact
- * distribution you're running (eg. on Ubuntu you will get Debian).
- * @return A @ref NvdDistroInfo filled out with all the necessary information,
- * or NULL if there is a failure (Will set the error accordingly unless not on
- * GNU/Linux).
- */
-NvdDistroInfo nvd_get_distro_branch();
-
-/**
  * @brief Returns the path to `libnotify` on the system for `dlopen`.
  * @note Linux-only function, will not work on Windows/macOS. The pointer
  * returned was dynamically allocated and hence should be freed using `free()`.
