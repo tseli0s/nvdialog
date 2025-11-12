@@ -30,10 +30,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "nvdialog_assert.h"
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
-#include "nvdialog_string.h"
 
 #ifdef _WIN32
 #include <io.h>
@@ -47,24 +45,6 @@ static inline bool nvd_file_exists(const char* path) {
 }
 
 void nvd_zero_memory(void* ptr, size_t size) { memset(ptr, 0, size); }
-
-#if defined(__linux__) || defined(__linux) || defined(__gnu_linux__)
-static void nvd_read_os_release(NvdDistroInfo* info) {
-        FILE* file = fopen("/etc/os-release", "r");
-        NVD_ASSERT(file != NULL);
-
-        char line[NVD_BUFFER_SIZE];
-        while (fgets(line, sizeof(line), file)) {
-                if (strstr(line, "VERSION_ID=")) {
-                        if (sscanf(line, "VERSION_ID=\"%ld",
-                                   &info->version_m) == 1) {
-                                fclose(file);
-                                break;
-                        }
-                }
-        }
-}
-#endif /* __linux__ */
 
 NvdProcessID nvd_create_process(void) {
 #if defined(__unix__) || defined(__APPLE__)
