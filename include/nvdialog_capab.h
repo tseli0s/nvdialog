@@ -30,22 +30,34 @@
 #include <stdbool.h>
 #include "nvdialog_platform.h"
 
-enum {
-        /* Adwaita backend support */
+/**
+ * @brief Enumerator defining nvdialog optional capabilities. To be used with @ref nvd_get_capabilities
+ * @since v0.2.0
+ * @note In v0.10.1 the type name was added (using typedef).
+ * @ingroup Capabilities
+*/
+typedef enum {
+        /**
+         * @brief Has nvdialog been configured to use the Adwaita backend by default?
+         * @deprecated The Adwaita backend has been deprecated as of v0.10.0, any value returned by this is invalid.
+         */
         NVD_ADW_BACKEND = 0x20,
-        /* Built as a static library */
+        /** @brief Is nvdialog linked to the program statically or dynamically? */
         NVD_STATIC_LIB,
-        /* Older version compatibility */
+        /**
+         * @brief Is nvdialog configured to be in compatibility mode?:
+         * @warning This will always return false with @ref nvd_get_capabilities. Compatibility mode wasn't implemented properly and went unused.
+        */
         NVD_COMPAT_MODE
-};
+} NvdCapability;
 
 /**
- * @brief Returns the NvDialog's build time detected capabilities.
+ * @brief Returns the NvDialog's build time detected (optional) features.
  * @details This function returns the NvDialog's build time capabilities, such
  * as backends enabled, linkage method and others. It is a work in progress
  * since most of the library isn't modular.
  * @param query Which capabilities to query.
- * @return true if the requested @ref query is supported, else false.
+ * @return true if the requested query is supported, else false.
  * @since v0.2.0
  * @ingroup Capabilities
  */
