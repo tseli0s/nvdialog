@@ -87,4 +87,13 @@ NVD_API NvdImage *nvd_create_image(const uint8_t *data, int width, int height);
  */
 NVD_API void nvd_destroy_image(NvdImage *image);
 
+/**
+ * @brief Returns the raw image bytes that the given image contains
+ * @note Format, as with every @ref NvdImage, is always RGBA.
+ * @param image The image to get the bytes from
+ * @ingroup Image
+ * @since v0.10.1
+ */
+NVD_API uint8_t *nvd_image_to_bytes(NvdImage *image);
+
 #endif /* __nvdialog_image_h__ */
