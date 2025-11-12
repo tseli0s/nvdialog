@@ -19,7 +19,6 @@ if (NVD_USE_GTK4)
 endif()
 
 if(APPLE OR NVD_USE_GNUSTEP)
-    set(CMAKE_C_COMPILER clang)
     enable_language(OBJC)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-objc-arc")
 elseif(CROSS_COMPILE_FOR_WIN32)
