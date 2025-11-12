@@ -72,3 +72,8 @@ void nvd_destroy_image(NvdImage *image) {
                 free(image);
         }
 }
+
+uint8_t *nvd_image_to_bytes(NvdImage *image) {
+        NVD_ASSERT(image != NULL);
+        return image->data;
+}
