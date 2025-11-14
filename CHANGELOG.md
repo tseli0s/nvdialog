@@ -14,6 +14,8 @@
 - New function `nvd_image_to_bytes()`. This function returns the raw bytes that represent an image inside `NvdImage`
   and can be reused for other purposes.
 - Fixed missing definition of `nvd_open_file_dialog_get_raw`
+- New `NvdError` member: `NVD_UNSUPPORTED_ACTION`, when the API is disabled for a build of nvdialog.
+- Make image functionality optional (enabled by default) so that users that don't need image support can easily get rid of it.
 
 # Changelog -- 0.10.0
 - (**BREAKING**) Added new `NvdDynamicString` type and integrated it into various library APIs. This will break the FileDialog and Error groups in preexisting code.
