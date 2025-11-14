@@ -9,9 +9,14 @@ option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux
 option(NVD_BUILD_STATIC "Build NvDialog as a static library." ON)
 option(NVD_GENERATE_DOCS "Generate documentation for NvDialog. Requires doxygen to be installed" OFF) # Off by default because doxygen may not be available
 option(NVD_USE_GNUSTEP "Use the GNUstep+Cocoa backend on generation. Only intended for testing." OFF)
+option(NVD_IMAGE_SUPPORT "Add support for images through nvdialog, only disable this if you're building nvdialog statically!" ON)
 
 set(CMAKE_C_STANDARD 11)
 add_compile_definitions(NVDIALOG_MAXBUF=4096 NVD_EXPORT_SYMBOLS)
+if (NVD_IMAGE_SUPPORT)
+    add_compile_definitions(_NVD_SUPPORT_IMAGES)
+endif()
+
 include_directories(${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
 
 if (NVD_USE_GTK4)
