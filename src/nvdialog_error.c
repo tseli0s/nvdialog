@@ -57,7 +57,8 @@ NvdDynamicString *nvd_stringify_error(NvdError err) {
                 [NVD_FILE_INACCESSIBLE] = "Attempted to read an inaccessible file.",
                 [NVD_BACKEND_INVALID] = "Invalid or corrupt backend, make sure your system is up to date.",
                 [NVD_OUT_OF_MEMORY] = "No memory left on the host machine.",
-                [NVD_INTERNAL_ERROR] = "Internal or unexpected library error - Open an issue on GitHub."
+                [NVD_INTERNAL_ERROR] = "Internal or unexpected library error - Open an issue on GitHub.",
+                [NVD_UNSUPPORTED_ACTION] = "Unsupported or unimplemented functionality"
         };
 
         if (err >= sizeof(messages)/sizeof(*messages) || !messages[err]) {
