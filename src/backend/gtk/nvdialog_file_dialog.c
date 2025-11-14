@@ -64,7 +64,8 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
 
                         gtk_file_filter_add_pattern(current_filter, filter);
                         gtk_file_filter_set_name(current_filter, filter); /* Couldn't come up with something better lol */
-                        gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog->raw), current_filter);        
+                        gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog->raw), current_filter);
+                        free(filter); /* gtk makes an internal copy, so we can discard this safely */
                 }
 
                 GtkFileFilter *default_filter = gtk_file_filter_new();
