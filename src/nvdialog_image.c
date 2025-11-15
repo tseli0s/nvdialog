@@ -87,7 +87,7 @@ void nvd_destroy_image(NvdImage *image) {
         }
 #else
         nvd_set_error(NVD_UNSUPPORTED_ACTION);
-        return NULL;
+        return;
 #endif
 }
 
