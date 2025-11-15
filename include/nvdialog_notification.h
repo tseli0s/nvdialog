@@ -48,15 +48,12 @@ typedef enum {
 /**
  * @brief The base notification type used by NvDialog.
  *
- * NvDialog offers since v0.5.0 support for basic notifications that
+ * @details NvDialog offers since v0.5.0 support for basic notifications that
  * add an extra cross-platform solution. The notification API is cross-platform
- * and should reduce the required setup to send a simple notification. On GNU/Linux,
- * `libnotify` is OPTIONALLY used at runtime to send notifications, meaning it's not a
- * hard dependency. In addition, it can be disabled from being loaded entirely at initialization
- * by setting the environment variable NVD_NO_NOTIFS to any value (except 0). Note that if you
- * need to create a notification down the line it will load instances of the library separately,
- * but only if you insist so.
- *
+ * and should reduce the required setup to send a simple notification. On GNU/Linux and other Unix-like platforms,
+ * the DBus interface for notifications is used, making it desktop-agnostic and only requiring libdbus and related daemons
+ * to be available.
+ * 
  * @ingroup Notification
  * @sa nvd_notification_new
  * @since v0.5.0
