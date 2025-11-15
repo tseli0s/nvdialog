@@ -35,7 +35,6 @@
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
 #ifndef _WIN32
-#include <dlfcn.h>
 #ifdef NVD_USE_GTK4
 #include "backend/adw/nvdialog_adw.h"
 #elif defined(NVD_USE_COCOA)
