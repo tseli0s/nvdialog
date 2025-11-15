@@ -30,7 +30,6 @@
 #include "nvdialog_core.h"
 #include "nvdialog_error.h"
 #include "nvdialog_gtk.h"
-#include <dlfcn.h>
 #include <dbus/dbus.h>
 #include <stdlib.h>
 #include <sys/types.h>
