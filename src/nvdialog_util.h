@@ -108,15 +108,6 @@ bool nvd_is_sandboxed(void);
 char** nvd_seperate_args(const char* str);
 
 /**
- * @brief Returns the path to `libnotify` on the system for `dlopen`.
- * @note Linux-only function, will not work on Windows/macOS. The pointer
- * returned was dynamically allocated and hence should be freed using `free()`.
- *
- * @return The path to libnotify on each platform if succesfull, otherwise NULL.
- */
-const NvdDynamicString *nvd_get_libnotify_path();
-
-/**
  * @brief A wrapper around `malloc` that checks if the allocation succeeded and properly fails otherwise.
  *
  * This wrapper essentially factorizes the usual routine for checking an allocation success: If the pointer returned
