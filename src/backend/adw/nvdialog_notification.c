@@ -27,18 +27,7 @@
 #include "../../nvdialog_assert.h"
 #include "nvdialog_adw.h"
 #include "../gtk/nvdialog_gtk.h"
-/* So we reduce compile-time dependencies. */
-#if defined(NVD_PREINCLUDE_HEADERS)
-#include <libnotify/notification.h>
-#endif /* NVD_PREINCLUDE_HEADERS */
-#include <dlfcn.h>
 #include <stdlib.h>
-
-#if !defined(NVD_PREINCLUDE_HEADERS)
-typedef void *nvd_notification_t;
-#else
-typedef NotifyNotification nvd_notification_t;
-#endif /* NVD_PREINCLUDE_HEADERS */
 
 NvdNotification *nvd_notification_adw(const char *title, const char *msg,
                                       NvdNotifyType type) {
