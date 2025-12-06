@@ -47,8 +47,8 @@ typedef struct _NvdAboutDialog NvdAboutDialog;
  * containing the actual dialog.
  */
 NVD_API NvdAboutDialog *nvd_about_dialog_new(const char *name,
-                                             const char *description,
-                                             const char *logo);
+					     const char *description,
+					     const char *logo);
 
 /**
  * @brief Sets a hyperlink to the application's license (Preferably a link.)
@@ -56,11 +56,12 @@ NVD_API NvdAboutDialog *nvd_about_dialog_new(const char *name,
  * @param license_link The link that points to your license.
  * @param txt A text string to set as the link's text. Can be NULL if the link
  * can be used as the text too.
+ * @warning This function has no effect on Windows.
  * @ingroup AboutDialog
  */
 NVD_API void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
-                                               const char *license_link,
-                                               const char *txt);
+					       const char *license_link,
+					       const char *txt);
 
 /**
  * @brief Adds a version text to the dialog given.
@@ -69,7 +70,7 @@ NVD_API void nvd_about_dialog_set_license_link(NvdAboutDialog *dialog,
  * @ingroup AboutDialog
  */
 NVD_API void nvd_about_dialog_set_version(NvdAboutDialog *dialog,
-                                          const char *version);
+					  const char *version);
 
 /**
  * @brief Shows the About dialog given to the user.
