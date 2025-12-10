@@ -152,6 +152,17 @@ A future X11 backend based on Xt/Xaw is being considered, as it can remove the `
 ## Android
 Android support will not be implemented anytime soon. You are advised instead to use Android's `AlertDialog` class (through Java), which would achieve the same effect but cut out the C-side middleman, since you'd have to use Java in your application anyways.
 
+# I want to contribute!
+That's great! There are many aspects of nvdialog that you could possibly improve:
+- Test nvdialog under your platform, and report any inconsistent or unexpected behaviour.
+- Hunt for bugs and report them.
+- Write a backend for an operating system. For example, you could write a backend for Android that calls into Java.
+- Recommend code improvements and cleanups, especially with platforms that may change in the future.
+- Help with the documentation of nvdialog. If there's any undocumented feature or caveat, let the users know.
+- Fix an existing bug or contribute to an ongoing pull request.
+
+Also see [the contributing guidelines](./CONTRIBUTING.md).
+
 # Current Status
 As of August 2025, the main focus of development is to stabilize and standardize all interfaces, and switch the library to maintenance mode only, as I believe there isn't much left to add. The long term plan is to release v1.0 and stop there, only making sure the library runs well from that point forward. In addition, to make sure that the library is truly seamless across platforms and systems, extra attention will be given to the `cocoa` and `win32` backends and more extensive testing will take place.
 
