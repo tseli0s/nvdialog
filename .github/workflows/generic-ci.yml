@@ -51,6 +51,7 @@ jobs:
         run: cmake --build build --config ${{ matrix.build_type }}
 
       - name: Install
+        shell: bash
         if: matrix.os != 'macos-latest'
         run: |
           if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
@@ -61,6 +62,7 @@ jobs:
 
       - name: Test
         working-directory: build
+        shell: bash
         run: |
           if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
             ctest --output-on-failure || cat build/Testing/Temporary/LastTest.log
