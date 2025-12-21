@@ -197,7 +197,7 @@ int nvd_init_backends(NvdBackendMask *mask) {
         return nvd_init_hku(mask);
 #elif defined(NVD_COCOA_IMPL)
         return nvd_init_cocoa(mask);
+#else
+#warning Unknown target. NvDialog currently only supports Windows, macOS and Gtk-based desktops.
 #endif
-
-        return -1;
 }
