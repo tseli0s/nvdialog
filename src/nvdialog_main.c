@@ -51,7 +51,6 @@
 
 NVD_THREAD_LOCAL(char *nvd_app_name) = "NvDialog Application";
 NVD_THREAD_LOCAL(bool nvd_initialized) = false;
-NVD_THREAD_LOCAL(bool nvd_is_process_container) = false;
 NVD_THREAD_LOCAL(NvdParentWindow nvd_parent_window) = NULL;
 
 static NvdBackendMask mask = {0};
