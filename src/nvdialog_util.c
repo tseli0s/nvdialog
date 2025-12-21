@@ -64,16 +64,8 @@ bool nvd_is_sandboxed(void) {
 #if defined(_WIN32) || defined(NVD_USE_COCOA)
         return false;  // see documentation
 #else
-
-        if (getenv("container")) {
-                return true;
-        } else if (getenv("APPIMAGE")) {
-                return true;
-        } else if (getenv("SNAP")) {
-                return true;
-        }
-        return false;
-
+        if (getenv("container") || getenv("APPIMAGE") || getenv("SNAP")) return true;
+        else return false;
 #endif
 }
 
