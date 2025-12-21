@@ -94,7 +94,7 @@ void nvd_destroy_image(NvdImage *image) {
 uint8_t *nvd_image_to_bytes(NvdImage *image) {
 #ifdef _NVD_SUPPORT_IMAGES
         NVD_ASSERT(image != NULL);
-        return image->data;
+        return (uint8_t*)image->data;
 #else
         nvd_set_error(NVD_UNSUPPORTED_ACTION);
         return NULL;
