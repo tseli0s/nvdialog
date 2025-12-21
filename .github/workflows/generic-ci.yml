@@ -1,0 +1,68 @@
+name: Build/Test nvdialog (Windows, macOS, GNU/Linux)
+
+on:
+  push:
+    branches: ["master"]
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    branches: ["master"]
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            compiler: gcc
+            build_type: Debug
+            gtk_flags: "-DNVD_USE_GTK4=OFF -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -DWIN32_TARGET=OFF -G Ninja"
+          - os: ubuntu-latest
+            compiler: clang
+            build_type: Debug
+            gtk_flags: "-DNVD_USE_GTK4=OFF -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -DWIN32_TARGET=OFF -G Ninja"
+          - os: macos-latest
+            compiler: clang
+            build_type: Release
+            gtk_flags: ""
+          - os: windows-latest
+            compiler: msvc
+            build_type: Debug
+            gtk_flags: "-DNVD_USE_GTK4=OFF -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=1024 -DWIN32_TARGET=OFF"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Linux dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y libgtk-3-0 ninja-build libgtk-3-dev libdbus-1-dev
+
+      - name: Configure CMake
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. ${{ matrix.gtk_flags }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+
+      - name: Build
+        run: cmake --build build --config ${{ matrix.build_type }}
+
+      - name: Install
+        if: matrix.os != 'macos-latest'
+        run: |
+          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+            sudo cmake --install build/
+          else
+            cmake --install build/ --config ${{ matrix.build_type }}
+          fi
+
+      - name: Test
+        working-directory: build
+        run: |
+          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+            ctest --output-on-failure || cat build/Testing/Temporary/LastTest.log
+          else
+            ctest --config ${{ matrix.build_type }} --rerun-failed --output-on-failure
