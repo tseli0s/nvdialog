@@ -53,5 +53,4 @@ bool nvd_get_capabilities(int query) {
                         nvd_set_error(NVD_INVALID_PARAM);
                         return false;
         }
-        return false; /* Just to silence compiler warnings */
 }
