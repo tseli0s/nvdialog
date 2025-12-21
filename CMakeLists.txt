@@ -2,7 +2,11 @@
 # This file is part of libnvdialog and is released under the MIT license.
 
 cmake_minimum_required(VERSION 3.18)
+<<<<<<< HEAD
 project(libnvdialog VERSION 0.10.0 LANGUAGES C CXX DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+=======
+project(libnvdialog VERSION 0.10.1 LANGUAGES C DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+>>>>>>> dd5d240 (tree: Bump version to v0.10.1)
 
 option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux." OFF)
 option(NVD_BUILD_STATIC "Build NvDialog as a static library." ON)
