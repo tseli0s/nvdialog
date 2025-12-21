@@ -1,9 +1,9 @@
 # CMake Build Script for libnvdialog.
 # This file is part of libnvdialog and is released under the MIT license.
 
+<<<<<<< HEAD
 cmake_minimum_required(VERSION 3.19)
 project(libnvdialog VERSION 0.10.1 LANGUAGES C DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
->>>>>>> dd5d240 (tree: Bump version to v0.10.1)
 
 option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux." OFF)
 option(NVD_BUILD_STATIC "Build NvDialog as a static library." ON)
@@ -36,8 +36,13 @@ is not yet finished and stability may suffer or features may be missing. You can
     set(NVD_HAIKU_TARGET TRUE)
 elseif(MSVC)
     message(WARNING "MSVC is experimental; prefer GCC/Clang.")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Wall /W4 /WX")
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+endif()
+
+
+if (NOT MSVC)
+	add_compile_options(-Wall -Wextra)
 endif()
 
 set(NVD_HEADERS
@@ -88,16 +93,6 @@ elseif(APPLE OR NVD_USE_GNUSTEP)
         src/backend/cocoa/nvdialog_cocoa_init.m
         ${NVD_COMMON_SOURCES})
     add_compile_definitions(NVD_USE_COCOA=1)
-elseif(NVD_HAIKU_TARGET)
-    set(NVD_SOURCES
-        src/backend/hku/nvdialog_dialog_box.cpp
-        src/backend/hku/nvdialog_file_dialog.cpp
-        src/backend/hku/nvdialog_input_box.cpp
-        src/backend/hku/nvdialog_question_dialog.cpp
-        src/backend/hku/nvdialog_notification.cpp
-        src/backend/hku/nvdialog_about_dialog.cpp
-        ${NVD_COMMON_SOURCES})
-    add_compile_definitions(NVD_HAIKU_TARGET=1)
 else()
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(GTK REQUIRED gtk+-3.0)
@@ -161,16 +156,7 @@ elseif(NVD_USE_GNUSTEP)
     target_link_libraries(nvdialog gnustep-base gnustep-gui objc m)
 elseif(CROSS_COMPILE_FOR_WIN32 OR WIN32)
     target_link_libraries(nvdialog comdlg32 shell32 user32 gdi32 ole32)
-<<<<<<< HEAD
-elseif(NVD_HAIKU_TARGET)
-	message(INFO "-- Linking with libbe.so")
-	target_link_libraries(nvdialog be)
-elseif(LINUX OR UNIX AND NOT NVD_HAIKU_TARGET)
-    target_link_libraries(nvdialog ${GTK_LIBRARIES})
-elseif(LINUX OR UNIX)
-=======
 elseif(UNIX AND NOT APPLE)
->>>>>>> f297d95 (CMakeLists.txt: Remove unnecessary check)
     target_link_libraries(nvdialog ${GTK_LIBRARIES} ${DBUS_LIBRARIES})
     if (UNIX AND NOT LINUX)
         message(WARNING "Building on a Unix-like OS that is not GNU/Linux has not been verified to work as reliably, results may vary!")
