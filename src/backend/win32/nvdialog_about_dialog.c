@@ -112,6 +112,6 @@ void nvd_show_about_dialog_win32(NvdAboutDialog *dialog) {
                                                           dialog->image->height)
                                    : app_icon);
 
-        (app_icon != NULL) ? DestroyIcon(app_icon) : (void)app_icon;
+        if (app_icon) DestroyIcon(app_icon);
         if (!result) nvd_set_error(NVD_INTERNAL_ERROR);
 }
