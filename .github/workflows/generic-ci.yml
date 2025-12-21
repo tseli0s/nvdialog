@@ -66,3 +66,4 @@ jobs:
             ctest --output-on-failure || cat build/Testing/Temporary/LastTest.log
           else
             ctest --config ${{ matrix.build_type }} --rerun-failed --output-on-failure
+          fi
