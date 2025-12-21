@@ -1,11 +1,12 @@
 #include <nvdialog.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-int main(int argc, char **argv) {
+int main(void) {
         int retval = nvd_init();
         if (retval != 0) {
-                puts("nvdialog: Failed to initialize backends.");
-                return -1;
+                fprintf(stderr, "nvdialog: Failed to initialize backends.\n");
+                abort();
         }
         puts("nvdialog: Initialized NvDialog.");
         return 0;
