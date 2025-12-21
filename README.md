@@ -5,19 +5,15 @@
         <a href="#screenshots">Screenshots</a> |
         <a href="#installation">Installing</a> |
         <a href="https://github.com/AndroGR/nvdialog/releases">Releases</a>
+        <br>
+        <br>
+        <img src="https://img.shields.io/github/license/tseli0s/nvdialog?color=blue&label=License">
+        <img src="https://img.shields.io/github/issues/tseli0s/nvdialog">
+        <img src="https://img.shields.io/github/commits-since/tseli0s/nvdialog/v0.9.0?label=Commits%20since%200.9.0&logo=git">
+        <br>
         <h5><b>A simple, cross-platform dialog box library.</b></h5>
 <code>libnvdialog</code> is a simple, efficient, batteries-included dialog box library written in C
 for multiple purposes such as games, app development, simple UI boxes for terminal apps or pretty much anything else. NvDialog uses the host's UI library (eg. <a href="https://gtk.org">Gtk3</a> on Linux and other Unix like OSes, <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html">the Cocoa API</a> on macOS or the <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">WinAPI</a> for Windows) to achieve a look and feel that follows the system theme and design guidelines without depending on extra libraries or themes. In addition, NvDialog provides official <a href="https://github.com/tseli0s/nvdialog-rs">Rust bindings</a> and can be used, thanks to its simple C ABI, with almost every language on the planet.
-<br>
-<br>
-<img src="https://img.shields.io/github/license/tseli0s/nvdialog?color=blue&label=License">
-<img src="https://img.shields.io/github/issues/tseli0s/nvdialog">
-<img src="https://img.shields.io/github/commits-since/tseli0s/nvdialog/v0.9.0?label=Commits%20since%200.9.0&logo=git">
-<br>
-<img src="https://img.shields.io/github/actions/workflow/status/tseli0s/nvdialog/x86_64-pc-linux-gnu.yml?label=Ubuntu">
-<img src="https://img.shields.io/github/actions/workflow/status/tseli0s/nvdialog/x86_64-apple-darwin.yml?branch=master&label=macOS%20X&logo=github">
-<img src="https://img.shields.io/github/actions/workflow/status/tseli0s/nvdialog/i686-pc-windows-msvc.yml?branch=master&label=Windows%2010&logo=github">
-<br> <br>
 <h6><i>This project is in immediate need of macOS-based contributors for the Cocoa backend. If you use this library consider contributing to support it.</i></h6>
 </div>
 
