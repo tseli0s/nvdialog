@@ -31,7 +31,7 @@ elseif(CROSS_COMPILE_FOR_WIN32)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-stack-protector -Wno-unused-parameter -Wconversion -Werror=format -Werror=format-security -Winline -Wall -Wextra")
 elseif(MSVC)
     message(WARNING "MSVC is experimental; prefer GCC/Clang.")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Wall /W4 /WX")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Wall")
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 endif()
 
