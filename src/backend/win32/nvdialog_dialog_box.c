@@ -72,5 +72,7 @@ void nvd_dialog_box_set_accept_text_win32(NvdDialogBox *dialog, const char *acce
          * - 1. Simply do nothing (maybe add a notice/warning for the developer).
          * - 2. Make our dialogs from scratch, which may break compatibility and consistency.
          */
+	(void) dialog;
+	(void) accept_text;
         return;
 }
