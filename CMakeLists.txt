@@ -97,6 +97,7 @@ else()
     find_package(PkgConfig REQUIRED)
     if(NVD_USE_GTK4)
         pkg_check_modules(GTK REQUIRED gtk+-3.0)
+        pkg_check_modules(DBUS REQUIRED dbus-1)
         add_compile_definitions(NVD_USE_GTK4)
         set(NVD_SOURCES
             src/backend/adw/nvdialog_about_dialog.c
@@ -119,6 +120,7 @@ else()
             ${NVD_COMMON_SOURCES})
     else()
         pkg_check_modules(GTK REQUIRED gtk+-3.0)
+        pkg_check_modules(DBUS REQUIRED dbus-1)
         set(NVD_SOURCES
             src/backend/gtk/nvdialog_about_dialog.c
             src/backend/gtk/nvdialog_file_dialog.c
@@ -162,6 +164,8 @@ elseif(NVD_HAIKU_TARGET)
 	target_link_libraries(nvdialog be)
 elseif(LINUX OR UNIX AND NOT NVD_HAIKU_TARGET)
     target_link_libraries(nvdialog ${GTK_LIBRARIES})
+elseif(LINUX OR UNIX)
+    target_link_libraries(nvdialog ${GTK_LIBRARIES} ${DBUS_LIBRARIES})
     if (UNIX AND NOT LINUX)
         message(WARNING "Building on a Unix-like OS that is not GNU/Linux has not been verified to work as reliably, results may vary!")
     endif()
