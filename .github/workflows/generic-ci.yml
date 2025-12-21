@@ -67,5 +67,5 @@ jobs:
           if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
             ctest --output-on-failure || cat build/Testing/Temporary/LastTest.log
           else
-            ctest --rerun-failed --output-on-failure
+            ctest -C ${{ matrix.build_type }} --rerun-failed --output-on-failure
           fi
