@@ -114,12 +114,13 @@ NvdFileDialog *nvd_save_file_dialog_win32(const char *title,
         NVD_RETURN_IF_NULL(dialog);
 
         dialog->is_save_dialog = true;
-        dialog->raw = NULL;
         dialog->is_dir_dialog = false;
         dialog->file_extensions =
                 NULL; /* Technically, we could add filters here, but how? */
         dialog->title = title;
         dialog->location_was_chosen = false;
+	dialog->raw = default_filename; /* To be used when constructing the dialog, since this field is otherwise useless */
+
         return dialog;
 }
 
