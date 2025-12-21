@@ -20,11 +20,11 @@ jobs:
           - os: ubuntu-latest
             compiler: gcc
             build_type: Debug
-            gtk_flags: "-DNVD_USE_GTK4=OFF -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -DWIN32_TARGET=OFF -G Ninja"
+            gtk_flags: "-DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -DCROSS_COMPILE_FOR_WIN32=OFF -G Ninja"
           - os: ubuntu-latest
             compiler: clang
             build_type: Debug
-            gtk_flags: "-DNVD_USE_GTK4=OFF -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -DWIN32_TARGET=OFF -G Ninja"
+            gtk_flags: "-DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=4096 -DCROSS_COMPILE_FOR_WIN32=OFF -G Ninja"
           - os: macos-latest
             compiler: clang
             build_type: Release
@@ -32,7 +32,7 @@ jobs:
           - os: windows-latest
             compiler: msvc
             build_type: Debug
-            gtk_flags: "-DNVD_USE_GTK4=OFF -DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=1024 -DWIN32_TARGET=OFF"
+            gtk_flags: "-DNVD_BUILD_STATIC=OFF -DNVDIALOG_MAXBUF=1024 -DCROSS_COMPILE_FOR_WIN32=OFF"
 
     steps:
       - uses: actions/checkout@v3
