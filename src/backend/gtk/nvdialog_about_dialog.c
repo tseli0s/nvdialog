@@ -84,7 +84,6 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname, const char *brief,
 void nvd_about_dialog_set_version_gtk(NvdAboutDialog *dialog,
                                       const char *version) {
         gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog->raw), version);
-        return;
 }
 
 void nvd_about_dialog_set_license_link_gtk(NvdAboutDialog *dialog,
@@ -92,12 +91,11 @@ void nvd_about_dialog_set_license_link_gtk(NvdAboutDialog *dialog,
                                            const char *txt) {
         gtk_about_dialog_set_license(GTK_ABOUT_DIALOG(dialog->raw),
                                      license_link);
-        return;
+        (void) txt; /* FIXME: Make use of txt somehow */ 
 }
 
 void nvd_show_about_dialog_gtk(NvdAboutDialog *dialog) {
         gtk_dialog_run(GTK_DIALOG(dialog->raw));
-        return;
 }
 
 void *nvd_about_dialog_get_raw_gtk(NvdAboutDialog *dialog) {
