@@ -64,8 +64,6 @@ jobs:
         working-directory: build
         shell: bash
         run: |
-          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            ctest --output-on-failure || cat build/Testing/Temporary/LastTest.log
-          else
+          if [ "${{ matrix.os }}" != "ubuntu-latest" ]; then
             ctest -C ${{ matrix.build_type }} --rerun-failed --output-on-failure
           fi
