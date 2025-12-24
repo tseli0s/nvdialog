@@ -16,23 +16,29 @@ $ git checkout -b new-feature upstream/master
 $ git add src/some-file.c && git commit -m "some-file.c: Create new feature."
 $ git push -u origin new-feature
 ```
+### 1.1. Commit Signoffs and Acknowledgement
+It's currently not required, but recommended to sign off all your commits with your name and email address. When using the `git commit` command, you only have to specify the `-s` option and the rest will be taken care of by the VCS.
+
+### 1.2. Licensing
+If you are creating a new file or changing major parts of the codebase, please release your changes under the same license as [this project](./COPYING), the MIT license. Other licensing terms will be rejected, except for releasing your contributions to the public domain.
+
 ## 2. Commit Messages
 NvDialog uses a very simple model for commit messages:
 - If an include was changed or new functions were added, the commit message will start with the new function's name or the filename (without the extension, the `nvdialog_` prefix, and any dirs). Eg:
 ```sh
-$ git commit -m "main: Fix incorrect include." -m "Fixed an incorrect include within the file causing a compile error due to recent changes."
+$ git commit -s -m "main: Fix incorrect include." -m "Fixed an incorrect include within the file causing a compile error due to recent changes."
 ```
 - If a new function was added, for the public API (Aka what the end user is going to use), the function name should be used.
 ```sh
-$ git commit -m "nvd_dialog_box_new_improved: Implement function." -m "Implemented new function."
+$ git commit -s -m "nvd_dialog_box_new_improved: Implement function." -m "Implemented new function."
 ```
 - For backend-wide changes such as implementing a platform-dependent functionality, use the backend/&gt;BACKEND&lt;
 ```sh
-$ git commit -m "backend/gtk: Add notification support for Gtk3 backend."
+$ git commit -s -m "backend/gtk: Add notification support for Gtk3 backend."
 ```
 - For everything else, you can just use the commit message, omitting filenames, functions etc. Eg:
 ```sh
-$ git commit -m "tree: Fix compilation errors on Windows 11."
+$ git commit -s -m "tree: Fix compilation errors on Windows 11."
 ```
 - **Descriptions of the commit should just extend the first commit message, adding notices if necessary, and if needed, also specifying which commit do they fix.**
 
