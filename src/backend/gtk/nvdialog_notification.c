@@ -139,5 +139,11 @@ void nvd_send_notification_gtk(NvdNotification *notification) {
 void nvd_add_notification_action_gtk(NvdNotification *notification,
                                      const char *action, int value_to_set,
                                      int *value_to_return) {
+        /* to silence compiler warnings*/
+        (void) notification;
+        (void) action;
+        (void) value_to_set;
+        (void) value_to_return;
+        
         nvd_error_message("nvd_add_notification_action_gtk: Deprecated, do not use.");
 }
