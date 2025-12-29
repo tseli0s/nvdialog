@@ -53,7 +53,7 @@ install:
 	mkdir -p $(INCDIR)
 	mkdir -p $(DIALOGDIR)
 	cp $(TARGET) $(LIBDIR)/
-	cp include/nvdialog_*.h $(INCDIR)/
+	cp include/nvdialog*.h $(INCDIR)/
 	cp include/dialogs/nvdialog_*.h $(DIALOGDIR)/
 
 uninstall:
