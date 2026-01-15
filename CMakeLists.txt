@@ -130,7 +130,7 @@ else()
     add_library(nvdialog SHARED ${NVD_SOURCES})
 endif()
 
-target_include_directories(nvdialog ${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
+target_include_directories(nvdialog PRIVATE ${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
 
 if(APPLE)
     target_link_libraries(nvdialog
