@@ -16,8 +16,6 @@ if (NVD_IMAGE_SUPPORT)
     add_compile_definitions(_NVD_SUPPORT_IMAGES)
 endif()
 
-include_directories(${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
-
 if (NVD_USE_GTK4)
     message(WARNING "**IMPORTANT** The build system detected that you are trying to build this library with the Gtk4/libadwaita backend. This backend is being deprecated as of version v0.10. For future-proofness, resort to the default gtk backend instead. See PR #59 on the repository for further details.")
     message("-- If you are building for Windows/macOS, you can ignore the warning above.")
@@ -131,6 +129,8 @@ if(NVD_BUILD_STATIC)
 else()
     add_library(nvdialog SHARED ${NVD_SOURCES})
 endif()
+
+target_include_directories(nvdialog ${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
 
 if(APPLE)
     target_link_libraries(nvdialog
