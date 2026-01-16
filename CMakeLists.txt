@@ -130,7 +130,7 @@ else()
     add_library(nvdialog SHARED ${NVD_SOURCES})
 endif()
 
-target_include_directories(nvdialog PRIVATE ${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
+target_include_directories(nvdialog PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/impl/ ${CMAKE_CURRENT_SOURCE_DIR}/vendor)
 
 if(APPLE)
     target_link_libraries(nvdialog
@@ -159,7 +159,7 @@ elseif(UNIX AND NOT APPLE)
 endif()
 
 set_target_properties(nvdialog PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 3)
-target_include_directories(nvdialog PRIVATE include/)
+target_include_directories(nvdialog PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 if (NVD_GENERATE_DOCS)
     set(NVD_DOXYFILE ${CMAKE_SOURCE_DIR}/Doxyfile)
