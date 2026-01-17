@@ -25,6 +25,8 @@
 #ifndef __nvdialog_platform_h__
 #define __nvdialog_platform_h__ (1)
 
+#if !defined(NVD_API_EXPORT) && !defined(NVD_API_IMPORT) && !defined(NVD_API) && !defined(NVD_STATIC_LINKAGE)
+
 #if defined(_WIN32) || defined(WIN32)
 #if defined(__clang__) || defined(__GNUC__)
 #define NVD_API_EXPORT __attribute__((dllexport))
@@ -50,5 +52,12 @@
 #else
 #define NVD_API NVD_API_IMPORT
 #endif /* DLLEXPORT */
+
+#endif /* !defined(NVD_API_EXPORT) && !defined(NVD_API_IMPORT) && \
+          !defined(NVD_API) && !defined(NVD_STATIC_LINKAGE) */
+
+#if !defined(NVD_API)
+#define NVD_API
+#endif /* !defined(NVD_API) */
 
 #endif /* __nvdialog_platform_h__ */
