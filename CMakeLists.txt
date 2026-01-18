@@ -8,10 +8,13 @@ option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux
 option(NVD_BUILD_STATIC "Build NvDialog as a static library." ON)
 option(NVD_GENERATE_DOCS "Generate documentation for NvDialog. Requires doxygen to be installed" OFF) # Off by default because doxygen may not be available
 option(NVD_USE_GNUSTEP "Use the GNUstep+Cocoa backend on generation. Only intended for testing." OFF)
-
+option(NVD_IMAGE_SUPPORT "Add support for images through nvdialog, only disable this if you're building nvdialog statically!" ON)
+ 
 set(CMAKE_C_STANDARD 11)
 add_compile_definitions(NVDIALOG_MAXBUF=4096 NVD_EXPORT_SYMBOLS)
-include_directories(${CMAKE_SOURCE_DIR}/src/impl/ ${CMAKE_SOURCE_DIR}/vendor)
+if (NVD_IMAGE_SUPPORT)
+    add_compile_definitions(_NVD_SUPPORT_IMAGES)
+endif()
 
 if (NVD_USE_GTK4)
     message(WARNING "**IMPORTANT** The build system detected that you are trying to build this library with the Gtk4/libadwaita backend. This backend is being deprecated as of version v0.10. For future-proofness, resort to the default gtk backend instead. See PR #59 on the repository for further details.")
@@ -121,10 +124,12 @@ endif()
 
 if(NVD_BUILD_STATIC)
     add_library(nvdialog STATIC ${NVD_SOURCES})
-    add_compile_definitions(NVD_STATIC_LINKAGE)
+    target_compile_definitions(nvdialog PUBLIC NVD_STATIC_LINKAGE)
 else()
     add_library(nvdialog SHARED ${NVD_SOURCES})
 endif()
+
+target_include_directories(nvdialog PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/impl/ ${CMAKE_CURRENT_SOURCE_DIR}/vendor)
 
 if(APPLE)
     target_link_libraries(nvdialog
@@ -153,7 +158,7 @@ elseif(LINUX OR UNIX)
 endif()
 
 set_target_properties(nvdialog PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 3)
-target_include_directories(nvdialog PRIVATE include/)
+target_include_directories(nvdialog PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 if (NVD_GENERATE_DOCS)
     set(NVD_DOXYFILE ${CMAKE_SOURCE_DIR}/Doxyfile)
