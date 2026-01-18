@@ -87,37 +87,6 @@ extern "C" {
                 (NvdVersion) x.patch = NVDIALOG_VERSION_PATCH; \
         }
 
-#if !defined(NVD_API_EXPORT) && !defined(NVD_API_IMPORT) && !defined(NVD_API)
-
-#if defined(_WIN32) || defined(WIN32)
-#if defined(__clang__) || defined(__GNUC__)
-#define NVD_API_EXPORT __attribute__((dllexport))
-#else /* __clang__ */
-#define NVD_API_EXPORT __declspec(dllexport)
-#endif /* NVD_API */
-#else  /* _WIN32 */
-#define NVD_API_EXPORT
-#endif /* _WIN32 */
-
-#if defined(_WIN32) || defined(WIN32)
-#if defined(__clang__) || defined(__GNUC__)
-#define NVD_API_IMPORT __attribute__((dllimport))
-#else /* __clang__ */
-#define NVD_API_IMPORT __declspec(dllimport)
-#endif /* NVD_API */
-#else  /* _WIN32 */
-#define NVD_API_IMPORT
-#endif /* _WIN32 */
-
-#if defined(NVD_EXPORT_SYMBOLS)
-#define NVD_API NVD_API_EXPORT
-#else
-#define NVD_API NVD_API_IMPORT
-#endif /* DLLEXPORT */
-
-#endif /* !defined(NVD_API_EXPORT) && !defined(NVD_API_IMPORT) && \
-          !defined(NVD_API) */
-
 #if !defined(_WIN32) || !defined(WIN32)
 /**
  * @brief A macro to create thread-local static variables, primarily intended
@@ -130,6 +99,7 @@ extern "C" {
 #define NVD_THREAD_LOCAL(var) var
 #endif /* _WIN32 */
 
+#include "nvdialog_platform.h"
 #include "nvdialog_capab.h"
 #include "nvdialog_core.h"
 #include "nvdialog_dialog.h"
