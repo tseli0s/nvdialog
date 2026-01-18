@@ -60,12 +60,17 @@
 typedef struct _NvdDynamicString NvdDynamicString;
 
 /**
- * @brief Creates a new @ref NvdDynamicString and returns it, optionally with the data given in `contents`.
- * @param data A C-style string to convert into a dynamic string, optional. Pass NULL to create an empty `NvdDynamicString`.
- * @returns A new `NvdDynamicString` on success, otherwise `NULL` and the internal error code is set.
+ * @brief Creates a new @ref NvdDynamicString and returns it, optionally with
+ * the data given in `contents`.
+ * @param data A C-style string to convert into a dynamic string, optional. Pass
+ * NULL to create an empty `NvdDynamicString`.
+ * @returns A new `NvdDynamicString` on success, otherwise `NULL` and the
+ * internal error code is set.
  * @since v0.10.0
+ * @note This function duplicates the string given internally, so if your string
+ * is allocated on the heap, make sure to free it!
  * @ingroup String
-*/
+ */
 NVD_API NvdDynamicString *nvd_string_new(const char *data);
 
 /**
