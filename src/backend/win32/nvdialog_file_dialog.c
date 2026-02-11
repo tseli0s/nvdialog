@@ -67,12 +67,16 @@ static NvdDynamicString *nvd_file_only_dialog_win32(NvdFileDialog *dialog) {
         } else  ofn.lpstrFilter = NULL;
 
         file[NVDIALOG_MAXBUF - 1] = '\0';
-        if (dialog->is_save_dialog) GetSaveFileName(&ofn);
-        else GetOpenFileName(&ofn);
+	if (dialog->is_save_dialog)
+		dialog->location_was_chosen = (GetSaveFileName(&ofn) != 0);
+	else
+		dialog->location_was_chosen = (GetOpenFileName(&ofn) != 0);
 
-        dialog->filename = nvd_string_new(ofn.lpstrFile);
-        dialog->location_was_chosen = true;
-        return dialog->filename;
+	if (dialog->location_was_chosen) {
+		dialog->filename = nvd_string_new(ofn.lpstrFile);
+		return dialog->filename;
+	}
+	return NULL;
 }
 
 static NvdDynamicString *nvd_dir_dialog_win32(NvdFileDialog *dialog) {
