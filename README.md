@@ -30,15 +30,15 @@ for multiple purposes such as games, app development, simple UI boxes for termin
 
 # Backends
 - **Gtk3 Backend**\
-The most battle-hardened backend, using pure Gtk3 to create the dialogs. On GNU/Linux this does mean you will need to have Gtk3 installed but almost all modern distributions include it which was the primary motivator for making it the default backend on GNU/Linux. It is actively tested and works on almost all distributions regardless of desktop, windowing system or hardening features. In addition, it uses the system's portal for file dialogs, and falls back to the Gtk one if a portal isn't present.
+The most battle-hardened backend, using the gtk3 library to create the dialogs. On GNU/Linux and other Unix-like platforms this does mean you will need to have Gtk3 installed but almost all modern distributions include it which was the primary motivator for making it the default backend on GNU/Linux. It is actively tested and works on almost all distributions regardless of desktop, windowing system or hardening features. In addition, it uses the system's portal for file dialogs, and falls back to the Gtk one if a portal isn't present.
 
 Starting with version v0.10, this is also explicitly the default backend for Unix-like platforms. This is subject to change in the future; An X11/Xaw backend is being considered to reduce dependencies and maintenance.
 
 - **Cocoa Backend**\
-The Cocoa backend was recently added to NvDialog for macOS X support. It is written in Objective-C for better integration with the OS, and is still in the experimental stage although it should work fine by now. Please report any bugs or features that need to be fixed / implemented, or make a pull request to add them yourself. You can also test this backend on GNU/Linux and Windows using [GNUstep](https://gnustep.org) from v0.10 onwards, though experience may be suboptimal.
+The Cocoa backend was recently added to NvDialog for macOS X support. It is written in Objective-C for better integration with the OS, and is still in the experimental stage although it should work fine by now. Please report any bugs or features that need to be fixed / implemented, or make a pull request to add them yourself. You can also test this backend on GNU/Linux and Windows using [GNUstep](https://gnustep.org) from v0.10 onwards, though experience may be suboptimal and features may be missing.
 
 - **Win32 Backend**\
-The default backend on Windows systems, relying on WinAPI. It is also actively tested and works well, even in super outdated systems like Windows XP. However, some minor customization options may not work due to the limited features of the API - Make sure your program works well using that license!
+The default backend on Windows systems, relying on WinAPI. It is also actively tested and works well, even in super outdated systems like Windows XP. It is also verified to work well under ReactOS and Wine. Compatibility with Windows versions 10 and later is a major goal of this project.
 
 # Example
 This is a simple cross-platform example of a simple message box greeting the user:
@@ -121,29 +121,24 @@ $ sudo cmake --install .
 
 # OS Versions Supported
 ## Windows
-The oldest OS NvDialog has ran on is Windows XP, although some calls did not produce any change / output (But did not fail either). The recommended minumum is Windows 7, and any later version should work as expected.
+The oldest OS NvDialog has ran on is Windows XP, although some calls did not produce any change / output (But did not fail either). The recommended minumum is Windows 7, and any later version should work as expected. ReactOS and Wine are both supported but receive only limited testing.
 
 ## macOS
 The Cocoa APIs used by nvdialog in the respective backend are available through most OS X versions and even NeXTSTEP (Where they originate from). However, only recent versions of macOS are known to work well, so only macOS 10.13 and later are considered "supported".
 
-You might see some deprecation warnings when building nvdialog from source. This is expected.
+You might see some deprecation warnings when building nvdialog from source. This is expected. If your application does not work after a given macOS version, make sure to [file an issue](https://github.com/tseli0s/nvdialog/issues) so that the deprecated APIs can be replaced.
 
 ## GNU/Linux
 GNU/Linux is not one operating system but a family of thousands of different distributions. As such, there's no specific distro requirement. The system must provide those however:
 - Gtk3 or some ABI-compatible equivalent. Most distributions ship with Gtk3 out of the box and Gtk is quite widespread in the GNU/Linux world, so it is probably installed already.
-- A display server. Wayland and X11 are both supported (Through Gtk), and an implementation is required to display the windows on the screen.
+- A display server. Wayland and X11 are both supported (Through Gtk), and an implementation of either one (Your favourite DE or an X server respectively) is required to display the windows on the screen.
 - Recommended (but not required): A driver that supports hardware acceleration for graphics, like Vulkan, can increase performance massively.
+
 > [!WARNING]
 > The GNOME desktop environment may ignore the icons you use in the dialog's window on Wayland sessions, showing a generic icon instead. You can try setting an application name matching your desktop launcher as a temporary workaround. 
 
-## BSD systems
-Through the `gtk` backend almost all (recent enough) BSD systems with a graphical environment are supported. You must install the Gtk+ libraries appropriate for your system. It's also recommended (but not required) to use a desktop that supports Gtk well. XFCE and KDE are both verified to work nicely with FreeBSD. The X11 backend is being worked on to drop the gtk dependency and use X11's libraries directly.
-
-To ensure stability, support is still considered experimental. Although the implementation should work identically between platforms thanks to Gtk+ support, platform-specific configurations may change the expected output. Report any issues to the [Issues](https://github.com/tseli0s/nvdialog/issues/) page.
-
-A known issue is that CMake may struggle to find Gtk+ libraries when building the library. You should use `make` instead if you run into issues, written exactly for this purpose. You may not be able to configure the library as much with this build method though.
-
-A future X11 backend based on Xt/Xaw is being considered, as it can remove the `gtk` dependency while still providing graphical dialogs that work with the X server, with minimal memory and CPU footprint.
+## FreeBSD
+Since version v0.10.2, FreeBSD is now an officially supported platform. FreeBSD 15 is where nvdialog is being developed, but any modern FreeBSD version (13 and later) should work fine, assuming the presence of the gtk libraries. A future X11 backend based on Xt/Xaw is being considered, as it can remove the `gtk` dependency while still providing graphical dialogs that work with the X server, with minimal memory and CPU footprint, and providing better integration with more minimal systems.
 
 ## Android
 Android support will not be implemented anytime soon. You are advised instead to use Android's `AlertDialog` class (through Java), which would achieve the same effect but cut out the C-side middleman, since you'd have to use Java in your application anyways.
@@ -162,7 +157,7 @@ Also see [the contributing guidelines](./CONTRIBUTING.md).
 # Current Status
 As of August 2025, the main focus of development is to stabilize and standardize all interfaces, and switch the library to maintenance mode only, as I believe there isn't much left to add. The long term plan is to release v1.0 and stop there, only making sure the library runs well from that point forward. In addition, to make sure that the library is truly seamless across platforms and systems, extra attention will be given to the `cocoa` and `win32` backends and more extensive testing will take place.
 
-To achieve the latter, I now test various projects using `libnvdialog` both on my main OS (Arch Linux) and a Windows 10 machine, and I've been able to run executables linked with nvdialog all the way back to Windows XP and Ubuntu 14.04 comfortably. That being said, enormous work has been done to ensure that `libnvdialog` works as expected on all platforms. The final aim is to make sure that two projects using two different versions of `libnvdialog` from v0.10 forward can both work with different versions unless they explicitly forbid so.
+To achieve the latter, I now test various projects using `libnvdialog` both on my main OS (FreeBSD) and a Windows 10 machine, and I've been able to run executables linked with nvdialog all the way back to Windows XP and Ubuntu 14.04 comfortably. That being said, enormous work has been done to ensure that `libnvdialog` works as expected on all platforms. The final aim is to make sure that two projects using two different versions of `libnvdialog` from v0.10 forward can both work with different versions unless they explicitly forbid so.
 
 # Why should I use this?
 In general, NvDialog tries to wrap for you about 2000 lines of code you'd have written anyways and make sure that this code will work on a variety of systems while still matching the system's theme and looks. In addition, it abstracts all of the platform specific details into easy to read, simple APIs, which you'd have to do yourself otherwise depending on the compiler and OS. However, NvDialog may not be for you *if*:
@@ -173,3 +168,4 @@ In general, NvDialog tries to wrap for you about 2000 lines of code you'd have w
 # License
 `nvdialog` is licensed under the MIT license. See [COPYING](./COPYING) for more.
 All contributions made to the library are assumed to be licensed under the MIT license as well. However, you may specify a different license if you wish.
+

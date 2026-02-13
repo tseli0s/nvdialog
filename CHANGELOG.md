@@ -6,6 +6,7 @@
 - nvdialog can now be built as a CMake submodule (See #68)
 - Fixed missing header when installing using the [Makefile](./Makefile) (See #66)
 - Warn if the target cannot be recognized when initializing backends during `nvd_init()`.
+- FreeBSD is now officially a supported platform of nvdialog.
 
 # Changelog -- 0.10.1
 - Fixed memory leak when freeing a notification in the `gtk` backend
