@@ -87,6 +87,15 @@ elseif(APPLE OR NVD_USE_GNUSTEP)
         ${NVD_COMMON_SOURCES})
     add_compile_definitions(NVD_USE_COCOA=1)
 else()
+    # CMake can't find libraries under /usr/local/lib by default; It should be
+    # reported upstream too, but for now, we should tell it to explicitly look
+    # for libraries (well, just gtk for now) under /usr/local/lib
+
+    if (BSD)
+	    message(INFO "BSD detected: Adding /usr/local/lib to implicit link directories")
+	    link_directories(BEFORE /usr/local/lib)
+    endif(BSD)
+
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(GTK REQUIRED gtk+-3.0)
     pkg_check_modules(DBUS REQUIRED dbus-1)

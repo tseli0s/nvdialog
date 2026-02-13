@@ -1,3 +1,12 @@
+# Changelog -- 0.10.2
+- Improved GitHub workflows for more extensive testing
+- Fixed a compiler warning in `nvd_image_to_bytes`
+- Numerous minor code cleanups and compiler warning fixes
+- Fix incorrect return values if a file(name) was not chosen when using `NvdFileDialog` on Windows (See #54)
+- nvdialog can now be built as a CMake submodule (See #68)
+- Fixed missing header when installing using the [Makefile](./Makefile) (See #66)
+- Warn if the target cannot be recognized when initializing backends during `nvd_init()`.
+
 # Changelog -- 0.10.1
 - Fixed memory leak when freeing a notification in the `gtk` backend
 - Removed checking for libnotify at runtime when on GNU/Linux
