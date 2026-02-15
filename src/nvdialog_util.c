@@ -33,17 +33,6 @@
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
 
-#ifdef _WIN32
-#include <io.h>
-#define access _access
-#else
-#include <unistd.h>  // access()
-#endif
-
-static inline bool nvd_file_exists(const char* path) {
-        return (access(path, 0) == 0);
-}
-
 void nvd_zero_memory(void* ptr, size_t size) { memset(ptr, 0, size); }
 
 NvdProcessID nvd_create_process(void) {
