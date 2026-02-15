@@ -30,13 +30,6 @@
 #include "gtk/gtk.h"
 #include "nvdialog_gtk.h"
 
-static inline void nvd_set_margins_gtk3(GtkWidget *widget) {
-        gtk_widget_set_margin_start(widget, 16);
-        gtk_widget_set_margin_end(widget, 16);
-        gtk_widget_set_margin_top(widget, 16);
-        gtk_widget_set_margin_bottom(widget, 16);
-}
-
 NvdAboutDialog *nvd_about_dialog_gtk(const char *appname, const char *brief,
                                      const char *icon_name) {
         GdkPixbuf *img = NULL;
