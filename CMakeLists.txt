@@ -2,7 +2,7 @@
 # This file is part of libnvdialog and is released under the MIT license.
 
 cmake_minimum_required(VERSION 3.19)
-project(libnvdialog VERSION 0.10.1 LANGUAGES C DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
+project(libnvdialog VERSION 0.10.2 LANGUAGES C DESCRIPTION "A simple and minimal dialog library, with cross-platform support")
 
 option(CROSS_COMPILE_FOR_WIN32 "Cross-compile the library for Windows from Linux." OFF)
 option(NVD_BUILD_STATIC "Build NvDialog as a static library." ON)
@@ -162,9 +162,6 @@ elseif(CROSS_COMPILE_FOR_WIN32 OR WIN32)
     target_link_libraries(nvdialog comdlg32 shell32 user32 gdi32 ole32)
 elseif(UNIX AND NOT APPLE)
     target_link_libraries(nvdialog ${GTK_LIBRARIES} ${DBUS_LIBRARIES})
-    if (UNIX AND NOT LINUX)
-        message(WARNING "Building on a Unix-like OS that is not GNU/Linux has not been verified to work as reliably, results may vary!")
-    endif()
 endif()
 
 set_target_properties(nvdialog PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 3)
