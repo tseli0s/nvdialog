@@ -39,7 +39,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "nvdialog.h"
 #include "nvdialog_error.h"
 #include "nvdialog_macros.h"
 
@@ -50,26 +49,26 @@ __attribute__((format(printf, 1, 2)))
 #endif
 static void
 nvd_print_assert(const char *msg, ...) {
-        va_list args;
-        va_start(args, msg);
+	va_list args;
+	va_start(args, msg);
 
-        char buffer[NVD_BUFFER_SIZE];
-        snprintf(buffer, sizeof(buffer), "%s \x1B[1m%s\x1B[0m", TERMINAL_PREFIX,
-                 msg);
-        vfprintf(stderr, buffer, args);
+	char buffer[NVD_BUFFER_SIZE];
+	snprintf(buffer, sizeof(buffer), "%s \x1B[1m%s\x1B[0m", TERMINAL_PREFIX,
+		 msg);
+	vfprintf(stderr, buffer, args);
 
-        va_end(args);
-        fflush(stderr);
+	va_end(args);
+	fflush(stderr);
 }
 
 #define NVD_ASSERT(eq)                                                        \
-        do {                                                                  \
-                if (!(eq)) {                                                  \
-                        nvd_print_assert("%s:%d (%s): assertion %s failed\n", \
-                                         __FILENAME__, __LINE__, NVD_FN_IDENT,    \
-                                         #eq);                                \
-                }                                                             \
-        } while (0)
+	do {                                                                  \
+		if (!(eq)) {                                                  \
+			nvd_print_assert("%s:%d (%s): assertion %s failed\n", \
+					 __FILE_NAME__, __LINE__,             \
+					 NVD_FN_IDENT, #eq);                  \
+		}                                                             \
+	} while (0)
 
 /*
  * Long story short: If ptr is NULL, this macro will print an error message,
@@ -77,35 +76,36 @@ nvd_print_assert(const char *msg, ...) {
  * constructors where this pattern is common.
  */
 #define NVD_CHECK_INTERNAL(ptr, obj, retval)     \
-        do {                                     \
-                if (!(ptr)) {                    \
-                        NVD_ASSERT(ptr != NULL); \
-                        free(obj);               \
-                        return retval;           \
-                }                                \
-        } while (0);
+	do {                                     \
+		if (!(ptr)) {                    \
+			NVD_ASSERT(ptr != NULL); \
+			free(obj);               \
+			return retval;           \
+		}                                \
+	} while (0);
 
-#define NVD_RETURN_IF_NULL(x)                                               \
-        do {                                                                \
-                if (!(x)) {                                                 \
-                        NVD_ASSERT(x !=                                     \
-                                   NULL); /* Just for the error message. */ \
-                        return NULL;                                        \
-                }                                                           \
-        } while (0);
+#define NVD_RETURN_IF_NULL(x)                                         \
+	do {                                                          \
+		if (!(x)) {                                           \
+			nvd_error_message(                            \
+				"%s::%d: %s is NULL, returning NULL", \
+				__FILE_NAME__, __LINE__, #x);         \
+			return NULL;                                  \
+		}                                                     \
+	} while (0);
 
 /* This is supposed to be called only when the library cannot be used anymore.
  */
-#define NVD_ASSERT_FATAL(eq)                                        \
-        do {                                                        \
-                if (!(eq)) {                                        \
-                        nvd_print_assert(                           \
-                                "**CRITICAL ASSERTION FAILURE**: "  \
-                                "%s\n  Line: %d\n  Filename: "      \
-                                "%s\n  Function: %s\n",             \
-                                #eq, __LINE__, __FILENAME__, __func__); \
-                                abort();                            \
-                }                                                   \
-        } while (0);
+#define NVD_ASSERT_FATAL(eq)                                            \
+	do {                                                            \
+		if (!(eq)) {                                            \
+			nvd_print_assert(                               \
+				"**CRITICAL ASSERTION FAILURE**: "      \
+				"%s\n  Line: %d\n  Filename: "          \
+				"%s\n  Function: %s\n",                 \
+				#eq, __LINE__, __FILENAME__, __func__); \
+			abort();                                        \
+		}                                                       \
+	} while (0);
 
 #endif /* __nvdialog_assert_h__ */
