@@ -22,35 +22,31 @@
  * IN THE SOFTWARE.
  */
 
-#include "nvdialog.h"
 #include "nvdialog_error.h"
 
-static const bool nvd_has_adw_gtk =
-#if defined(NVD_USE_GTK4)
-        true;
-#else
-        false;
-#endif
+/* Set to false consistently after 0.10.2, so that applications understand
+ * they're not using it in practice anymore. */
+static const bool nvd_has_adw_gtk = false;
 
 static const bool nvd_built_static =
 #if defined(NVD_STATIC_LINKAGE)
-        true;
+	true;
 #else
-        false;
+	false;
 #endif
 
 static const bool nvd_compat_mode = false;
 
 bool nvd_get_capabilities(int query) {
-        switch (query) {
-                case NVD_ADW_BACKEND:
-                        return nvd_has_adw_gtk;
-                case NVD_STATIC_LIB:
-                        return nvd_built_static;
-                case NVD_COMPAT_MODE:
-                        return nvd_compat_mode;
-                default:
-                        nvd_set_error(NVD_INVALID_PARAM);
-                        return false;
-        }
+	switch (query) {
+		case NVD_ADW_BACKEND:
+			return nvd_has_adw_gtk;
+		case NVD_STATIC_LIB:
+			return nvd_built_static;
+		case NVD_COMPAT_MODE:
+			return nvd_compat_mode;
+		default:
+			nvd_set_error(NVD_INVALID_PARAM);
+			return false;
+	}
 }
