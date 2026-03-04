@@ -63,7 +63,7 @@ nvd_print_assert(const char *msg, ...) {
 	do {                                                                  \
 		if (!(eq)) {                                                  \
 			nvd_print_assert("%s:%d (%s): assertion %s failed\n", \
-					 __FILENAME__, __LINE__,             \
+					 __FILE_NAME__, __LINE__,             \
 					 NVD_FN_IDENT, #eq);                  \
 		}                                                             \
 	} while (0)
@@ -101,7 +101,7 @@ nvd_print_assert(const char *msg, ...) {
 				"**CRITICAL ASSERTION FAILURE**: "      \
 				"%s\n  Line: %d\n  Filename: "          \
 				"%s\n  Function: %s\n",                 \
-				#eq, __LINE__, __FILENAME__, __func__); \
+				#eq, __LINE__, __FILE_NAME__, __func__); \
 			abort();                                        \
 		}                                                       \
 	} while (0);
