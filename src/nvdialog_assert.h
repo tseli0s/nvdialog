@@ -25,15 +25,13 @@
 #ifndef __nvdialog_assert_h__
 #define __nvdialog_assert_h__
 
-#ifndef __FILENAME__
+#ifndef __FILE_NAME__
 #if defined(__GNUC__) || defined(__clang__)
 #define __FILENAME__ __FILE_NAME__
-#elif defined(_MSC_VER)
-#define __FILENAME__ "libnvdialog"
 #else
-#define __FILENAME__ "nvdialog"
+#define __FILE_NAME__ "nvdialog"
 #endif /* __GNUC__ */
-#endif /* __FILENAME__ */
+#endif /* __FILE_NAME__ */
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -65,7 +63,7 @@ nvd_print_assert(const char *msg, ...) {
 	do {                                                                  \
 		if (!(eq)) {                                                  \
 			nvd_print_assert("%s:%d (%s): assertion %s failed\n", \
-					 __FILE_NAME__, __LINE__,             \
+					 __FILENAME__, __LINE__,             \
 					 NVD_FN_IDENT, #eq);                  \
 		}                                                             \
 	} while (0)
