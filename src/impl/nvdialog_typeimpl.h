@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "nvdialog_string.h"
 #ifndef __nvdialog_typeimpl_h
 #define __nvdialog_typeimpl_h (1)
 
@@ -33,6 +32,20 @@
 #include <stdbool.h>
 
 #include "nvdialog.h"
+#include "nvdialog_string.h"
+#include "nvdialog_widestr.h"
+
+typedef enum _NvdWideCharWidth {
+	NVD_WCHAR_WIDTH_8, /* That should never be used, but keep it around for
+			      bug checking */
+	NVD_WCHAR_WIDTH_16,
+	NVD_WCHAR_WIDTH_24, /* unrealistic, but some platforms have this
+			       apparently. Maybe for future expansion? */
+	NVD_WCHAR_WIDTH_32,
+	NVD_WCHAR_WIDTH_64, /* That probably doesn't even exist. Maybe in 100
+			       years it will, or when aliens come around and
+			       need to type their language. */
+} NvdWideCharWidth;
 
 struct _NvdDialogBox {
         void* window_handle;
@@ -100,6 +113,12 @@ struct _NvdDynamicString {
     size_t len;
     size_t capacity;
     char *buffer;
+};
+
+struct _NvdWideString {
+	size_t len;
+	size_t mem_usage;
+	wchar_t* buffer;
 };
 
 #endif /* __nvdialog_typeimpl_h */
