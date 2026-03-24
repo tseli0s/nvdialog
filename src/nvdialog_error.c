@@ -84,12 +84,15 @@ void nvd_error_message(const char *fmt, ...) {
 }
 
 
-void nvd_out_of_memory() {
+NVD_NO_RETURN void nvd_out_of_memory() {
         nvd_error_message("%s%d%s%s", "Host machine out of memory: (errno ",
                           errno, strerror(errno), "). Aborting execution");
         nvd_set_error(NVD_OUT_OF_MEMORY); /* Like described in the header, this
                                              is pretty useless. */
         abort();
+#ifdef __GNUC__
+	__builtin_unreachable();
+#endif /* __GNUC__ */ 
 }
 
 void nvd_message(const char *fmt, ...) {
