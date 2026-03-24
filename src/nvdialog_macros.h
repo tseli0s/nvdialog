@@ -25,13 +25,15 @@
 #ifndef __nvdialog_macros_h__
 #define __nvdialog_macros_h__
 
-#if defined(__clang__) || defined(__GNUC__)
-
-#define NVD_FORCE_INLINE inline __attribute__((always_inline))
-
 #ifndef NVD_BUFFER_SIZE
 #define NVD_BUFFER_SIZE NVDIALOG_MAXBUF
 #endif /* NVD_BUFFER_SIZE */
+
+#define NVD_NO_RETURN _Noreturn
+
+#if defined(__clang__) || defined(__GNUC__)
+
+#define NVD_FORCE_INLINE inline __attribute__((always_inline))
 
 #ifndef __MINGW32__
 #define NVD_LIBRARY_FUNCTION __attribute__((visibility("default")))
@@ -55,9 +57,6 @@
 
 #define NVD_FN_IDENT __func__
 
-#ifndef NVD_BUFFER_SIZE
-#define NVD_BUFFER_SIZE NVDIALOG_MAXBUF
-#endif /* NVD_BUFFER_SIZE */
 #endif /* __clang__ */
 
 #endif /* __nvdialog_macros_h__ */
