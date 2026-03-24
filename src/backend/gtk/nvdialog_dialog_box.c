@@ -34,7 +34,7 @@ NvdDialogBox *nvd_dialog_box_gtk(const char *title, const char *message,
         NvdDialogBox *dialog = nvd_malloc(sizeof(NvdDialogBox));
         NVD_RETURN_IF_NULL(dialog);
 
-        dialog->accept_label = "Okay";
+        dialog->accept_label = (char*) "_Okay";
         dialog->content = (char *)message;
         dialog->msg = (char *)title;
         dialog->type = type;
