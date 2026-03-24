@@ -83,6 +83,7 @@ NvdNotification *nvd_notification_win32(const char *title, const char *msg,
 }
 
 void nvd_send_notification_win32(NvdNotification *notification) {
+	NVD_ASSERT(notification != NULL);
         NVD_ASSERT(Shell_NotifyIcon(NIM_ADD, notification->raw) == TRUE);
 }
 
