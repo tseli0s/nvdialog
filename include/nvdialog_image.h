@@ -31,8 +31,10 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "nvdialog_platform.h"
-#include "nvdialog_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 /**
  * @brief Data that can be interpeted as an image.
@@ -95,5 +97,9 @@ NVD_API void nvd_destroy_image(NvdImage *image);
  * @since v0.10.1
  */
 NVD_API uint8_t *nvd_image_to_bytes(NvdImage *image);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __nvdialog_image_h__ */

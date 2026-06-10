@@ -29,6 +29,10 @@
 
 #include "nvdialog_platform.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /**
  * @brief Possible types of NvDialog notifications. Each field will create a
  * slightly different dialog matching the requested type.
@@ -120,4 +124,9 @@ NVD_API void nvd_delete_notification(NvdNotification* notification);
 NVD_API void nvd_add_notification_action(NvdNotification* notification,
                                          const char* action, int value_to_set,
                                          int* value_to_return);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #endif /* __nvdialog_notification_h__ */

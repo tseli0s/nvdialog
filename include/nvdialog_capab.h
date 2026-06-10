@@ -30,6 +30,10 @@
 #include <stdbool.h>
 #include "nvdialog_platform.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /**
  * @brief Enumerator defining nvdialog optional capabilities. To be used with @ref nvd_get_capabilities
  * @since v0.2.0
@@ -62,5 +66,9 @@ typedef enum {
  * @ingroup Capabilities
  */
 NVD_API bool nvd_get_capabilities(int query);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __nvdialog_capab_h__ */

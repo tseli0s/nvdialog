@@ -24,11 +24,15 @@
 
 #pragma once
 
-#include "nvdialog_string.h"
 #ifndef __nvdialog_error_h__
 #define __nvdialog_error_h__ 1
 
 #include "nvdialog_platform.h"
+#include "nvdialog_string.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 /**
  * @brief An enumerator describing possible errors that may occur from the library.
@@ -73,5 +77,9 @@ NVD_API NvdError nvd_get_error(void);
  * @note Pre v0.10 code may not work with this function due to different return types.
  */
 NVD_API NvdDynamicString *nvd_stringify_error(NvdError err);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __nvdialog_error_h__ */

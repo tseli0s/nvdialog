@@ -30,6 +30,10 @@
 #include <stddef.h>
 #include "nvdialog_platform.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /**
  * @brief A shortcut macro to create a new @ref NvdDynamicString out of a simple string.
  * @since v0.10
@@ -152,5 +156,9 @@ NVD_API void nvd_string_clear(NvdDynamicString *string);
  * @ingroup String
 */
 NVD_API void nvd_delete_string(NvdDynamicString *string);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __nvdialog_string_h__ */

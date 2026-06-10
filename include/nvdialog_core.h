@@ -27,8 +27,11 @@
 #ifndef __nvdialog_core_h__
 #define __nvdialog_core_h__ 1
 
-#include "nvdialog_types.h"
 #include "nvdialog_platform.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 /**
  * @brief An opaque representation of a window object.
@@ -139,5 +142,9 @@ NVD_API void nvd_delete_parent(void);
  * @note @ref object may be NULL, although this will print a small warning on the command line.
  */
 NVD_API void nvd_free_object(void *object);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __nvdialog_core_h__ */
