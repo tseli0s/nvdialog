@@ -27,6 +27,10 @@
 #ifndef __nvdialog_types_h__
 #define __nvdialog_types_h__ 1
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /**
  * @brief Defines what use it the dialog about.
  * Each member of this enum defines what the dialog should
@@ -88,5 +92,9 @@ typedef struct {
         char *string; /**< String representation of the version for eg. printf()
                          calls. */
 } NvdVersion;
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __nvdialog_types_h__ */
