@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2025 Aggelos Tselios
+ *  Copyright (c) 2023 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -27,7 +27,6 @@
 #ifndef __nvdialog_util_h__
 #define __nvdialog_util_h__ (1)
 #include <stddef.h>
-#include "nvdialog_string.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -66,18 +65,6 @@ void nvd_zero_memory(void* ptr, size_t size);
  * @since v0.7.0
  */
 typedef signed long NvdProcessID;
-
-/**
- * @brief Creates a new process by forking.
- * @details This function is used to fork the current process.
- * On success, the @ref is returned to the parent, and 0 is returned to
- * the child.
- * @note On Windows, this function does nothing. You should use `CreateProcess`
- * manually instead, which is guaranteed to work as expected.
- * @since v0.7.0
- * @sa @ref NvdProcessID
- */
-NvdProcessID nvd_create_process(void);
 
 /**
  * @brief Returns a boolean to indicate whether the host is running the

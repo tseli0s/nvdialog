@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2025 Aggelos Tselios
+ *  Copyright (c) 2023 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -34,14 +34,6 @@
 #include "nvdialog_macros.h"
 
 void nvd_zero_memory(void* ptr, size_t size) { memset(ptr, 0, size); }
-
-NvdProcessID nvd_create_process(void) {
-#if defined(__unix__) || defined(__APPLE__)
-        return (NvdProcessID)fork();
-#else
-        return (NvdProcessID)GetCurrentProcessId();
-#endif
-}
 
 /*
  * For some explanation, here's my answer on StackOverflow:
