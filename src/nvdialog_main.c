@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2025 Aggelos Tselios
+ *  Copyright (c) 2022, 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -33,7 +33,6 @@
 #include "nvdialog.h"
 #include "nvdialog_assert.h"
 #include "nvdialog_error.h"
-#include "nvdialog_macros.h"
 #ifndef _WIN32
 #ifdef NVD_USE_GTK4
 #include "backend/adw/nvdialog_adw.h"
@@ -47,7 +46,6 @@
 
 #include "nvdialog_init.h"
 #include "nvdialog_types.h"
-#include "nvdialog_util.h"
 
 NVD_THREAD_LOCAL(char *nvd_app_name) = "NvDialog Application";
 NVD_THREAD_LOCAL(bool nvd_initialized) = false;
