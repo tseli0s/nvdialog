@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2025 Aggelos Tselios
+ *  Copyright (c) 2022 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -24,11 +24,9 @@
 
 #include "nvdialog.h"
 
-/* The versions of nvdialog are held as statics in the global scope. */
-NVD_THREAD_LOCAL(const short vermajor) = NVDIALOG_VERSION_MAJOR;
-NVD_THREAD_LOCAL(const short verminor) = NVDIALOG_VERSION_MINOR;
-NVD_THREAD_LOCAL(const short verpatch) = NVDIALOG_VERSION_PATCH;
-
 NvdVersion nvd_get_version() {
-        return ((NvdVersion){vermajor, verminor, verpatch, "0.10.2"});
+	return (NvdVersion){.major = NVDIALOG_VERSION_MAJOR,
+			    .minor = NVDIALOG_VERSION_MINOR,
+			    .patch = NVDIALOG_VERSION_PATCH,
+			    .string = "0.10.2"};
 }
