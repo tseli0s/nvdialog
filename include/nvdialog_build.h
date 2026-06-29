@@ -1,27 +1,3 @@
-/*
- *  The MIT License (MIT)
- *
- *  Copyright (c) 2025 Aggelos Tselios
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
- */
-
 /************************************************************************************
  * This file is NOT source code. It will just be used by Doxygen when
  * generating documentation for the "Building NvDialog" page. It won't be
@@ -30,7 +6,7 @@
  ************************************************************************************/
 
 /**
- * @page building BuildingNvDialog
+ * @page building Building NvDialog
  * @version v0.10.0
  * @author Aggelos Tselios
  *
@@ -126,11 +102,12 @@
  * ## Compile-time features:
  * This is a table of features that NvDialog supports enabling at compile time.
  * You can enable features (Or set them appropriately) using the
- * `-D<feature>=<value>` cmake flag. | Feature | Default | Description | | --- |
- * --- | --- | | NVD_USE_GTK4 | OFF | Sets the Linux backend to use `libadwaita`
- * | | CROSS_COMPILE_FOR_WIN32 | OFF | Cross compile from a Unix system for a
- * Windows host | | NVDIALOG_MAXBUF | 4096 | Amount of bytes NvDialog will
- * allocate by default on static buffers | | NVD_BUILD_STATIC | OFF | Build
- * NvDialog as a static library instead, that will be packaged with your
- * executable |
+ * `-D<feature>=<value>` cmake flag.
+ * | Feature | Default | Description |
+ * | --- | --- | --- |
+ * | CROSS_COMPILE_FOR_WIN32 | OFF | Cross compile from a Unix system for a Windows host |
+ * | NVD_BUILD_STATIC | ON | Build NvDialog as a static library instead, that will be packaged with your executable |
+ * | NVD_GENERATE_DOCS | OFF | Generate the documentation pages along with the source code (Requires doxygen) |
+ * | NVD_IMAGE_SUPPORT | ON | Include support for images in the library. |
+ * | NVD_USE_GNUSTEP | OFF | Use the GNUstep+Cocoa backend if available on non-macOS platforms. Experimental. |
  */
