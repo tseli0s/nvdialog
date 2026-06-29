@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2025 Aggelos Tselios
+ *  Copyright (c) 2022, 2026 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -24,10 +24,6 @@
 
 #include "nvdialog_error.h"
 
-/* Set to false consistently after 0.10.2, so that applications understand
- * they're not using it in practice anymore. */
-static const bool nvd_has_adw_gtk = false;
-
 static const bool nvd_built_static =
 #if defined(NVD_STATIC_LINKAGE)
 	true;
@@ -35,16 +31,15 @@ static const bool nvd_built_static =
 	false;
 #endif
 
-static const bool nvd_compat_mode = false;
-
 bool nvd_get_capabilities(int query) {
 	switch (query) {
+		/* These two have been long deprecated. Kept here just in case
+		 * any application still, for some reason, uses them. */
 		case NVD_ADW_BACKEND:
-			return nvd_has_adw_gtk;
+		case NVD_COMPAT_MODE:
+			return false;
 		case NVD_STATIC_LIB:
 			return nvd_built_static;
-		case NVD_COMPAT_MODE:
-			return nvd_compat_mode;
 		default:
 			nvd_set_error(NVD_INVALID_PARAM);
 			return false;
