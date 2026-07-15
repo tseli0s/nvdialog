@@ -75,6 +75,7 @@ if(WIN32 OR CROSS_COMPILE_FOR_WIN32)
         src/backend/win32/nvdialog_notification.c
         src/backend/win32/nvdialog_input_box.c
         ${NVD_COMMON_SOURCES})
+    add_definitions(-DNVD_EXTRA_TESTING=1)
 elseif(APPLE OR NVD_USE_GNUSTEP)
     set(NVD_SOURCES
         src/backend/cocoa/nvdialog_dialog_box.m
@@ -148,6 +149,7 @@ if(APPLE)
         "-framework Foundation"
         "-framework UserNotifications"
     )
+    add_definitions(-DNVD_EXTRA_TESTING=1)
 elseif(NVD_USE_GNUSTEP)
     message(WARNING "You are building with GNUstep. This is intended for development only -- Stability may suffer.")
     find_package(PkgConfig REQUIRED)
@@ -160,6 +162,7 @@ elseif(NVD_USE_GNUSTEP)
     target_link_libraries(nvdialog gnustep-base gnustep-gui objc m)
 elseif(CROSS_COMPILE_FOR_WIN32 OR WIN32)
     target_link_libraries(nvdialog comdlg32 shell32 user32 gdi32 ole32)
+    add_definitions(-DNVD_EXTRA_TESTING=1)
 elseif(UNIX AND NOT APPLE)
     target_link_libraries(nvdialog ${GTK_LIBRARIES} ${DBUS_LIBRARIES})
 endif()
@@ -199,7 +202,7 @@ set(NVDIALOG_TESTS init dialogs multithreading aboutdlg question notification)
 foreach(test_exe ${NVDIALOG_TESTS})
     add_executable(nvdialog_${test_exe}_test tests/test_${test_exe}.c)
     target_compile_definitions(nvdialog_${test_exe}_test PRIVATE NVDIALOG_TESTING)
-    target_link_libraries(nvdialog_${test_exe}_test nvdialog)
+    target_link_libraries(nvdialog_${test_exe}_test nvdialog pthread)
     target_include_directories(nvdialog_${test_exe}_test PUBLIC ${CMAKE_SOURCE_DIR}/include/)
     add_test(NAME nvdialog_${test_exe}_test COMMAND $<TARGET_FILE:nvdialog_${test_exe}_test>)
 endforeach()
