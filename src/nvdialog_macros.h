@@ -1,7 +1,7 @@
 /*
  *  The MIT License (MIT)
  *
- *  Copyright (c) 2025 Aggelos Tselios
+ *  Copyright (c) 2022, 2025 Aggelos Tselios
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to
@@ -29,7 +29,15 @@
 #define NVD_BUFFER_SIZE NVDIALOG_MAXBUF
 #endif /* NVD_BUFFER_SIZE */
 
+#if __STDC_VERSION__ >= 201112L
 #define NVD_NO_RETURN _Noreturn
+#else /* __STDC_VERSION__ */
+#if defined(__GNUC__) || defined(__clang__)
+#define NVD_NO_RETURN __attribute__((__noreturn__))
+#else /* __GNUC__ */
+#define NVD_NO_RETURN
+#endif /* __GNUC__ */
+#endif /* __STDC_VERSION__ */
 
 #if defined(__clang__) || defined(__GNUC__)
 
