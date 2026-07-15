@@ -2,7 +2,6 @@
 #include <stdio.h>
 #if defined(__linux__) || defined(__gnu_linux__)
 #include <pthread.h>
-#endif /* __linux__ */
 
 static int return_code = -1;
 static void* create_dialog() {
@@ -20,6 +19,7 @@ static void* create_dialog() {
         return_code = 0;
         return NULL;
 }
+#endif /* __linux__ */
 
 int main() {
 #if defined(__linux__) || defined(__gnu_linux__)
