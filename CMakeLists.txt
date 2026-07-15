@@ -75,7 +75,6 @@ if(WIN32 OR CROSS_COMPILE_FOR_WIN32)
         src/backend/win32/nvdialog_notification.c
         src/backend/win32/nvdialog_input_box.c
         ${NVD_COMMON_SOURCES})
-    add_definitions(-DNVD_EXTRA_TESTING=1)
 elseif(APPLE OR NVD_USE_GNUSTEP)
     set(NVD_SOURCES
         src/backend/cocoa/nvdialog_dialog_box.m
@@ -149,7 +148,6 @@ if(APPLE)
         "-framework Foundation"
         "-framework UserNotifications"
     )
-    add_definitions(-DNVD_EXTRA_TESTING=1)
 elseif(NVD_USE_GNUSTEP)
     message(WARNING "You are building with GNUstep. This is intended for development only -- Stability may suffer.")
     find_package(PkgConfig REQUIRED)
@@ -162,7 +160,6 @@ elseif(NVD_USE_GNUSTEP)
     target_link_libraries(nvdialog gnustep-base gnustep-gui objc m)
 elseif(CROSS_COMPILE_FOR_WIN32 OR WIN32)
     target_link_libraries(nvdialog comdlg32 shell32 user32 gdi32 ole32)
-    add_definitions(-DNVD_EXTRA_TESTING=1)
 elseif(UNIX AND NOT APPLE)
     target_link_libraries(nvdialog ${GTK_LIBRARIES} ${DBUS_LIBRARIES})
 endif()
