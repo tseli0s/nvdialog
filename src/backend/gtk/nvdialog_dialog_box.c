@@ -74,7 +74,6 @@ inline void *nvd_dialog_box_get_raw_gtk(NvdDialogBox *dlg) {
 
 void nvd_show_dialog_gtk(NvdDialogBox *dialog) {
         gtk_dialog_run(GTK_DIALOG(dialog->window_handle));
-	gtk_main_quit();
 }
 
 void nvd_gtk_update_accept_label(NvdDialogBox *dialog) {
@@ -87,4 +86,3 @@ void nvd_dialog_box_set_accept_text_gtk(NvdDialogBox *box, const char *text) {
         box->accept_label = (char*) text; 
         nvd_gtk_update_accept_label(box);
 }
-
