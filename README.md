@@ -86,8 +86,8 @@ int main(void) {
                 <img src="./assets/screenshots/gtk.png">
         </div>
         <div id="fourth-screenshot">
-                <h6><i>FreeBSD using Gtk3+XFCE</i></h6>
-                <img src="./assets/screenshots/freebsd-gtk.png" width="325px">
+                <h6><i>FreeBSD</i></h6>
+                <img src="./assets/screenshots/freebsd-gtk.png">
         </div>
 </div>
 
