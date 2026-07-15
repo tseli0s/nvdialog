@@ -1,6 +1,6 @@
 #include <nvdialog.h>
 #include <stdio.h>
-#if defined(__linux__) || defined(__gnu_linux__) || defined(__FreeBSD__)
+#if defined(__linux__) || defined(__gnu_linux__) || defined(__FreeBSD__) || defined(__APPLE__)
 #include <pthread.h>
 
 static int return_code = -1;
@@ -22,7 +22,7 @@ static void* create_dialog() {
 #endif /* __linux__ */
 
 int main() {
-#if defined(__linux__) || defined(__gnu_linux__) || defined(__FreeBSD__)
+#if defined(__linux__) || defined(__gnu_linux__) || defined(__FreeBSD__) || defined(__APPLE__)
         pthread_t thread;
         int result = pthread_create(&thread, NULL,
                                     (void* (*)(void*))create_dialog, NULL);
