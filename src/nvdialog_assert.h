@@ -43,7 +43,7 @@
 #define NVD_BUFFER_MULTIPLIER (10)
 
 #if defined(__clang__) || defined(__GNUC__)
-__attribute__((format(printf, 1, 2)))
+__attribute__((format(printf, 1, 2), used))
 #endif
 static void
 nvd_print_assert(const char *msg, ...) {
