@@ -29,6 +29,8 @@
 #define NVD_BUFFER_SIZE NVDIALOG_MAXBUF
 #endif /* NVD_BUFFER_SIZE */
 
+#define NVD_UNUSED_PARAMETER(p) ((void)p)
+
 #if __STDC_VERSION__ >= 201112L
 #define NVD_NO_RETURN _Noreturn
 #else /* __STDC_VERSION__ */
