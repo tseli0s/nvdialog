@@ -57,8 +57,7 @@ NvdAboutDialog *nvd_about_dialog_gtk(const char *appname, const char *brief,
                         nvd_set_error(NVD_OUT_OF_MEMORY);
                         return NULL;
                 }
-                sprintf(buffer, "%s%s", icons_path, icon_name);
-                buffer[len] = '\0';
+                snprintf(buffer, len, "%s%s", icons_path, icon_name);
                 img = gdk_pixbuf_new_from_file(buffer, &err);
                 if (!img) {
                         NVD_ASSERT(img != NULL);
