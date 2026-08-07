@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../nvdialog_macros.h"
 #include "dialogs/nvdialog_input_box.h"
 #include "glib.h"
 #include "gtk/gtk.h"
@@ -46,7 +47,8 @@ static void nvd_fetch_user_input(GtkWidget *button, gpointer data) {
 }
 
 static gboolean nvd_input_box_delete(GtkWidget *widget, GdkEvent *event,
-					   gpointer data) {
+				     gpointer data) {
+	NVD_UNUSED_PARAMETER(event);
 	NvdInputBox *box = data;
 	box->user_input = NULL;
 
@@ -101,9 +103,9 @@ NvdInputBox *nvd_input_box_gtk(const char *title, const char *message) {
 }
 
 void nvd_show_input_box_gtk(NvdInputBox *box) {
-        gtk_widget_show_all(GTK_WIDGET(box->window_handle));
-        gtk_main();
-        gtk_widget_destroy(GTK_WIDGET(box->window_handle));
+	gtk_widget_show_all(GTK_WIDGET(box->window_handle));
+	gtk_main();
+	gtk_widget_destroy(GTK_WIDGET(box->window_handle));
 }
 
 NvdDynamicString *nvd_input_box_get_string_gtk(NvdInputBox *box) {
