@@ -38,7 +38,7 @@ struct _NvdDialogBox {
         void* window_handle;
         char* msg;
         char* content;
-        char *accept_label, *reject_label;
+        const char *accept_label, *reject_label;
         void* accept_button;
         void *extra_data;
         NvdDialogType type;
@@ -74,15 +74,15 @@ struct _NvdFileDialog {
 
 struct _NvdQuestionBox {
         void* window_handle;
-        char *title, *contents;
+        const char *title, *contents;
         NvdReply reply;
         NvdQuestionButton buttons;
-        char *accept_label, reject_label;
+        const char *accept_label, reject_label;
 };
 
 struct _NvdNotification {
-        char* title;
-        char* body;
+        const char* title;
+        const char* body;
         NvdNotifyType type;
         bool shown;
         void* raw;
