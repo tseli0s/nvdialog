@@ -47,7 +47,10 @@ const uint8_t *nvd_image_from_filename(const char *filename, int *width,
         int w, h, channels;
         const uint8_t *data =
                 stbi_load_from_file(f, &w, &h, &channels, STBI_rgb_alpha);
-        NVD_ASSERT(data != NULL);
+        if (!data) {
+                fclose(f);
+                return NULL;
+        }
         NVD_ASSERT(channels == 4);  // We need 4 channels per pixel (RGBA).
 
         *width = w;
