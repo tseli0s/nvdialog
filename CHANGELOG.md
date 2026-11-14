@@ -7,6 +7,23 @@
 - Fixed missing header when installing using the [Makefile](./Makefile) (See #66)
 - Warn if the target cannot be recognized when initializing backends during `nvd_init()`.
 - FreeBSD is now officially a supported platform of nvdialog.
+- Fix a bug where the `NvdError` code wasn't converted to a positive sign correctly if backend initialization failed.
+- Fix a bug where garbage data was returned from `nvd_image_from_filename()` if the image couldn't be read properly causing assertion messages to fire.
+- Fix a potential integer overflow during multiplication (#73)
+- Fixed a compiler warning about assigning strings to non-`const` pointers
+- Add new `NVD_UNUSED_PARAMETER` macro
+- Use `snprintf()` instead of `sprintf()` when loading icons in the `gtk` backend.
+- Fix a dialog hang when closing windows in the `gtk` backend.
+- Fix a warning in the `gtk` backend about a redundant call to `gtk_main_quit()`
+- Add new `NVD_NO_RETURN` define for functions
+- Fix a false positive compiler warning about `nvd_print_assert()` being unused
+- Fix a compiler warning in the multithreading test
+- Improved and more accurate copyright notices where applicable (**No, nothing changed about the license**)
+- Drop global variables to track runtime version, use constants directly instead
+- Drop the `nvd_create_process` function (No longer used)
+- nvdialog headers can now be used directly in C++ without forcing the C ABI by hand (See pull request #72)
+- Enable automatic translations in the `gtk` backend where possible
+- Check the return values of some Win32 API calls in the `win32` backend before using the returned data.
 
 # Changelog -- 0.10.1
 - Fixed memory leak when freeing a notification in the `gtk` backend
