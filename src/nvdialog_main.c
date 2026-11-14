@@ -74,7 +74,7 @@ int nvd_init(void) {
 #endif
         int result = nvd_init_backends(&mask);
         if (result < 0) {
-                nvd_set_error((NvdError)+result);
+                nvd_set_error((NvdError)-result);
                 return result;
         }
 
