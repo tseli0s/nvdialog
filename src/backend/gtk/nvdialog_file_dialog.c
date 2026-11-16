@@ -36,7 +36,7 @@
 
 NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
                                         const char *file_extensions) {
-        NvdFileDialog *dialog = nvd_malloc(sizeof(struct _NvdFileDialog));
+        NvdFileDialog *dialog = nvd_calloc(1, sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
         dialog->file_extensions = (char *)file_extensions;
 
@@ -80,7 +80,7 @@ NvdFileDialog *nvd_open_file_dialog_gtk(const char *title,
 
 NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
                                         const char *default_filename) {
-        NvdFileDialog *dialog = nvd_malloc(sizeof(struct _NvdFileDialog));
+        NvdFileDialog *dialog = nvd_calloc(1, sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
         dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
                                                   GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -98,7 +98,7 @@ NvdFileDialog *nvd_save_file_dialog_gtk(const char *title,
 
 NvdFileDialog *nvd_open_folder_dialog_gtk(const char *title,
                                           const char *default_filename) {
-        NvdFileDialog *dialog = nvd_malloc(sizeof(struct _NvdFileDialog));
+        NvdFileDialog *dialog = nvd_calloc(1, sizeof(struct _NvdFileDialog));
         NVD_RETURN_IF_NULL(dialog);
         dialog->raw = gtk_file_chooser_native_new(title, nvd_get_parent(),
                                                   GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
